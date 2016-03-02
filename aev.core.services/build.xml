@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project" default="default">
+	<property name="jarname" value="arcad-ae-core.jar"/>
+	<property name="version" value="02.06.00" />
+    <target name="default">    		 
+	  	<javac srcdir="src" destdir="bin" verbose="true" executable="C:\Program Files (x86)\Java\jdk1.7.0_71\bin\javac.exe" fork="true">	  
+	  		<include name="**/*.java"/>	  
+		</javac>
+		<delete file="distrib/${jarname}"/>
+	  	<echo>Création de l'archive du server : ${jarname} - version : ${version}</echo>
+		<jar jarfile="distrib/${jarname}" basedir="bin">
+	     	<manifest>
+	     		<attribute name="Implementation-Version" value="${version}"/>
+	     	</manifest>			
+		</jar>
+    </target>
+</project>
