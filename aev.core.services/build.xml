@@ -2,7 +2,7 @@
 <project name="project" default="build">
 	<target name="build">
 		<!-- Retrieve common build file -->
-		<tempfile deleteonexit="true" property="build.file" prefix="build" />
+		<tempfile deleteonexit="true" property="build.file" prefix="build" suffix=".xml"/>
 		<get dest="${build.file}"
 			 src="http://rdvm-ci:8081/artifactory/tools-building-local/scripts/build.simple.jar.xml" />
 		
