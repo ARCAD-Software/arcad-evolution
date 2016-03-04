@@ -31,7 +31,7 @@
     	<ivy:info />
     	<property name="jar.name" value="${ivy.module}-${ivy.revision}.jar"/>
     	
-		<delete file="${input.distrib.dir}/${jar.name}"/>
+		<delete file="${input.distrib.dir}" />
 		<jar jarfile="${input.distrib.dir}/${jar.name}" basedir="bin">
 	     	<manifest>
 	     		<attribute name="Specification-Version" value="${input.version}"/>
