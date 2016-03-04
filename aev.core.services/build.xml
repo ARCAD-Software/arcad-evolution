@@ -34,7 +34,7 @@
 		<delete dir="${input.distrib.dir}" />
 		<jar jarfile="${input.distrib.dir}/${jar.name}" basedir="bin">
 	     	<manifest>
-	     		<attribute name="Specification-Version" value="${input.version}"/>
+	     		<attribute name="Specification-Version" value="${ivy.revision}"/>
 				<attribute name="Implementation-Version" value="${input.build}"/>
 	     	</manifest>			
 		</jar>
