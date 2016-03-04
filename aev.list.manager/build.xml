@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project" default="build.all">	
+	<!-- Input properties -->
+	<property name="input.path.to.aev.core.services" value="../aev.core.services"/>
+	<property name="input.distrib.dir" value="distrib"/>
+	<property name="input.version" value="02.07.00" />
+	<property name="input.build" value="manual" />
+	
+	<!-- General properties -->
+	<property name="java.level" value="1.7" />
+	
+	<target name="build.all" depends="get.aev.core.services, compile, build.mmk.lists" />
+	
+	<target name="build.mmk.lists">
+		<antcall target="build">
+			<param name="param.jar" value="arcad-lm-core.jar"/>
+			<param name="param.includes" value="com.arcadsoftware.mmk.lists/**" />
+		</antcall>
+	</target>
+	
+    <target name="build" depends="clean">
+		<jar jarfile="${input.distrib.dir}/${param.jar}" basedir="bin"
+			includes ="${param.includes}">
+	     	<manifest>
+	     		<attribute name="Specification-Version" value="${input.version}"/>
+	     		<attribute name="Implementation-Version" value="${input.build}"/>
+	     	</manifest>			
+		</jar>
+    </target>
+	
+	<target name="compile">
+		<delete dir="bin" />
+		<mkdir dir="bin" />
+		<path id="class.path">
+			<fileset dir="lib" includes="*.jar"/>
+		</path>
+		<javac 	fork="true"
+				debug="true"
+				srcdir="src" destdir="bin" 
+				source="${java.level}" target="${java.level}" classpathref="class.path"
+				includeAntRuntime="false"
+		/>
+	</target>
+	
+	<target name="get.aev.core.services">
+		<property name="aev.core.services" value="lib/arcad-ae-core.jar" />
+		<delete file="${aev.core.services}" />
+		<copy tofile="${aev.core.services}" overwrite="true" file="${input.path.to.aev.core.services}/distrib/arcad-ae-core.jar" />
+		<copy todir="lib">
+			<fileset dir="${input.path.to.aev.core.services}/lib"/>
+		</copy>
+	</target>
+	
+	<target name="clean">
+		<delete file="${input.distrib.dir}/${param.jar}"/>
+	</target>
+</project>
