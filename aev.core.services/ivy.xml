@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info
+		organisation="com.arcadsoftware"
+		module="aev-core-services"
+		status="integration"
+		revision="2.0.0.7"
+	/>	
+	<dependencies>
+		<dependency org="org.apache.ant" name="ant" rev="1.9.6" transitive="false"/>
+		<dependency org="commons-logging" name="commons-logging" rev="1.2" transitive="false"/>
+		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false"/>		
+		<dependency org="org.springframework" name="spring-context" rev="2.0.6" transitive="false" />
+		<dependency org="org.springframework" name="spring-beans" rev="2.0.6" transitive="false" />
+		<dependency org="org.springframework" name="spring-core" rev="2.0.6" transitive="false" />
+		<dependency org="xerces" name="xercesImpl" rev="2.6.1" transitive="false"/>
+		<dependency org="com.thoughtworks.xstream" name="xstream" rev="1.4.8" transitive="false"/>				
+	</dependencies>
+</ivy-module>

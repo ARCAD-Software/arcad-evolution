@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="project" default="build">
+<project name="project" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 	<!-- Input properties -->
 	<property name="input.distrib.dir" value="distrib"/>
-	<property name="input.version" value="manual" />
 	<property name="input.build" value="manual" />
+	<property name="input.debug" value="true" />
 	
 	<!-- General properties -->
 	<property name="java.level" value="1.7" />
-	<property name="jarname" value="arcad-ae-core.jar"/>
 	
-	<target name="build" depends="compile, package"/>
+	<target name="build" depends="resolve, compile, package" />
 	
+	<target name="resolve">
+		<ivy:resolve type="jar" />
+	</target>
+		
     <target name="compile">
 		<delete dir="bin" />
 		<mkdir dir="bin" />
-		<path id="class.path">
-    		<fileset dir="lib" includes="*.jar"/>
-    	</path>
+
+		<ivy:cachepath pathid="ivy.classpath" />
+    	
     	<javac 	fork="true"
-    			debug="true"
+    			debug="${input.debug}"
     			srcdir="src" destdir="bin" 
-    			source="${java.level}" target="${java.level}" classpathref="class.path"
-    			includeAntRuntime="false"
-    	/>
+    			source="${java.level}" target="${java.level}" classpathref="ivy.classpath"
+    			includeAntRuntime="false" />
     </target>
     
     <target name="package">
-		<delete file="${input.distrib.dir}/${jarname}"/>
-		<jar jarfile="${input.distrib.dir}/${jarname}" basedir="bin">
+    	<ivy:info />
+    	<property name="jar.name" value="${ivy.module}-${ivy.revision}.jar"/>
+    	
+		<delete file="${input.distrib.dir}/${jar.name}"/>
+		<jar jarfile="${input.distrib.dir}/${jar.name}" basedir="bin">
 	     	<manifest>
 	     		<attribute name="Specification-Version" value="${input.version}"/>
 				<attribute name="Implementation-Version" value="${input.build}"/>

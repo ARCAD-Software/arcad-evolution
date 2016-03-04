@@ -2,13 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/ant.jar"/>
-	<classpathentry kind="lib" path="lib/com.thoughtworks.xstream_1.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/spring-beans.jar"/>
-	<classpathentry kind="lib" path="lib/spring-context.jar"/>
-	<classpathentry kind="lib" path="lib/spring-core.jar"/>
-	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=aev.core.services&amp;ivyXmlPath=ivy.xml&amp;confs=*"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
