@@ -5,8 +5,7 @@
         module="aev-list-manager"
         status="integration"
         revision="9.0.0.0"
-        >
-	</info>
+	/>
 	<dependencies>
 		<dependency org="org.hsqldb" name="hsqldb" rev="2.3.3"/>
 		<dependency org="org.springframework" name="spring-context" rev="2.0.6" transitive="false" />
