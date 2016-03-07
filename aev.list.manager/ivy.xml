@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info
+        organisation="com.arcadsoftware"
+        module="aev-list-manager"
+        status="integration"
+        revision="9.0.0.0"
+        >
+	</info>
+	<dependencies>
+		<dependency org="org.hsqldb" name="hsqldb" rev="2.3.3"/>
+		<dependency org="org.springframework" name="spring-context" rev="2.0.6" transitive="false" />
+		<dependency org="org.springframework" name="spring-beans" rev="2.0.6" transitive="false" />
+		<dependency org="org.springframework" name="spring-core" rev="2.0.6" transitive="false" />
+		<dependency org="commons-io" name="commons-io" rev="2.4"/>
+		<dependency org="org.ogce" name="xpp3" rev="1.1.6" />						
+	</dependencies>
+</ivy-module>
