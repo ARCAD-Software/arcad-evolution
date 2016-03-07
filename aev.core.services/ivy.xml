@@ -4,7 +4,7 @@
 		organisation="com.arcadsoftware"
 		module="aev-core-services"
 		status="integration"
-		revision="2.0.0.7"
+		revision="9.0.0.0"
 	/>	
 	<dependencies>
 		<dependency org="org.apache.ant" name="ant" rev="1.9.6" transitive="false"/>
