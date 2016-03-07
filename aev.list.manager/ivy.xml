@@ -14,5 +14,6 @@
 		<dependency org="org.springframework" name="spring-core" rev="2.0.6" transitive="false" />
 		<dependency org="commons-io" name="commons-io" rev="2.4"/>
 		<dependency org="org.ogce" name="xpp3" rev="1.1.6" />						
+		<dependency org="com.arcadsoftware" name="aev-core-services" rev="[9.0.0.0,)" />						
 	</dependencies>
 </ivy-module>
