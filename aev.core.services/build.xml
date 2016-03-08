@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="project" default="build">
-	<target name="build" depends="manual.build.number">
+	<target name="build">
 		<!-- Retrieve common build file -->
 		<tempfile deleteonexit="true" property="build.file" prefix="build" suffix=".xml"/>
 		<get dest="${build.file}"
@@ -8,9 +8,5 @@
 		
 		<!-- Run build file -->
 		<ant antfile="${build.file}" />
-	</target>
-	
-	<target name="manual.build.number" unless="env.SVN_REVISION">
-		<property name="input.build" value="manual" />
 	</target>
 </project>
