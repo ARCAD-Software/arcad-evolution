@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<antlib>     
+	<taskdef name="copy" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadCopyTask"/> 
+	<taskdef name="copywithlog" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadCopyWithLogTask"/> 
+	<taskdef name="delete" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadDeleteTask"/>		     
+	<taskdef name="transaction" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadTransactionTask"/>
+	<taskdef name="rollback" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask"/>
+	
+	
+	<taskdef name="list.info" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListInfoTask"/> 
+	<taskdef name="list.count" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListCountTask"/> 
+	<taskdef name="list.removeduplicate" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListRemoveDuplicateTask"/>		
+	<taskdef name="list.initialize" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListInitializeTask"/>		
+	
+	
+	<taskdef name="list.clear" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListClearTask"/>	
+	
+	<taskdef name="list.extract" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListExtractTask"/>
+	
+	<taskdef name="list.merge" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListMergeTask"/>	
+	<taskdef name="list.intersect" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListIntersectTask"/>	
+	<taskdef name="list.substract" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListSubstractTask"/>	
+	
+	<taskdef name="list.compare" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListCompareTask"/>
+	<taskdef name="list.diff" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListDiffTask"/>	
+	
+	<taskdef name="list.execute" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListExecuteTask"/>
+	
+	<taskdef name="list.change" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListChangeTask"/>
+	
+	<taskdef name="list.delete" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListDeletionTask"/>	
+	<taskdef name="list.create" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListCreationTask"/> 
+	<taskdef name="list.add" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListAdditionTask"/> 
+	<taskdef name="list.update" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListModificationTask"/> 
+	<taskdef name="list.updateHeader" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListUpdateHeaderTask"/> 
+	
+	
+	
+	
+	<taskdef name="list.file.delete" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.file.ListOfFileDeletionTask"/>	
+	<taskdef name="list.file.create" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.file.ListOfFileCreationTask"/> 
+	<taskdef name="list.file.add" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.file.ListOfFileAdditionTask"/> 
+	
+	<taskdef name="list.test" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.test.TestTask"/> 
+			
+	<taskdef name="item.chg.convertDirectory" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.transform.directoryConvertTask"/> 
+		     			
+	<taskdef name="replace.token.value" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.misc.ArcadReplaceTokenValueTask"/> 
+		     
+	<taskdef name="get.token.value" 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.misc.ArcadGetTokenValueTask"/> 
+		     
+</antlib>
+      
