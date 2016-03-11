@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info
-        organisation="com.arcadsoftware"
+        organisation="com.arcadsoftware.evolution"
         module="aev-list-manager"
         status="integration"
         revision="9.0.0.0"
@@ -10,6 +10,6 @@
 		<dependency org="org.hsqldb" name="hsqldb" rev="2.3.3"/>
 		<dependency org="commons-io" name="commons-io" rev="2.4"/>
 		<dependency org="org.ogce" name="xpp3" rev="1.1.6" />						
-		<dependency org="com.arcadsoftware" name="aev-core-services" rev="[9.0.0.0,)" />						
+		<dependency org="com.arcadsoftware.evolution" name="aev-core-services" rev="[9.0.0.0,)" />						
 	</dependencies>
 </ivy-module>
