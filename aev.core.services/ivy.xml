@@ -10,8 +10,7 @@
 		<dependency org="org.apache.ant" name="ant" rev="1.9.6" transitive="false"/>
 		<dependency org="commons-logging" name="commons-logging" rev="1.2" transitive="false"/>
 		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false"/>		
-		<dependency org="org.springframework" name="spring-context" rev="2.0.8" />
-		<dependency org="org.springframework" name="spring-beans" rev="2.0.8" />		
+		<dependency org="org.springframework" name="spring-context" rev="3.2.16.RELEASE"/>	
 		<dependency org="xerces" name="xercesImpl" rev="2.6.1" />
 		<dependency org="com.thoughtworks.xstream" name="xstream" rev="1.4.8" transitive="false"/>				
 	</dependencies>
