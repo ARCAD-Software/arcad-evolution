@@ -1,0 +1,9 @@
+javaCompiler.arpcore.jar.args
+build.xml
+arpcore.jar
+.classpath
+aevcore.jar
+javaCompiler.aevcore.jar.args
+temp.folder
+.settings
+@dot
