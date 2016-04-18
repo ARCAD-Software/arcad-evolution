@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info
+		organisation="com.arcadsoftware.plugins"
+		module="arcadsoftware-evolution-core-ui-plugin"
+		status="integration"
+		revision="9.0.0.0"
+	/>
+	<configurations>
+		<conf name="default" visibility="public" />
+		<conf name="plugin" visibility="public" />
+	</configurations>
+	<publications>
+		<artifact name="com.arcadsoftware.aev.core.ui" type="jar" ext="jar" />
+	</publications>
+	<dependencies defaultconf="*->default">		
+		<dependency org="com.arcadsoftware.plugins" name="arcadsoftware-evolution-core-plugin" rev="[9.0.0.0,)" conf="plugin->plugin"/>
+		<dependency org="bundle" name="org.eclipse.core.resources" rev="[0,)" conf="plugin->default"/>
+		<dependency org="bundle" name="org.eclipse.core.runtime" rev="[0,)" conf="plugin->default"/>
+		<dependency org="bundle" name="org.eclipse.ui" rev="[0,)" conf="plugin->default"/>
+		<dependency org="bundle" name="org.eclipse.ui.forms" rev="[0,)" conf="plugin->default" transitive="false"/>
+		<dependency org="bundle" name="org.eclipse.swt.win32.win32.x86" rev="[0,)" conf="plugin->default"/>
+	</dependencies>
+</ivy-module>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="ARCAD" link_to="../com.arcadsoftware.doc/toc.xml">
+	<topic label="Actions sur la vue des messages Arcad" href="html/messagelogviewactions.htm" />
+</toc>
