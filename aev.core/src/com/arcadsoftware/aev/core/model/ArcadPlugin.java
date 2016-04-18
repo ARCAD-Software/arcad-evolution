@@ -101,6 +101,14 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 		shellProvider = new PluginShellProvider(this);
 	}
 
+	/**
+	 * Implement this method to initialize the Plugin Image Registry.
+	 * 
+	 * <p>
+	 * Use the method <code>putImageInRegistry</code> to add an image.
+	 * 
+	 * @see #putImageInRegistry(String, String)
+	 */
 	protected abstract void initializeImageRegistry();
 
 	public static String getIconPath() {
@@ -112,7 +120,13 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 		return p.toOSString();
 	}
 
-
+	/**
+	 * Add an image to the plugin image registry.
+	 * 
+	 * @param id The image ID
+	 * @param fileName the plugin local path to the image file. 
+	 * @return
+	 */
 	protected ImageDescriptor putImageInRegistry(String id, String fileName) {
 		ImageDescriptor fid = getPluginImage(fileName);
 		imageRegistry.put(id, fid);
@@ -136,7 +150,8 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 			imageRegistry.put(key, result);
 		}
 		return result;
-	}		
+	}
+	
 	/**
 	 * Get an registered image. If this image is not already registered, 
 	 * it is first registered.
