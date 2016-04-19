@@ -136,32 +136,50 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 
 
 	private ImageDescriptor registerImage(String key) {
+		// getImageDescriptor initialize the imageRegistry.
+		ImageDescriptor result = getImageDescriptor(key);
+		if (result != null) {
+			return result;
+		}
 		int pos = key.indexOf(":");  //$NON-NLS-1$
-		ImageDescriptor result = null;
-		if (pos>0) {
+		if (pos > 0) {
 			String bundleId = key.substring(0,pos);
 			String imageKey = key.substring(pos+1);
 			result = AbstractUIPlugin.imageDescriptorFromPlugin(bundleId, imageKey);
+			if (result != null) {
+				// ImageRegistry is initialized into getImageDescriptor
+				imageDescriptorRegistry.put(key, result);
+				imageRegistry.put(key, result);
+			}
 		} else {
-			result = getImageDescriptor(key);					
-		}		
-		if (result!=null) {
-			imageDescriptorRegistry.put(key, result);
-			imageRegistry.put(key, result);
+			try {
+				URL url = FileLocator.find(getBundle(), new Path(key), null);
+				if (url != null) {
+					result = ImageDescriptor.createFromURL(url);
+					imageDescriptorRegistry.put(key, result);
+					imageRegistry.put(key, result);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				// Bug potentiel ici: l'URL contient des espace au lieu de %20. correction:
+				// url = new URL(null,url.toString().replaceAll(" ", "%20")).toURI();
+			}
 		}
 		return result;
 	}
 	
 	/**
-	 * Get an registered image. If this image is not already registered, 
+	 * Get a registered image. If this image is not already registered, 
 	 * it is first registered.
+	 * 
 	 * @param key
 	 * @return
+	 * 
 	 */
 	public ImageDescriptor getRegisteredImageDescriptor(String key) {
-		if (key!=null) {			
+		if (key != null) {			
 			ImageDescriptor result = imageDescriptorRegistry.get(key);
-			if (result==null) {			
+			if (result == null) {			
 				result = registerImage(key);
 			}
 			return result;
