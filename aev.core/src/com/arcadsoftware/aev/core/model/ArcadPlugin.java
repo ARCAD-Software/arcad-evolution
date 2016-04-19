@@ -172,6 +172,9 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 	 * Get a registered image. If this image is not already registered, 
 	 * it is first registered.
 	 * 
+	 * <p>
+	 * Must be called into UI thread or ImageRegistry initialization may throw an NPE.
+	 * 
 	 * @param key
 	 * @return
 	 * 
@@ -199,6 +202,14 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 		}
 	}
 
+	/**
+	 * 
+	 * <p>
+	 * Must be called into UI thread or ImageRegistry initialization may throw an NPE.
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public Image getImage(String key) {
 		if ((key == null) || (key.length() == 0)) {
 			return null;
@@ -238,6 +249,16 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 		return colorRegistry.get(key);
 	}
 
+	/**
+	 * Get a previously registered image.
+	 * 
+	 * <p>
+	 * Must be called into UI thread or ImageRegistry initialization may throw an NPE.
+	 * 
+	 * @param key
+	 * @return
+	 * @see #putImageInRegistry(String, String)
+	 */
 	public ImageDescriptor getImageDescriptor(String key) {
 		if (imageRegistry == null) {
 			imageRegistry = new ImageRegistry();
