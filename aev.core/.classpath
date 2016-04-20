@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="nl/src"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=aev.core&amp;ivyXmlPath=ivy.xml&amp;confs=default%2Clibs&amp;acceptedTypes=jar%2Cbundle&amp;alphaOrder=false&amp;resolveInWorkspace=true&amp;transitiveResolve=true&amp;readOSGiMetadata=false&amp;retrievedClasspath=true&amp;retrievedClasspathPattern=lib%2F%5Bartifact%5D-%5Brevision%5D.%5Bext%5D&amp;retrievedClasspathSync=false&amp;retrievedClasspathTypes=*"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
