@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD Core UI Plugin Evolution
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui; singleton:=true
 Bundle-Version: 9.1.0
-Bundle-ClassPath: aevcoreui.jar
+Bundle-ClassPath: bin/
 Bundle-Activator: com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin
 Bundle-Vendor: ARCAD Software
 Bundle-Localization: plugin
