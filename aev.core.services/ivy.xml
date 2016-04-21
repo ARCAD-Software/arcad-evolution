@@ -9,7 +9,8 @@
 	<dependencies defaultconf="default->master">
 		<dependency org="org.apache.ant" name="ant" rev="1.9.6" transitive="false"/>
 		<dependency org="commons-logging" name="commons-logging" rev="1.2" />
-		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false"/>		
+		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false"/>
+		<dependency org="org.springframework" name="spring-expression" rev="3.2.16.RELEASE"/>		
 		<dependency org="org.springframework" name="spring-context" rev="3.2.16.RELEASE"/>	
 		<dependency org="org.springframework" name="spring-beans" rev="3.2.16.RELEASE"/>	
 		<dependency org="org.springframework" name="spring-core" rev="3.2.16.RELEASE"/>	
