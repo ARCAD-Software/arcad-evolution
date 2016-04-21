@@ -60,14 +60,22 @@ public abstract class ArcadActions {
 
 	public void fillMenuAction(IMenuManager manager) {
 		for (int i = 0; i < actions.size(); i++) {
-			if (actions.get(i) instanceof ArcadAction)
-				manager.add((ArcadAction) actions.get(i));
-			else if (actions.get(i) instanceof Separator)
+			if (actions.get(i) instanceof ArcadAction){
+				ArcadAction a = (ArcadAction) actions.get(i);
+				if (match(a)) {
+					manager.add(a);
+				}
+			} else if (actions.get(i) instanceof Separator) {
 				manager.add((Separator) actions.get(i));
+			}
 		}
 		manager.add(new Separator());
 	}
 
+	protected boolean match(ArcadAction a){
+		return true;
+	}
+	
 	public void fillToolbarAction(IToolBarManager manager) {
 		for (int i = 0; i < actions.size(); i++) {
 			if (actions.get(i) instanceof ArcadAction)
