@@ -6,6 +6,8 @@
  */
 package com.arcadsoftware.aev.core.ui.tools;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,12 +52,14 @@ import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Hyperlink;
@@ -2040,4 +2044,39 @@ public class GuiFormatTools {
 		}		
 	}
 	
+	public static Link createLabelledLink(Composite parent, String label, String text,int style){
+		Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
+		GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+		textLabel.setLayoutData(gridData);
+
+		textLabel.setText(label);
+		Label twopoints = new Label(parent, SWT.NONE);
+		twopoints.setText(":"); //$NON-NLS-1$
+		gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+		twopoints.setLayoutData(gridData);
+
+		Link link = new Link(parent, style);
+		gridData = new GridData(GridData.BEGINNING);
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.grabExcessHorizontalSpace = true;
+		link.setLayoutData(gridData);
+		link.setData(textLabel);
+		link.setText(text);
+	    link.addSelectionListener(new SelectionAdapter(){
+	        @Override
+	        public void widgetSelected(SelectionEvent e) {
+	               try {
+	                //  Open default external browser 
+	                PlatformUI.getWorkbench().getBrowserSupport().createBrowser("browserId").openURL(new URL(e.text)); //$NON-NLS-1$
+	              } 
+	             catch (PartInitException ex) {
+	            	 MessageManager.addException(ex, MessageManager.LEVEL_PRODUCTION);
+	            } 
+	            catch (MalformedURLException ex) {
+	            	MessageManager.addException(ex, MessageManager.LEVEL_PRODUCTION);
+	            }
+	        }
+	    }); 
+		return link;		
+	}
 }
