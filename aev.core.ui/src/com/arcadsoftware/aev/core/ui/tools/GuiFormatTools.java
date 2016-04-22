@@ -14,6 +14,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.ToolBarManager;
@@ -37,6 +40,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -55,10 +59,13 @@ import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -104,6 +111,41 @@ public class GuiFormatTools {
 
 	public static IFileManagerProvider getFileManagerProvider(){
 		return EvolutionCoreUIPlugin.getDefault().getFileManagerProvider();
+	}
+	
+	
+	public class DropdownMenuSelectionListener extends SelectionAdapter {
+		  private ToolItem dropdown;
+		  private Menu menu;
+
+		  public DropdownMenuSelectionListener(ToolItem dropdown) {
+		    this.dropdown = dropdown;
+		    menu = new Menu(dropdown.getParent().getShell());
+		  }
+
+		  public void add(final Action action) {
+		    final MenuItem menuItem = new MenuItem(menu, SWT.CHECK);
+		    menuItem.setText(action.getText());
+		    menuItem.addSelectionListener(new SelectionAdapter() {
+			    public void widgetSelected(SelectionEvent event) {
+			    	action.setChecked(menuItem.getSelection());
+			    	action.run();
+			    }
+		    });
+		    menuItem.setSelection(action.isChecked());
+		  }
+
+		  public void widgetSelected(SelectionEvent event) {
+		    if (event.detail == SWT.ARROW) {
+		      ToolItem item = (ToolItem) event.widget;
+		      Rectangle rect = item.getBounds();
+		      Point pt = item.getParent().toDisplay(new Point(rect.x, rect.y));
+		      menu.setLocation(pt.x, pt.y + rect.height);
+		      menu.setVisible(true);
+		    } else {
+		      System.out.println(dropdown.getText() + " Pressed");
+		    }
+		  }
 	}
 	
 	
@@ -2044,6 +2086,28 @@ public class GuiFormatTools {
 		}		
 	}
 	
+
+	public static ContributionItem createToolbarDropDownMenu(final java.util.List<Action> actions){
+		ContributionItem contributionItem = new ContributionItem(""){
+			@Override
+			public void fill(ToolBar parent, int index) {
+				ToolItem ti = new ToolItem(parent,SWT.DROP_DOWN);
+				ti.setText("Section");
+				
+				DropdownMenuSelectionListener l = GuiFormatTools.instance.new DropdownMenuSelectionListener(ti);
+				for (Action action:actions) {
+					l.add(action);
+				}
+				ti.addSelectionListener(l);
+
+			}
+		};	
+		return contributionItem;
+	}
+
+	
+	
+
 	public static Link createLabelledLink(Composite parent, String label, String text,int style){
 		Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
 		GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
@@ -2079,4 +2143,5 @@ public class GuiFormatTools {
 	    }); 
 		return link;		
 	}
+
 }
