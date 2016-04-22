@@ -4,7 +4,7 @@
 		organisation="com.arcadsoftware.evolution"
 		module="arcadsoftware-evolution-core-ui-rcp-plugin"
 		status="integration"
-		revision="9.0.0.0"
+		revision="9.1.0"
 	/>
 	<configurations>
 		<conf name="default" visibility="public" />
