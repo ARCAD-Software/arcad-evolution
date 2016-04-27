@@ -3,14 +3,12 @@ package com.arcadsoftware.ae.core.utils;
 
 import java.io.File;
 
-import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
 public abstract class AbstractFactory {
-	protected static File arcadHomeFolder = null;		
-	private XmlBeanFactory factory = null;
+	protected static File arcadHomeFolder = null;
 	private FileSystemXmlApplicationContext ctx;
 	
 	protected AbstractFactory() {		
