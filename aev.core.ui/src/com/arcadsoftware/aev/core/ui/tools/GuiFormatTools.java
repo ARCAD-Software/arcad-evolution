@@ -63,6 +63,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -2078,7 +2079,9 @@ public class GuiFormatTools {
 	public static void disableComposite(Composite c){
 		Control[] controls = c.getChildren();
 		for (Control control:controls) {
-			if (control instanceof Composite) {
+			if (control instanceof Table) {
+				((Table)control).setEnabled(false);
+			} else if (control instanceof Composite) {
 				disableComposite((Composite)control);
 			} else {
 				control.setEnabled(false);
