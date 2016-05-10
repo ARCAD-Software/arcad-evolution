@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd" xmlns:e="http://ant.apache.org/ivy/extra">
 	<info
 		organisation="com.arcadsoftware.evolution"
 		module="arcadsoftware-evolution-core-ui-plugin"
 		status="integration"
 		revision="9.1.0"
+		e:qualifier="${input.qualifier}"
 	/>
 	<configurations>
 		<conf name="default" visibility="public" />
