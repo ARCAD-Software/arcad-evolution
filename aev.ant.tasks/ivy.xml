@@ -13,6 +13,6 @@
 		<dependency org="com.thoughtworks.xstream" name="xstream" rev="1.4.8" transitive="false"/>
 		<dependency org="com.arcadsoftware.evolution" name="aev-core-services" rev="[9.0.0.0,)" />
 		<dependency org="com.arcadsoftware.evolution" name="aev-list-manager" rev="[9.0.0.0,)" />
-		<dependency org="com.arcadsoftware.serviceproviders" name="asp-core" rev="[10.6.0.0,)" />						
+		<dependency org="com.arcadsoftware.serviceproviders" name="asp-core" rev="[10.6.0,)" />						
 	</dependencies>
 </ivy-module>
