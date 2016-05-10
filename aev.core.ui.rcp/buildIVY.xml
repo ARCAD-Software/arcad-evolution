@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="project" default="build">
+<project name="project" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 	<target name="build">
 		<!-- Retrieve common build file -->
-		<tempfile deleteonexit="true" property="build.file" prefix="build" suffix=".xml"/>
-		<get dest="${build.file}"
-			 src="http://rdvm-ci:8081/artifactory/tools-building-local/scripts/build.simple.jar.xml" />
+		<tempfile deleteonexit="true" property="build.plugin.file" prefix="build.plugin." suffix=".xml"/>
+		<get dest="${build.plugin.file}" src="http://rdvm-ci:8081/artifactory/tools-building-local/scripts/build.plugin.xml" />
 		
 		<!-- Run build file -->
-		<ant antfile="${build.file}" />
+		<ant antfile="${build.plugin.file}" />
 	</target>
 </project>
