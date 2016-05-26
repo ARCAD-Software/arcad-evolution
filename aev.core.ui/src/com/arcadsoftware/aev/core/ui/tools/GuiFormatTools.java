@@ -48,6 +48,7 @@ import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
@@ -1022,6 +1023,23 @@ public class GuiFormatTools {
 		p.setData(TIME_PART_MINUTE,minutChooser);
 		p.setData(TIME_PART_HOUR,hourChooser);
 		return p;
+	}
+	
+	/**
+	 * Create DateTime
+	 * @param parent
+	 * @param label
+	 * @param style SWT.TIME || SWT.DATE
+	 * @return
+	 */
+	public static DateTime createLabelledDateTime(Composite parent, String label, int style) {
+		new Label(parent, SWT.NONE).setText(label);
+		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		
+		DateTime time = new DateTime(parent, style);
+		time.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		
+		return time;
 	}
 	
 	public static Text createLabelledDateWithDateSelectorNotNull(Composite parent, String label, int style) {
