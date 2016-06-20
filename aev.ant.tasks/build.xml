@@ -7,7 +7,9 @@
 			 src="http://rdvm-ci:8081/artifactory/tools-building-local/scripts/build.simple.jar.xml" />		
 
 		<!-- Run build file -->
-		<ant antfile="${build.file}" />
+		<ant antfile="${build.file}">
+			<property name="no.publish" value="1" />
+		</ant>
 		
 		<!-- Add antlib.xml -->
 		<ivy:info />
@@ -17,5 +19,7 @@
 				<globmapper from="*" to="com/arcadsoftware/mmk/anttasks/*" />
 			</mappedresources>			
 		</jar>
+		
+		<ant antfile="${build.file}" target="publish" />
 	</target>
 </project>
