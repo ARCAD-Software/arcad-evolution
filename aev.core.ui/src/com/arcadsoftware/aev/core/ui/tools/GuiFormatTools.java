@@ -2080,9 +2080,11 @@ public class GuiFormatTools {
 			Text help = new Text(cmp, /*SWT.H_SCROLL | SWT.V_SCROLL |*/ SWT.WRAP);
 			help.setBackground(cmp.getBackground());
 			GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-			gridData.heightHint = 40;
+			//gridData.heightHint = 40;
 			help.setLayoutData(gridData);
 			help.setText(helper);
+			help.setEditable(false);
+			help.setEnabled(false);
 		}
 		
 		/* NEW EMPTY LINE */
