@@ -15,6 +15,6 @@
 		<dependency org="org.springframework" name="spring-beans" rev="3.2.16.RELEASE"/>	
 		<dependency org="org.springframework" name="spring-core" rev="3.2.16.RELEASE"/>	
 		<dependency org="xerces" name="xercesImpl" rev="2.6.1" />
-		<dependency org="com.thoughtworks.xstream" name="xstream" rev="1.4.8" />				
+		<dependency org="com.thoughtworks.xstream" name="xstream" rev="1.4.2" />				
 	</dependencies>
 </ivy-module>
