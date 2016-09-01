@@ -150,6 +150,36 @@ public class GuiFormatTools {
 		  }
 	}
 	
+	public class MenuItemSelectionListener extends SelectionAdapter {
+		  private Menu menu;
+
+		  public MenuItemSelectionListener(Menu menu) {
+			  this.menu = menu;
+		  }
+
+		  public void add(final Action action) {
+		    final MenuItem menuItem = new MenuItem(menu, SWT.CHECK);
+		    menuItem.setText(action.getText());
+		    menuItem.addSelectionListener(new SelectionAdapter() {
+			    public void widgetSelected(SelectionEvent event) {
+			    	action.setChecked(menuItem.getSelection());
+			    	action.run();
+			    }
+		    });
+		    menuItem.setSelection(action.isChecked());
+		  }
+
+		  public void widgetSelected(SelectionEvent event) {
+		    if (event.detail == SWT.ARROW) {
+		      ToolItem item = (ToolItem) event.widget;
+		      Rectangle rect = item.getBounds();
+		      Point pt = item.getParent().toDisplay(new Point(rect.x, rect.y));
+		      menu.setLocation(pt.x, pt.y + rect.height);
+		      menu.setVisible(true);
+		    } 
+		  }
+	}	
+	
 	
 	public class CalendarManager {
 		private CalendarDialog dialog;
@@ -2128,6 +2158,19 @@ public class GuiFormatTools {
 		return contributionItem;
 	}
 
+	public static ContributionItem createMenu(final java.util.List<Action> actions){
+		ContributionItem contributionItem = new ContributionItem(""){
+			@Override
+			public void fill(Menu menu, int index) {
+				MenuItemSelectionListener l = GuiFormatTools.instance.new MenuItemSelectionListener(menu);
+				for (Action action:actions) {
+					l.add(action);
+				}
+				//ti.addSelectionListener(l);
+			}
+		};	
+		return contributionItem;
+	}	
 	
 	
 
