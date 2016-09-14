@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: FR - Plugin Core Evolution
 Bundle-SymbolicName: com.arcadsoftware.aev.core;singleton:=true
-Bundle-Version: 9.1.0
+Bundle-Version: 9.0.5.0
 Bundle-ClassPath: lib/dom4j-1.6.1.jar,
  .,
  arpcore.jar
