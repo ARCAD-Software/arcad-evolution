@@ -50,3 +50,4 @@ Require-Bundle: com.arcadsoftware.aev.core,
  org.eclipse.rap.ui.forms;bundle-version="1.4.0";resolution:=optional,
  org.eclipse.rap.jface;resolution:=optional
 Eclipse-LazyStart: true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
