@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.Hashtable;
 
 import com.arcadsoftware.ae.core.exceptions.ArcadException;
-import com.arcadsoftware.ae.core.logger.MessageLogger;
 import com.arcadsoftware.ae.core.utils.ListenerList;
 import com.arcadsoftware.mmk.lists.managers.AbstractContentManager;
 import com.arcadsoftware.mmk.lists.managers.AbstractFiller;
+import com.arcadsoftware.mmk.lists.managers.AbstractLoggedObject;
 import com.arcadsoftware.mmk.lists.managers.AbstractStoreManager;
 import com.arcadsoftware.mmk.lists.metadata.AbstractStoreItemManager;
 import com.arcadsoftware.mmk.lists.metadata.ListMetaDatas;
@@ -17,7 +17,7 @@ import com.arcadsoftware.mmk.lists.metadata.StoreItem;
 
 
 
-public abstract class AbstractList 
+public abstract class AbstractList  extends AbstractLoggedObject
 implements IContentAction{
 	
 	public static final String MODULE_NAME = "LM";
@@ -184,7 +184,7 @@ implements IContentAction{
 		try {
 			getStoreManager().saveItem();
 		} catch (ArcadException e) {
-			MessageLogger.sendErrorMessage(MODULE_NAME,e);
+			logError(MODULE_NAME,e);
 		}
 	}	
 	
@@ -202,7 +202,7 @@ implements IContentAction{
 			try {
 				return storeManager.store();
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}			
 		}
 		return -1;
@@ -321,7 +321,7 @@ implements IContentAction{
 			try {
 				return contentManager.browse(subquery);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}		
 		return -1;
@@ -337,7 +337,7 @@ implements IContentAction{
 			try {
 				return contentManager.exists(item);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return false;
@@ -361,7 +361,7 @@ implements IContentAction{
 			try {
 				return contentManager.addItems(filler,checkIfExists,replaceIfExists);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -373,7 +373,7 @@ implements IContentAction{
 			try {
 				return contentManager.addItems(items,checkIfExists,replaceIfExists);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -385,7 +385,7 @@ implements IContentAction{
 			try {
 				return contentManager.addItems(item,checkIfExists,replaceIfExists);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -398,10 +398,10 @@ implements IContentAction{
 				try {
 					return contentManager.addItems(list,checkIfExists,replaceIfExists);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			} else 
-				MessageLogger.sendErrorMessage(MODULE_NAME,"List must not be null");
+				logError(MODULE_NAME,"List must not be null");
 		}
 		return -1;	
 	}
@@ -415,7 +415,7 @@ implements IContentAction{
 			try {
 				return contentManager.removeItems(items);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -427,7 +427,7 @@ implements IContentAction{
 			try {
 				return contentManager.removeItems(item);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -439,7 +439,7 @@ implements IContentAction{
 			try {
 				return contentManager.removeItems(removeQuery);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -452,10 +452,10 @@ implements IContentAction{
 				try {
 					return contentManager.removeItems(fromList);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			} else 
-				MessageLogger.sendErrorMessage(MODULE_NAME,"List must not be null");
+				logError(MODULE_NAME,"List must not be null");
 			
 		}
 		return -1;
@@ -467,7 +467,7 @@ implements IContentAction{
 			try {
 				return contentManager.clearItems();
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -481,7 +481,7 @@ implements IContentAction{
 			try {
 				return contentManager.updateItems(items);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -493,7 +493,7 @@ implements IContentAction{
 			try {
 				return contentManager.updateItems(item);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;		
@@ -506,10 +506,10 @@ implements IContentAction{
 				try {
 					return contentManager.updateItems(fromList);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			} else 
-				MessageLogger.sendErrorMessage(MODULE_NAME,"List must not be null");
+				logError(MODULE_NAME,"List must not be null");
 		}
 		return -1;
 	}	
@@ -523,7 +523,7 @@ implements IContentAction{
 			try {
 				return contentManager.extractItems(extractQuery);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;
@@ -544,10 +544,10 @@ implements IContentAction{
 							                           checkIfExists,
 							                           replaceIfExists);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			} else 
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Result List must not be null");
+				logError(MODULE_NAME,"Result List must not be null");
 		}
 		return -1;
 	}
@@ -565,7 +565,7 @@ implements IContentAction{
 			try {
 				return contentManager.removeDuplicate(orderQuery);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;
@@ -577,7 +577,7 @@ implements IContentAction{
 			try {
 				return contentManager.reinitializeValue(id,value);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}
 		return -1;
@@ -593,10 +593,10 @@ implements IContentAction{
 				try {
 					contentManager.duplicate(toList);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			} else 
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Result List must not be null");			
+				logError(MODULE_NAME,"Result List must not be null");			
 		}
 	}
 
@@ -610,7 +610,7 @@ implements IContentAction{
 			try {
 				contentManager.load(retrieveProcessInfo,metadataOnly);
 			} catch (ArcadException e) {				
-				MessageLogger.sendErrorMessage(MODULE_NAME,e.getCause());
+				logError(MODULE_NAME,e.getCause());
 			}
 		}		
 	}	
@@ -621,7 +621,7 @@ implements IContentAction{
 			try {
 				return contentManager.count(query);
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(MODULE_NAME,e);
+				logError(MODULE_NAME,e);
 			}
 		}	
 		return -1;
@@ -638,14 +638,14 @@ implements IContentAction{
 		contentManager = getContentManager();
 		if (contentManager!=null) {
 			if (opList == null)
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Operand List must not be null");	
+				logError(MODULE_NAME,"Operand List must not be null");	
 			else if (resList == null)
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Result List must not be null");
+				logError(MODULE_NAME,"Result List must not be null");
 			else {
 				try {
 					return contentManager.merge(opList,resList,checkIfExists,replaceIfExists);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			}
 		}
@@ -661,14 +661,14 @@ implements IContentAction{
 		contentManager = getContentManager();
 		if (contentManager!=null) {
 			if (opList == null)
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Operand List must not be null");	
+				logError(MODULE_NAME,"Operand List must not be null");	
 			else if (resList == null)
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Result List must not be null");
+				logError(MODULE_NAME,"Result List must not be null");
 			else {
 				try {
 					return contentManager.substract(opList,resList,checkIfExists,replaceIfExists);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			}
 		}
@@ -680,15 +680,15 @@ implements IContentAction{
 		contentManager = getContentManager();
 		if (contentManager!=null) {
 			if (opList == null)
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Operand List must not be null");	
+				logError(MODULE_NAME,"Operand List must not be null");	
 			else if (resList == null)
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Result List must not be null");
+				logError(MODULE_NAME,"Result List must not be null");
 			else {			
 				try {
 					return contentManager.intersect(opList,resList,checkIfExists,
 							                        replaceIfExists,extendedQuery);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			}
 		}
@@ -708,7 +708,7 @@ implements IContentAction{
 		contentManager = getContentManager();
 		if (contentManager!=null) {
 			if (opList == null)
-				MessageLogger.sendErrorMessage(MODULE_NAME,"Operand List must not be null");	
+				logError(MODULE_NAME,"Operand List must not be null");	
 			else {			
 				try {
 					contentManager.compare(opList,
@@ -716,7 +716,7 @@ implements IContentAction{
 							               commonList,cmCheckIfExists,cmReplaceIfExists,
 							               deletedList,deCheckIfExists,deReplaceIfExists);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(MODULE_NAME,e);
+					logError(MODULE_NAME,e);
 				}
 			}
 		}

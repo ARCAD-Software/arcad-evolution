@@ -1,8 +1,9 @@
 package com.arcadsoftware.mmk.lists.metadata;
 
 import com.arcadsoftware.mmk.lists.AbstractList;
+import com.arcadsoftware.mmk.lists.managers.AbstractLoggedObject;
 
-public abstract class AbstractStoreItemManager {
+public abstract class AbstractStoreItemManager extends AbstractLoggedObject{
 	
 	protected AbstractList list;
 	
@@ -21,6 +22,7 @@ public abstract class AbstractStoreItemManager {
 	 */
 	public void setList(AbstractList list) {
 		this.list = list;
+		setLogger(list.getLogger());
 	}
 	
 }

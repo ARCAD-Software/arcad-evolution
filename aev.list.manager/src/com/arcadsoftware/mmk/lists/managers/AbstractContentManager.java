@@ -3,7 +3,7 @@ package com.arcadsoftware.mmk.lists.managers;
 import com.arcadsoftware.mmk.lists.AbstractList;
 import com.arcadsoftware.mmk.lists.IContentAction;
 
-public abstract class AbstractContentManager 
+public abstract class AbstractContentManager  extends AbstractLoggedObject
 implements IContentAction {
 	protected AbstractList list;
 	protected AbstractCashManager cashManager;
@@ -11,6 +11,7 @@ implements IContentAction {
 	public AbstractContentManager(AbstractList list) {
 		super();
 		this.list = list;
+		setLogger(list.getLogger());
 	}
 
 	/**

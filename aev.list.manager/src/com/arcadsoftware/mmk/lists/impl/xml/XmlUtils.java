@@ -30,6 +30,7 @@ public class XmlUtils {
 			clone.setXmlFileName(name);
 			return clone;
 		} catch (IOException e) {
+			listToClone.logError(AbstractList.MODULE_NAME, e);
 			return null;
 		}
 	}

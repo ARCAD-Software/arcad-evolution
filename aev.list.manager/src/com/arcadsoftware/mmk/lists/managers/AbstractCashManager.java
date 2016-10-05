@@ -2,7 +2,7 @@ package com.arcadsoftware.mmk.lists.managers;
 
 import com.arcadsoftware.mmk.lists.AbstractList;
 
-public abstract class AbstractCashManager {
+public abstract class AbstractCashManager  extends AbstractLoggedObject{
 	protected AbstractList list;
 	
 	private boolean flushImmediat = true;
@@ -11,6 +11,7 @@ public abstract class AbstractCashManager {
 	public AbstractCashManager(AbstractList list) {
 		super();
 		this.list = list;
+		setLogger(list.getLogger());
 	}
 	
 	public void flushRequest() {

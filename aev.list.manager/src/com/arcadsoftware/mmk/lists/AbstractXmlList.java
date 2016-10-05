@@ -11,12 +11,12 @@ public abstract class AbstractXmlList extends AbstractList
 implements IXmlLists {
 
 	private String xmlfileName;
-	private XmlCashManager cashManager;
+	private XmlCashManager cashManager=null;
 	
 
 	public AbstractXmlList() {
 		super();
-		cashManager = new XmlCashManager(this);
+		
 	}	
 
 	@Override
@@ -44,6 +44,9 @@ implements IXmlLists {
 	}
 
 	public XmlCashManager getCashManager() {
+		if (cashManager==null) {
+			cashManager = new XmlCashManager(this);
+		}
 		return cashManager;
 	}
 

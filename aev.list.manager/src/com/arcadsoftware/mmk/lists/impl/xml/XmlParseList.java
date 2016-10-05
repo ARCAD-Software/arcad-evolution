@@ -10,16 +10,16 @@ import java.util.Date;
 import org.xmlpull.mxp1.MXParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.arcadsoftware.ae.core.logger.MessageLogger;
 import com.arcadsoftware.mmk.lists.AbstractList;
 import com.arcadsoftware.mmk.lists.IXmlLists;
+import com.arcadsoftware.mmk.lists.managers.AbstractLoggedObject;
 import com.arcadsoftware.mmk.lists.metadata.ListColumnDef;
 import com.arcadsoftware.mmk.lists.metadata.ListMetaDatas;
 import com.arcadsoftware.mmk.lists.metadata.StoreItem;
 
 import static com.arcadsoftware.mmk.lists.EListConstants.*;
 
-public class XmlParseList {
+public class XmlParseList extends AbstractLoggedObject{
 	
 	SimpleDateFormat sd = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");	
 	
@@ -191,11 +191,11 @@ public class XmlParseList {
 				} while (eventType != MXParser.END_DOCUMENT);
 				reader.close();
 			} catch (FileNotFoundException e1) {
-				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME+"::XmlParseList",e1);
+				logError(AbstractList.MODULE_NAME+"::XmlParseList",e1);
 			} catch (XmlPullParserException e1) {
-				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME+"::XmlParseList",e1);
+				logError(AbstractList.MODULE_NAME+"::XmlParseList",e1);
 			} catch (IOException e) {
-				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME+"::XmlParseList",e);
+				logError(AbstractList.MODULE_NAME+"::XmlParseList",e);
 			}
 		}
 	}
@@ -233,11 +233,11 @@ public class XmlParseList {
 				} while ((eventType != MXParser.END_DOCUMENT) && !found);
 				reader.close();
 			} catch (FileNotFoundException e1) {
-				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME+"::XmlParseList",e1);
+				logError(AbstractList.MODULE_NAME+"::XmlParseList",e1);
 			} catch (XmlPullParserException e1) {
-				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME+"::XmlParseList",e1);
+				logError(AbstractList.MODULE_NAME+"::XmlParseList",e1);
 			} catch (IOException e) {
-				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME+"::XmlParseList",e);
+				logError(AbstractList.MODULE_NAME+"::XmlParseList",e);
 			}			
 		}
 	}	

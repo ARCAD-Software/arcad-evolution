@@ -25,7 +25,7 @@ import com.arcadsoftware.mmk.lists.metadata.StoreItem;
  * @author MD
  *
  */
-public abstract class AbstractFiller {
+public abstract class AbstractFiller  extends AbstractLoggedObject{
 	
 	private boolean fillMode = true;
 	private ListMetaDatas metadatas;
@@ -56,6 +56,7 @@ public abstract class AbstractFiller {
 	 */
 	public void setList(AbstractList list) {
 		this.list = list;
+		setLogger(list.getLogger());
 		if (list.getStoreItem().getMetadatas()==null)
 			list.initStoreItem();		
 	}

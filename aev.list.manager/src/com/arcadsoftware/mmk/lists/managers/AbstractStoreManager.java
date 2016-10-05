@@ -3,7 +3,7 @@ package com.arcadsoftware.mmk.lists.managers;
 import com.arcadsoftware.ae.core.exceptions.ArcadException;
 import com.arcadsoftware.mmk.lists.AbstractList;
 
-public abstract class AbstractStoreManager {
+public abstract class AbstractStoreManager extends AbstractLoggedObject{
 
 	protected AbstractList list;
 	protected AbstractFiller filler;
@@ -11,6 +11,7 @@ public abstract class AbstractStoreManager {
 	public AbstractStoreManager(AbstractList list) {
 		super();
 		this.list = list;
+		setLogger(list.getLogger());
 	}
 	
 	protected boolean initialization()throws ArcadException{return true;};

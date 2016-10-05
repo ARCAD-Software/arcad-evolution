@@ -15,8 +15,8 @@ import java.util.Iterator;
 
 
 import com.arcadsoftware.ae.core.exceptions.ArcadException;
-import com.arcadsoftware.ae.core.logger.MessageLogger;
 import com.arcadsoftware.ae.core.translation.Translator;
+import com.arcadsoftware.ae.core.utils.Utils;
 import com.arcadsoftware.mmk.lists.AbstractList;
 import com.arcadsoftware.mmk.lists.EListConstants;
 import com.arcadsoftware.mmk.lists.IListBrowseListener;
@@ -95,23 +95,17 @@ implements IListBrowseListener {
 				createSQLOrders();
 				try {							
 					this.createCash();
-				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME,e);
+				} catch (ArcadException e) {					
+					logError(AbstractList.MODULE_NAME,e);
 				}
 			}
 			// Il faut purgé la table pour éviter les valeurs parasites.
-			
-//			try {
-//				delete("");
-//			} catch (ArcadException e) {
-//				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME,e);
-//			}
-			
 			XmlParseList pl = new XmlParseList(xmllist) {
 				protected void fireElementBrowsed(StoreItem item) {
 					elementBrowsed(item);
 				}
-			};					
+			};			
+			pl.setLogger(logger);
 			pl.parse();			
 			//TODO [BLINDAGE] Etre sur que le nom du fichier est affect‚
 		}
@@ -125,34 +119,60 @@ implements IListBrowseListener {
 
 		@Override
 		public int fill() {
-			StringBuffer query = new StringBuffer();
-			query.append("select * from t").append(cashId);
-			ResultSet rs;
-			try {
-				rs = DBConnector.getInstance().executeQuery(query.toString());
+			StringBuffer log = new StringBuffer("+ Fill The list: ");
+			log.append(xmllist.getXmlFileName());
+			boolean execution = true;
+			try{
+				StringBuffer query = new StringBuffer();
+				log.append("\n  SQL Query Creation");
+				query.append("select * from t").append(cashId);
+				log.append("\n  Query: ").append(query.toString());
+				ResultSet rs;
 				try {
-					int count = 0;
-					while(rs.next()) {
-						for (int i=0;i<list.getMetadatas().count();i++){
-							list.getStoreItem().setValue(i,rs.getString(i+2));					
-						}	
-						saveItem(list.getStoreItem());
-						count++;
-					}
-					rs.close();
-					return count;
-				} catch (SQLException e) {
-					ArcadException ae = new ArcadException(
-								Translator.resString("error.cash.executionFailed", new String[]{"FlushFiller::fill"}), 
-								e);
-					MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME,ae);
+					log.append("\n  -> Query execution");
+					rs = DBConnector.getInstance().executeQuery(query.toString());
+					try {
+						int count = 0;
+						log.append("\n  -> Browsing the result set");
+						while(rs.next()) {		
+							log.append("\n  -> Load the Current Item #").append(count);
+							for (int i=0;i<list.getMetadatas().count();i++){
+								String value = rs.getString(i+2);
+								log.append("\n    : value #").append(i).append(" : "+value);
+								list.getStoreItem().setValue(i,value);					
+							}	
+							log.append("\n    -> Get The current Item");
+							StoreItem item = list.getStoreItem(); 
+							log.append("\n    -> Save the Item into the list");
+							saveItem(item);							
+							count++;
+						}
+						log.append("\n  -> Close the result set");
+						rs.close();
+						log.append("\n  -> Return the processed items count");
+						return count;
+					} catch (SQLException e) {
+						log.append("\n  : an error occurred during the SQL Execution " + Utils.stackTrace(e));
+						ArcadException ae = new ArcadException(
+									Translator.resString("error.cash.executionFailed", new String[]{"FlushFiller::fill"}), 
+									e);
+						logError(AbstractList.MODULE_NAME,ae);
+						execution = false;
+						return -1;
+					}				
+				} catch (ArcadException e1) {
+					log.append("\n  : an error occurred during saving the Item " + Utils.stackTrace(e1));
+					execution = false;
+					logError(AbstractList.MODULE_NAME,e1);
 					return -1;
-				}				
-			} catch (ArcadException e1) {
-				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME,e1);
-				return -1;
+				}
+			} finally{
+				if (!execution) {
+					logError(AbstractList.MODULE_NAME,log.toString());
+				} else {
+					logVerbose(AbstractList.MODULE_NAME,"+ Fill The list: "+xmllist.getXmlFileName()+" : OK");
+				}
 			}
-	
 		}		
 	}	
 	
@@ -292,7 +312,7 @@ implements IListBrowseListener {
 				DBConnector.getInstance()
 				           .executePrepareStatement(insertOrder,item.getValues());
 			} catch (ArcadException e) {
-				MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME,e);
+				logError(AbstractList.MODULE_NAME,e);
 			}
 		}
 	}	
@@ -533,7 +553,7 @@ implements IListBrowseListener {
 				try {
 					addItems(item,checkIfExists,replaceIfExists);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME,e);
+					logError(AbstractList.MODULE_NAME,e);
 				}
 			}			
 		};			
@@ -629,7 +649,7 @@ implements IListBrowseListener {
 				try {
 					updateItems(item);
 				} catch (ArcadException e) {
-					MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME,e);
+					logError(AbstractList.MODULE_NAME,e);
 				}
 			}			
 		};			
@@ -686,6 +706,7 @@ implements IListBrowseListener {
 	public void load(boolean retrieveProcessInfo,boolean metadataOnly) 
 	throws ArcadException {
 		XmlParseList p = new XmlParseList(xmllist);
+		p.setLogger(getLogger());
 		p.parseInfoOnly();
 		if (!metadataOnly || retrieveProcessInfo) {
 			putInCash();

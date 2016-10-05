@@ -14,7 +14,6 @@ import java.util.Hashtable;
 import org.apache.commons.io.FileUtils;
 
 import com.arcadsoftware.ae.core.exceptions.ArcadException;
-import com.arcadsoftware.ae.core.logger.MessageLogger;
 import com.arcadsoftware.mmk.lists.AbstractList;
 import com.arcadsoftware.mmk.lists.IContentAction;
 import com.arcadsoftware.mmk.lists.IListBrowseListener;
@@ -227,7 +226,7 @@ implements IContentAction{
 					toList.getHeader().setLastModifiedBy(System.getProperty("user.name"));
 					updateHeader(toList);					
 				} catch (IOException e) {
-					MessageLogger.sendErrorMessage(AbstractList.MODULE_NAME,e);
+					logError(AbstractList.MODULE_NAME,e);
 				}	
 			}			
 		}		
