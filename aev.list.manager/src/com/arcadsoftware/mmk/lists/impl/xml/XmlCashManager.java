@@ -183,7 +183,7 @@ implements IListBrowseListener {
 
 		@Override
 		public int fill() {	
-			return -1;	
+			return 0;	
 		}		
 	}	
 	
