@@ -6,11 +6,9 @@ package com.arcadsoftware.mmk.lists.impl.xml;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.UUID;
 
 
 
@@ -257,13 +255,14 @@ implements IListBrowseListener {
 	
 	
 	private synchronized String getTableName(){
-		SimpleDateFormat fd = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+		/*SimpleDateFormat fd = new SimpleDateFormat("yyyyMMddhhmmssSSS");
 		Object o = new Object();
 		try {
 			synchronized(o) { o.wait(5);}
 			
 		} catch (InterruptedException e) {}	
-		return fd.format(new Date());		
+		return fd.format(new Date());*/
+		return UUID.randomUUID().toString().replace("-", "").toUpperCase();
 	}	
 	
 	private void createCreationOrder(){
