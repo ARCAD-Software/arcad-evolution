@@ -67,6 +67,7 @@ implements IListBrowseListener {
 	}
 	
 	private void createSQLOrders(){
+		
 		createCreationOrder();		
 		createInsertOrder();			
 		createUpdateOrder();
@@ -90,6 +91,9 @@ implements IListBrowseListener {
 	private void putInCash(boolean createTable){
 		if (!this.isActive()) {
 			if (createTable){
+				XmlParseList xmlParser = new XmlParseList(xmllist);			
+				xmlParser.setLogger(logger);
+				xmlParser.parseInfoOnly();	
 				createSQLOrders();
 				try {							
 					this.createCash();
@@ -97,7 +101,7 @@ implements IListBrowseListener {
 					logError(AbstractList.MODULE_NAME,e);
 				}
 			}
-			// Il faut purgé la table pour éviter les valeurs parasites.
+			// Il faut purger la table pour éviter les valeurs parasites.
 			XmlParseList pl = new XmlParseList(xmllist) {
 				protected void fireElementBrowsed(StoreItem item) {
 					elementBrowsed(item);
