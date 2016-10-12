@@ -37,7 +37,7 @@ implements IListBrowseListener {
     									   +EListConstants.LST_TAG_COLUMNDEF.getValue();
 	public static final String DATA_PATH = ROOT_PATH+"/content/row";	
 	
-	private static final String IDROW = "_id";
+	private static final String IDROW = "internalid";
 	
 
 	IXmlLists xmllist;	
