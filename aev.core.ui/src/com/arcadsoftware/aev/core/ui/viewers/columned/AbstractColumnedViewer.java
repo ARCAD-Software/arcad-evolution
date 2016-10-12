@@ -733,8 +733,12 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			Object[] colsProps = internalViewer.getColumnProperties();
 			if (cols != null) {
 				for (int i = 0; i < cols.length; i++) {
-					if (colsProps[i] != null && !cols[i].isDisposed() && cols[i].getWidth() > 0)
-						displayedColumns.items(colsProps[i].toString()).setWidth(cols[i].getWidth());
+					if (colsProps[i] != null && !cols[i].isDisposed() && cols[i].getWidth() > 0){
+						ArcadColumn currentColumn = displayedColumns.items(colsProps[i].toString());
+						if (currentColumn!=null) {
+							currentColumn.setWidth(cols[i].getWidth());
+						}
+					}
 				}
 			}
 		} else if (getViewer() instanceof TreeViewer) {
@@ -743,8 +747,13 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			Object[] colsProps = internalViewer.getColumnProperties();
 			if (cols != null) {
 				for (int i = 0; i < cols.length; i++) {
-					if (!cols[i].isDisposed())
-						displayedColumns.items(colsProps[i].toString()).setWidth(cols[i].getWidth());
+					if (!cols[i].isDisposed()){
+						ArcadColumn currentColumn = displayedColumns.items(colsProps[i].toString());
+						if (currentColumn!=null) {
+							currentColumn.setWidth(cols[i].getWidth());
+						}						
+
+					}
 				}
 			}
 		}
@@ -754,7 +763,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	 * Méthode permettant la recréation des colonnes
 	 */
 	public void refreshColumns() {
-		saveState();
+		
 		// Supression de toutes les colonnes
 		columnsDisposedByDevelopper = true;
 		removeAllColumns();
@@ -762,6 +771,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		// Recréation des colonnes
 		createColumns(displayedColumns);
 		internalViewer.setColumnProperties(displayedColumns.getIdentifiers());
+		saveState();
 		refresh();
 	}
 
