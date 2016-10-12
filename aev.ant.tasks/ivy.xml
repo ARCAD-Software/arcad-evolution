@@ -4,7 +4,7 @@
 		organisation="com.arcadsoftware.evolution"
 		module="aev-ant-tasks"
 		status="integration"
-		revision="9.0.0.0"
+		revision="9.0.0.1"
 	/>	
 	<dependencies defaultconf="*->default">
 		<dependency org="org.apache.ant" name="ant" rev="1.9.6" transitive="false"/>		
