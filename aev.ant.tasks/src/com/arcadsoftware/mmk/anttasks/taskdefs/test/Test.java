@@ -6,7 +6,6 @@ import java.io.File;
 
 import org.apache.tools.ant.types.FileSet;
 
-import com.arcadsoftware.mmk.anttasks.taskdefs.misc.ArcadReplaceTokenValueTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadCopyTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask;
 
@@ -24,9 +23,9 @@ public class Test {
 		//t.setHost("arcad05a");
 		//t.setUser("fportier");
 		//t.setPwd("ZnBvcnRpZXI=");
-		File fromFile = new File("C:\\temp\\arc\\ant-settings.xml");
-		File toFile = new File("C:\\temp\\dist\\copy\\arcad_list_remote.xml");
-		File rollbackDir = new File("C:\\temp\\backup");		
+		File fromFile = new File("E:\\temp\\amazing.war");
+		File toFile = new File("E:\\temp\\dist\\copy\\amazing.war");
+		File rollbackDir = new File("E:\\temp\\backup");		
 		FileSet set = new FileSet();
 		set.setFile(fromFile);
 		t.setTofile(toFile);

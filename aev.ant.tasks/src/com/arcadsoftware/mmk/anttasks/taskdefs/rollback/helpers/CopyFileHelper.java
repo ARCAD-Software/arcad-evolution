@@ -114,13 +114,20 @@ public class CopyFileHelper extends AbstractRollbackableTaskHelper {
 			}
 		}
 		else if (status.equals(CREATED)){
+			System.out.println("-> Delete file " + fileToRestore);
+			
 			//Si le fichier a restaurer existe mais qu'aucun fichier correspondant
-			//n'existe dans le repertoire de backup, on supprime le fichier
-			//de destination.
-			//TODO [RB] Possibilite de parametrer cela
+			//n'existe dans le repertoire de backup, on supprime le fichier de destination.
 			File file = new File(fileToRestore);			
-			if (file.exists())
-				file.delete();
+			if (file.exists()){
+				try{
+					org.apache.commons.io.FileUtils.forceDelete(file);
+				}
+				catch (IOException e) {
+					System.out.println("***EXCEPTION *** : " + e.getMessage());
+					throw new BuildException("Unable to delete file!",e ,task.getTask().getLocation());
+				}
+			}
 		}
 	}		
 	
