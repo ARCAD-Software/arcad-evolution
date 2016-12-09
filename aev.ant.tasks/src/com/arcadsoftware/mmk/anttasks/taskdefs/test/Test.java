@@ -2,7 +2,13 @@ package com.arcadsoftware.mmk.anttasks.taskdefs.test;
 
 
 
+import java.io.File;
+
+import org.apache.tools.ant.types.FileSet;
+
 import com.arcadsoftware.mmk.anttasks.taskdefs.misc.ArcadReplaceTokenValueTask;
+import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadCopyTask;
+import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask;
 
 
 
@@ -13,28 +19,33 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		
-		/*ArcadCopyTask t = new ArcadCopyTask();
+		ArcadCopyTask t = new ArcadCopyTask();
 		//t.setCopyWithLog(false);
 		//t.setHost("arcad05a");
 		//t.setUser("fportier");
 		//t.setPwd("ZnBvcnRpZXI=");
+		File fromFile = new File("C:\\temp\\arc\\ant-settings.xml");
 		File toFile = new File("C:\\temp\\dist\\copy\\arcad_list_remote.xml");
-		File rollbackDir = new File("C:\\temp\\dist\\copy");
-		File fromFile = new File("C:\\temp\\fportier\\lists\\arcad_list_remote.xml");
+		File rollbackDir = new File("C:\\temp\\backup");		
 		FileSet set = new FileSet();
 		set.setFile(fromFile);
 		t.setTofile(toFile);
 		t.setOverwrite(true);
-		t.setRollbackDir("C:\\Program Files\\ARCAD Solutions\\ARCAD Home\\rollback");
+		t.setRollbackDir(rollbackDir.getAbsolutePath());
 		t.setRollbackId("111125152500");
 		t.setFile(fromFile);
-		t.execute();*/
+		t.execute();
 		
-		ArcadReplaceTokenValueTask t = new ArcadReplaceTokenValueTask();
+		ArcadRollbackTask rollback = new ArcadRollbackTask();
+		rollback.setRollbackDir(rollbackDir.getAbsolutePath());
+		rollback.setRollbackId("111125152500");
+		rollback.execute();
+		
+		/*ArcadReplaceTokenValueTask t = new ArcadReplaceTokenValueTask();
 		t.setFilePath("C:/eclipse-3.6-birt/workspace/Parcer_scanner_testing/test.xml");
 		t.setOccurs("1");
 		t.setToken("echo oldoldold");
-		t.execute();
+		t.execute();*/
 		
 		//<arcad:copywithlog todir="${deploy.dir}" rollbackDir="${arcad.rollback.dir}" rollbackId="${aea.sec.tid}" overwrite="true" copyWithLog="true" host="${aea.server.as400}" user="${aea.user.as400}" pwd="${aea.pwd.as400}" >
 		

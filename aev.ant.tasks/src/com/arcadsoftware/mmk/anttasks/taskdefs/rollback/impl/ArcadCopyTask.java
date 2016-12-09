@@ -9,14 +9,11 @@ import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.AbstractRollback
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.CopyFileHelper;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants;
 
-public class ArcadCopyTask extends AbstractArcadCopyTask  
-implements IRollbackableTask{
+public class ArcadCopyTask extends AbstractArcadCopyTask implements IRollbackableTask{
+	protected static final String VERSION= "1.0.0.1";
+	protected boolean inTransaction = false;
 	
-	
-	private static final String VERSION= "1.0.0.0";
-	private boolean inTransaction = false;
-	
-	CopyFileHelper helper;
+	protected CopyFileHelper helper;
 	
 	public ArcadCopyTask(){
 		super();
@@ -33,7 +30,6 @@ implements IRollbackableTask{
 		helper.doAfterExecuting();
 	}
 
-	
 	@Override
 	public void doBeforeCopying(String fromFile, String toFile,boolean overwrite) {
 		MessageLogger.sendInfoMessage("COPY TASK","Copy "+fromFile+" to "+toFile);
@@ -70,7 +66,7 @@ implements IRollbackableTask{
 	}
 
 	
-	//TODO [ANT] changer le nom de la proc‚dure pour ‚viter la prise en charge bean
+	//TODO [ANT] changer le nom de la procedure pour eviter la prise en charge bean
 	public void setInTransaction(boolean inTransaction) {
 		this.inTransaction = inTransaction;
 	}
@@ -78,24 +74,4 @@ implements IRollbackableTask{
 	public Task getTask() {
 		return this;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

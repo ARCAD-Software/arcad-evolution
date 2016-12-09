@@ -30,10 +30,7 @@ public class ArcadRollbackTask extends AbstractArcadAntTask {
 		
 	private String rollbackDir;
 	private String rollbackId;
-	
 
-	
-	
 	@Override
 	public void validateAttributes() {
 		if ((rollbackId==null) || (rollbackId.equals(""))) {
