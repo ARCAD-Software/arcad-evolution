@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.arcadsoftware.aev.core.features"
-      label="Features"
-      version="1.0.0.qualifier"
+      label="ARCAD-Evolution - Core Features"
+      version="9.2.0"
       provider-name="ARCAD-Software">
 
    <description url="http://www.example.com/description">
