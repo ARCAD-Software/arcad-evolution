@@ -4,6 +4,8 @@
  */
 package com.arcadsoftware.aev.core.ui.actions;
 
+import org.eclipse.jface.dialogs.Dialog;
+
 import com.arcadsoftware.aev.core.model.ArcadEntity;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.wizards.AbstractSimpleItemWizard;
@@ -121,6 +123,7 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 					wizard);
 			dialog.setPageSize(getWidth(), getHeight());
 			dialog.create();
+			doAfterWizardCreation(dialog);
 			wizard.beforeShow();
 			dialog.open();
 			return wizard.isExecutionSucceed();
@@ -154,5 +157,9 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 
 	public void setActionsToRunAfterWizard(boolean actionsToRunAfterWizard) {
 		this.actionsToRunAfterWizard = actionsToRunAfterWizard;
+	}
+
+	protected void doAfterWizardCreation(Dialog dialog){
+		
 	}
 }
