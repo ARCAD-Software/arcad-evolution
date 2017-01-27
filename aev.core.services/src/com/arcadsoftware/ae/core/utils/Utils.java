@@ -15,15 +15,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
-
-
 /**
  * @author MD
  *
  */
 public class Utils {
-
+	protected static final String ARCAD_HOME = "ARCAD_HOME";
     private static final Class[] parameters = new Class[]{URL.class};
     
     public static void addFile(String s) throws IOException {
@@ -336,13 +333,16 @@ public class Utils {
 			return folder;
 	}
     public static String getHomeDirectory(){
-    	String result = System.getenv("ARCAD_HOME");		
-		if ((result==null) || (result.equals(""))){
-			result = System.getProperty("ARCAD_HOME");		
-		}    	
-		if (result!=null) {
-			System.setProperty("ARCAD_HOME",result);	
-		}		
+    	String result = System.getProperty(ARCAD_HOME);		
+		
+    	if (isEmpty(result)){
+    		result = System.getenv(ARCAD_HOME);	
+		}
+		
+		if (!isEmpty(result)) {
+			System.setProperty(ARCAD_HOME,result);	
+		}
+		
 		return result;
     }
     
@@ -376,6 +376,7 @@ public class Utils {
 		file.close();					
 	}
     
-
-	
+	public static boolean isEmpty(String string){
+		return string == null || string.equals("");
+	}	
 }

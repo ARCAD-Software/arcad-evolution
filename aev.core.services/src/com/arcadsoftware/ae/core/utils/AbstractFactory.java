@@ -17,9 +17,7 @@ public abstract class AbstractFactory {
 	}	
 	
 	protected void doBeforeInitializing() {
-		String arcadHome  = System.getenv("ARCAD_HOME");
-		if (arcadHome==null)
-			arcadHome  = System.getProperty("ARCAD_HOME");
+		String arcadHome  = Utils.getHomeDirectory();
 		arcadHomeFolder = new File(arcadHome);	
 	}		
 	
