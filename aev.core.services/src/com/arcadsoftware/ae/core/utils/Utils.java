@@ -3,17 +3,21 @@ package com.arcadsoftware.ae.core.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * @author MD
@@ -378,5 +382,46 @@ public class Utils {
     
 	public static boolean isEmpty(String string){
 		return string == null || string.equals("");
-	}	
+	}
+	
+	public static String getProperty(Class<?> sourceClass, String jarFile, String fileInJar, String propertyName){
+		String value = "N/A";
+		InputStream inputStream = null;
+		try {
+			//Load from an external JAR
+			if(!isEmpty(jarFile)){
+				String jarFileURL = String.format("jar:file:/%1$s!/%2$s", jarFile, fileInJar);
+				URL inputURL = new URL(jarFileURL);
+		    	JarURLConnection conn = (JarURLConnection)inputURL.openConnection();
+				inputStream = conn.getInputStream();
+			}
+			//Load from current JAR
+			else{
+				inputStream = sourceClass.getClass().getResourceAsStream(fileInJar);
+			}
+			
+			//Load from file
+		    if(inputStream == null){
+				inputStream = new FileInputStream(new File(fileInJar));	
+		    }
+		}
+    	catch (Exception e) {
+    		System.err.println(String.format("Cannot find %1$s (%2$s) file: %3$s", fileInJar, jarFile, e.getLocalizedMessage()));
+			e.printStackTrace();
+		}
+	    
+	    if(inputStream != null){
+	    	try {
+	    		Properties versionProps = new Properties();			
+				versionProps.load(inputStream);
+				value = (String) versionProps.get(propertyName);
+			}
+	    	catch (IOException e) {
+	    		System.err.println(String.format("Cannot load %1$s from %2$s (%3$s): %4$s", propertyName, fileInJar, jarFile, e.getLocalizedMessage()));
+	    		e.printStackTrace();
+			}
+	    }
+		
+	    return value;
+	}
 }
