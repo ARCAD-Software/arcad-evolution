@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="libs/arcad-arx-client.jar" sourcepath="/arcad.agent"/>
+	<classpathentry exported="true" kind="lib" path="libs/arcad-arx-client.jar" sourcepath="/arcad.agent/src"/>
 	<classpathentry exported="true" kind="lib" path="libs/arcad-ae-core.jar" sourcepath="/arcad.agent"/>
 	<classpathentry exported="true" kind="lib" path="libs/dom4j-1.6.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/spring-beans.jar"/>
