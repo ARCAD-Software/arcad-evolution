@@ -10,10 +10,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionItem;
@@ -1156,6 +1156,63 @@ public class GuiFormatTools {
 		return valueText;
 	}
 
+	/**
+	 * Create labelled text input with multiple buttons
+	 * @param parent
+	 * @param label
+	 * @param defaultText
+	 * @param readonly
+	 * @param buttonTexts
+	 * @return
+	 */
+	public static Text createLabelledTextWithButtons(Composite parent, String label, String defaultText,
+			boolean readonly, String[] buttonTexts) {
+		if (buttonTexts == null){
+			return createLabelledTextWithButton(parent, label, defaultText, readonly, "");
+		}
+		new Label(parent, SWT.NONE).setText(label);
+		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		
+		// Reception component creation		
+		int count = buttonTexts.length;
+		Composite p = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout(count+1, false);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		layout.horizontalSpacing = 0;
+		p.setLayout(layout);
+		if (parent.getLayout() instanceof GridLayout) {
+			GridData gridData = new GridData(GridData.BEGINNING);
+			gridData.horizontalAlignment = GridData.FILL;
+			gridData.grabExcessHorizontalSpace = true;
+			p.setLayoutData(gridData);
+		}
+		Text valueText;
+		if (readonly) {
+			valueText = new Text(p, SWT.BORDER | SWT.READ_ONLY);
+		} else {
+			valueText = new Text(p, SWT.BORDER);
+		}
+		GridData gridData = new GridData(GridData.BEGINNING);
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.grabExcessHorizontalSpace = true;
+		valueText.setLayoutData(gridData);
+
+		java.util.List<Button> buttons = new ArrayList<Button>(count);
+		Button bAdd = null;
+		for (String buttonText : buttonTexts) {
+			bAdd = new Button(p, SWT.PUSH);
+			bAdd.setText(buttonText);
+			gridData = new GridData();
+			gridData.heightHint = 21;
+			bAdd.setLayoutData(gridData);
+			buttons.add(bAdd);
+		}
+
+		valueText.setData(buttons);
+		valueText.setText(defaultText);
+		return valueText;
+	}
 	public static Composite createComposite(Composite parent) {
 		return createComposite(parent, 3, false, 1);
 	}
