@@ -1,7 +1,7 @@
 
 package com.arcadsoftware.ae.core.logger;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import com.arcadsoftware.ae.core.logger.formatter.impl.XmlMessageFormatter;
 import com.arcadsoftware.ae.core.logger.messages.AbstractMessage;
 import com.arcadsoftware.ae.core.logger.messages.impl.ErrorMessage;
@@ -20,20 +20,14 @@ import com.arcadsoftware.ae.core.utils.Utils;
  */
 public class MessageLogger {
 	private static MessageLogger instance = null;			
-	private ArrayList<AbstractMessageRouter> messageRouters = 
-		new ArrayList<AbstractMessageRouter>();
+	private ArrayList<AbstractMessageRouter> messageRouters = new ArrayList<AbstractMessageRouter>();
 	private static boolean enabled = true;
 	private static boolean loaded = false;	
-	
-    /**
-     * 
-     */
+
     protected MessageLogger() {
         super();
     }
-    
 
-    
     public void setMessageRouters(ArrayList<AbstractMessageRouter> list) {
     	this.messageRouters = list;
     }
@@ -71,8 +65,7 @@ public class MessageLogger {
      */
     public static void sendMessage(AbstractMessage message) {
     	for (int i=0;i<getInstance().messageRouters.size();i++){
-    		AbstractMessageRouter mr = 
-    			(AbstractMessageRouter)getInstance().messageRouters.get(i);
+    		AbstractMessageRouter mr = (AbstractMessageRouter)getInstance().messageRouters.get(i);
     		mr.interceptMessage(message);
     	}
     }
@@ -235,8 +228,4 @@ public class MessageLogger {
 			message = message.substring(0,message.length()-1);
 		return XmlMessageFormatter.isStatusOk(message,AbstractMessage.TYPE_MSG_STATUS);
 	}
-    
-    
-	
-	
 }
