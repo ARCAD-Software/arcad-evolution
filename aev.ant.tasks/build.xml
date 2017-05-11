@@ -4,22 +4,9 @@
 		<!-- Retrieve common build file -->
 		<tempfile deleteonexit="true" property="build.file" prefix="build" suffix=".xml"/>
 		<get dest="${build.file}"
-			 src="http://rdvm-ci:8081/artifactory/tools-building-local/scripts/build.simple.jar.xml" />		
+			 src="http://rdvm-ci:8081/artifactory/tools-building-local/scripts/build.antlib.xml" />		
 
 		<!-- Run build file -->
-		<ant antfile="${build.file}">
-			<property name="no.publish" value="1" />
-		</ant>
-		
-		<!-- Add antlib.xml -->
-		<ivy:info />
-		<jar destfile="${ivy.distrib.dir}/${ivy.artifact.1.name}-${ivy.revision}.jar" update="true">
-			<mappedresources>
-				<fileset file="src/com/arcadsoftware/mmk/anttasks/antlib.xml" />
-				<globmapper from="*" to="com/arcadsoftware/mmk/anttasks/*" />
-			</mappedresources>			
-		</jar>
-		
-		<ant antfile="${build.file}" target="publish" />
+		<ant antfile="${build.file}" />		
 	</target>
 </project>
