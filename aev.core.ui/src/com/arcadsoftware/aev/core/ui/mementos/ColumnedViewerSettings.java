@@ -5,6 +5,7 @@ package com.arcadsoftware.aev.core.ui.mementos;
 
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumn;
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumns;
+import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSortCriteriaList;
 import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 
 /**
@@ -14,6 +15,17 @@ public class ColumnedViewerSettings extends ArcadSettings {
 	
 	private String viewerId;
 	private ArcadColumns columns;
+	//<FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+	private ColumnedSortCriteriaList sortCriteriaList = null;
+
+	public ColumnedSortCriteriaList getSortCriteriaList() {
+		return sortCriteriaList;
+	}
+
+	public void setSortCriteriaList(ColumnedSortCriteriaList sortCriteriaList) {
+		this.sortCriteriaList = sortCriteriaList;
+	}
+	//</FM>	
 	
 	/**
 	 * @param serverName

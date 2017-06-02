@@ -14,6 +14,8 @@ import com.arcadsoftware.aev.core.tools.StringTools;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumn;
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumns;
+import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSortCriteria;
+import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSortCriteriaList;
 import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 
 /**
@@ -83,7 +85,29 @@ public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 					cols[i].getString("userLabel"), cols[i].getInteger("visible").intValue(), //$NON-NLS-1$ //$NON-NLS-2$
 					cols[i].getInteger("position").intValue(), cols[i].getInteger("width").intValue()));//$NON-NLS-1$ //$NON-NLS-2$
 		}
-		return new ColumnedViewerSettings(serverName, userName, colViewerId, arcCols);
+
+		ColumnedViewerSettings settings = 
+			new ColumnedViewerSettings(serverName,userName,colViewerId,arcCols);	
+		
+		IMemento sortNode = user.getChild("sort");//$NON-NLS-1$
+		if (sortNode!=null) {
+			ColumnedSortCriteriaList list = new ColumnedSortCriteriaList(arcCols);
+			IMemento[] sortCols = sortNode.getChildren("column");//$NON-NLS-1$
+			for (int i=0;i<sortCols.length;i++) {
+				int id = sortCols[i].getInteger("id");//$NON-NLS-1$
+				String columnName = sortCols[i].getString("name");//$NON-NLS-1$
+				String sortOrder = sortCols[i].getString("order");//$NON-NLS-1$
+				int index = sortCols[i].getInteger("index");//$NON-NLS-1$				
+				ColumnedSortCriteria c = 
+					new ColumnedSortCriteria(id,columnName);
+				c.setId(id);
+				c.setColumnIndex(index);
+				c.setSortOrder(sortOrder);
+				list.add(c);
+			}		
+			settings.setSortCriteriaList(list);
+		}		
+		return settings;
 	}
 
 	/*
@@ -109,6 +133,22 @@ public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 				aCol.putInteger("position", colViewerSettings.getColumn(i).getPosition());//$NON-NLS-1$
 				aCol.putInteger("width", colViewerSettings.getColumn(i).getWidth());//$NON-NLS-1$
 			}
+			//<FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+			IMemento sortNode = user.createChild("sort");//$NON-NLS-1$
+			if (colViewerSettings.getSortCriteriaList()!=null) {
+				ColumnedSortCriteriaList list = 
+					colViewerSettings.getSortCriteriaList();
+				for (int i=0;i<list.getSize();i++) {
+					IMemento aCol = sortNode.createChild("column");//$NON-NLS-1$
+					ColumnedSortCriteria c = (ColumnedSortCriteria)list.getItems(i);
+					aCol.putInteger("id",c.getId());//$NON-NLS-1$
+					aCol.putString("name",c.getColumnName());//$NON-NLS-1$
+					aCol.putInteger("index",c.getColumnIndex());//$NON-NLS-1$
+					aCol.putString("order",c.getSortOrder());//$NON-NLS-1$
+				}
+			}
+			//</FM>			
+			
 		}
 	}
 

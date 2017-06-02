@@ -24,6 +24,7 @@ import com.arcadsoftware.aev.core.ui.contentproviders.ArcadCollectionItemContent
 import com.arcadsoftware.aev.core.ui.dialogs.columned.ColumnedSortDialog;
 import com.arcadsoftware.aev.core.ui.labelproviders.columned.AbstractColumnedLabelProviderAdapter;
 import com.arcadsoftware.aev.core.ui.labelproviders.columned.AbstractColumnedTableLabelProvider;
+import com.arcadsoftware.aev.core.ui.mementos.ColumnedViewerSettings;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedInternalTableViewer;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedTableViewer;
@@ -35,7 +36,6 @@ import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedSorter;
  */
 public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer {
 
-	ColumnedSorter sorter;
 
 	private class ShowSortEditorAction extends Action {
 		public ShowSortEditorAction() {
@@ -268,4 +268,12 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 	public void addViewerContextMenu(IMenuManager cmManager) {
 		fillContextMenu(cmManager);
 	}
+	//<FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+	@Override
+	protected void extendSettings(ColumnedViewerSettings settings) {
+		if (sorter!=null) {
+			settings.setSortCriteriaList(sorter.getCriteriaList());
+		}
+	}
+	//</FM>	
 }

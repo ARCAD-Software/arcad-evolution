@@ -48,6 +48,7 @@ import com.arcadsoftware.aev.core.ui.actions.columned.ColumnedExportAction;
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumn;
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumns;
 import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSearchCriteriaList;
+import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSortCriteriaList;
 import com.arcadsoftware.aev.core.ui.dialogs.columned.ColumnedDisplayDialog;
 import com.arcadsoftware.aev.core.ui.dialogs.columned.ColumnedFilterDialog;
 import com.arcadsoftware.aev.core.ui.dialogs.columned.ColumnedSearchDialog;
@@ -61,6 +62,7 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedSearcher;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnResolver;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnedSearcher;
 import com.arcadsoftware.aev.core.ui.viewers.sorters.ArcadTableViewerColumnSorter;
+import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedSorter;
 
 /**
  * @author MD
@@ -88,6 +90,9 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	protected Composite parent;
 	protected int style;
 
+	protected ColumnedSorter sorter;
+
+	
 	/**
 	 * indicateur si le dispose des colonnes est appelé explicitement par le développeur. Utile car Eclipse n'effectue
 	 * pas le meme traitement dans le cas d'un dispose appelé en interne ou explicitement par le développeur. C'est le
@@ -363,6 +368,19 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 						displayedColumns.delete(i);
 				}
 			}
+			
+    		//<FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+    		if (viewerSettings.getSortCriteriaList()!=null) {
+    			ColumnedSortCriteriaList list = 
+    				new ColumnedSortCriteriaList(displayedColumns);
+    			for (int i =0;i<viewerSettings.getSortCriteriaList().getSize();i++) {
+    				list.add(viewerSettings.getSortCriteriaList().getItems(i));
+    			}    			
+    			sorter = new ColumnedSorter(list,this);
+    			getViewer().setSorter(sorter);
+    		}
+    		//</FM>			
+			
 		} else {
 			// TODO [MCV] Pensez à trier les colonnes visible par
 			// position d'affichage
@@ -514,14 +532,23 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	public boolean saveState() {
 		if (useUserPreference) {
 			setColumnsWidth();
-			ColumnedViewerMementoTools.getInstance().setCurrentSettings(
-					new ColumnedViewerSettings(AbstractColumnedViewer.this.viewerIdentifier,
-							AbstractColumnedViewer.this.displayedColumns));
-			ColumnedViewerMementoTools.getInstance().save();
+	    	//<FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+	    	ColumnedViewerSettings settings =
+	    		new ColumnedViewerSettings(AbstractColumnedViewer.this.viewerIdentifier,
+		               AbstractColumnedViewer.this.displayedColumns);
+	    	extendSettings(settings); 	
+	    	ColumnedViewerMementoTools.getInstance().setCurrentSettings(settings);
+			//</FM>	  			
+			ColumnedViewerMementoTools.getInstance().save();			
 		}
 		return true;
 	}
-
+    
+	//<FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+    protected void extendSettings (ColumnedViewerSettings settings){
+     	//nothing
+    }
+	//</FM>
 	/**
 	 * Méthoe permettant de définir si oui ou non le view affiche des colonnes.
 	 * 
@@ -763,7 +790,6 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	 * Méthode permettant la recréation des colonnes
 	 */
 	public void refreshColumns() {
-		
 		// Supression de toutes les colonnes
 		columnsDisposedByDevelopper = true;
 		removeAllColumns();
