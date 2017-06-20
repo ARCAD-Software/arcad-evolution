@@ -4,7 +4,7 @@
 		organisation="com.arcadsoftware.evolution"
 		module="aev-core-services"
 		status="integration"
-		revision="9.1.1.1"
+		revision="9.2.0.0"
 	/>
 	<dependencies defaultconf="default->master">
 		<dependency org="org.apache.ant" name="ant" rev="1.9.6" transitive="false"/>
@@ -14,7 +14,6 @@
 		<dependency org="org.springframework" name="spring-context" rev="3.2.16.RELEASE"/>	
 		<dependency org="org.springframework" name="spring-beans" rev="3.2.16.RELEASE"/>	
 		<dependency org="org.springframework" name="spring-core" rev="3.2.16.RELEASE"/>	
-		<dependency org="xerces" name="xercesImpl" rev="2.6.1" />
 		<dependency org="com.thoughtworks.xstream" name="xstream" rev="1.4.2" />				
 	</dependencies>
 </ivy-module>
