@@ -31,10 +31,21 @@ extends AbstractRollbackableHelper {
 			i++;
 			f = new File(baseFile+i);			
 		} while(f.exists());
-		if (f.mkdirs())
+		
+		task.getTask().getProject().log("--> "+f.getAbsolutePath());
+		File parent = f.getParentFile();
+		task.getTask().getProject().log("--> parent "+parent.getAbsolutePath());
+		if (!parent.exists()) {
+			task.getTask().getProject().log("--> parent : create directory");
+			if (f.mkdirs()){
+				return f.getAbsolutePath();
+			} else {
+				task.getTask().getProject().log("--> error creating directory");
+				return null;
+			}
+		} else {
 			return f.getAbsolutePath();
-		else
-			return null;		
+		}
 	}	
 	
 	public void doBeforeExecuting(){

@@ -2,7 +2,6 @@ package com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl;
 
 import org.apache.tools.ant.Task;
 
-import com.arcadsoftware.ae.core.logger.MessageLogger;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.AbstractArcadCopyTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.IRollbackableTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.AbstractRollbackableHelper;
@@ -32,7 +31,7 @@ public class ArcadCopyTask extends AbstractArcadCopyTask implements IRollbackabl
 
 	@Override
 	public void doBeforeCopying(String fromFile, String toFile,boolean overwrite) {
-		MessageLogger.sendInfoMessage("COPY TASK","Copy "+fromFile+" to "+toFile);
+		log("Copy "+fromFile+" to "+toFile);
 		helper.backupFile(fromFile,toFile,overwrite);		
 	}
 

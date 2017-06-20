@@ -17,7 +17,7 @@ import org.dom4j.io.XPP3Reader;
 import org.xmlpull.v1.XmlPullParserException;
 
 
-import com.arcadsoftware.ae.core.logger.MessageLogger;
+//import com.arcadsoftware.ae.core.logger.MessageLogger;
 import com.arcadsoftware.mmk.anttasks.AntFactory;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.IRollbackableTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask;
@@ -135,7 +135,9 @@ public abstract class AbstractRollbackableHelper {
 	        writer.close();	
 	        return true;
 		} catch (IOException e) {
-			MessageLogger.sendErrorMessage(AntFactory.MODULE_NAME,e);
+			if (task!=null) {
+				task.getTask().getProject().log(e.getLocalizedMessage(),e,Project.MSG_ERR);
+			}
 			return false;
 		}			
 	}
@@ -182,11 +184,18 @@ public abstract class AbstractRollbackableHelper {
 				new XPP3Reader();
 			document = reader.read(in);
 		} catch (DocumentException e) {
-			MessageLogger.sendErrorMessage(AntFactory.MODULE_NAME,e);
+			if (task!=null) {
+				task.getTask().getProject().log(e.getLocalizedMessage(),e,Project.MSG_ERR);
+			}
 		} catch (XmlPullParserException e) {
-			MessageLogger.sendErrorMessage(AntFactory.MODULE_NAME,e);
+			if (task!=null) {
+				task.getTask().getProject().log(e.getLocalizedMessage(),e,Project.MSG_ERR);
+			}
 		} catch (IOException e) {
-			MessageLogger.sendErrorMessage(AntFactory.MODULE_NAME,e);
+			if (task!=null) {
+				task.getTask().getProject().log(e.getLocalizedMessage(),e,Project.MSG_ERR);
+			}
+
 		}
 		Element root = document.getRootElement();
 		createRollbackData(root);

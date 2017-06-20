@@ -10,8 +10,6 @@
 		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadTransactionTask"/>
 	<taskdef name="rollback" 
 		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask"/>
-	
-	
 	<taskdef name="list.info" 
 		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic.ListInfoTask"/> 
 	<taskdef name="list.count" 
@@ -80,4 +78,3 @@
 		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.misc.ArcadGetTokenValueTask"/> 
 		     
 </antlib>
-      
