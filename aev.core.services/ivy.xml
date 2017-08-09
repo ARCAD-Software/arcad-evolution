@@ -7,7 +7,7 @@
 		revision="9.2.0.0"
 	/>
 	<dependencies defaultconf="default->master">
-		<dependency org="org.apache.ant" name="ant" rev="1.9.6" transitive="false"/>
+		<dependency org="org.apache.ant" name="ant" rev="1.9.9" transitive="false"/>
 		<dependency org="commons-logging" name="commons-logging" rev="1.2" />
 		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false"/>
 		<dependency org="org.springframework" name="spring-expression" rev="3.2.16.RELEASE"/>		
