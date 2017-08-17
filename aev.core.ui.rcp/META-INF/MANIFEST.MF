@@ -18,6 +18,6 @@ Export-Package: com.arcadsoftware.aev.core.ui.common,
  com.arcadsoftware.aev.core.ui.rcp.tools
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
- libs/commons-io-2.4.jar,
  libs/commons-logging-1.2.jar,
- libs/jmimemagic-0.1.2.jar
+ libs/jmimemagic-0.1.2.jar,
+ libs/commons-io-2.5.jar

@@ -16,7 +16,7 @@
 		<artifact name="com.arcadsoftware.aev.core.ui.rcp" type="jar" ext="jar" />
 	</publications>
 	<dependencies defaultconf="*->default">
-		<dependency org="commons-io" name="commons-io" rev="2.4" conf="libs->master"/>
+		<dependency org="commons-io" name="commons-io" rev="2.5" conf="libs->master"/>
 		<dependency org="commons-logging" name="commons-logging" rev="1.2" conf="libs->master"/>
 		<dependency org="jmimemagic" name="jmimemagic" rev="0.1.2" conf="libs->default"/>		
 		<dependency org="com.arcadsoftware.evolution" name="arcadsoftware-evolution-core-plugin" rev="[9.0.0.0,)" conf="plugin->plugin"/>
