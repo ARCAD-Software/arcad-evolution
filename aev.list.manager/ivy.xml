@@ -8,7 +8,7 @@
 	/>
 	<dependencies defaultconf="*->default">
 		<dependency org="org.hsqldb" name="hsqldb" rev="2.3.3"/>
-		<dependency org="commons-io" name="commons-io" rev="2.4" />
+		<dependency org="commons-io" name="commons-io" rev="2.5" />
 		<dependency org="org.ogce" name="xpp3" rev="1.1.6" />						
 		<dependency org="com.arcadsoftware.evolution" name="aev-core-services" rev="[9.0.0.0,)" />						
 	</dependencies>
