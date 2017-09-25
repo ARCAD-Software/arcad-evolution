@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Widget;
 
 import com.arcadsoftware.aev.core.messages.MessageDetail;
 import com.arcadsoftware.aev.core.messages.MessageManager;
+import com.arcadsoftware.aev.core.tools.StringTools;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.actions.IActionMenuManager;
 import com.arcadsoftware.aev.core.ui.actions.columned.ColumnedExportAction;
@@ -691,6 +692,11 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 					};
 					item.addDisposeListener(listener);
 					item.setText(CoreUILabels.resString(col.getUserName()));
+					if (item instanceof TableColumn) {
+						String tooltipText = col.getTooltipText();
+						if (!StringTools.isEmpty(tooltipText))
+							((TableColumn) item).setToolTipText(tooltipText);
+					}
 					setColumnValues(item, col);
 					j++;
 				}

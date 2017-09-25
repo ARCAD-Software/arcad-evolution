@@ -13,15 +13,16 @@ public class ArcadColumn {
 	public static final int VISIBLE = 0;
 	public static final int HIDDEN = 1;
 
-	private String identifier = null;
-	private String name = null;
-	private String userName = null;
-	private int visible;
-	private int position = 0;
-	private int width = 100;
+	protected String identifier = null;
+	protected String name = null;
+	protected String userName = null;
+	protected int visible;
+	protected int position = 0;
+	protected int width = 100;
+	protected int actualIndex = 0;
+
 	private int style = SWT.LEFT;
 
-	private int actualIndex = 0;
 
 	public ArcadColumn() {
 		super();
@@ -30,7 +31,7 @@ public class ArcadColumn {
 	/**
 	 * Constructeur d'un colonne
 	 * 
-	 * @param property
+	 * @param identifier (aka property)
 	 *            : Identificateur de la colonne
 	 * @param name
 	 *            : Libellé de la colonne
@@ -39,53 +40,30 @@ public class ArcadColumn {
 	 * @param position
 	 *            Position de la colonne dans la liste
 	 */
-	public ArcadColumn(String property, String name, int visible, int position, int width, int actualIndex) {
-		this();
-		this.identifier = property;
-		this.name = name;
-		this.userName = name;
-		this.visible = visible;
-		this.position = position;
-		this.width = width;
-		this.actualIndex = actualIndex;
-	}
-
-	public ArcadColumn(String property, String name, String userName, int visible, int position, int width,
+	public ArcadColumn(String identifier, String name, String userName, int visible, int position, int width,
 			int actualIndex) {
-		this();
-		this.identifier = property;
-		this.name = name;
-		this.userName = userName;
-		this.visible = visible;
-		this.position = position;
-		this.width = width;
-		this.actualIndex = actualIndex;
-	}
-
-	/**
-	 * Constructeur d'un colonne
-	 * 
-	 * @param property
-	 *            : Identificateur de la colonne
-	 * @param name
-	 *            : Libellé de la colonne
-	 * @param visible
-	 *            : Indicateur de visibilité de la colonne
-	 * @param position
-	 *            Position de la colonne dans la liste
-	 */
-	public ArcadColumn(String identifier, String name, String userName, int visible, int position, int width) {
-		this();
+		super();
 		this.identifier = identifier;
 		this.name = name;
 		this.userName = userName;
 		this.visible = visible;
 		this.position = position;
 		this.width = width;
+		this.actualIndex = actualIndex;
 	}
-
+	public ArcadColumn(String identifier, String name, String userName, int visible, int position, int width) {
+		this(identifier, name, userName, visible, position, width, position); // pass position for both position and actualIndex property
+	}
+	
+	public ArcadColumn(String property, String name, int visible, int position, int width, int actualIndex) {
+		this(property, name, name, visible, position, width, actualIndex); // pass name for both name and userName property
+	}
+	
+	public ArcadColumn(String property, String name, int visible, int position, int width) {
+		this(property, name, name, visible, position, width, position); // pass name/userName, position/actualIndex properties
+	}
 	public ArcadColumn duplicate() {
-		return new ArcadColumn(identifier, name, userName, visible, position, width);
+		return new ArcadColumn(identifier, name, userName, visible, position, width, actualIndex);
 	}
 
 	public void assignTo(ArcadColumn target) {
@@ -222,4 +200,7 @@ public class ArcadColumn {
 		this.style = style;
 	}
 
+	public String getTooltipText() {
+		return null;
+	}
 }
