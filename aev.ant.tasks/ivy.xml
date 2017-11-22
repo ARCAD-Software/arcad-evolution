@@ -4,7 +4,7 @@
 		organisation="com.arcadsoftware.evolution"
 		module="aev-ant-tasks"
 		status="integration"
-		revision="9.1.0.0"
+		revision="9.2.0.0"
 	/>	
 	<configurations>
 		<conf name="default"/>
@@ -15,6 +15,6 @@
 		<dependency org="commons-io" name="commons-io" rev="2.5" />
 		<dependency org="com.arcadsoftware.evolution" name="aev-core-services" rev="[9.0.0.0,)" />
 		<dependency org="com.arcadsoftware.evolution" name="aev-list-manager" rev="[9.0.0.0,)" />
-		<dependency org="com.arcadsoftware.serviceproviders" name="asp-core" rev="[10.6.0,)" />						
+		<dependency org="com.arcadsoftware.serviceproviders" name="asp-transaction-logger" rev="[10.6.0,)" />						
 	</dependencies>
 </ivy-module>
