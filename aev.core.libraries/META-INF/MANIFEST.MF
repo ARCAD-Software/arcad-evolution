@@ -6,14 +6,14 @@ Bundle-Version: 2.8.1.qualifier
 Bundle-Vendor: ARCAD Software
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
- lib/aev-core-services.jar,
- lib/arcad-arx-client.jar,
- lib/dom4j.jar,
- lib/spring-beans.jar,
- lib/spring-context.jar,
- lib/spring-core.jar,
- lib/spring-expression.jar,
- lib/xstream.jar
+ libs/aev-core-services.jar,
+ libs/arcad-arx-client.jar,
+ libs/dom4j.jar,
+ libs/spring-beans.jar,
+ libs/spring-context.jar,
+ libs/spring-core.jar,
+ libs/spring-expression.jar,
+ libs/xstream.jar
 Export-Package: com.arcadsoftware.ae.core.ant;version="1.0.0",
  com.arcadsoftware.ae.core.exceptions;version="1.0.0",
  com.arcadsoftware.ae.core.hsqldb;version="1.0.0",
