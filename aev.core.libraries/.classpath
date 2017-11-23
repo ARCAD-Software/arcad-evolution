@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="libs/aev-core-services.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/arcad-arx-client.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/dom4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/spring-beans.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/spring-context.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/spring-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/spring-expression.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/xstream.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=aev.core.libraries&amp;ivyXmlPath=ivy.xml&amp;confs=*&amp;acceptedTypes=jar%2Cbundle&amp;alphaOrder=false&amp;resolveInWorkspace=false&amp;transitiveResolve=true&amp;readOSGiMetadata=false&amp;retrievedClasspath=true&amp;retrievedClasspathPattern=libs%2F%5Bartifact%5D.%5Bext%5D&amp;retrievedClasspathSync=true&amp;retrievedClasspathTypes=*"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
