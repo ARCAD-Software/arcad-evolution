@@ -131,16 +131,17 @@ public abstract class AbstractMessageRouter {
     		String message = new String(buf, off, len).trim();
     		if(message.length() > 0){
 	    		if(isErrorStream){
-	    			writeLine(getLogFile(standardLogFile), message);
+	    			writeLine(getLogFile(errorLogFile), message);
 	    		}
 	    		else{
-	    			writeLine(getLogFile(errorLogFile), message);
+	    			writeLine(getLogFile(standardLogFile), message);
 	    		}
     		}
     	}
     	
     	protected void writeLine(File logFile, String message) {
     		FileOutputStream fos = null;
+    		message += "\n";
     		try{
     			fos = new FileOutputStream(logFile, true);
     			fos.write(message.getBytes("UTF-8"));
