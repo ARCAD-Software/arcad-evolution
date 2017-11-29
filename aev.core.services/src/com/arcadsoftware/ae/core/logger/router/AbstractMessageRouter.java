@@ -4,6 +4,9 @@
  */
 package com.arcadsoftware.ae.core.logger.router;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.concurrent.locks.ReentrantLock;
@@ -13,7 +16,7 @@ import com.arcadsoftware.ae.core.logger.formatter.impl.BasicMessageFormatter;
 import com.arcadsoftware.ae.core.logger.messages.AbstractMessage;
 import com.arcadsoftware.ae.core.logger.messages.Messages;
 import com.arcadsoftware.ae.core.logger.messages.impl.ErrorMessage;
-import com.arcadsoftware.ae.core.logger.messages.impl.InfoMessage;
+import com.arcadsoftware.ae.core.utils.Utils;
 
 /**
  * @author MD
@@ -101,11 +104,25 @@ public abstract class AbstractMessageRouter {
     }
     
     protected class DualStream extends PrintStream{
+    	protected boolean canLog;
     	protected boolean isErrorStream;
+    	protected File standardLogFile;
+    	protected File errorLogFile;
     	
     	public DualStream(OutputStream stream1, boolean isErrorStream) {
     		super(stream1);
-    		this.isErrorStream = isErrorStream;    		
+    		this.isErrorStream = isErrorStream;
+    		try {
+				this.standardLogFile = new File(Utils.getHomeDirectory() + "/logs/service_providers_stdout.log")
+										.getCanonicalFile();
+				this.errorLogFile = new File(Utils.getHomeDirectory() + "/logs/service_providers_stderr.log")
+										.getCanonicalFile();
+			}
+			catch (IOException e) {
+				interceptMessage(new ErrorMessage("DualStream", "Could not initialize DualStream output logs:" + e.getLocalizedMessage()));
+				e.printStackTrace();
+			}
+    		canLog = (standardLogFile != null && errorLogFile != null);
 		}
     	
     	@Override
@@ -114,12 +131,51 @@ public abstract class AbstractMessageRouter {
     		String message = new String(buf, off, len).trim();
     		if(message.length() > 0){
 	    		if(isErrorStream){
-	    			interceptMessage(new ErrorMessage("System.err", message));
+	    			writeLine(getLogFile(standardLogFile), message);
 	    		}
 	    		else{
-	    			interceptMessage(new InfoMessage("System.out", message));
+	    			writeLine(getLogFile(errorLogFile), message);
 	    		}
     		}
-    	}    	
+    	}
+    	
+    	protected void writeLine(File logFile, String message) {
+    		FileOutputStream fos = null;
+    		try{
+    			fos = new FileOutputStream(logFile, true);
+    			fos.write(message.getBytes("UTF-8"));
+    			fos.flush();
+    		}
+			catch (Exception e) {}
+    		finally{
+    			if(fos != null)
+					try {fos.close();} catch (IOException e) {}
+    		}
+		}
+
+		protected File getLogFile(File logFile) {
+    		try {
+				if(logFile.exists()){
+					if(logFile.length() > 2097152){
+						renameLocalLogFile(logFile, 1);
+						logFile.createNewFile();
+					}
+				}
+				else{
+					logFile.createNewFile();
+				}
+			}
+			catch (IOException e) {}
+    		
+    		return logFile;
+    	}
+    	
+    	protected void renameLocalLogFile(File localLogFile, int number) {
+    		File backLocalLogFile = new	File(localLogFile.getAbsolutePath() + String.format("%1$03d", number));
+    		if(backLocalLogFile.exists()){
+    			renameLocalLogFile(backLocalLogFile, number + 1);
+    		}
+    		localLogFile.renameTo(backLocalLogFile);
+    	}
     }
 }
