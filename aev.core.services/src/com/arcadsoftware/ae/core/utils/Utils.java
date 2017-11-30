@@ -230,12 +230,8 @@ public class Utils {
 	}	
 	
 	public static void sleepForAWhile(long millisecond){
-		Object o = new Object(); 
-		try {
-			synchronized(o) { 
-				o.wait(millisecond,0);
-			}
-		} catch (InterruptedException e) {}		
+		try {Thread.sleep(millisecond);}
+		catch (InterruptedException e) {}		
 	}		
 	
 	//--------------------------------------------------------------------------
