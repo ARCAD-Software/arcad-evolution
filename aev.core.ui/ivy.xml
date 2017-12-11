@@ -4,7 +4,7 @@
 		organisation="com.arcadsoftware.evolution"
 		module="arcadsoftware-evolution-core-ui-plugin"
 		status="integration"
-		revision="9.1.0"
+		revision="9.2.1"
 		e:qualifier="${input.qualifier}"
 	/>
 	<configurations>

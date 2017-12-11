@@ -1939,7 +1939,7 @@ public class GuiFormatTools {
 			public void widgetSelected(SelectionEvent event) {
 				ArcadColorUI newColor = GuiFormatTools.getColor(EvolutionCoreUIPlugin.getShell(), CoreUILabels
 						.resString("color.widget.title"), widget.getColorUI());//$NON-NLS-1$
-				if (!newColor.equals(widget.getColorUI()))
+				if (newColor != null && !newColor.equals(widget.getColorUI()))
 					widget.setColorUI(newColor);
 			}
 		});
