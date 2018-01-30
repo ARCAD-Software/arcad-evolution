@@ -21,6 +21,8 @@ import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author MD
  * 
@@ -425,5 +427,9 @@ public class StringTools {
 		if (name.matches("[A-Z]{1}[A-Z_0-9]*")) //$NON-NLS-1$
 			return null;
 		return CoreLabels.resString("Name.Notvalid.Message"); //$NON-NLS-1$
+	}
+	
+	public static boolean containsAny(String aString, CharSequence charSequence){
+		return StringUtils.containsAny(aString, charSequence);
 	}
 }

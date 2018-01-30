@@ -17,6 +17,8 @@
 	</publications>
 	<dependencies defaultconf="*->default">
 		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false" conf="libs->default"/>
+		<dependency org="org.apache.commons" name="commons-lang3" rev="3.5"/>	
+		
 		<dependency org="bundle" name="org.eclipse.core.runtime" rev="[0,)" conf="plugin->default" />
 		<dependency org="bundle" name="org.eclipse.core.resources" rev="[0,)" conf="plugin->default" />
 		<dependency org="bundle" name="org.eclipse.ui" rev="[0,)" conf="plugin->default" />		
