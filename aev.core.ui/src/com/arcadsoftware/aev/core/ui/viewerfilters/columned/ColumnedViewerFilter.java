@@ -3,6 +3,7 @@ package com.arcadsoftware.aev.core.ui.viewerfilters.columned;
 import java.text.Collator;
 import java.util.ArrayList;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
@@ -108,22 +109,30 @@ public class ColumnedViewerFilter extends ViewerFilter {
 		this.casse = casse;
 	}
 
-	@SuppressWarnings("unchecked")
+	private static final String SPECIAL_REGEX = "<([{\\^-=$!|]})?*+.>";
+	/**
+	 * @return regex string, taking account special regex escape characters and '*' treated as wildcard
+	 */
 	private String regexStar(String s) {
 		String result = s;
-		if (s.lastIndexOf("*") >= 0) { //$NON-NLS-1$
-			String f = new String();
-			ArrayList list = new ArrayList();
+		//<MR number="2018/00035" date="Jan 30, 2018" type="Bug" user="ACL">
+		// ParseException error when Filter string contains any Regex "special" character
+		if (StringUtils.containsAny(s, SPECIAL_REGEX) ) { //$NON-NLS-1$
+			StringBuilder sb = new StringBuilder();
 			char[] c = s.toCharArray();
 			for (int j = 0; j < c.length; j++) {
-				if (c[j] == '*')
-					list.add(String.valueOf('.'));
-				list.add(String.valueOf(c[j]));
+				char cj = c[j];
+				// Interpret any '*' values in string as regex pattern match '.'
+				if (cj == '*')
+					sb.append('.');
+				// Escape any other special regex characters with backslash '\'
+				else if (SPECIAL_REGEX.indexOf(cj) > 0) //$NON-NLS-1$
+					sb.append('\\');
+				sb.append(cj);
 			}
-			for (int j = 0; j < list.size(); j++)
-				f += list.get(j);
-			result = f;
+			result = sb.toString();
 		}
+		//</MR>
 		return result;
 	}
 }
