@@ -432,4 +432,8 @@ public class StringTools {
 	public static boolean containsAny(String aString, CharSequence charSequence){
 		return StringUtils.containsAny(aString, charSequence);
 	}
+	
+	public static boolean isBlank(CharSequence arg0) {
+		return StringUtils.isBlank(arg0);
+	}
 }
