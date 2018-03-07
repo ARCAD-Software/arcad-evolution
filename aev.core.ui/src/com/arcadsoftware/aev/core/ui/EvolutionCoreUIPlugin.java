@@ -61,7 +61,7 @@ public class EvolutionCoreUIPlugin extends ArcadPlugin implements IHelperRessour
 	public static final String IMG_WIZARD = "wizard.gif"; //$NON-NLS-1$
 	public static final String ARROW_COLLAPSED = "arw_col.gif"; //$NON-NLS-1$
 	public static final String ARROW_EXPANDED = "arw_exp.gif"; //$NON-NLS-1$
-	public static final String ACT_ERASE = "erase.gif"; //$NON-NLS-1$
+	public static final String ACT_ERASE = "erase.png"; //$NON-NLS-1$
 	public static final String ICO_SRVMAN = "srvman.gif"; //$NON-NLS-1$
 	public static final String ICO_CHECKED = "checked.gif"; //$NON-NLS-1$
 	public static final String ICO_UNCHECKED = "unchecked.gif"; //$NON-NLS-1$
