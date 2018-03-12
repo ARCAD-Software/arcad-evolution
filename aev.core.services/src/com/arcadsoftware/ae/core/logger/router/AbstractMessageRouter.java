@@ -172,9 +172,17 @@ public abstract class AbstractMessageRouter {
     	}
     	
     	protected void renameLocalLogFile(File localLogFile, int number) {
-    		File backLocalLogFile = new	File(localLogFile.getAbsolutePath() + String.format("%1$03d", number));
+    		String path = localLogFile.getParent();
+    		String name = localLogFile.getName();
+    		String extension = "";
+    		int lastPoint = name.lastIndexOf(".");
+    		if(lastPoint > 0) {
+    			extension = name.substring(lastPoint);
+    			name = name.substring(0, lastPoint) + "_";			 
+    		}
+    		File backLocalLogFile = new	File(path + File.separator + name + String.format("%1$03d", number) + extension);
     		if(backLocalLogFile.exists()){
-    			renameLocalLogFile(backLocalLogFile, number + 1);
+    			renameLocalLogFile(localLogFile, number + 1);
     		}
     		localLogFile.renameTo(backLocalLogFile);
     	}

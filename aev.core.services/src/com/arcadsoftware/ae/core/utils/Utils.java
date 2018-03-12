@@ -406,7 +406,6 @@ public class Utils {
 		}
     	catch (Exception e) {
     		System.err.println(String.format("Cannot find %1$s (%2$s) file: %3$s", fileInJar, jarFile, e.getLocalizedMessage()));
-			e.printStackTrace();
 		}
 	    
 	    if(inputStream != null){
@@ -417,7 +416,6 @@ public class Utils {
 			}
 	    	catch (IOException e) {
 	    		System.err.println(String.format("Cannot load %1$s from %2$s (%3$s): %4$s", propertyName, fileInJar, jarFile, e.getLocalizedMessage()));
-	    		e.printStackTrace();
 			}
 	    }
 		
