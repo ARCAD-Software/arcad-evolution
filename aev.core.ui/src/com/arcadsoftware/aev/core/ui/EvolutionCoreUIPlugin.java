@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Preferences;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -274,7 +274,7 @@ public class EvolutionCoreUIPlugin extends ArcadPlugin implements IHelperRessour
 	}
 
 	public void initializeDefaultPreferences() {
-		Preferences store = EvolutionCoreUIPlugin.getDefault().getPluginPreferences();
+		IPreferenceStore store = EvolutionCoreUIPlugin.getDefault().getPreferenceStore();
 		store.setDefault(EvolutionCoreUIPlugin.PREF_MESSAGE_LEVELVIEW, -1);
 	}
 
