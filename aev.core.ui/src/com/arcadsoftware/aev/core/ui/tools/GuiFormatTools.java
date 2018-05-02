@@ -564,7 +564,7 @@ public class GuiFormatTools {
 		return createLabelledIntegerText(parent, label, intialValue, maxValue,null,false);
 	}	
 	
-	public static Text createLabelledIntegerText(Composite parent, String label, int intialValue, int maxValue, String help, boolean isPositive) {
+	public static Text createLabelledIntegerText(Composite parent, String label, int intialValue, int maxValue, String help, final boolean isPositive) {
 		int maximumValue = maxValue;
 		if (maximumValue != -1) {
 			String stMaxValue = new Integer(maximumValue).toString();
