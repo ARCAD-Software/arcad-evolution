@@ -93,6 +93,7 @@ public class GuiFormatTools {
 	private static GuiFormatTools instance = new GuiFormatTools();
 	
 	static String NUMCHAR = "0123456789-"; //$NON-NLS-1$
+	static String NUMCHARPOSITIVE = "0123456789"; //$NON-NLS-1$
 	/**
 	 * Caract�re utilis� pour les champs de saisie prot�g� (saisie des mots de passes).
 	 */
@@ -552,18 +553,18 @@ public class GuiFormatTools {
 	}
 
 	public static Text createLabelledIntegerText(Composite parent, String label, int intialValue) {
-		return createLabelledIntegerText(parent, label, intialValue, -1,null);
+		return createLabelledIntegerText(parent, label, intialValue, -1,null,false);
 	}
 
 	public static Text createLabelledIntegerText(Composite parent, String label, int intialValue, String help) {
-		return createLabelledIntegerText(parent, label, intialValue, -1,help);
+		return createLabelledIntegerText(parent, label, intialValue, -1,help,false);
 	}	
 	
 	public static Text createLabelledIntegerText(Composite parent, String label, int intialValue, int maxValue) {
-		return createLabelledIntegerText(parent, label, intialValue, maxValue,null);
+		return createLabelledIntegerText(parent, label, intialValue, maxValue,null,false);
 	}	
 	
-	public static Text createLabelledIntegerText(Composite parent, String label, int intialValue, int maxValue, String help) {
+	public static Text createLabelledIntegerText(Composite parent, String label, int intialValue, int maxValue, String help, boolean isPositive) {
 		int maximumValue = maxValue;
 		if (maximumValue != -1) {
 			String stMaxValue = new Integer(maximumValue).toString();
@@ -576,7 +577,8 @@ public class GuiFormatTools {
 				char[] chars = new char[string.length()];
 				string.getChars(0, chars.length, chars, 0);
 				for (int i = 0; i < chars.length; i++) {
-					if (NUMCHAR.indexOf(chars[i]) == -1) {
+					String testString = isPositive? NUMCHARPOSITIVE: NUMCHAR;
+					if (testString.indexOf(chars[i]) == -1) {
 						e.doit = false;
 						return;
 					}
