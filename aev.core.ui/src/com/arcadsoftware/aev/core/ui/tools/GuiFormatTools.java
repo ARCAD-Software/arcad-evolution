@@ -1253,7 +1253,7 @@ public class GuiFormatTools {
 	public static Composite createScrolledCompositeWithOneChildAndReturnChild(Composite parent, int numberOfColumn,
 			boolean equalWidth) {
 
-		final ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL
+		final ScrolledComposite scrolledComposite = new ScrolledComposite(parent,  SWT.V_SCROLL
 				| SWT.H_SCROLL);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
