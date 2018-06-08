@@ -29,6 +29,14 @@ public abstract class ArcadActions {
 	private Container container;
 	private ContainerProvider containerProvider;
 
+	public ArcadActions() {
+	
+	}
+	
+	public ArcadActions(Container container) {
+		this.container = container;
+	}
+	
 	public ArcadAction[] getActions() {
 		ArcadAction[] a = new ArcadAction[actions.size()];
 		for (int i = 0; i < actions.size(); i++) {
