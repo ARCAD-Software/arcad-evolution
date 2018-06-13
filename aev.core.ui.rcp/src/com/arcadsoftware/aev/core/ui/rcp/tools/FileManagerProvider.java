@@ -81,6 +81,7 @@ public class FileManagerProvider implements IFileManagerProvider {
 				File tempFile = null;
 				try {					
 					tempFile = File.createTempFile("customer_", '_' + tempFileName); //$NON-NLS-1$
+					tempFile.deleteOnExit();
 					out = new FileOutputStream(tempFile);
 					byte buf[] = new byte[1024];
 					int len;
