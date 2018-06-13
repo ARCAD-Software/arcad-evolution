@@ -13,6 +13,8 @@ public interface IFileManagerProvider {
 	public List<String> selectFiles(Shell shell, int actionStyle, String title,final String[] fileExtensions);
 	public void openFileFromStream(InputStream stream, String tempFileName);
 	public void openFile(File file);
+	public boolean isSelectorAvailable();
+	
 	
 	
 }
