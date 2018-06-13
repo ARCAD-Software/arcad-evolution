@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 
@@ -16,7 +18,11 @@ public class FileManagerProvider implements IFileManagerProvider {
 	}
 	
 	public String selectFile(Shell shell, int actionStyle, String title,final String[] fileExtensions) {
-		return null;
+		
+		final FileDialog fileDialog = new FileDialog( shell, SWT.OPEN | SWT.APPLICATION_MODAL );
+		fileDialog.setFilterExtensions(fileExtensions);
+		fileDialog.setText(title);
+		return fileDialog.open();
 	}
 
 	
@@ -36,6 +42,11 @@ public class FileManagerProvider implements IFileManagerProvider {
 	@Override
 	public List<String> selectFiles(Shell shell, int actionStyle, String title,final String[] fileExtensions) {
 		return null;
+	}
+
+	@Override
+	public boolean isSelectorAvailable() {
+		return false;
 	}	
 	
 }
