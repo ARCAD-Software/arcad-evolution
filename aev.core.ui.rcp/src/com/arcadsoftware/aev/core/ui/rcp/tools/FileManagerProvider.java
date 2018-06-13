@@ -176,4 +176,9 @@ public class FileManagerProvider implements IFileManagerProvider {
 			}
 		}
 	}
+
+	@Override
+	public boolean isSelectorAvailable() {
+		return true;
+	}
 }
