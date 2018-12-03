@@ -21,3 +21,4 @@ Bundle-ClassPath: .,
  libs/commons-logging-1.2.jar,
  libs/jmimemagic-0.1.2.jar,
  libs/commons-io-2.5.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -16,4 +16,6 @@ Export-Package: com.arcadsoftware.mmk.lists,
  com.arcadsoftware.mmk.lists.managers,
  com.arcadsoftware.mmk.lists.metadata,
  com.arcadsoftware.mmk.lists.test
-Require-Bundle: org.apache.commons.io
+Require-Bundle: org.apache.commons.io,
+ aev.core.services
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -18,4 +18,6 @@ Export-Package: com.arcadsoftware.ae.core.ant,
  com.arcadsoftware.ae.core.translation,
  com.arcadsoftware.ae.core.utils,
  com.arcadsoftware.ae.core.utils.io
-Require-Bundle: org.apache.ant;bundle-version="1.9.6"
+Require-Bundle: org.apache.ant;bundle-version="1.9.6",
+ com.arcadsoftware.afs.ae.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
