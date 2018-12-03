@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="libs/xpp3-1.1.4c.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/aev-core-services.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/arcad-arx-client.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/dom4j.jar"/>

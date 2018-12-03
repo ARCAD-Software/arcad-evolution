@@ -13,7 +13,8 @@ Bundle-ClassPath: .,
  libs/spring-context.jar,
  libs/spring-core.jar,
  libs/spring-expression.jar,
- libs/xstream.jar
+ libs/xstream.jar,
+ libs/xpp3-1.1.4c.jar
 Export-Package: com.arcadsoftware.ae.core.ant;version="1.0.0",
  com.arcadsoftware.ae.core.exceptions;version="1.0.0",
  com.arcadsoftware.ae.core.hsqldb;version="1.0.0",
