@@ -66,5 +66,7 @@
 <!--
 		<module>aev.ant.tasks</module>
 -->
+		<module>aev.core.features</module>
+		<module>releng</module>
 	</modules>
 </project>
