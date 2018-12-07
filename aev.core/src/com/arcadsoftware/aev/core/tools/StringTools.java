@@ -93,7 +93,7 @@ public class StringTools {
 		if (s.length() < length) {
 			int l = length - s.length();
 			for (int i = 0; i < l; i++) {
-				sb.append(" ");//$NON-NLS-1$ 
+				sb.append(' ');//$NON-NLS-1$ 
 			}
 		}
 		return sb.toString();
