@@ -111,7 +111,7 @@ public class ColumnedExportAction extends ArcadAction {
 					data.append(separator);
 					data.append(column.getUserName());
 				}
-				data.append("\n"); //$NON-NLS-1$
+				data.append('\n'); //$NON-NLS-1$
 			}
 
 			if (viewer.isFiltered() && parametersPage.isOnlyDisplayedFilteredData()) {
@@ -150,7 +150,7 @@ public class ColumnedExportAction extends ArcadAction {
 					}
 					data.append(value);
 				}
-				data.append("\n"); //$NON-NLS-1$
+				data.append('\n'); //$NON-NLS-1$
 			}
 
 			String filePath = parametersPage.getFilePath();
