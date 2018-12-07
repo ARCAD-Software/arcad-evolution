@@ -211,12 +211,12 @@ implements IListBrowseListener {
 		for (int i=0;i<list.getMetadatas().count();i++){
 			ListColumnDef cd = list.getMetadatas().getColumnDefAt(i);
 			insert.append(cd.getId());
-			if (i<list.getMetadatas().count()-1) insert.append(",");				
+			if (i<list.getMetadatas().count()-1) insert.append(',');				
 		}			
 		insert.append(") values (");
 		for (int i=0;i<list.getMetadatas().count();i++){
 			insert.append("?");
-			if (i<list.getMetadatas().count()-1) insert.append(",");								
+			if (i<list.getMetadatas().count()-1) insert.append(',');								
 		}
 		insert.append(")");	
 		insertOrder = insert.toString();
@@ -243,7 +243,7 @@ implements IListBrowseListener {
 		for (int i=0;i<list.getMetadatas().count();i++){
 			ListColumnDef cd = list.getMetadatas().getColumnDefAt(i);
 			if (cd.isKey()) {
-				order.append(cd.getId()).append(",");
+				order.append(cd.getId()).append(',');
 			}
 		}					
 		order.deleteCharAt(order.length()-1);
@@ -281,7 +281,7 @@ implements IListBrowseListener {
 		for (int i=0;i<list.getMetadatas().count();i++){
 			ListColumnDef cd = list.getMetadatas().getColumnDefAt(i);
 			if (!columns.toString().equals(""))
-				columns.append(",");
+				columns.append(',');
 			switch (cd.getDatatype()) {
 			case INTEGER: columns.append(cd.getId()).append(" integer");break;
 			case STRING: columns.append(cd.getId()).append(" varchar(4000)");break;
@@ -289,7 +289,7 @@ implements IListBrowseListener {
 			}
 			if (cd.isKey()) {
 				if (!indexes.toString().equals(""))
-					indexes.append(",");
+					indexes.append(',');
 				indexes.append(cd.getId());
 			}
 		}
@@ -428,7 +428,7 @@ implements IListBrowseListener {
 		query.append("select * from t").append(cashId);
 		query.append(orderByOrder);
 		if ((orderQuery!=null) && (!orderQuery.equals(""))){
-			query.append(",").append(orderQuery);
+			query.append(',').append(orderQuery);
 		}
 		int count = 0;
 		ResultSet rs = DBConnector.getInstance().executeQuery(query.toString());
