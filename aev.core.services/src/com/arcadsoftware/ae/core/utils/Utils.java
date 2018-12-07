@@ -122,11 +122,11 @@ public class Utils {
 	
     public static String stackTrace(Throwable e) {
     	StringBuffer sb = new StringBuffer();
-    	sb.append(e.getMessage()).append("\n");
+    	sb.append(e.getMessage()).append('\n');
     	StackTraceElement[] ste =  e.getStackTrace();
     	for (int i=0;i<ste.length;i++) {
     		StackTraceElement st = ste[i];
-    		sb.append(st.toString()).append("\n");
+    		sb.append(st.toString()).append('\n');
     	}
     	return sb.toString();
     }	
@@ -358,7 +358,7 @@ public class Utils {
             
         	String str;
             while ((str = in.readLine()) != null) {
-            	sb.append(str).append("\n");
+            	sb.append(str).append('\n');
             }        	        	    	    	    
         } catch (FileNotFoundException e) {
         } catch (IOException e) {

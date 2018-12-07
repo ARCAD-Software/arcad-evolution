@@ -47,9 +47,9 @@ public class ArcadAntExecutor {
 				b.append("::").append(arg0.getTask().getTaskName());//$NON-NLS-1$
 			}
 			if (arg0.getException()!=null) {
-				b.append("\n").append(arg0.getException().getMessage()).append("\n");//$NON-NLS-1$ //$NON-NLS-2$
+				b.append('\n').append(arg0.getException().getMessage()).append('\n');//$NON-NLS-1$ //$NON-NLS-2$
 			}	
-			b.append("\n").append(arg0.getMessage());//$NON-NLS-1$
+			b.append('\n').append(arg0.getMessage());//$NON-NLS-1$
 			if (b.toString().equals(""))//$NON-NLS-1$
 				return "";//$NON-NLS-1$
 			return b.toString();

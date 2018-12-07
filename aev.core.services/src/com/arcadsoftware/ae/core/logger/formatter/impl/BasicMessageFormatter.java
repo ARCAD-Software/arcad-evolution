@@ -58,7 +58,7 @@ public class BasicMessageFormatter extends AbstractMessageFormatter {
 		for (int i=0;i<count;i++){
 			AbstractMessage message = 
 				messages.messageAt(i);			
-			sb.append(format(message)).append("\n");
+			sb.append(format(message)).append('\n');
 		}
 		return sb.toString();
 	}
