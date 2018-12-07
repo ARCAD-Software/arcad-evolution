@@ -252,7 +252,7 @@ implements IListBrowseListener {
 	
 	private void createDeleteOder(){
 		StringBuffer delete = new StringBuffer();
-		delete.append("delete from t").append(cashId).append(" ");
+		delete.append("delete from t").append(cashId).append(' ');
 		delete.append(makeWhereClause());
 		deleteOrder = delete.toString();
 	}	
