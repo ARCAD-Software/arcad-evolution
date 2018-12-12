@@ -215,7 +215,7 @@ implements IListBrowseListener {
 		}			
 		insert.append(") values (");
 		for (int i=0;i<list.getMetadatas().count();i++){
-			insert.append("?");
+			insert.append('?');
 			if (i<list.getMetadatas().count()-1) insert.append(',');								
 		}
 		insert.append(')');	
