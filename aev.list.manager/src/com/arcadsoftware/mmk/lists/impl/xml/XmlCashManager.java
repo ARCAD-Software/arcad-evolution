@@ -218,7 +218,7 @@ implements IListBrowseListener {
 			insert.append("?");
 			if (i<list.getMetadatas().count()-1) insert.append(',');								
 		}
-		insert.append(")");	
+		insert.append(')');	
 		insertOrder = insert.toString();
 	}
 	
@@ -294,13 +294,13 @@ implements IListBrowseListener {
 			}
 		}
 		if (!columns.toString().equals("")) {
-			table.append(columns.toString()).append(")");
+			table.append(columns.toString()).append(')');
 			tableCreationOrder = table.toString();
 		}
 		if (!indexes.toString().equals("")) {
 			createindex.append("create index i").append(cashId)
 			            .append(" on t").append(cashId).append(" (")
-			            .append(indexes.toString()).append(")");
+			            .append(indexes.toString()).append(')');
 			indexCreationOrder = createindex.toString();
 		}	
 
@@ -620,7 +620,7 @@ implements IListBrowseListener {
 			if (i<keys.length-1)
 				sql.append(" and ");
 		}
-		sql.append(")");		
+		sql.append(')');		
 		int count = DBConnector.getInstance().execute(sql.toString());
 		flushRequest();
 		return count;
@@ -761,7 +761,7 @@ implements IListBrowseListener {
 			}
 			//sql.append(query);
 		}
-		sql.append(")");	
+		sql.append(')');	
 		
 		ResultSet rs = DBConnector.getInstance().executeQuery(sql.toString());
 		try {
