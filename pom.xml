@@ -17,24 +17,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>eclipse-neon</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/neon</url>
-		</repository>
-		<repository>
-			<id>eclipse-rap</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/rt/rap/2.3</url>
-		</repository>
-		<repository>
-			<id>eclipse-rap-incubator-fileupload</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/rt/rap/incubator/2.1/fileupload</url>
-		</repository>
-	</repositories>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -51,6 +33,21 @@
 					<includeAllDependencies>true</includeAllDependencies>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<executionEnvironment>JavaSE-1.8</executionEnvironment>
+					<target>
+						<artifact>
+							<groupId>com.arcadsoftware</groupId>
+							<artifactId>com.arcadsoftware.aev.platform</artifactId>
+							<version>9.3.0-SNAPSHOT</version>
+						</artifact>
+					</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -62,9 +59,7 @@
 		<module>aev.core.libraries</module>
 		<module>aev.core.services</module>
 		<module>aev.list.manager</module>
-<!--
-		<module>aev.ant.tasks</module>
--->
+		<!-- <module>aev.ant.tasks</module> -->
 		<module>aev.core.features</module>
 		<module>releng</module>
 	</modules>
