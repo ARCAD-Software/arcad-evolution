@@ -182,7 +182,7 @@ public class ArcadColumn {
 
 	public String getLabel() {
 		StringBuffer buf = new StringBuffer(getUserName());
-		return buf.append(" [").append(getName()).append("]").toString(); //$NON-NLS-1$ //$NON-NLS-2$
+		return buf.append(" [").append(getName()).append(']').toString(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
