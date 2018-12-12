@@ -29,23 +29,23 @@ public class BasicMessageFormatter extends AbstractMessageFormatter {
      */
     private String createHeader(AbstractMessage message) {
         StringBuffer sb = new StringBuffer();
-        sb.append("[").append(sp.format(new Date())).append("]")
-          .append("[").append(message.getServiceName()).append("]")
-          .append("[").append(message.getMessageType()).append("]")                    
+        sb.append('[').append(sp.format(new Date())).append(']')
+          .append('[').append(message.getServiceName()).append(']')
+          .append('[').append(message.getMessageType()).append(']')                    
           .append(message.getMessageText());        
         return sb.toString();
     }
 	
 	public String format(AbstractMessage message) {
         StringBuffer sb = new StringBuffer(createHeader(message));
-        sb.append("(");
+        sb.append('(');
         for (int i=0;i<message.getDatas().size();i++) {
         	MessageData md = (MessageData)message.getDatas().get(i);
             String key = md.getKey();
             String value = md.getData();
             sb.append(key).append("=").append(value).append(";");
         }
-        sb.append(")");
+        sb.append(')');
         return sb.toString();
 	}
 
