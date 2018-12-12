@@ -175,7 +175,7 @@ public class Utils {
 	public static String substituteProperty(String value,String propertyName){
 		if (System.getProperty(propertyName)!=null){
 			StringBuffer toReplace = new StringBuffer();
-			toReplace.append("${").append(propertyName).append("}");			
+			toReplace.append("${").append(propertyName).append('}');			
 			value = Utils.substitute(value,toReplace.toString(),System.getProperty(propertyName),-1);
 		}
 		return value;

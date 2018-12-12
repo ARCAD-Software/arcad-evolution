@@ -43,7 +43,7 @@ public class BasicMessageFormatter extends AbstractMessageFormatter {
         	MessageData md = (MessageData)message.getDatas().get(i);
             String key = md.getKey();
             String value = md.getData();
-            sb.append(key).append("=").append(value).append(";");
+            sb.append(key).append('=').append(value).append(';');
         }
         sb.append(')');
         return sb.toString();
