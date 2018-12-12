@@ -1,0 +1,16 @@
+target "AEV Platform" with source
+
+location "http://download.eclipse.org/releases/neon" {
+	org.eclipse.e4.rcp.feature.group
+	org.eclipse.platform.feature.group
+	org.eclipse.emf.common.feature.group
+	org.eclipse.emf.ecore.feature.group
+}
+
+location "http://download.eclipse.org/rt/rap/2.1" {
+	org.eclipse.rap.feature.feature.group
+}
+
+location "http://download.eclipse.org/rt/rap/incubator/2.1/fileupload" {
+	org.eclipse.rap.fileupload.feature.feature.group
+}
