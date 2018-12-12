@@ -167,7 +167,7 @@ public class MultiValueDialog extends ArcadCenteredDialog {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < list.getItemCount(); i++) {
 			if (i > 0)
-				sb.append(";"); //$NON-NLS-1$
+				sb.append(';'); //$NON-NLS-1$
 			sb.append(list.getItem(i));
 		}
 		value = sb.toString();

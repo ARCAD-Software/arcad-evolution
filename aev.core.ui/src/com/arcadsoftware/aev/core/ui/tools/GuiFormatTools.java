@@ -915,7 +915,7 @@ public class GuiFormatTools {
 					StringBuffer fileList = new StringBuffer();
 					for (String file : selection) {
 						if (fileList.length() > 0)
-							fileList.append(";");
+							fileList.append(';');
 						fileList.append(file);
 					}
 					text.setText(fileList.toString());
