@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ARCAD Core UI Plugin Evolution - RAP
+Bundle-SymbolicName: com.arcadsoftware.aev.core.ui.rap
+Bundle-Version: 9.0.1
+Bundle-Activator: com.arcadsoftware.aev.core.ui.rap.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ com.arcadsoftware.aev.core.ui,
+ com.arcadsoftware.aev.core,
+ org.eclipse.rap.ui;bundle-version="2.1.0",
+ org.eclipse.rap.ui.forms;bundle-version="2.1.0",
+ org.eclipse.rap.rwt.supplemental.filedialog;bundle-version="2.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: ARCAD-Software
+Export-Package: com.arcadsoftware.aev.core.ui.common,
+ com.arcadsoftware.aev.core.ui.rap,
+ com.arcadsoftware.aev.core.ui.rap.dialogs,
+ com.arcadsoftware.aev.core.ui.rap.tools

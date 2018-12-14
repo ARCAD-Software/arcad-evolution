@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.arcadsoftware</groupId>
+		<artifactId>com.arcadsoftware.aev</artifactId>
+		<version>9.3.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>com.arcadsoftware.aev.bundles</artifactId>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>aev.core</module>
+		<module>aev.core.ui</module>
+		<module>aev.core.ui.rap</module>
+		<module>aev.core.ui.rcp</module>
+		<module>aev.core.libraries</module>
+		<module>aev.core.services</module>
+		<module>aev.list.manager</module>
+		<!-- <module>aev.ant.tasks</module> -->
+	</modules>
+</project>

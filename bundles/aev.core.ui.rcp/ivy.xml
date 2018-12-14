@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd" xmlns:e="http://ant.apache.org/ivy/extra">
+	<info
+		organisation="com.arcadsoftware.evolution"
+		module="arcadsoftware-evolution-core-ui-rcp-plugin"
+		status="integration"
+		revision="9.2.0"
+		e:qualifier="${input.qualifier}"
+	/>
+	<configurations>
+		<conf name="default" visibility="public" />
+		<conf name="libs" visibility="private" extends="default" description="required"/>
+		<conf name="plugin" visibility="public" extends="libs" />
+	</configurations>
+	<publications>
+		<artifact name="com.arcadsoftware.aev.core.ui.rcp" type="jar" ext="jar" />
+	</publications>
+	<dependencies defaultconf="*->default">
+		<dependency org="commons-io" name="commons-io" rev="2.5" conf="libs->master"/>
+		<dependency org="commons-logging" name="commons-logging" rev="1.2" conf="libs->master"/>
+		<dependency org="jmimemagic" name="jmimemagic" rev="0.1.2" conf="libs->default"/>		
+		<dependency org="com.arcadsoftware.evolution" name="arcadsoftware-evolution-core-plugin" rev="[9.0.0.0,)" conf="plugin->plugin"/>
+		<dependency org="com.arcadsoftware.evolution" name="arcadsoftware-evolution-core-ui-plugin" rev="[9.0.0.0,)" conf="plugin->plugin"/>
+		
+		<dependency org="plugins" name="org.eclipse.ui.ide" rev="eclipse" conf="plugin->default"/>
+		<dependency org="plugins" name="org.eclipse.core.filesystem" rev="eclipse" conf="plugin->default"/>		
+	</dependencies>
+</ivy-module>

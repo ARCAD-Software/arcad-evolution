@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<contexts>
-  <context id="messageLogView">
-    <description>Vue des messages Arcad</description>
-    <topic label="Actions sur l'arbre des messages Arcad" href="html/messagelogviewactions.htm"/>
-  </context>
- </contexts>

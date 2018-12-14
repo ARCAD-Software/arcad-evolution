@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.arcadsoftware.aev.core.features_9.2.0.jar" id="com.arcadsoftware.aev.core.features" version="9.2.0"/>
+   <feature url="features/com.arcadsoftware.aev.core.features_9.3.0.jar" id="com.arcadsoftware.aev.core.features" version="9.3.0"/>
    <bundle id="com.arcadsoftware.aev.core" version="9.2.2"/>
    <bundle id="com.arcadsoftware.aev.core.ui" version="9.2.2"/>
    <bundle id="com.arcadsoftware.aev.core.ui.rap" version="9.0.1"/>

@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ARCAD Core UI Plugin Evolution - RCP
+Bundle-SymbolicName: com.arcadsoftware.aev.core.ui.rcp
+Bundle-Version: 9.2.0
+Bundle-Activator: com.arcadsoftware.aev.core.ui.rcp.AEVRCPPlugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ com.arcadsoftware.aev.core,
+ com.arcadsoftware.aev.core.ui,
+ org.eclipse.core.filesystem;bundle-version="1.2.0",
+ org.eclipse.ui.ide;bundle-version="3.4.1",
+ org.eclipse.ui.forms
+Bundle-Vendor: ARCAD Software
+Export-Package: com.arcadsoftware.aev.core.ui.common,
+ com.arcadsoftware.aev.core.ui.rcp,
+ com.arcadsoftware.aev.core.ui.rcp.dialogs,
+ com.arcadsoftware.aev.core.ui.rcp.tools
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ libs/commons-logging-1.2.jar,
+ libs/jmimemagic-0.1.2.jar,
+ libs/commons-io-2.5.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info
+        organisation="com.arcadsoftware.evolution"
+        module="aev-core-libraries"
+        status="integration"
+        revision="2.8.1"
+	/>
+	<dependencies defaultconf="*->default">
+		<dependency org="com.arcadsoftware.agent" name="arcad-execution-agent" rev="[0,)" conf="default->client">
+			<exclude module="ant" />
+			<exclude module="commons-io" />
+			<exclude module="commons-logging" />
+		</dependency>								
+	</dependencies>
+</ivy-module>
