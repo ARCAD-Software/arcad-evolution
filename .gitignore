@@ -1,1 +1,5 @@
-target/
+/bundles/*/bin/
+/bundles/*/target/
+/features/*/target/
+/releng/*/bin/
+/releng/*/target/
