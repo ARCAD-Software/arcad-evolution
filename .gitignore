@@ -3,3 +3,5 @@
 /features/*/target/
 /releng/*/bin/
 /releng/*/target/
+/.project
+/.settings/
