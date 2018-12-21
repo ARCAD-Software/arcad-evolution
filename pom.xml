@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
-		<artifactId>arcadsoftware</artifactId>
-		<version>1.0.0</version>
+		<artifactId>super-pom</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev</artifactId>
