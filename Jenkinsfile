@@ -2,7 +2,14 @@ node {
 	properties([
 		pipelineTriggers([
 			cron('H/15 * * * *')
-		])
+		]),
+		[$class: 'BuildDiscarderProperty',
+		strategy: [$class: 'LogRotator',
+			artifactDaysToKeepStr: '',
+			artifactNumToKeepStr: '',
+			daysToKeepStr: '',
+			numToKeepStr: '10']
+		]
 	])
 	stage('Preparation') {
 		checkout scm
