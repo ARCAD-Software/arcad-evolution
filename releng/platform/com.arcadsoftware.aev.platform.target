@@ -3,18 +3,18 @@
 <target name="AEV Platform">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/releases/neon"/>
+      <repository location="https://download.eclipse.org/releases/neon"/>
       <unit id="org.eclipse.e4.rcp.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.common.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.ecore.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/rt/rap/2.1"/>
+      <repository location="https://download.eclipse.org/rt/rap/2.1"/>
       <unit id="org.eclipse.rap.feature.feature.group" version="0.0.0"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/rt/rap/incubator/2.1/fileupload"/>
+      <repository location="https://download.eclipse.org/rt/rap/incubator/2.1/fileupload"/>
       <unit id="org.eclipse.rap.fileupload.feature.feature.group" version="0.0.0"/>
     </location>
   </locations>
