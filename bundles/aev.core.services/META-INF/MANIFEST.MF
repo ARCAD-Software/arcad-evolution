@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ARCAD Evolution Services
+Bundle-SymbolicName: com.arcadsoftware.aev.core.services
+Bundle-Version: 9.3.0.qualifier
+Bundle-Vendor: ARCAD Software
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: com.arcadsoftware.ae.core.ant,
+ com.arcadsoftware.ae.core.exceptions,
+ com.arcadsoftware.ae.core.hsqldb,
+ com.arcadsoftware.ae.core.logger,
+ com.arcadsoftware.ae.core.logger.formatter,
+ com.arcadsoftware.ae.core.logger.formatter.impl,
+ com.arcadsoftware.ae.core.logger.messages,
+ com.arcadsoftware.ae.core.logger.messages.impl,
+ com.arcadsoftware.ae.core.logger.router,
+ com.arcadsoftware.ae.core.logger.router.impl,
+ com.arcadsoftware.ae.core.settings,
+ com.arcadsoftware.ae.core.substitute,
+ com.arcadsoftware.ae.core.translation,
+ com.arcadsoftware.ae.core.utils,
+ com.arcadsoftware.ae.core.utils.io
+Import-Package: org.apache.tools.ant,
+ org.dom4j,
+ org.dom4j.io
+Bundle-ClassPath: .,
+ libs/spring-beans.jar,
+ libs/spring-context.jar,
+ libs/spring-core.jar,
+ libs/spring-expression.jar
