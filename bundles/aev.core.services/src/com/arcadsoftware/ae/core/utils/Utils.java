@@ -341,7 +341,6 @@ public class Utils {
 		
 		if (!isEmpty(result)) {
 			System.setProperty(ARCAD_HOME,result);
-			System.out.println("ARCAD_HOME is " + result);
 		}
 		else{
 			System.err.println("Error: ARCAD_HOME was not found, neither as an environment variable nor as a property.");

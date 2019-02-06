@@ -36,8 +36,8 @@ public class XMLUtils {
 		Element rootNode = document.addElement(content.getRootName());
 		content.provide(rootNode);
         XMLWriter writer;		
-		OutputFormat format = OutputFormat.createPrettyPrint();        
-		writer = new XMLWriter(new FileOutputStream( xmlFilename), format);
+		OutputFormat format = OutputFormat.createPrettyPrint();
+		writer = new XMLWriter(new FileOutputStream(xmlFilename), format);
         writer.write(document);	
         writer.flush();
         writer.close();	        
