@@ -1,8 +1,6 @@
 /*
  * Créé le 28 avr. 04
  *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 
 package com.arcadsoftware.aev.core.model;
@@ -34,14 +32,11 @@ import com.arcadsoftware.aev.core.messages.MessageManager;
 /**
  * @author MD
  * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
  */
 public abstract class ArcadPlugin extends AbstractUIPlugin {
 	
-	private Hashtable<String,ImageDescriptor> imageDescriptorRegistry;
-	private ImageRegistry imageRegistry;
+	protected Hashtable<String,ImageDescriptor> imageDescriptorRegistry;
+	protected ImageRegistry imageRegistry;
 	protected FontRegistry fontRegistry;
 	protected ColorRegistry colorRegistry;
 

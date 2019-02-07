@@ -22,66 +22,85 @@ import com.arcadsoftware.aev.core.tools.StringTools;
  */
 public abstract class ArcadEntity implements IArcadCollectionItem, IAdaptable, ITagable {
 
-	private ArcadCollection parent;
-	private int level = 1;
-	private int tag = -1;
-	private String iconID = StringTools.EMPTY;
-	boolean useTagEquality = false;
+	protected ArcadCollection lastParent;
+	protected int level = 1;
+	protected int tag = -1;
+	protected String iconID = StringTools.EMPTY;
+	protected boolean useTagEquality = false;
 
 	public ArcadEntity() {
 		super();
 	}
 
+	@Override
 	public String getIconID() {
 		return iconID;
 	}
 
+	@Override
 	public String getOverlayID() {
 		return null;
 	}
 
+	@Override
 	public void setIconID(String string) {
 		iconID = string;
 	}
 
+	@Override
 	public int getLevel() {
 		return level;
 	}
 
+	@Override
 	public void setLevel(int i) {
 		level = i;
 	}
 
+	@Override
 	public int getTag() {
 		return tag;
 	}
 
+	@Override
 	public void setTag(int data) {
 		tag = data;
 	}
 
+	@Override
 	public void setParent(ArcadCollection parent) {
-		this.parent = parent;
+		this.lastParent = parent;
 	}
 
+	@Override
 	public ArcadCollection getParent() {
-		return parent;
+		return lastParent;
+	}
+	
+	@Override
+	public void unsetParent(ArcadCollection parent) {
+		// TODO Auto-generated method stub
 	}
 
+	@Override
 	public boolean hasChildren() {
-		if (parent == null)
+		if (lastParent == null)
 			return false;
-		return parent.hasChildren(this);
+		return lastParent.hasChildren(this);
 	}
 
+	@Override
 	public IArcadCollectionItem duplicate() {
+		System.out.println("Warning: call to ArcadEntity::duplicate() returning null.");
 		return null;
 	}
 
+	@Override
 	public boolean equalsItem(IArcadCollectionItem item) {
 		return false;
 	}
 
+	@Override
 	public boolean equalsWithLevel(IArcadCollectionItem item) {
 		return false;
 	}
@@ -90,15 +109,18 @@ public abstract class ArcadEntity implements IArcadCollectionItem, IAdaptable, I
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
+	@Override
 	public Object getAdapter(Class adapter) {
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
+	@Override
 	public boolean isUseTagEquality() {
 		return useTagEquality;
 	}
 
+	@Override
 	public void setUseTagEquality(boolean useTagEquality) {
 		this.useTagEquality = useTagEquality;
 	}

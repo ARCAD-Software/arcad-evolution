@@ -17,118 +17,60 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 	public static int SORT_ASCENDING = 0;
 	public static int SORT_DESCENDING = 1;
 
-	@SuppressWarnings("unchecked")
-	private ArrayList list = new ArrayList();
+	protected ArrayList<IArcadCollectionItem> list = new ArrayList<IArcadCollectionItem>();
 
 	public ArcadCollection() {
 		super();
 	}
 
-	@SuppressWarnings("unchecked")
-	protected void initList() {
-		list = new ArrayList();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arcadsoftware.aev.core.collections.IArcadCollection#count()
-	 */
+	@Override
 	public int count() {
 		return list.size();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#add(com.arcadsoftware
-	 * .aev.core.collections.IArcadCollectionItem)
-	 */
-	@SuppressWarnings("unchecked")
+	@Override
 	public void add(IArcadCollectionItem c) {
-		c.setParent(this);
 		list.add(c);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arcadsoftware.aev.core.collections.IArcadCollection#insert(int,
-	 * com.arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
-	@SuppressWarnings("unchecked")
+	@Override
 	public void insert(int index, IArcadCollectionItem c) {
-		c.setParent(this);
 		list.add(index, c);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#copyAndAdd(com
-	 * .arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
+	@Override
 	public void copyAndAdd(IArcadCollectionItem c) {
 		this.add(c.duplicate());
-
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#copyAndInsert
-	 * (int, com.arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
+	@Override
 	public void copyAndInsert(int index, IArcadCollectionItem c) {
-		this.insert(index, c.duplicate());
-
+		insert(index, c.duplicate());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arcadsoftware.aev.core.collections.IArcadCollection#items(int)
-	 */
+	@Override
 	public IArcadCollectionItem items(int index) {
 		return (IArcadCollectionItem) list.get(index);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arcadsoftware.aev.core.collections.IArcadCollection#delete(int)
-	 */
+	protected void doAfterItemsRemoved(IArcadCollectionItem...items) {}
+	
+	@Override
 	public void delete(int index) {
 		list.remove(index);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arcadsoftware.aev.core.collections.IArcadCollection#delete(int)
-	 */
 	public void delete(IArcadCollectionItem c) {
 		list.remove(c);
+		doAfterItemsRemoved(c);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arcadsoftware.aev.core.collections.IArcadCollection#clear()
-	 */
+	@Override
 	public void clear() {
 		list.clear();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seecom.arcadsoftware.aev.core.collections.IArcadCollection#find(com.
-	 * arcadsoftware.aev.core.collections.IArcadCollectionItem, int)
-	 */
+	@Override
 	public int find(IArcadCollectionItem c, int startpos) {
 		int size = list.size();
 		for (int i = startpos; i < size; i++) {
@@ -138,65 +80,38 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 		return -1;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seecom.arcadsoftware.aev.core.collections.IArcadCollection#find(com.
-	 * arcadsoftware.aev.core.collections.IArcadCollectionItem, int)
-	 */
-	// --------------------------------------------------------------------------
+	@Override
 	public int findWithLevel(IArcadCollectionItem c, int startpos) {
 		int size = list.size();
 		for (int i = startpos; i < size; i++) {
-			if (((IArcadCollectionItem) list.get(i)).equalsWithLevel(c))
+			if (list.get(i).equalsWithLevel(c))
 				return i;
 		}
 		return -1;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seecom.arcadsoftware.aev.core.collections.IArcadCollection#find(com.
-	 * arcadsoftware.aev.core.collections.IArcadCollectionItem, int)
-	 */
-	// --------------------------------------------------------------------------
+	@Override
 	public int findByInstance(IArcadCollectionItem c) {
 		int size = list.size();
 		for (int i = 0; i < size; i++) {
-			IArcadCollectionItem item = (IArcadCollectionItem) list.get(i);
+			IArcadCollectionItem item = list.get(i);
 			if (item == c)
 				return i;
 		}
 		return -1;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#findFirst(com
-	 * .arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
+	@Override
 	public int findFirst(IArcadCollectionItem c) {
 		return find(c, 0);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seecom.arcadsoftware.aev.core.collections.IArcadCollection#find(com.
-	 * arcadsoftware.aev.core.collections.IArcadCollectionItem, int)
-	 */
+	@Override
 	public int findFirstWithLevel(IArcadCollectionItem c) {
 		return findWithLevel(c, 0);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.arcadsoftware.aev.core.collections.IArcadCollection#toArray()
-	 */
+	@Override
 	public Object[] toArray() {
 		/*
 		 * int size = list.size(); Object[] aoc = new Object[size]; for (int
@@ -205,47 +120,30 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 		return list.toArray();
 	}
 
-	@SuppressWarnings("unchecked")
 	public Object[] toArray(Object[] array) {
 		return list.toArray(array);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#getChildren(com
-	 * .arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
-	@SuppressWarnings("unchecked")
+	@Override
 	public Object[] getChildren(IArcadCollectionItem item) {
 		int index = list.indexOf(item);
-		int lvl = item.getLevel();
-		ArrayList a = new ArrayList();
+		int lvl = item.getLevel();	
+		ArrayList<IArcadCollectionItem> array = new ArrayList<IArcadCollectionItem>();
 		if (hasChildren(item)) {
-			for (int i = index + 1; i < list.size(); i++) {
-				if (items(i).getLevel() <= lvl)
+			for (int i=index+1;i<list.size();i++){
+				if (items(i).getLevel()<=lvl)
 					break;
-				else if (items(i).getLevel() == lvl + 1) {
-					a.add(items(i));
+				else if (items(i).getLevel()==lvl+1){
+					array.add(items(i));						
 				}
 			}
-			Object[] o = new Object[a.size()];
-			for (int i = 0; i < a.size(); i++) {
-				o[i] = a.get(i);
-			}
-			return o;
-		}
-		return new Object[0];
+			return array.toArray();
+		}	
+		else
+			return new Object[0];	
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#getChildren(com
-	 * .arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
+	@Override
 	public void removeBranch(IArcadCollectionItem item, boolean removeParent) {
 		int index = findByInstance(item);
 		if (index > -1) {
@@ -271,13 +169,7 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#getParent(com
-	 * .arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
+	@Override
 	public IArcadCollectionItem getParent(IArcadCollectionItem item) {
 		int index = list.indexOf(item);
 		int lvl = item.getLevel();
@@ -290,13 +182,7 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#hasChildren(com
-	 * .arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
+	@Override
 	public boolean hasChildren(IArcadCollectionItem item) {
 		int index = list.indexOf(item);
 		int lvl = item.getLevel();
@@ -305,42 +191,26 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 		return (items(index + 1).getLevel() > lvl);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.collections.IArcadCollection#hasChildren(com
-	 * .arcadsoftware.aev.core.collections.IArcadCollectionItem)
-	 */
-	@SuppressWarnings("unchecked")
 	public Object[] getElementsByLevel(int level) {
-		ArrayList a = new ArrayList();
+		ArrayList<IArcadCollectionItem> array = new ArrayList<IArcadCollectionItem>();
 
-		for (int i = 0; i < list.size(); i++) {
-			if (items(i).getLevel() == level)
-				a.add(items(i));
-		}
-		Object[] o = new Object[a.size()];
-		for (int i = 0; i < a.size(); i++) {
-			o[i] = a.get(i);
-		}
-		return o;
+		for (int i=0;i<list.size();i++){
+			if (items(i).getLevel()==level)
+				array.add(items(i));						
+		}	
+		
+		return array.toArray();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		ArcadCollection result = (ArcadCollection) super.clone();
-		result.list = (ArrayList) list.clone();
+		result.list = (ArrayList<IArcadCollectionItem>) list.clone();
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public ArrayList getList() {
 		return list;
 	}
