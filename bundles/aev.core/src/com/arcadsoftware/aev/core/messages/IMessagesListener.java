@@ -18,6 +18,7 @@ public interface IMessagesListener {
 	 * @param message
 	 */
 	public void newMessageAdded(Message message);
+	public void newMessageAdded(Message message, Throwable e);
 
 
 	/**

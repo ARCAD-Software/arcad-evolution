@@ -74,10 +74,25 @@ public class MessageDetail {
 	}
 
 	public void print() {
-		System.err.println("Detail : "+getType()+" : "+getDescription());//$NON-NLS-1$ //$NON-NLS-2$ 
+		System.err.println("Detail : " + this.toString());//$NON-NLS-1$ 
 	}
 
 	public Message getMessage() {
 		return parentMessage;
+	}
+	
+	public String getTypeString(){
+		switch(getType()){
+			case EXCEPTION: return "Exception";
+			case ERROR: return "Error";
+			case WARNING: return "Warning";
+			case COMPLETION: return "Completion";
+			default: return "Diagnostic";
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("[%1$s] %2$s", getTypeString(), getDescription());	//$NON-NLS-1$
 	}
 }

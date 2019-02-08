@@ -28,8 +28,7 @@ import com.arcadsoftware.aev.core.ui.treeviewers.MessagesTreeViewer;
 public class MessagesWizardPage extends ArcadWizardPage implements IMessagesListener {
 
 	private int showParam = 0;
-	@SuppressWarnings("unchecked")
-	private ArrayList messages = new ArrayList();
+	private ArrayList<Message> messages = new ArrayList<Message>();
 	private MessagesTreeViewer tree;
 
 	/**
@@ -59,13 +58,7 @@ public class MessagesWizardPage extends ArcadWizardPage implements IMessagesList
 		this.showParam = showParam;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets
-	 * .Composite)
-	 */
+	@Override
 	public void createControl(Composite parent) {
 		Composite compo = GuiFormatTools.createComposite(parent, 1, false);
 		tree = new MessagesTreeViewer(compo, SWT.NONE | SWT.FULL_SELECTION, showParam);
@@ -107,8 +100,8 @@ public class MessagesWizardPage extends ArcadWizardPage implements IMessagesList
 	 * com.arcadsoftware.aev.core.messages.IMessagesListener#newMessageAdded
 	 * (com.arcadsoftware.aev.core.messages.Message)
 	 */
-	@SuppressWarnings("unchecked")
-	public void newMessageAdded(Message message) {
+	@Override
+	public void newMessageAdded(Message message, Throwable e) {
 		if (message.isVisibleTo(showParam)) {
 			messages.add(message);
 			if ((tree != null) && !tree.getTree().isDisposed()) {
@@ -116,14 +109,12 @@ public class MessagesWizardPage extends ArcadWizardPage implements IMessagesList
 			}
 		}
 	}
+	@Override
+	public void newMessageAdded(Message newMessage) {
+		newMessageAdded(newMessage, null);
+	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#messageDeleted(
-	 * com.arcadsoftware.aev.core.messages.Message)
-	 */
+	@Override
 	public void messageDeleted(Message message) {
 		int i = messages.indexOf(message);
 		if (i != -1) {
@@ -134,13 +125,7 @@ public class MessagesWizardPage extends ArcadWizardPage implements IMessagesList
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#messageChanged(
-	 * com.arcadsoftware.aev.core.messages.Message)
-	 */
+	@Override
 	public void messageChanged(Message message) {
 		if ((tree != null) && !tree.getTree().isDisposed()) {
 			tree.refresh();

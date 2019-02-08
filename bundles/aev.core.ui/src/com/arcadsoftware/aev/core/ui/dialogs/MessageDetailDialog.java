@@ -271,8 +271,11 @@ public class MessageDetailDialog extends ArcadDialog implements IMessagesListene
 	 * com.arcadsoftware.aev.core.messages.IMessagesListener#newMessageAdded
 	 * (com.arcadsoftware.aev.core.messages.Message)
 	 */
-	public void newMessageAdded(Message newMessage) {
+	public void newMessageAdded(Message newMessage, Throwable e) {
 		// Do nothing
+	}
+	public void newMessageAdded(Message newMessage) {
+		newMessageAdded(newMessage, null);
 	}
 
 	/*

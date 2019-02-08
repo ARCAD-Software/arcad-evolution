@@ -32,14 +32,13 @@ import com.arcadsoftware.aev.core.ui.treeviewers.MessagesTreeViewer;
  */
 public class MessageDialog extends ArcadDialog implements IMessagesListener {
 
+	// public static Message begin(Plugin plugin, String blockContext) {
 	/**
 	 * Débute un block d'enregistrement de messges pour la dialog.
 	 * 
-	 * @param plugin
 	 * @param blockContext
 	 * @return Message
 	 */
-	// public static Message begin(Plugin plugin, String blockContext) {
 	public static Message begin(String blockContext) {
 		return MessageManager.beginMessageBlock(blockContext);
 	}
@@ -50,13 +49,12 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 	 * @param shell
 	 * @param showParam
 	 */
-	@SuppressWarnings("unchecked")
 	public static void end(Shell shell, int showParam) {
 		int showParameter = showParam;
 		if (showParameter == 0)
 			showParameter = MessageManager.SHOW_ALL;
 
-		ArrayList list = MessageManager.endMessageBlock(showParameter);
+		ArrayList<Message> list = MessageManager.endMessageBlock(showParameter);
 		if (list != null) {
 			MessageDialog dialog = new MessageDialog(shell, list, showParameter);
 			MessageManager.addListener(dialog);
@@ -69,40 +67,21 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 		return MessageManager.addMessage(command, type, level, description);
 	}
 
-	@SuppressWarnings("unchecked")
-	private ArrayList messages;
+	private ArrayList<Message> messages;
 	private MessagesTreeViewer messagesTree;
 	private int levelFilter;
 
-	/**
-	 * @param parentShell
-	 */
-	@SuppressWarnings("unchecked")
-	public MessageDialog(Shell parentShell, ArrayList messages, int levelFilter) {
+	public MessageDialog(Shell parentShell, ArrayList<Message> messages, int levelFilter) {
 		super(parentShell);
 		this.messages = messages;
 		this.levelFilter = levelFilter;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse
-	 * .swt.widgets.Composite)
-	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, DialogConstantProvider.getInstance().OK_LABEL, true);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets
-	 * .Composite)
-	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite comp = (Composite) super.createDialogArea(parent);
@@ -120,13 +99,6 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 		return comp;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets
-	 * .Shell)
-	 */
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
@@ -150,15 +122,8 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 		newShell.setText(text);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#newMessageAdded
-	 * (com.arcadsoftware.aev.core.messages.Message)
-	 */
-	@SuppressWarnings("unchecked")
-	public void newMessageAdded(Message message) {
+	@Override
+	public void newMessageAdded(Message message, Throwable e) {
 		if (message.isVisibleTo(levelFilter)) {
 			messages.add(message);
 			if (messagesTree != null) {
@@ -167,13 +132,12 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 			}
 		}
 	}
+	@Override
+	public void newMessageAdded(Message newMessage) {
+		newMessageAdded(newMessage, null);
+	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#messageDeleted()
-	 */
+	@Override
 	public void messageDeleted(Message message) {
 		if (message != null) {
 			int i = messages.indexOf(message);
@@ -193,14 +157,7 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#messageChanged(
-	 * com.arcadsoftware.aev.core.messages.Message)
-	 */
-	@SuppressWarnings("unchecked")
+	@Override
 	public void messageChanged(Message message) {
 		if (message.isVisibleTo(levelFilter)) {
 			int i = messages.indexOf(message);

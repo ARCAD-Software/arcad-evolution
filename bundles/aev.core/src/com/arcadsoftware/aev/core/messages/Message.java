@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.arcadsoftware.aev.core.tools.CoreLabels;
+import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
  * Description d'un message à collectionner.
@@ -20,96 +21,115 @@ import com.arcadsoftware.aev.core.tools.CoreLabels;
  */
 public class Message {
 
+
 	// Formater utilisé pour les details datant les messages.
 	private static final SimpleDateFormat dateForMessage = new SimpleDateFormat("HH:mm:ss (dd.MM.yyyy)"); //$NON-NLS-1$
+	
 
-	@SuppressWarnings("unchecked")
-	private ArrayList details = new ArrayList();
+
+	private ArrayList<MessageDetail> details = new ArrayList<MessageDetail>();
 	private String command;
 	private int maxDetailsType;
 	private int level;
-
+	protected boolean isFixedType = false;
+	protected Date creationDate = new Date();
+	
+	/**
+	 * 
+	 */
 	public Message(String command) {
 		super();
 		setCommand(command);
 		level = MessageManager.LEVEL_DEVELOPMENT;
 		maxDetailsType = MessageDetail.COMPLETION;
 	}
-
+	
 	/**
-	 * Création d'un message avec un détail (Type,description) et de niveau
-	 * Développement.
-	 * 
-	 * @param command
-	 *            le texte de la commande (titre) associé au message.
-	 * @param type
-	 *            le type du détail (Completion, diagnostic, warning, error).
-	 * @param description
-	 *            le contenu du détail.
+	 * Création d'un message avec un détail (Type,description) et de
+	 * niveau Développement.
+	 *
+	 * @param command le texte de la commande (titre) associé au message.
+	 * @param type le type du détail (Completion, diagnostic, warning, error).
+	 * @param description le contenu du détail.
 	 */
-	public Message(String command, int type, String description) {
+	public Message(String command,int type,String description) {
 		this(command);
-		addDetail(type, description);
+		addDetail(type,description);
 		maxDetailsType = type;
+	}	
+
+	public Message(String command,int type,int level, String description) {
+		this(command, type, level, description, false);
 	}
 
-	public Message(String command, int type, int level, String description) {
+	public Message(String command,int type,int level, String description, boolean fixedType) {
 		this(command);
-		addDetail(type, description);
+		if(!StringTools.isEmpty(description))
+			addDetail(type,description);
 		maxDetailsType = type;
 		this.level = level;
-	}
+		this.isFixedType = fixedType;
+	}	
 
+	/**
+	 * @return
+	 */
 	public String getCommand() {
 		return command;
 	}
 
+	/**
+	 * @param string
+	 */
 	public void setCommand(String string) {
 		command = string;
 	}
 
-	@SuppressWarnings("unchecked")
-	public ArrayList getDetails() {
+	/**
+	 * @return
+	 */
+	public ArrayList<MessageDetail> getDetails() {
 		return details;
 	}
 
 	/**
 	 * Retourne la liste des détails du message
-	 * 
-	 * @return MessageDetail[]
+	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public MessageDetail[] toArray() {
 		if (details == null) {
 			return new MessageDetail[0];
+		} else {
+			return (MessageDetail[])details.toArray(new MessageDetail[details.size()]);
 		}
-		return (MessageDetail[]) details.toArray(new MessageDetail[details.size()]);
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setDetails(ArrayList list) {
+	/**
+	 * @param list
+	 */
+	public void setDetails(ArrayList<MessageDetail> list) {
 		details = list;
 		maxDetailsType = 0;
-		if (list != null)
+		if (list != null && !isFixedType){
 			for (int i = 0; i < list.size(); i++) {
-				if (((MessageDetail) list.get(i)).getType() > maxDetailsType)
-					maxDetailsType = ((MessageDetail) list.get(i)).getType();
+				if (list.get(i).getType() > maxDetailsType)
+					maxDetailsType = ((MessageDetail)list.get(i)).getType();
 			}
+		}
 		MessageManager.fireMessageChanged(this);
 	}
 
 	/**
 	 * Ajoute un détail au message.<br/>
-	 * Cette methode retourne le message lui-même, de telle sorte que les
-	 * addDetails peuvent se succeder.
+	 * Cette methode retourne le message lui-même, de telle sorte que les addDetails peuvent se
+	 * succeder.
 	 * 
 	 * @param type
 	 * @param description
 	 */
-	@SuppressWarnings("unchecked")
-	public Message addDetail(int type, String description) {
-		details.add(new MessageDetail(this, type, description));
-		if (type > maxDetailsType)
+	public Message addDetail(int type,String description){
+		details.add(new MessageDetail(this,type,description));	
+		if (!isFixedType && type > maxDetailsType)
 			maxDetailsType = type;
 		MessageManager.fireMessageChanged(this);
 		return this;
@@ -119,9 +139,9 @@ public class Message {
 	 * Ajoute des détails relatifs à l'exception.
 	 * 
 	 * @param e
-	 * @return Message
+	 * @return
 	 */
-	public Message addException(Exception e) {
+	public Message addException(Exception e){
 		return addThrowable(e);
 	}
 
@@ -135,93 +155,128 @@ public class Message {
 		if (m == null)
 			m = throwable.getMessage();
 		if (m == null)
-			m = CoreLabels.resString("MessageManager.ExceptionThrown"); //$NON-NLS-1$
-		addDetail(MessageDetail.EXCEPTION, m);
+			m = CoreLabels.resString("MessageManager.ExceptionThrown");  //$NON-NLS-1$
+		addDetail(MessageDetail.EXCEPTION,m);
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			throwable.printStackTrace(new PrintWriter(out, true));
+			throwable.printStackTrace(new PrintWriter(out,true));
 			out.flush();
 			String s = out.toString();
 			out.close();
 			if ((s != null) && (s.length() > 0)) {
-				addDetail(MessageDetail.EXCEPTION, s);
+				addDetail(MessageDetail.EXCEPTION,s);
 			}
 		} catch (IOException e1) {
-			addDetail(MessageDetail.EXCEPTION, e1.getLocalizedMessage());
+			addDetail(MessageDetail.EXCEPTION,e1.getLocalizedMessage());
 		}
 		addDate();
 		MessageManager.fireMessageChanged(this);
 		return this;
 	}
-
+	
 	/**
 	 * Ajoute un détail indiquant la date courante.
-	 * 
+	 *
 	 */
 	public void addDate() {
-		addDetail(MessageDetail.DIAGNOSTIC, dateForMessage.format(new Date()));
+		addDetail(MessageDetail.DIAGNOSTIC,dateForMessage.format(new Date()));
 	}
-
-	/**
+	
+	/** 
 	 * Supprime tous les détails.
-	 * 
+	 *
 	 */
-	public void clear() {
-		details.clear();
+	public void clear(){
+		details.clear();	
 		maxDetailsType = 0;
 		MessageManager.fireMessageChanged(this);
-	}
+	}	
 
 	public MessageDetail getDetailAt(int index) {
-		return (MessageDetail) details.get(index);
+		return (MessageDetail)details.get(index);
 	}
 
 	public void removeDetailAt(int index) {
-		details.remove(index);
-		if (details != null)
+		details.remove(index);		
+		if (details != null && !isFixedType){
 			for (int i = 0; i < details.size(); i++) {
-				if (((MessageDetail) details.get(i)).getType() > maxDetailsType)
-					maxDetailsType = ((MessageDetail) details.get(i)).getType();
+				//<FM number="2014/00293" version="10.03.00" date="Mar. 28 2014" user="FPO">
+				if (i == 0)
+					maxDetailsType = details.get(i).getType();
+				//</FM>
+				if (((MessageDetail)details.get(i)).getType() > maxDetailsType)
+					maxDetailsType = details.get(i).getType();
 			}
+		}
 		MessageManager.fireMessageChanged(this);
-	}
+	}	
 
-	public int detailCount() {
+	public int detailCount(){
 		return details.size();
 	}
 
-	public void print() {
-		System.err.println("COMMAND : " + getCommand());//$NON-NLS-1$ 
-		for (int i = 0; i < detailCount(); i++) {
+	public void print(){
+		System.err.println("COMMAND : " + this.toString());		//$NON-NLS-1$ 
+		for (int i=0;i<detailCount();i++) {
 			getDetailAt(i).print();
 		}
 	}
 
+	@Override
+	public String toString() {
+		char ln = Character.LINE_SEPARATOR;
+		StringBuffer buffer = new StringBuffer(String.format(
+			"[%1$s] %2$s", 
+			//FormatDateTools.getFormattedDateTime(creationDate), 
+			new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(creationDate), 
+			getCommand()
+		));
+		
+		for(MessageDetail detail : details){
+			buffer	.append(ln)
+					.append("   ")								//$NON-NLS-1$
+					.append(detail.toString());
+		}
+		
+		return buffer.toString();
+	}
+	
 	/**
-	 * @return int
+	 * @return
 	 */
 	public int getMaxDetailsType() {
 		return maxDetailsType;
 	}
 
+	public void setMaxDetailsType(int maxDetailsType) {
+		this.maxDetailsType = maxDetailsType;
+	}
+
 	/**
 	 * @param showParam
-	 * @return boolean
+	 * @return
 	 */
 	public boolean isVisibleTo(int showParam) {
 		for (int j = 0; j < details.size(); j++) {
-			if ((showParam & ((MessageDetail) details.get(j)).getType()) != 0) {
+			if ((showParam & details.get(j).getType()) != 0) {
 				return true;
 			}
 		}
 		return false;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * @param i
+	 */
 	public void setLevel(int i) {
 		level = i;
 	}
+
 }

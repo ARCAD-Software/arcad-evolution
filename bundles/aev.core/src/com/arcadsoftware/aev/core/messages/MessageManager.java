@@ -15,19 +15,18 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 import com.arcadsoftware.aev.core.tools.CoreLabels;
 import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
- * Gestionnaire des messages. Cette classe statique est appelée dans toutes les
- * opération à risque pour controler le bon déroulement de l'opération.
+ * Gestionnaire des messages. Cette classe statique est appelée dans
+ * toutes les opération à risque pour controler le bon déroulement de l'opération.
  * 
  * @author MD
  */
-public class MessageManager {
-
+public class MessageManager implements IDiagnosisProvider {
+	
 	public static final int LEVEL_PRODUCTION = 4;
 	public static final int LEVEL_BETATESTING = 2;
 	public static final int LEVEL_DEVELOPMENT = 1;
@@ -35,123 +34,118 @@ public class MessageManager {
 
 	public static int level_PluginsStatus = LEVEL_BETATESTING;
 
-	/**
+	/** 
 	 * Affiche les détails de messages de type COMPLETION.<br>
-	 * Equivalent à MessageDetail.COMPLETION, peut être utilisé en tant que
-	 * paramètre des methodes d'ajout de messages et détails.
+	 * Equivalent à MessageDetail.COMPLETION, peut être utilisé en tant
+	 * que paramètre des methodes d'ajout de messages et détails.
 	 */
 	public static final int SHOW_COMPLETION = MessageDetail.COMPLETION;
-	/**
+	/** 
 	 * Affiche les détails de messages de type DIAGNOSTIC.<br>
-	 * Equivalent à MessageDetail.DIAGNOSTIC, peut être utilisé en tant que
-	 * paramètre des methodes d'ajout de messages et détails.
+	 * Equivalent à MessageDetail.DIAGNOSTIC, peut être utilisé en tant
+	 * que paramètre des methodes d'ajout de messages et détails.
 	 */
 	public static final int SHOW_DIAGNOSTIC = MessageDetail.DIAGNOSTIC;
-	/**
+	/** 
 	 * Affiche les détails de messages de type WARNING.<br>
-	 * Equivalent à MessageDetail.WARNING, peut être utilisé en tant que
-	 * paramètre des methodes d'ajout de messages et détails.
+	 * Equivalent à MessageDetail.WARNING, peut être utilisé en tant
+	 * que paramètre des methodes d'ajout de messages et détails.
 	 */
 	public static final int SHOW_WARNING = MessageDetail.WARNING;
-	/**
+	/** 
 	 * Affiche les détails de messages de type ERROR.<br>
-	 * Equivalent à MessageDetail.ERROR, peut être utilisé en tant que paramètre
-	 * des methodes d'ajout de messages et détails.
+	 * Equivalent à MessageDetail.ERROR, peut être utilisé en tant
+	 * que paramètre des methodes d'ajout de messages et détails.
 	 */
 	public static final int SHOW_ERROR = MessageDetail.ERROR;
-	/**
+	/** 
 	 * Affiche les détails de messages de type EXCEPTION.<br>
-	 * Equivalent à MessageDetail.EXCEPTION, peut être utilisé en tant que
-	 * paramètre des methodes d'ajout de messages et détails.
+	 * Equivalent à MessageDetail.EXCEPTION, peut être utilisé en tant
+	 * que paramètre des methodes d'ajout de messages et détails.
 	 */
 	public static final int SHOW_EXCEPTION = MessageDetail.EXCEPTION;
-	/**
-	 * Affiche tous les détails de messages de type erreur (Warning, erreur, ou
-	 * exception).<br>
-	 * Ne peut pas être utilisé en tant que paramètre des methodes d'ajout de
-	 * messages et détails.
+	/** 
+	 * Affiche tous les détails de messages de type erreur (Warning, erreur, ou exception).<br>
+	 * Ne peut pas être utilisé en tant que paramètre des methodes d'ajout de messages et détails.
 	 */
 	public static final int SHOW_ANYERROR = SHOW_WARNING | SHOW_ERROR | SHOW_EXCEPTION;
-	/**
+	/** 
 	 * Affiche tous les détails de messages.<br>
-	 * Ne peut pas être utilisé en tant que paramètre des methodes d'ajout de
-	 * messages et détails.
+	 * Ne peut pas être utilisé en tant que paramètre des methodes d'ajout de messages et détails.
 	 */
 	public static final int SHOW_ALL = SHOW_COMPLETION | SHOW_DIAGNOSTIC | SHOW_WARNING | SHOW_ERROR | SHOW_EXCEPTION;
+	
+
 
 	// Compter de blocks d'update...
-	@SuppressWarnings("unchecked")
-	private static ArrayList contextPlugins = new ArrayList();
-	@SuppressWarnings("unchecked")
-	private static final ArrayList listenerList = new ArrayList();
-
-	@SuppressWarnings("unchecked")
-	private static final ArrayList messages = new ArrayList();
+	private static ArrayList<Object> contextPlugins = new ArrayList<Object>();
+	private static final ArrayList<IMessagesListener> listenerList = new ArrayList<IMessagesListener>();
+	
+	private static final ArrayList<Message> messages = new ArrayList<Message>();
 	private static final MessageManager instance = new MessageManager();
 	private static int firstBlockMessage = 0;
-	private SAXReader reader = new SAXReader();
 
-	// /**
-	// * Listener utilisé pour récupérer les log d'un plugin (durant un block
-	// process).
-	// */
-	// private static ILogListener arcadLogListener = new ILogListener() {
-	// public void logging(IStatus status, String plugin) {
-
-	// // Mapping entre séverité et message type.
-	// Message message = addMessage(plugin,status.getSeverity() <<
-	// 1,level_PluginsStatus,status.getMessage());
-
-	// IStatus[] children = status.getChildren();
-	// for (int i=0; i < children.length;i++) {
-	// message.addDetail(children[i].getSeverity() <<
-	// 1,children[i].getMessage());
-	// }
-	// }
-	// };
-
+	
+//	/**
+//	 * Listener utilisé pour récupérer les log d'un plugin (durant un block process).
+//	 */
+//	private static ILogListener arcadLogListener = new ILogListener() {
+//		public void logging(IStatus status, String plugin) {
+//
+//			// Mapping entre séverité et message type.
+//			Message message = addMessage(plugin,status.getSeverity() << 1,level_PluginsStatus,status.getMessage());
+//
+//			IStatus[] children = status.getChildren();
+//			for (int i=0; i < children.length;i++) {
+//				message.addDetail(children[i].getSeverity() << 1,children[i].getMessage());
+//			}
+//		}
+//	}; 
+//	
+	/**
+	 * 
+	 */
 	public MessageManager() {
 		super();
-		reader.setEncoding("ISO-8859-1"); //$NON-NLS-1$
 	}
-
+	
 	public static MessageManager getDefault() {
 		return instance;
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	public static void addListener(IMessagesListener listener) {
 		if (listenerList.indexOf(listener) == -1)
 			listenerList.add(listener);
 	}
 
 	public static void removeListener(IMessagesListener listener) {
-		int i = listenerList.indexOf(listener);
+		int i = listenerList.indexOf(listener); 
 		if (i != -1)
 			listenerList.remove(i);
 	}
-
-	protected static void fireAddMessage(Message message) {
+	
+	protected static void fireAddMessage(Message message, Throwable e) {
 		for (int i = 0; i < listenerList.size(); i++) {
-			((IMessagesListener) listenerList.get(i)).newMessageAdded(message);
+			((IMessagesListener)listenerList.get(i)).newMessageAdded(message, e);
 		}
 	}
 
 	protected static void fireMessageDeleted(Message message) {
 		for (int i = 0; i < listenerList.size(); i++) {
-			((IMessagesListener) listenerList.get(i)).messageDeleted(message);
+			((IMessagesListener)listenerList.get(i)).messageDeleted(message);
 		}
 	}
 
-	protected static void fireMessageChanged(Message message) {
+	public static void fireMessageChanged(Message message) {
 		for (int i = 0; i < listenerList.size(); i++) {
-			((IMessagesListener) listenerList.get(i)).messageChanged(message);
+			((IMessagesListener)listenerList.get(i)).messageChanged(message);
 		}
 	}
-
+	
 	/**
-	 * Supprime tous les messages du gestionnaire. Attention cette suppression
-	 * entraine la perte de toutes les informations de débugage.
+	 * Supprime tous les messages du gestionnaire.
+	 * Attention cette suppression entraine la perte 
+	 * de toutes les informations de débugage.
 	 * 
 	 */
 	public static void clear() {
@@ -160,219 +154,247 @@ public class MessageManager {
 		contextPlugins.clear();
 		fireMessageDeleted(null);
 	}
-
+	
 	/**
-	 * Débute un block de messages. La chaîne blockContext peut définir un
-	 * Message qui sera ajouté an entête du block, si cette chaîne est nulle
-	 * alors aucun message n'est ajouté.
+	 * Débute un block de messages.
+	 * La chaîne blockContext peut définir un Message qui sera ajouté an entête du block, si 
+	 * cette chaîne est nulle alors aucun message n'est ajouté.
 	 * 
-	 * @param plugin
-	 *            le plugin responsable du block de message (peut être null).
-	 * @param blockContext
-	 *            message englobant les messages jusqu'à terminaison du block.
+	 * @param plugin le plugin responsable du block de message (peut être null). 
+	 * @param blockContext message englobant les messages jusqu'à terminaison du block. 
 	 */
 	public static Message beginMessageBlock(String blockContext) {
 		if (contextPlugins.isEmpty())
 			firstBlockMessage = messages.size();
-		// contextPlugins.add(plugin);
-		// if (plugin != null) {
-		// plugin.getLog().addLogListener(arcadLogListener);
-		// }
+
 		if (blockContext != null) {
-			return addMessage(blockContext, MessageDetail.COMPLETION, LEVEL_BETATESTING, CoreLabels
-					.resString("MessageManager.ProcessBegin")); //$NON-NLS-1$
+			return addMessage(blockContext,MessageDetail.COMPLETION,LEVEL_BETATESTING,
+					CoreLabels.resString("MessageManager.ProcessBegin")); //$NON-NLS-1$
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Termine un block et retourne la liste des messages à afficher...
 	 * 
-	 * @param dialogParentShell
+	 * @param dialogParentShell 
 	 */
-	@SuppressWarnings("unchecked")
-	public static ArrayList endMessageBlock(int showParam) {
-		// if (contextPlugins.size() > 0) {
-		// Plugin plugin = (Plugin)contextPlugins.get(contextPlugins.size() -
-		// 1);
-		// contextPlugins.remove(contextPlugins.size() - 1);
-		// if ((plugin != null) && (contextPlugins.indexOf(plugin) == -1)) {
-		// plugin.getLog().removeLogListener(arcadLogListener);
-		// }
-		// }
+	public static ArrayList<Message> endMessageBlock(int showParam) {
 		if (contextPlugins.isEmpty() && (messages.size() > firstBlockMessage)) {
+			
+			ArrayList<Message> filteredMessages = new ArrayList<Message>(messages.size() - firstBlockMessage);
 
-			ArrayList filteredMessages = new ArrayList(messages.size() - firstBlockMessage);
-
-			for (int i = firstBlockMessage; i < messages.size(); i++) {
-				Message message = (Message) messages.get(i);
-				if (message.isVisibleTo(showParam)) {
+			for(int i = firstBlockMessage;i < messages.size(); i++) {
+				Message message = messages.get(i);
+				//SJU: retour homologation defect 1377 (affichage intempestif du dialog)
+				//if (message.isVisibleTo(showParam)) {
+				if ((showParam & message.getMaxDetailsType()) != 0 ) {
 					filteredMessages.add(message);
 				}
 			}
 			if (filteredMessages.size() == 0)
 				return null;
 			return filteredMessages;
+		} else {
+			return null;
 		}
-		return null;
 	}
-
+	
 	/**
-	 * Ajoute un message dans le gestionnaire. (Message visible dans tous les
-	 * modes d'exécution).
-	 * 
-	 * @param command
-	 *            : Commande exécutée
-	 * @param type
-	 *            : Type d'erreur générée (voir MessageDetail)
-	 * @param description
-	 *            : Texte de l'erreur
+	 * Ajoute un message dans le gestionnaire.
+	 * (Message visible dans tous les modes d'exécution).
+	 * @param command : Commande exécutée
+	 * @param type : Type d'erreur générée (voir MessageDetail)
+	 * @param description : Texte de l'erreur
 	 */
-	public static Message addMessage(String command, int type, String description) {
-		return addMessage(command, type, LEVEL_PRODUCTION, description);
+	public static Message addMessage(String command,int type,String description){
+		return addMessage(command,type,LEVEL_PRODUCTION,description);
 	}
 
 	/**
-	 * Ajoute un message dans le gestionnaire. (Message visible uniquement dans
-	 * les modes betatest et développement).
-	 * 
-	 * @param command
-	 *            : Commande exécutée
-	 * @param type
-	 *            : Type d'erreur générée (voir MessageDetail)
-	 * @param description
-	 *            : Texte de l'erreur
+	 * Ajoute un message dans le gestionnaire. (Message visible dans tous les modes d'exécution).
+	 * Le type du message est fixe, donc l'ajout de détails n'influera pas sur le type affiché du message.
+	 * @param command : Commande exécutée
+	 * @param type : Type d'erreur générée (voir MessageDetail)
+	 * @param description : Texte de l'erreur
 	 */
-	public static Message addMessageBeta(String command, int type, String description) {
-		return addMessage(command, type, LEVEL_BETATESTING, description);
+	public static Message addFixedTypeMessage(String command, int type, String description){
+		return addMessage(command,type,LEVEL_PRODUCTION,description,true);
 	}
-
+	
 	/**
-	 * Ajoute un message dans le gestionnaire. (Message visible uniquement dans
-	 * le mode d'exécution développement).
-	 * 
-	 * @param command
-	 *            : Commande exécutée
-	 * @param type
-	 *            : Type d'erreur générée (voir MessageDetail)
-	 * @param description
-	 *            : Texte de l'erreur
+	 * Ajoute un message dans le gestionnaire.
+	 * (Message visible uniquement dans les modes betatest et développement).
+	 * @param command : Commande exécutée
+	 * @param type : Type d'erreur générée (voir MessageDetail)
+	 * @param description : Texte de l'erreur
 	 */
-	public static Message addMessageDev(String command, int type, String description) {
-		return addMessage(command, type, LEVEL_DEVELOPMENT, description);
+	public static Message addMessageBeta(String command,int type,String description){
+		return addMessage(command,type,LEVEL_BETATESTING,description);
 	}
 
 	/**
-	 * Ajoute un message décrivant l'exception. (Message visible uniquement en
-	 * mode BetaTest ou Developpement).
+	 * Ajoute un message dans le gestionnaire.
+	 * (Message visible uniquement dans le mode d'exécution développement).
+	 * @param command : Commande exécutée
+	 * @param type : Type d'erreur générée (voir MessageDetail)
+	 * @param description : Texte de l'erreur
+	 */
+	public static Message addMessageDev(String command,int type,String description){
+		return addMessage(command,type,LEVEL_DEVELOPMENT,description);
+	}
+
+	/**
+	 * Ajoute un message décrivant l'exception.
+	 * (Message visible uniquement en mode BetaTest ou Developpement).
 	 * 
-	 * @param e
-	 *            l'exception associée au message.
+	 * @param e l'exception associée au message.
 	 * @return le messgae qui vient d'être ajouté.
 	 */
 	public static Message addExceptionBeta(Throwable e) {
-		return addException(e, LEVEL_BETATESTING);
+		return addException(e,LEVEL_BETATESTING);
 	}
 
+	//<MR number="2018/00421" version="10.09.11" date="Aug 30, 2018" type="Enh" user="ACL">
+	public static Message addException(Throwable e) {
+		return addException(e,LEVEL_PRODUCTION);
+	}
+	//</MR>
+
 	/**
-	 * Ajout d'un message lié au déclenchement d'une exception.
-	 * 
+	 * Ajout d'un message lié au déclenchement d'un exception.
 	 * @param e
 	 * @param level
 	 */
-	public static Message addException(Throwable e, int level) {
+	public static Message addException(Throwable e,int level) {
+		final String EXCEPTION_THROWN = CoreLabels.resString("MessageManager.ExceptionThrown");
 		String m = e.getLocalizedMessage();
 		if (m == null)
 			m = e.getMessage();
 		if (m == null)
-			m = CoreLabels.resString("MessageManager.ExceptionThrown"); //$NON-NLS-1$
-		Message message = addMessage(m, SHOW_EXCEPTION, level, CoreLabels.resString("MessageManager.ExceptionThrown")); //$NON-NLS-1$
+			m = EXCEPTION_THROWN;
+		Message message = new Message(m,SHOW_EXCEPTION, level, EXCEPTION_THROWN);
+		//<FM number="2011/00454" version="08.12.02" date="9 déc. 2011" user="MLAFON">
+		messages.add(message);
+		fireAddMessage(message,e);
+		//</FM>
+		ByteArrayOutputStream out = null;
 		try {
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			e.printStackTrace(new PrintWriter(out, true));
+			out = new ByteArrayOutputStream();
+			e.printStackTrace(new PrintWriter(out,true));
 			out.flush();
 			String s = out.toString();
 			out.close();
 			if ((s != null) && (s.length() > 0)) {
-				message.addDetail(SHOW_EXCEPTION, s);
+				message.addDetail(SHOW_EXCEPTION,s);
 			}
 		} catch (IOException e1) {
-			message.addDetail(SHOW_EXCEPTION, e1.getLocalizedMessage());
+			message.addDetail(SHOW_EXCEPTION,e1.getLocalizedMessage());
+		} finally {
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
 		}
-		if (level <= LEVEL_BETATESTING)
+		if (level <= LEVEL_BETATESTING) {
 			message.addDate();
+		}
+		fireMessageChanged(message);
 		return message;
 	}
-
+	
 	/**
-	 * Ajout d'un message avec un premier détail. (Seule opération créant
-	 * véritablement un objet Message).
+	 * Log and print an exception at level production.
 	 * 
-	 * @param command
-	 *            Le texte de la commande utilisé ou titre du message.
-	 * @param type
-	 *            Type du premier détail du message (MEssageDetail.*)
-	 * @param level
-	 *            Niveau lisé au niveau d'exécution de la machine LEVEL_*
-	 * @param description
-	 *            Texte du premier détail.
-	 * @return le message créé.
+	 * @param e: an exception
 	 */
-	@SuppressWarnings("unchecked")
-	public static Message addMessage(String command, int type, int level, String description) {
-		Message result = new Message(command, type, level, description);
-		// ML: suppression du filtre en dur...
-		// if (level <= ArcadCorePlugin.getDefault().getMessagesLevel()) {
-		messages.add(result);
-		fireAddMessage(result);
-		// }
-		return result;
+	public static Message addAndPrintException(Throwable e){
+		return addAndPrintException(e, LEVEL_PRODUCTION);
+	}
+	
+	public static Message addAndPrintException(Throwable e, int level){		
+		e.printStackTrace();
+		return addException(e, level);
+	}
+	
+	/**
+	 * Ajout d'un message avec un premier détail.
+	 * (Seule opération créant véritablement un objet Message). 
+	 * 
+	 * @param command Le texte de la commande utilisé ou titre du message. 
+	 * @param type Type du premier détail du message (MEssageDetail.*)
+	 * @param level Niveau lisé au niveau d'exécution de la machine LEVEL_*
+	 * @param description Texte du premier détail.
+	 * @return le message créé.
+	 */	
+	public static Message addMessage(String command,int type,int level,String description){
+		return addMessage(command, type, level, description, false);
+	}
+
+	public static Message addMessage(String command,int type,int level,String description, boolean fixedType){
+		return addMessage(new Message(command,type,level,description,fixedType));
+	}
+	
+	/**
+	 * Ajout d'un message précréé.
+	 * 
+	 * @param msg Le message à ajouter.
+	 * @return
+	 */
+	public static Message addMessage(Message msg) {
+		//ML: suppression du filtre en dur...
+		//if (level <= ArcadCorePlugin.getDefault().getMessagesLevel()) {
+			messages.add(msg);
+			fireAddMessage(msg, null);
+		//}
+		return msg;
 	}
 
 	/**
-	 * 
-	 * @param index
-	 *            : position du message
-	 * @return Renvoit le message situé à la position "index". Si index est
-	 *         inférieur à 0 ou si index est supérieur à la taille du
-	 *         gestionnaire la valeur null est retournée.
+	 *  
+	 * @param index : position du message
+	 * @return Renvoit le message situé à la position "index". Si index est inférieur à 0 ou si index est supérieur à la taille du 
+	 * gestionnaire la valeur null est retournée.  
 	 */
 	public static Message getMessageAt(int index) {
-		if ((index > -1) && (index < messages.size()))
-			return (Message) messages.get(index);
+		if ((index>-1) && (index<messages.size())) {		
+			return (Message)messages.get(index);
+		}
 		return null;
-	}
-
+	}	
+	
 	/**
-	 * Supprime le message situé à la position "index".Si index est inférieur à
-	 * 0 ou si index est supérieur à la taille du gestionnaire aucune
-	 * suppression n'est effectuée
-	 * 
-	 * @param index
-	 *            : position du message à supprimer
+	 * Supprime le message situé à la position "index".Si index est inférieur 
+	 * à 0 ou si index est supérieur à la taille du gestionnaire aucune
+	 * suppression n'est effectuée  
+	 * @param index : position du message à supprimer
 	 */
 	public static void removeMessageAt(int index) {
-		if ((index > -1) && (index < messages.size())) {
-			Message message = (Message) messages.remove(index);
+		if ((index>-1) && (index<messages.size())) {		
+			Message message = (Message)messages.remove(index);
 			fireMessageDeleted(message);
 		}
-	}
-
-	/**
+	}	
+	/** 
 	 * @return Le nombre de message du gestionnaire
 	 */
 	public static int messageCount() {
 		return messages.size();
-	}
-
+	}	
+	
 	public static void print() {
 		for (int i = 0; i < messageCount(); i++) {
-			getMessageAt(i).print();
+			getMessageAt(i).print();	
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public static ArrayList getMessagesList() {
+	/**
+	 * @return
+	 */
+	public static ArrayList<Message> getMessagesList() {
 		return messages;
 	}
 
@@ -386,9 +408,8 @@ public class MessageManager {
 	 *            Liste des messages à exporter (si cette liste est nulle c'est
 	 *            la liste complète qui est utilisée).
 	 */
-	@SuppressWarnings("unchecked")
-	public static void exportMessagesToXMLFile(String fileName, ArrayList messageList) {
-		ArrayList msgs = messageList;
+	public static void exportMessagesToXMLFile(String fileName, ArrayList<Message> messageList) {
+		ArrayList<Message> msgs = messageList;
 		if (messageList == null)
 			msgs = messages;
 
@@ -473,6 +494,7 @@ public class MessageManager {
 		if (document != null) {
 			try {
 				file.write(document.asXML().getBytes());
+				file.close();
 			} catch (IOException e) {
 				addExceptionBeta(e);
 			}
@@ -665,5 +687,26 @@ public class MessageManager {
 	// // addExceptionBeta(e4);
 	// // }
 	// }
+	
+
+	@Override
+	public String getDiagnosisFileName() {
+		return "Message_manager.log";
+	}
+
+	@Override
+	public String getDiagnosisContent() {
+		char ln = Character.LINE_SEPARATOR;
+		StringBuffer content = new StringBuffer();
+		
+		//Copy the array to avoir concurrent modification exception
+		for(Message message : messages){
+			content	.append(message.toString())
+					.append(ln).append(ln); 
+		}
+		
+		return content.toString();
+	}	
+
 
 }

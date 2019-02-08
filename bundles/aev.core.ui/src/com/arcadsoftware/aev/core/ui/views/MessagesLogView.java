@@ -96,6 +96,7 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 		tree.setInput(MessageManager.getMessagesList());
 		GuiFormatTools.setHelp(tree.getViewer().getControl(), IDocProvider.HLP_MESSAGESLOG);
 		tree.getViewer().addDoubleClickListener(new IDoubleClickListener() {
+			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				tree.showDetails();
 			}
@@ -172,21 +173,15 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 			tree.getTree().setFocus();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#newMessageAdded
-	 * (com.arcadsoftware.aev.core.messages.Message)
-	 */
-	public void newMessageAdded(Message message) {
+	@Override
+	public void newMessageAdded(Message message, Throwable e) {
 		if ((tree != null)) {
 
 			// Evite un appel à la méthode refresh depuis un Thread qui n'y
 			// aurais pas accès.
 			try {
 				tree.getViewer().getControl().isVisible();
-			} catch (SWTException e) {
+			} catch (SWTException e1) {
 				return;
 			}
 
@@ -194,25 +189,17 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 			// tree.collapseAll();
 		}
 	}
+	@Override
+	public void newMessageAdded(Message newMessage) {
+		newMessageAdded(newMessage, null);
+	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#messageDeleted(
-	 * com.arcadsoftware.aev.core.messages.Message)
-	 */
+	@Override
 	public void messageDeleted(Message message) {
 		newMessageAdded(message);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#messageChanged(
-	 * com.arcadsoftware.aev.core.messages.Message)
-	 */
+	@Override
 	public void messageChanged(Message message) {
 		newMessageAdded(message);
 	}
