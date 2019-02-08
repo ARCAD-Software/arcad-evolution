@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: FR - Plugin Core Evolution
 Bundle-SymbolicName: com.arcadsoftware.aev.core;singleton:=true
-Bundle-Version: 9.2.2.qualifier
+Bundle-Version: 9.3.1.qualifier
 Bundle-ClassPath: .,
  arpcore.jar
 Bundle-Activator: com.arcadsoftware.aev.core.EvolutionCorePlugin
