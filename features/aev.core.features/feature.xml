@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.arcadsoftware.aev.core.features"
-      label="ARCAD-Evolution - Core Features"
+      label="ARCAD-Evolution Cores"
       version="9.3.1.qualifier"
       provider-name="ARCAD-Software">
 
@@ -18,13 +18,12 @@
    </license>
 
    <requires>
-      <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.core.filesystem" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.4.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.forms"/>
-      <import plugin="org.eclipse.core.filesystem"/>
-      <import plugin="org.eclipse.ui.ide"/>
    </requires>
 
    <plugin
@@ -49,6 +48,20 @@
 
    <plugin
          id="com.arcadsoftware.aev.core.services"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.lang3"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.servicemix.bundles.dom4j"
          download-size="0"
          install-size="0"
          version="0.0.0"

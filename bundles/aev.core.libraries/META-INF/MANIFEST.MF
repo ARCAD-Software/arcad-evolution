@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ARCAD Evolution API
+Bundle-Name: ARCAD-Evolution API libraries
 Bundle-SymbolicName: com.arcadsoftware.afs.ae.core
 Bundle-Version: 2.8.1.qualifier
 Bundle-Vendor: ARCAD Software

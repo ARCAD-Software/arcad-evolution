@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ARCAD Core UI Plugin Evolution - RCP
+Bundle-Name: ARCAD-Evolution Core UI RCP
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui.rcp
 Bundle-Version: 9.3.1.qualifier
 Bundle-Activator: com.arcadsoftware.aev.core.ui.rcp.AEVRCPPlugin

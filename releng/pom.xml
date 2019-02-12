@@ -12,7 +12,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>platform</module>
-		<module>update</module>
+		<module>aev.platform</module>
+		<module>aev.update</module>
 	</modules>
 </project>
