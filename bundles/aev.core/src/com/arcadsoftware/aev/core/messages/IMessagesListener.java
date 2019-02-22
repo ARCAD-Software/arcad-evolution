@@ -9,16 +9,17 @@ package com.arcadsoftware.aev.core.messages;
 /**
  * 
  * @author mlafon
- * @version 1.0.0
+ * @version 1.1.0
  */
 public interface IMessagesListener {
 
 	/**
-	 * Un nouveau message a été ajouté.
+	 * A new messages has been added to ARCAD Messages list.
 	 * @param message
+	 * @param e and exception, can be null.
 	 */
-	public void newMessageAdded(Message message);
 	public void newMessageAdded(Message message, Throwable e);
+	public void newMessageAdded(Message message);
 
 
 	/**
