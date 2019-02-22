@@ -89,6 +89,7 @@ public class EvolutionCorePlugin extends ArcadPlugin implements IHelperRessource
 		}
 	}
 
+	@Override
 	public String resString(String key) {
 		return getResourceString(key);
 	}

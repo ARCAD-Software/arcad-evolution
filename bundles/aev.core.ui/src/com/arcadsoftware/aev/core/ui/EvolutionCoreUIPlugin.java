@@ -269,6 +269,7 @@ public class EvolutionCoreUIPlugin extends ArcadPlugin implements IHelperRessour
 		return plugin.getDialogSettings().getSection(sectionName);
 	}
 
+	@Override
 	public String resString(String key) {
 		return getResourceString(key);
 	}
