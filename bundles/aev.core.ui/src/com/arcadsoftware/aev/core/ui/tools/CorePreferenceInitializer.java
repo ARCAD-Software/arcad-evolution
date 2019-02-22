@@ -13,7 +13,9 @@ import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 /**
  * @author administrateur
  * 
+ * TODO: Delete class entirely if not used?
  */
+@Deprecated
 public class CorePreferenceInitializer extends AbstractPreferenceInitializer {
 
 	/**

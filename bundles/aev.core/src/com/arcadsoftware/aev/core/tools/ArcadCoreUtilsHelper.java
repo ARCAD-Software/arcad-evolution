@@ -21,7 +21,8 @@ public class ArcadCoreUtilsHelper implements IHelper {
         super();
     }
 
-    public void beginAction(){
+    @Override
+	public void beginAction(){
 		Shell shell = EvolutionCorePlugin.getDefault().getPluginShell();
 		if (shell!=null){
 			if (shell.getDisplay()!=null){
@@ -31,6 +32,7 @@ public class ArcadCoreUtilsHelper implements IHelper {
 			}				
 		}
     }
+    @Override
 	public void endAction(){
 		Shell shell = EvolutionCorePlugin.getDefault().getPluginShell();
 		if (shell!=null){
@@ -39,10 +41,12 @@ public class ArcadCoreUtilsHelper implements IHelper {
 		}
 	}	
 
+    @Override
 	public String getBasedLocation(){
 	  return EvolutionCorePlugin.getDefault().getStateLocation().toString();	    
 	}
 
+    @Override
 	public String getCompliantFileName() {
 		return EvolutionCorePlugin.getCompliantFileName();
 	}
