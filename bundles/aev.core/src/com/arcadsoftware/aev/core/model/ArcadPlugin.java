@@ -5,6 +5,7 @@
 
 package com.arcadsoftware.aev.core.model;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,19 +29,23 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import com.arcadsoftware.aev.core.messages.MessageManager;
+import com.arcadsoftware.aev.core.tools.IHelperImage;
 
 /**
  * @author MD
  * 
  */
-public abstract class ArcadPlugin extends AbstractUIPlugin {
+public abstract class ArcadPlugin extends AbstractUIPlugin implements IHelperImage {
 	
 	protected Hashtable<String,ImageDescriptor> imageDescriptorRegistry;
 	protected ImageRegistry imageRegistry;
 	protected FontRegistry fontRegistry;
 	protected ColorRegistry colorRegistry;
 
-	protected static final String ICON_PATH = "icons/"; //$NON-NLS-1$;
+	protected static final String ICON_PATH;
+	static 	{
+		ICON_PATH = "icons" + File.separatorChar;//$NON-NLS-1$
+	}	
 
 	private class PluginShellProvider implements IShellProvider {
 		ArcadPlugin plugin;
@@ -49,6 +54,7 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 			this.plugin = plugin;
 		}
 
+		@Override
 		public Shell getShell() {
 			return plugin.getPluginShell();
 		}
@@ -200,6 +206,7 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 	 * @param key
 	 * @return
 	 */
+	@Override
 	public Image getImage(String key) {
 		if ((key == null) || (key.length() == 0)) {
 			return null;
@@ -249,6 +256,7 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 	 * @return
 	 * @see #putImageInRegistry(String, String)
 	 */
+	@Override
 	public ImageDescriptor getImageDescriptor(String key) {
 		if (imageRegistry == null) {
 			imageRegistry = new ImageRegistry();
@@ -267,6 +275,7 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 		return null;
 	}
 
+	@Override
 	public Image getCompositeImage(String key, String decoKey) {
 		String id = key.concat("_").concat(decoKey); //$NON-NLS-1$
 		getCompositeImageDescriptor(key, decoKey);
@@ -285,6 +294,7 @@ public abstract class ArcadPlugin extends AbstractUIPlugin {
 	}
 
 
+	@Override
 	public ImageDescriptor getCompositeImageDescriptor(String key, String decoKey) {
 		String id = key.concat("_").concat(decoKey); //$NON-NLS-1$
 		DecoratorImageDescriptor deco = (DecoratorImageDescriptor) imageDescriptorRegistry.get(id);
