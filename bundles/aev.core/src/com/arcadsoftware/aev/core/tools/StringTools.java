@@ -453,4 +453,11 @@ public class StringTools {
 	public static boolean isBlank(CharSequence arg0) {
 		return StringUtils.isBlank(arg0);
 	}
+	
+	//<MR number="2019/00069" version="11.00.04" date="Feb 27, 2019" type="Bug" user="ACL">
+	public static String stripEnd(String str, String stripChars) {
+		return StringUtils.stripEnd(str, stripChars);	
+	}
+	//</MR>
+	
 }
