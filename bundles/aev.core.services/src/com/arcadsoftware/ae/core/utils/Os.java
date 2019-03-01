@@ -7,14 +7,13 @@
 package com.arcadsoftware.ae.core.utils;
 import java.util.Locale;
 
-import org.apache.tools.ant.BuildException;
-	/**
-	 * This class also encapsulates methods which allow Files to be
-	 * referred to using abstract path names which are translated to native
-	 * system file paths at runtime as well as copying files or setting
-	 * their last modification time.
-	 *
-	 */
+/**
+ * This class also encapsulates methods which allow Files to be
+ * referred to using abstract path names which are translated to native
+ * system file paths at runtime as well as copying files or setting
+ * their last modification time.
+ *
+ */
 public class Os {
 
     private static final String OS_NAME =
@@ -161,7 +160,7 @@ public class Os {
      * @throws BuildException if there is an error.
      * @see Os#setFamily(String)
      */
-    public boolean eval() throws BuildException {
+    public boolean eval() throws RuntimeException {
         return isOs(family, name, arch, version);
     }
 
@@ -280,7 +279,7 @@ public class Os {
                 } else if (family.equals(FAMILY_VMS)) {
                     isFamily = OS_NAME.indexOf(FAMILY_VMS) > -1;
                 } else {
-                    throw new BuildException(
+                    throw new RuntimeException(
                         "Don\'t know how to detect os family \""
                         + family + "\"");
                 }

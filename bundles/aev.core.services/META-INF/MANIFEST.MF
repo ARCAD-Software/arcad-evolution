@@ -5,8 +5,7 @@ Bundle-SymbolicName: com.arcadsoftware.aev.core.services
 Bundle-Version: 9.3.1.qualifier
 Bundle-Vendor: ARCAD Software
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: com.arcadsoftware.ae.core.ant,
- com.arcadsoftware.ae.core.exceptions,
+Export-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.hsqldb,
  com.arcadsoftware.ae.core.logger,
  com.arcadsoftware.ae.core.logger.formatter,
@@ -20,8 +19,7 @@ Export-Package: com.arcadsoftware.ae.core.ant,
  com.arcadsoftware.ae.core.translation,
  com.arcadsoftware.ae.core.utils,
  com.arcadsoftware.ae.core.utils.io
-Import-Package: org.apache.tools.ant,
- org.dom4j,
+Import-Package: org.dom4j,
  org.dom4j.io,
  org.springframework.core,
  org.springframework.context.support,
