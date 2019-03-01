@@ -4,7 +4,7 @@ Bundle-Name: ARCAD-Evolution Core Services
 Bundle-SymbolicName: com.arcadsoftware.aev.core.services
 Bundle-Version: 9.3.1.qualifier
 Bundle-Vendor: ARCAD Software
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: com.arcadsoftware.ae.core.ant,
  com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.hsqldb,
@@ -22,9 +22,8 @@ Export-Package: com.arcadsoftware.ae.core.ant,
  com.arcadsoftware.ae.core.utils.io
 Import-Package: org.apache.tools.ant,
  org.dom4j,
- org.dom4j.io
-Bundle-ClassPath: .,
- libs/spring-beans.jar,
- libs/spring-context.jar,
- libs/spring-core.jar,
- libs/spring-expression.jar
+ org.dom4j.io,
+ org.springframework.core,
+ org.springframework.context.support,
+ org.springframework.beans
+Bundle-ClassPath: .

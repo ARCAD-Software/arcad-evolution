@@ -5,8 +5,6 @@ import java.io.File;
 
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-
-
 public abstract class AbstractFactory {
 	protected static File arcadHomeFolder = null;
 	private FileSystemXmlApplicationContext ctx;
