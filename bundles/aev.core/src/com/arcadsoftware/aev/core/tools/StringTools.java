@@ -19,10 +19,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * @author MD
@@ -460,4 +462,29 @@ public class StringTools {
 	}
 	//</MR>
 	
+	public static int[] stringToIntArray(List<String> strings){
+		return stringToIntArray(strings.toArray(new String[strings.size()]));
+	}
+	
+	public static int[] stringToIntArray(String[] strings){
+		int[] ints = new int[strings.length];
+		for(int i = 0; i < strings.length; i++){			
+			ints[i] = NumberUtils.toInt(strings[i]);
+		}
+		
+		return ints;
+	}
+	
+	public static String[] intToStringArray(List<Integer> ints){
+		return intToStringArray(ints.toArray(new Integer[ints.size()]));
+	}
+	
+	public static String[] intToStringArray(Integer[] ints){
+		String[] strings = new String[ints.length];
+		for(int i = 0; i < ints.length; i++){
+			strings[i] = String.valueOf(ints[i]);
+		}
+		
+		return strings;
+	}
 }
