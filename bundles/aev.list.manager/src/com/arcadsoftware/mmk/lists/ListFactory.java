@@ -9,7 +9,7 @@ import com.arcadsoftware.ae.core.utils.AbstractFactory;
 
 /**
  * Classe de gestion des chargements via Spring.<br>
- * Cette classe impl‚mente les m‚canismes n‚cessaires … la prise
+ * Cette classe implÃ©mente les mÃ©canismes nÃ©cessaires Ã  la prise
  * en charge du chargement des classes via le framework Spring.<br>
  * Cette classe est un singleton.
  * @author MD

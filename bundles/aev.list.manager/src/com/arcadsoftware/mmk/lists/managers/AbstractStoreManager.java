@@ -34,10 +34,10 @@ public abstract class AbstractStoreManager extends AbstractLoggedObject{
 	
 	
 	/**
-	 * MÇthode permettant l'enregistrement d'une ligne de contenu.<br>
-	 * @param item AbstractListItem : item Ö enregistrer. 
-	 * @return boolean : Retourne <code><b>true</b></code> si l'opÇration 
-	 *                   s'est effectuÇe avec succäs et 
+	 * M√©thode permettant l'enregistrement d'une ligne de contenu.<br>
+	 * @param item AbstractListItem : item √† enregistrer. 
+	 * @return boolean : Retourne <code><b>true</b></code> si l'op√©ration 
+	 *                   s'est effectu√©e avec succ√®s et 
 	 *                   <code><b>false</b></code> sinon.
 	 */
 	public abstract boolean saveItem() throws ArcadException ;

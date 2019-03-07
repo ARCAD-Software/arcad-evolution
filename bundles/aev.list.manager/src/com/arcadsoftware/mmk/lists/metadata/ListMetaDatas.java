@@ -166,7 +166,7 @@ public class ListMetaDatas  {
 	}
 
 	public void valid () throws ArcadException {
-		//TODO [LM] Validation des m‚tadatas  		
+		//TODO [LM] Validation des mÃ©tadatas  		
 	}
 	
 	

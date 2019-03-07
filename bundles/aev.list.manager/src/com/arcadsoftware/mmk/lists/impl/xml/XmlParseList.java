@@ -104,7 +104,7 @@ public class XmlParseList extends AbstractLoggedObject{
 	            } else if(eventType == MXParser.END_TAG) {
 	            	if (tag.equals(LST_TAG_METADATAS.getValue())) {
 	            		//TODO [LM] c'est le bon endroit pour valider les
-	            		//m‚tadatas stock‚es en terme d'Id et de version.
+	            		//mÃ©tadatas stockÃ©es en terme d'Id et de version.
 	            		if (xmlList.getList().getMetadatas().count() ==
 	            			xmlList.getList().getMetadatas().getFixedMetadataCount()) {
 	            			xmlList.getList().setMetadatas(storedMetadata);

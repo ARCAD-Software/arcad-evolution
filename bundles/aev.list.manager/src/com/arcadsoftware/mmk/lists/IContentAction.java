@@ -41,7 +41,7 @@ public interface IContentAction {
 	public int clearItems() throws ArcadException;	
 	
 	/**
-	 * Extrait les Çlements de la liste en fonction de la requàte d'extration
+	 * Extrait les √©lements de la liste en fonction de la requ√®te d'extration
 	 * et les ajoute dans la liste cible. 
 	 * @param extractQuery
 	 * @param targetList
@@ -57,8 +57,8 @@ public interface IContentAction {
 			                    boolean replaceIfExists)  throws ArcadException;
 	
 	/**
-	 * Ne conserve dans la liste que les donnÇes correspondantes Ö la
-	 * requàte d'extraction.
+	 * Ne conserve dans la liste que les donn√©es correspondantes √† la
+	 * requ√®te d'extraction.
 	 * @param extractQuery
 	 * @return
 	 */

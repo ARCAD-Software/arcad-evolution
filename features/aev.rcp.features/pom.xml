@@ -8,6 +8,6 @@
 		<version>9.3.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>com.arcadsoftware.aev.core.features</artifactId>
+	<artifactId>com.arcadsoftware.aev.rcp.features</artifactId>
 	<packaging>eclipse-feature</packaging>
 </project>

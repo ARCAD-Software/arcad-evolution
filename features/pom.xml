@@ -13,5 +13,7 @@
 
 	<modules>
 		<module>aev.core.features</module>
+		<module>aev.rcp.features</module>
+		<module>aev.rap.features</module>
 	</modules>
 </project>

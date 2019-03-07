@@ -21,14 +21,9 @@ public abstract class AbstractList  extends AbstractLoggedObject
 implements IContentAction{
 	
 	public static final String MODULE_NAME = "LM";
-	
-	/**
-	 * propri‚t‚s de description de la liste
-	 */		
+
 	private ListHeader header = new ListHeader();
-	/**
-	 * Propri‚t‚s de gestion du contenu
-	 */
+
 	private ListMetaDatas metadatas;
 	private StoreItem storeItem = new StoreItem(); 			
 	private AbstractFiller filler = null;	
@@ -82,14 +77,12 @@ implements IContentAction{
 	}
 	
 	/**
-	 * Renvoit le nombre d'‚l‚ment parcouru
 	 * @return the browsedElementCount int : 
 	 */
 	public int getBrowsedElementCount() {
 		return browsedElementCount;
 	}	
 	/**
-	 * Renvoit 
 	 * @return the header ListHeader : 
 	 */
 	public ListHeader getHeader() {
@@ -174,11 +167,11 @@ implements IContentAction{
 	 *                    Gestion du remplissage de la liste
 	 ------------------------------------------------------------------*/
 	/**
-	 * Cette m‚thode permet l'ajout d'un objet quelconque comme item
+	 * Cette mÃ©thode permet l'ajout d'un objet quelconque comme item
 	 * de la liste.<br> 
-	 * La conversion est r‚aliser … l'aide de la m‚thode {@link #toListItem(Object)
+	 * La conversion est rÃ©aliser Ã  l'aide de la mÃ©thode {@link #toListItem(Object)
 	 * toListItem(Object)} 
-	 * @param Object element : El‚ment … ajouter dans la liste.
+	 * @param Object element : ElÃ©ment Ã  ajouter dans la liste.
 	 */
 	public void saveItem(){
 		try {
@@ -219,9 +212,9 @@ implements IContentAction{
 	
 	
 	/**
-	 * Cette m‚thode permet de d‚finir la description des donn‚es
+	 * Cette mÃ©thode permet de dÃ©finir la description des donnÃ©es
 	 * de la liste.<br>
-	 * C'est dans cette m‚thode que vous d‚finirez 
+	 * C'est dans cette mÃ©thode que vous dÃ©finirez 
 	 *
 	 */		
 	protected void createMetaDatas() {
@@ -290,10 +283,10 @@ implements IContentAction{
 	}	
 	
 	/**
-	 * Cette m‚thode permet de d‚finir la conversion de donn‚es
-	 * entre l'objet <code>element</code> pass‚ en paramŠtre
-	 * et l'objet StoreItem charg‚ du stockage temporaire.<br> 
-	 * @param element : Objet … convertir.
+	 * Cette mÃ©thode permet de dÃ©finir la conversion de donnÃ©es
+	 * entre l'objet <code>element</code> passÃ© en paramÃ¨tre
+	 * et l'objet StoreItem chargÃ© du stockage temporaire.<br> 
+	 * @param element : Objet Ã  convertir.
 	 */
 	public StoreItem toStoreItem(Object element) {
 		if (getStoreItemManager()!=null)
@@ -301,10 +294,6 @@ implements IContentAction{
 		return null;		
 	}
 	
-	
-	/*-----------------------------------------------------------------
-	 *        Gestion des suppressions d'‚l‚ment  de la liste
-	 ------------------------------------------------------------------*/
 	public AbstractContentManager getContentManager(){
 		if (contentManager==null) {
 			contentManager = createContentManager();
@@ -343,13 +332,10 @@ implements IContentAction{
 		return false;
 	}
 		
-	/*-----------------------------------------------------------------
-	 *        Gestion des ajouts d'‚l‚ments  de la liste
-	 ------------------------------------------------------------------*/
 	/**
-	 * Ajout d'‚l‚ment … partir d'un objet de remplissage.<br>
-	 * Cette m‚thode utilise le parcours d'‚l‚ments sp‚cifiques fournit
-	 * par l'objet filler pass‚ en paramŠtre.
+	 * Ajout d'Ã©lÃ©ment Ã  partir d'un objet de remplissage.<br>
+	 * Cette mÃ©thode utilise le parcours d'Ã©lÃ©ments spÃ©cifiques fournit
+	 * par l'objet filler passÃ© en paramÃ¨tre.
 	 * @param filler AbstractFiller :	 
 	 * @param checkIfExists boolean : 
 	 * @param replaceIfExists boolean :	  
@@ -406,9 +392,6 @@ implements IContentAction{
 		return -1;	
 	}
 
-	/*-----------------------------------------------------------------
-	 *        Gestion des suppression d'‚l‚ments  de la liste
-	 ------------------------------------------------------------------*/		
 	public int removeItems(StoreItem[] items) {
 		contentManager = getContentManager();
 		if (contentManager!=null) {
@@ -472,9 +455,7 @@ implements IContentAction{
 		}
 		return -1;		
 	}	
-	/*-----------------------------------------------------------------
-	 *        Gestion des mise … jour d'‚l‚ments  de la liste
-	 ------------------------------------------------------------------*/
+
 	public int updateItems(StoreItem[] items) {
 		contentManager = getContentManager();
 		if (contentManager!=null) {
@@ -514,9 +495,6 @@ implements IContentAction{
 		return -1;
 	}	
 	
-	/*-----------------------------------------------------------------
-	 *        Gestion des extractions d'‚l‚ments  de la liste
-	 ------------------------------------------------------------------*/
 	public int extractItems(String extractQuery) {
 		contentManager = getContentManager();
 		if (contentManager!=null) {
@@ -551,10 +529,7 @@ implements IContentAction{
 		}
 		return -1;
 	}
-		
-	/*-----------------------------------------------------------------
-	 *        Gestion des op‚ration diverses sur les listes
-	 ------------------------------------------------------------------*/	
+
 	public int removeDuplicate() {
 		return removeDuplicate("");
 	}
@@ -627,12 +602,6 @@ implements IContentAction{
 		return -1;
 	}		
 	
-	/*-----------------------------------------------------------------
-	 *        Gestion des op‚ration ensemblistes sur les listes
-	 ------------------------------------------------------------------*/	
-	/* (non-Javadoc)
-	 * @see com.arcadsoftware.mmk.lists.impl.xml.IContentAction#merge(com.arcadsoftware.mmk.lists.AbstractList, com.arcadsoftware.mmk.lists.AbstractList, boolean, boolean)
-	 */
 	public int merge(AbstractList opList, AbstractList resList, 
 			         boolean checkIfExists, boolean replaceIfExists) {
 		contentManager = getContentManager();
@@ -652,9 +621,6 @@ implements IContentAction{
 		return -1;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.arcadsoftware.mmk.lists.impl.xml.IContentAction#substract(com.arcadsoftware.mmk.lists.AbstractList, com.arcadsoftware.mmk.lists.AbstractList, boolean, boolean)
-	 */
 	public int substract(AbstractList opList, 
 			             AbstractList resList, 
 			             boolean checkIfExists, boolean replaceIfExists) {
@@ -723,10 +689,6 @@ implements IContentAction{
 	}	
 
 	
-	/**
-	 * M‚thode permettant la cr‚ation d'une liste.
-	 * @return
-	 */
 	public AbstractList cloneList(){		
 		AbstractList l =createCloneList();
 		l.setMetadatas(getMetadatas().duplicate());
@@ -734,30 +696,26 @@ implements IContentAction{
 		return l;
 	}	
 	
-	
-	/*-----------------------------------------------------------------
-	 *                  D‚claration des m‚thodes abstraites 
-	 ------------------------------------------------------------------*/
 	/**
-	 * Cette m‚thode permet de d‚finir le StoreManager … utiliser
-	 * par la liste pour enregistrer les donn‚es en provenance
+	 * Cette mÃ©thode permet de dÃ©finir le StoreManager Ã  utiliser
+	 * par la liste pour enregistrer les donnÃ©es en provenance
 	 * d'un objet filler.
-	 * @return AbstractStoreManager : StoreManager … utiliser
+	 * @return AbstractStoreManager : StoreManager Ã  utiliser
 	 */
 	public abstract AbstractStoreManager createStoreManager();	
 	/**
-	 * Cette m‚thode permet de d‚finir le StoreManager … utiliser
-	 * par la liste pour enregistrer les donn‚es en provenance
+	 * Cette mÃ©thode permet de dÃ©finir le StoreManager Ã  utiliser
+	 * par la liste pour enregistrer les donnÃ©es en provenance
 	 * d'un objet filler.
-	 * @return AbstractStoreManager : StoreManager … utiliser
+	 * @return AbstractStoreManager : StoreManager Ã  utiliser
 	 */
 	public abstract AbstractContentManager createContentManager();		
 	
 	/**
-	 * Cette m‚thode permet de d‚finir le StoreManager … utiliser
-	 * par la liste pour enregistrer les donn‚es en provenance
+	 * Cette mÃ©thode permet de dÃ©finir le StoreManager Ã  utiliser
+	 * par la liste pour enregistrer les donnÃ©es en provenance
 	 * d'un objet filler.
-	 * @return AbstractStoreManager : StoreManager … utiliser
+	 * @return AbstractStoreManager : StoreManager Ã  utiliser
 	 */
 	public abstract AbstractStoreItemManager createStoreItemManager(AbstractList list);		
 	
@@ -778,15 +736,5 @@ implements IContentAction{
 	public void setStoreItemInitialized(boolean storeItemInitialized) {
 		this.storeItemInitialized = storeItemInitialized;
 	}
-
-
-
-
-
-
-
-
-
-	
 }
 

@@ -67,6 +67,11 @@
 					<excludes>
 						<plugin id="org.apache.commons.lang3" />
 						<plugin id="org.apache.servicemix.bundles.dom4j" />
+						<plugin id="org.apache.servicemix.bundles.spring-beans" />
+						<plugin id="org.apache.servicemix.bundles.spring-context" />
+						<plugin id="org.apache.servicemix.bundles.spring-core" />
+						<plugin id="org.apache.servicemix.bundles.spring-expression" />
+						<plugin id="net.sf.jmimemagic" />
 					</excludes>
 				</configuration>
 			</plugin>

@@ -48,10 +48,10 @@ public class DBConnector {
 		}	
 		
 		/**
-		 * MÇthode d'initalisation et de fourniture d'une connection jdbc
+		 * M√©thode d'initalisation et de fourniture d'une connection jdbc
 		 * @return Connection connexion jdbc ou null si une erreur est survenue
-		 * @throws ExecException - si le driver n'est pas trouvÇ<br>
-		 *                       - si une erreur s'est produite lors de la crÇation de la connexion
+		 * @throws ExecException - si le driver n'est pas trouv√©<br>
+		 *                       - si une erreur s'est produite lors de la cr√©ation de la connexion
 		 */
 		public Connection getConnection()  throws ArcadException {
 			if (connection==null){
@@ -101,7 +101,7 @@ public class DBConnector {
 	        try {
 				st = getConnection().prepareStatement(sql);
 				for (int i=0;i<data.length;i++) {
-					st.setString(i+1, data[i]); // 1 => premier ? dans la requàte
+					st.setString(i+1, data[i]); // 1 => premier ? dans la requ√®te
 				}
 				count = st.executeUpdate();
 		        st.close();			
@@ -119,7 +119,7 @@ public class DBConnector {
 	        try {
 	        	st = getConnection().prepareStatement(sql);
 				for (int i=0;i<data.length;i++) {
-					st.setString(i+1, data[i]); // 1 => premier ? dans la requàte
+					st.setString(i+1, data[i]); // 1 => premier ? dans la requ√®te
 				}	        	
 				result = st.executeQuery();    // run the query
 		        st.close();			
@@ -132,7 +132,6 @@ public class DBConnector {
 	    
 	    
 	    public synchronized void close() throws SQLException {
-	    	// TODO Faire un SHUTDOWN explicite si nÇcessaire.
 	    	connection.close();
 	    }
 
