@@ -65,6 +65,7 @@
 				</executions>
 				<configuration>
 					<excludes>
+						<plugin id="org.apache.commons.io" />
 						<plugin id="org.apache.commons.lang3" />
 						<plugin id="org.apache.servicemix.bundles.dom4j" />
 						<plugin id="org.apache.servicemix.bundles.spring-beans" />
