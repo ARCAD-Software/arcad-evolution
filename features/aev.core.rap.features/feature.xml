@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.arcadsoftware.aev.rap.features"
+      label="ARCAD-Evolution RAP"
+      version="9.3.1.qualifier"
+      provider-name="ARCAD-Software">
+
+   <description>
+      Contains the ARCAD Evolution RCP bundle and its dependencies.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="com.arcadsoftware.aev.core.features"
+         version="0.0.0"/>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="com.arcadsoftware.aev.core.ui"/>
+      <import plugin="com.arcadsoftware.aev.core"/>
+      <import plugin="org.eclipse.rap.ui" version="2.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.rap.ui.forms" version="2.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.rap.rwt.supplemental.filedialog" version="2.0.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="com.arcadsoftware.aev.core.ui.rap"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

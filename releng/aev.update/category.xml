@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
+   <feature id="com.arcadsoftware.aev.core.features" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   <feature id="com.arcadsoftware.aev.rap.features" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   <feature id="com.arcadsoftware.aev.rcp.features" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
    <bundle id="com.arcadsoftware.afs.ae.core" version="0.0.0"/>
    <bundle id="com.arcadsoftware.aev.core" version="0.0.0"/>
    <bundle id="com.arcadsoftware.aev.core.source" version="0.0.0"/>
@@ -11,4 +20,5 @@
    <bundle id="com.arcadsoftware.aev.core.ui.rcp.source" version="0.0.0"/>
    <bundle id="com.arcadsoftware.aev.core.services" version="0.0.0"/>
    <bundle id="com.arcadsoftware.aev.core.services.source" version="0.0.0"/>
+   <category-def name="aev_features" label="ARCAD-Evolution features"/>
 </site>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.arcadsoftware.aev.rcp.features"
+      label="ARCAD-Evolution RCP"
+      version="9.3.1.qualifier"
+      provider-name="ARCAD-Software">
+
+   <description>
+      Contains the ARCAD Evolution RCP bundle and its dependencies.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="com.arcadsoftware.aev.core.features"
+         version="0.0.0"/>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="com.arcadsoftware.aev.core"/>
+      <import plugin="com.arcadsoftware.aev.core.ui"/>
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.apache.commons.io"/>
+   </requires>
+
+   <plugin
+         id="com.arcadsoftware.aev.core.ui.rcp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.jmimemagic"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
