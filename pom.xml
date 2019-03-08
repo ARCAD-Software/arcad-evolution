@@ -72,6 +72,7 @@
 						<plugin id="org.apache.servicemix.bundles.spring-context" />
 						<plugin id="org.apache.servicemix.bundles.spring-core" />
 						<plugin id="org.apache.servicemix.bundles.spring-expression" />
+						<plugin id="org.ops4j.pax.logging.pax-logging-api" />
 						<plugin id="net.sf.jmimemagic" />
 					</excludes>
 				</configuration>

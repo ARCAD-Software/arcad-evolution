@@ -87,4 +87,11 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.ops4j.pax.logging.pax-logging-api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
