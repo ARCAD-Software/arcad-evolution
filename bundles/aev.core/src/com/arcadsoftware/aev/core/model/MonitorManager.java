@@ -12,14 +12,12 @@ import java.util.Iterator;
  */
 public class MonitorManager {
 
-	@SuppressWarnings("unchecked")
-	protected ArrayList monitors;
+	protected ArrayList<IMonitor> monitors;
 	protected boolean verbose = false;
 
-	@SuppressWarnings("unchecked")
 	public MonitorManager() {
 		super();
-		monitors = new ArrayList();
+		monitors = new ArrayList<IMonitor>();
 	}
 
 	public MonitorManager(boolean verbose) {
@@ -27,7 +25,6 @@ public class MonitorManager {
 		this.verbose = verbose;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addMonitor(IMonitor monitor) {
 		if (monitors.indexOf(monitor) == -1)
 			monitors.add(monitor);
@@ -69,8 +66,7 @@ public class MonitorManager {
 		return mons;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Iterator iterator() {
+	public Iterator<IMonitor> iterator() {
 		return monitors.iterator();
 	}
 }

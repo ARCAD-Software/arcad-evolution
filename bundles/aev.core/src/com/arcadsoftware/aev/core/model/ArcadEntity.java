@@ -6,9 +6,6 @@
  */
 package com.arcadsoftware.aev.core.model;
 
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Platform;
-
 import com.arcadsoftware.aev.core.collections.ArcadCollection;
 import com.arcadsoftware.aev.core.collections.IArcadCollectionItem;
 import com.arcadsoftware.aev.core.tools.StringTools;
@@ -20,7 +17,7 @@ import com.arcadsoftware.aev.core.tools.StringTools;
  *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
  *         commentaires
  */
-public abstract class ArcadEntity implements IArcadCollectionItem, IAdaptable, ITagable {
+public abstract class ArcadEntity implements IArcadCollectionItem, ITagable {
 
 	protected ArcadCollection lastParent;
 	protected int level = 1;
@@ -107,12 +104,6 @@ public abstract class ArcadEntity implements IArcadCollectionItem, IAdaptable, I
 
 	protected boolean read() {
 		return false;
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public Object getAdapter(Class adapter) {
-		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
 	@Override
