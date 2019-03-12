@@ -21,11 +21,18 @@ public abstract class AbstractFactory {
 	
 	protected void initialize(){
 		doBeforeInitializing();
-		if (getExtensionFolder()!=null) {
-			Utils.setUrls(getExtensionFolder());
-		}			
+		
+		String extensionFolder = getExtensionFolder(); 
+		if (extensionFolder != null) {
+			Utils.setUrls(extensionFolder);
+		}
+		
 		ctx = new FileSystemXmlApplicationContext(getConfigurationFiles());
+		
+		doAfterInitializing();
 	}
+	
+	protected void doAfterInitializing() {}
 	
 	protected String[] getConfigurationFiles() {
 		return new String[]{getConfigurationFile()};
