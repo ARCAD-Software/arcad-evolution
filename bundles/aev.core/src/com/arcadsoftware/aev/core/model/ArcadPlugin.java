@@ -5,7 +5,6 @@
 
 package com.arcadsoftware.aev.core.model;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,10 +41,7 @@ public abstract class ArcadPlugin extends AbstractUIPlugin implements IHelperIma
 	protected FontRegistry fontRegistry;
 	protected ColorRegistry colorRegistry;
 
-	protected static final String ICON_PATH;
-	static 	{
-		ICON_PATH = "icons" + File.separatorChar;//$NON-NLS-1$
-	}	
+	protected static final String ICON_PATH = "icons/";
 
 	private class PluginShellProvider implements IShellProvider {
 		ArcadPlugin plugin;
