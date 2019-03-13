@@ -7,6 +7,7 @@
 package com.arcadsoftware.aev.core.ui.dialogs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -67,11 +68,11 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 		return MessageManager.addMessage(command, type, level, description);
 	}
 
-	private ArrayList<Message> messages;
+	private List<Message> messages;
 	private MessagesTreeViewer messagesTree;
 	private int levelFilter;
 
-	public MessageDialog(Shell parentShell, ArrayList<Message> messages, int levelFilter) {
+	public MessageDialog(Shell parentShell, List<Message> messages, int levelFilter) {
 		super(parentShell);
 		this.messages = messages;
 		this.levelFilter = levelFilter;
