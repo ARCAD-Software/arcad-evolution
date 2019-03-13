@@ -12,7 +12,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>aev.services.features</module>
 		<module>aev.core.features</module>
+		<module>aev.core.ui.features</module>
 		<module>aev.rcp.features</module>
 		<module>aev.rap.features</module>
 	</modules>

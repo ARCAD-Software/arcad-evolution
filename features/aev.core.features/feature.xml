@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.arcadsoftware.aev.core.features"
-      label="ARCAD-Evolution Cores"
+      label="ARCAD-Evolution Core"
       version="9.3.1.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
-      Contains the core bundles from ARCAD Evolution:
-- AEV Core
-- AEV Core Services
-- AEV Core UI
+      Contains the ARCAD Evolution Core bundle and its dependencies.
    </description>
 
    <copyright url="http://www.example.com/copyright">
@@ -33,19 +30,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.arcadsoftware.aev.core.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="com.arcadsoftware.aev.core.services"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.apache.commons.lang3"
          download-size="0"
          install-size="0"
@@ -54,41 +38,6 @@
 
    <plugin
          id="org.apache.servicemix.bundles.dom4j"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.spring-beans"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.spring-context"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.spring-core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.spring-expression"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.ops4j.pax.logging.pax-logging-api"
          download-size="0"
          install-size="0"
          version="0.0.0"

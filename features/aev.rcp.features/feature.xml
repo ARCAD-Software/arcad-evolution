@@ -18,7 +18,7 @@
    </license>
 
    <includes
-         id="com.arcadsoftware.aev.core.features"
+         id="com.arcadsoftware.aev.core.ui.features"
          version="0.0.0"/>
 
    <requires>
@@ -29,7 +29,6 @@
       <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.forms"/>
-      <import plugin="org.apache.commons.io"/>
    </requires>
 
    <plugin

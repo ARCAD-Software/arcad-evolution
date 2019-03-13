@@ -24,7 +24,7 @@ import com.arcadsoftware.aev.core.ui.container.ContainerProvider;
  */
 public abstract class ArcadActions {
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private ArrayList actions = new ArrayList();
 	private Container container;
 	private ContainerProvider containerProvider;

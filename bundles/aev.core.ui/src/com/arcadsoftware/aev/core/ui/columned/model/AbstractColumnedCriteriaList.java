@@ -2,14 +2,10 @@ package com.arcadsoftware.aev.core.ui.columned.model;
 
 import java.util.ArrayList;
 
-/**
- * @author dlelong
- */
 public abstract class AbstractColumnedCriteriaList {
 
 	protected final int COUNT = 10;
-	@SuppressWarnings("unchecked")
-	protected ArrayList criteria = new ArrayList(COUNT);
+	protected ArrayList<AbstractColumnedCriteria> criteria = new ArrayList<AbstractColumnedCriteria>(COUNT);
 	protected ArcadColumns referenceColumns;
 
 	public String[] columnNames;
@@ -26,8 +22,7 @@ public abstract class AbstractColumnedCriteriaList {
 	/**
 	 * Return the collection of criteria
 	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList getCriteria() {
+	public ArrayList<AbstractColumnedCriteria> getCriteria() {
 		return criteria;
 	}
 
@@ -35,7 +30,6 @@ public abstract class AbstractColumnedCriteriaList {
 		return (criteria.size());
 	}
 
-	@SuppressWarnings("unchecked")
 	public void add(AbstractColumnedCriteria criterion) {
 		criteria.add(criterion);
 	}
