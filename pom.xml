@@ -1,6 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
@@ -15,7 +14,22 @@
 	<properties>
 		<tycho.version>1.3.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.arcadsoftware.aev.core.services</artifactId>
+			<version>${project.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.arcadsoftware.aev.list.manager</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -31,6 +45,7 @@
 				<version>${tycho.version}</version>
 				<configuration>
 					<executionEnvironment>JavaSE-1.7</executionEnvironment>
+					<pomDependencies>consider</pomDependencies>
 					<target>
 						<artifact>
 							<groupId>com.arcadsoftware</groupId>
@@ -74,6 +89,10 @@
 						<plugin id="org.apache.servicemix.bundles.spring-expression" />
 						<plugin id="org.ops4j.pax.logging.pax-logging-api" />
 						<plugin id="net.sf.jmimemagic" />
+						<plugin id="com.arcadsoftware.aev.core.services" />
+						<plugin id="com.arcadsoftware.aev.list.manager" />
+						<plugin id="org.apache.servicemix.bundles.xpp3" />
+						<plugin id="org.apache.servicemix.bundles.hsqldb" />
 					</excludes>
 				</configuration>
 			</plugin>

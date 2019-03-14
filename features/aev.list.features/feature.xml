@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.arcadsoftware.aev.list.features"
+      label="ARCAD-Evolution List Manager"
+      version="9.3.1.qualifier"
+      provider-name="ARCAD-Software">
+
+   <description>
+      Contains the ARCAD Evolution List Manager bundle and its dependencies.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+   
+   <includes
+         id="com.arcadsoftware.aev.services.features"
+         version="0.0.0"/>
+
+   <plugin
+         id="com.arcadsoftware.aev.list.manager"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.io"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.servicemix.bundles.xpp3"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.servicemix.bundles.hsqldb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+</feature>

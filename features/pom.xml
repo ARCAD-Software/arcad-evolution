@@ -13,6 +13,7 @@
 
 	<modules>
 		<module>aev.services.features</module>
+		<module>aev.list.features</module>
 		<module>aev.core.features</module>
 		<module>aev.core.ui.features</module>
 		<module>aev.rcp.features</module>

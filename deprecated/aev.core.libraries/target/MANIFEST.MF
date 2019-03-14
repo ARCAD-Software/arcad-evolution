@@ -1,0 +1,39 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: com.arcadsoftware.afs.ae.core
+Export-Package: com.arcadsoftware.arx.arcad;version="1.0.0",com.arcads
+ oftware.arx.arcad.messages;version="1.0.0",com.arcadsoftware.arx.clie
+ nt.factory;version="1.0.0",com.arcadsoftware.arx.client.log;version="
+ 1.0.0",com.arcadsoftware.arx.client.net;version="1.0.0",com.arcadsoft
+ ware.arx.client.net.socket;version="1.0.0",com.arcadsoftware.arx.clie
+ nt.net.ssl;version="1.0.0",com.arcadsoftware.arx.client.services;vers
+ ion="1.0.0",com.arcadsoftware.arx.client.services.subservices;version
+ ="1.0.0",com.arcadsoftware.arx.client.test;version="1.0.0",com.arcads
+ oftware.arx.common.ant;version="1.0.0",com.arcadsoftware.arx.common.c
+ onfig;version="1.0.0",com.arcadsoftware.arx.common.factory;version="1
+ .0.0",com.arcadsoftware.arx.common.file;version="1.0.0",com.arcadsoft
+ ware.arx.common.info;version="1.0.0",com.arcadsoftware.arx.common.log
+ ;version="1.0.0",com.arcadsoftware.arx.common.manager;version="1.0.0"
+ ,com.arcadsoftware.arx.common.messages;version="1.0.0",com.arcadsoftw
+ are.arx.common.messages.adm;version="1.0.0",com.arcadsoftware.arx.com
+ mon.messages.adm.reconnection;version="1.0.0",com.arcadsoftware.arx.c
+ ommon.messages.adm.users;version="1.0.0",com.arcadsoftware.arx.common
+ .messages.ant;version="1.0.0",com.arcadsoftware.arx.common.messages.c
+ md;version="1.0.0",com.arcadsoftware.arx.common.messages.connection;v
+ ersion="1.0.0",com.arcadsoftware.arx.common.messages.file;version="1.
+ 0.0",com.arcadsoftware.arx.common.messages.ibmi;version="1.0.0",com.a
+ rcadsoftware.arx.common.messages.secure;version="1.0.0",com.arcadsoft
+ ware.arx.common.messages.sql;version="1.0.0",com.arcadsoftware.arx.co
+ mmon.messages.std;version="1.0.0",com.arcadsoftware.arx.common.misc;v
+ ersion="1.0.0",com.arcadsoftware.arx.common.net;version="1.0.0",com.a
+ rcadsoftware.arx.common.net.socket;version="1.0.0",com.arcadsoftware.
+ arx.common.net.socket.ssl;version="1.0.0",com.arcadsoftware.arx.commo
+ n.rollback;version="1.0.0",com.arcadsoftware.arx.common.rollback.inte
+ rnal;version="1.0.0",com.arcadsoftware.arx.common.sql;version="1.0.0"
+Bundle-Name: ARCAD-Evolution API libraries
+Bundle-Version: 2.8.1.201903131640
+Bundle-ClassPath: .,libs/arcad-arx-client.jar,libs/spring-beans.jar,li
+ bs/spring-context.jar,libs/spring-core.jar,libs/spring-expression.jar
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: ARCAD Software
+

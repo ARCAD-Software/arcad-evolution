@@ -16,9 +16,5 @@
 		<module>aev.core.ui</module>
 		<module>aev.core.ui.rap</module>
 		<module>aev.core.ui.rcp</module>
-		<module>aev.core.libraries</module>
-		<module>aev.core.services</module>
-		<module>aev.list.manager</module>
-		<!-- <module>aev.ant.tasks</module> -->
 	</modules>
 </project>

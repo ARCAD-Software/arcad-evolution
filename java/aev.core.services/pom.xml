@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.arcadsoftware</groupId>
+		<artifactId>com.arcadsoftware.aev.java</artifactId>
+		<version>9.3.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<spring.version>3.2.18.RELEASE</spring.version>
+	</properties>
+
+	<name>ARCAD-Evolution Core Services</name>
+	<artifactId>com.arcadsoftware.aev.core.services</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>.</directory>
+				<includes>
+					<include>META-INF/MANIFEST.MF</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<file>${project.build.outputDirectory}/META-INF/MANIFEST.MF</file>
+					<replacements>
+						<replacement>
+							<token>qualifier</token>
+							<value>${buildQualifier}</value>
+						</replacement>
+					</replacements>
+				</configuration>
+			</plugin>
+			<!-- Disable the MANIFEST generation for this bundle -->
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase />
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
