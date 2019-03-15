@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <antlib>     
 	<taskdef name="copy" 
-		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadCopyTask"/> 
-	<taskdef name="copywithlog" 
-		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadCopyWithLogTask"/> 
+		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadCopyTask"/>	 
 	<taskdef name="delete" 
 		     classname="com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadDeleteTask"/>		     
 	<taskdef name="transaction" 

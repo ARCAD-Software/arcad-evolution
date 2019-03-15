@@ -32,10 +32,5 @@
 			<artifactId>com.arcadsoftware.aev.list.manager</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.arcadsoftware.serviceproviders</groupId>
-			<artifactId>asp-transaction-logger</artifactId>
-			<version>10.9.13-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 </project>
