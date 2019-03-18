@@ -8,15 +8,10 @@
 		<version>9.3.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>com.arcadsoftware.aev.bundles</artifactId>
+	<artifactId>com.arcadsoftware.aev.ant</artifactId>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>aev.core.services</module>
-		<module>aev.list.manager</module>
-		<module>aev.core</module>
-		<module>aev.core.ui</module>
-		<module>aev.core.ui.rap</module>
-		<module>aev.core.ui.rcp</module>
+		<module>aev.ant.tasks</module>
 	</modules>
 </project>

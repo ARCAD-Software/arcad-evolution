@@ -18,19 +18,6 @@
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.arcadsoftware.aev.core.services</artifactId>
-			<version>${project.version}</version>
-		</dependency>	
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.arcadsoftware.aev.list.manager</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -89,8 +76,6 @@
 						<plugin id="org.apache.servicemix.bundles.spring-expression" />
 						<plugin id="org.ops4j.pax.logging.pax-logging-api" />
 						<plugin id="net.sf.jmimemagic" />
-						<plugin id="com.arcadsoftware.aev.core.services" />
-						<plugin id="com.arcadsoftware.aev.list.manager" />
 						<plugin id="org.apache.servicemix.bundles.xpp3" />
 						<plugin id="org.apache.servicemix.bundles.hsqldb" />
 					</excludes>
@@ -114,6 +99,7 @@
 
 	<modules>
 		<module>bundles</module>
+		<module>ant</module>
 		<module>features</module>
 		<module>releng</module>
 	</modules>

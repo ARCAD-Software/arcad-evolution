@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>aev.core.ui</name>
+	<name>aev.core.services</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -23,7 +23,6 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.eclipse.babel.editor.rbeNature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
 	</natures>
 </projectDescription>

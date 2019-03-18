@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution Core UI
-Bundle-SymbolicName: com.arcadsoftware.aev.core.ui; singleton:=true
+Bundle-SymbolicName: com.arcadsoftware.aev.core.ui;singleton:=true
 Bundle-Version: 9.3.1.qualifier
 Bundle-Activator: com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin
 Bundle-Vendor: ARCAD Software
@@ -9,6 +9,7 @@ Bundle-Localization: plugin
 Export-Package: com.arcadsoftware.aev.core.ui,
  com.arcadsoftware.aev.core.ui.actions,
  com.arcadsoftware.aev.core.ui.actions.columned,
+ com.arcadsoftware.aev.core.ui.calendar,
  com.arcadsoftware.aev.core.ui.columned.cellmodifier,
  com.arcadsoftware.aev.core.ui.columned.model,
  com.arcadsoftware.aev.core.ui.composite,
@@ -48,5 +49,5 @@ Require-Bundle: com.arcadsoftware.aev.core,
  org.eclipse.rap.ui;resolution:=optional,
  org.eclipse.rap.ui.forms;bundle-version="1.4.0";resolution:=optional,
  org.eclipse.rap.jface;resolution:=optional
-Eclipse-LazyStart: true
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
