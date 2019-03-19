@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.AbstractList;
 import java.util.ArrayList;
 
 import org.dom4j.Document;
@@ -408,8 +409,8 @@ public class MessageManager implements IDiagnosisProvider {
 	 *            Liste des messages à exporter (si cette liste est nulle c'est
 	 *            la liste complète qui est utilisée).
 	 */
-	public static void exportMessagesToXMLFile(String fileName, ArrayList<Message> messageList) {
-		ArrayList<Message> msgs = messageList;
+	public static void exportMessagesToXMLFile(String fileName, AbstractList<Message> messageList) {
+		AbstractList<Message> msgs = messageList;
 		if (messageList == null)
 			msgs = messages;
 

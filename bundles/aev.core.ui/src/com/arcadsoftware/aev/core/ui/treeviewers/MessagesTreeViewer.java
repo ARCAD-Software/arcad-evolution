@@ -1,6 +1,6 @@
 package com.arcadsoftware.aev.core.ui.treeviewers;
 
-import java.util.ArrayList;
+import java.util.AbstractList;
 import java.util.Iterator;
 
 import org.eclipse.jface.viewers.IContentProvider;
@@ -78,19 +78,23 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 
 	static protected class MessageContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 
+		@Override
 		@SuppressWarnings("unchecked")
 		public Object[] getElements(Object inputElement) {
-			return ((ArrayList) inputElement).toArray(new Message[((ArrayList) inputElement).size()]);
+			return ((AbstractList) inputElement).toArray(new Message[((AbstractList) inputElement).size()]);
 		}
 
+		@Override
 		public void dispose() {
 			// Do nothing
 		}
 
+		@Override
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			// Do nothing
 		}
 
+		@Override
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof Message) {
 				return ((Message) parentElement).toArray();
@@ -98,12 +102,14 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 			return null;
 		}
 
+		@Override
 		public Object getParent(Object element) {
 			if (element instanceof MessageDetail)
 				return ((MessageDetail) element).getMessage();
 			return null;
 		}
 
+		@Override
 		public boolean hasChildren(Object element) {
 			return ((element instanceof Message) && (!((Message) element).getDetails().isEmpty()));
 		}
@@ -188,17 +194,16 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 //		dialog.setFilterExtensions(new String[] { "*.xml", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
 //		String fileName = dialog.open();
 		if (fileName != null)
-			MessageManager.exportMessagesToXMLFile(fileName, (ArrayList) getInput());
+			MessageManager.exportMessagesToXMLFile(fileName, (AbstractList) getInput());
 	}
 
 	/**
 	 * Vide la liste des messages.
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	public void clear() {
 		if (getInput() != null) {
-			Iterator iterator = ((ArrayList) getInput()).iterator();
+			Iterator iterator = ((AbstractList) getInput()).iterator();
 			while (iterator.hasNext()) {
 				((Message) iterator.next()).setLevel(MessageManager.LEVEL_DELETED);
 			}
@@ -209,7 +214,6 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 	/**
 	 * Supprime les messages sélectionnés de la liste.
 	 */
-	@SuppressWarnings("unchecked")
 	public void clearSelection() {
 		if (getInput() == null)
 			return;
@@ -227,7 +231,6 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 		refresh();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void showDetails() {
 		if (getInput() == null)
 			return;
