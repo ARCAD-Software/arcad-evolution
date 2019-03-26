@@ -1,19 +1,13 @@
-/*
- * Créé le 2 févr. 05
- *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
- */
 package com.arcadsoftware.aev.core.ui.mementos;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.eclipse.ui.IMemento;
-import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.XMLMemento;
 
 import com.arcadsoftware.aev.core.messages.MessageDetail;
@@ -22,13 +16,9 @@ import com.arcadsoftware.aev.core.messages.MessageManager;
 /**
  * @author MD
  * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
  */
 public abstract class RootAndUserMementoTools {
-	@SuppressWarnings("unchecked")
-	protected ArrayList list = new ArrayList();
+	protected ArrayList<ArcadSettings> list = new ArrayList<>();
 
 	protected abstract String getFileName();
 
@@ -38,17 +28,10 @@ public abstract class RootAndUserMementoTools {
 
 	public abstract boolean keyEquals(ArcadSettings ref, ArcadSettings toCompare);
 
-	/**
-	 * @param s
-	 */
 	protected boolean keep(ArcadSettings s) {
 		return true;
 	}
 
-	/**
-	 * @param serverName
-	 * @param userName
-	 */
 	public RootAndUserMementoTools() {
 		super();
 	}
@@ -64,9 +47,8 @@ public abstract class RootAndUserMementoTools {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public ArrayList getSettings() {
-		ArrayList l = new ArrayList();
+	public ArrayList<ArcadSettings> getSettings() {
+		ArrayList<ArcadSettings> l = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			ArcadSettings s = (ArcadSettings) list.get(i);
 			if (keep(s)) {
@@ -76,17 +58,14 @@ public abstract class RootAndUserMementoTools {
 		return l;
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setSettings(ArrayList settings) {
-		// On supprime de la liste tous les settings correspondant
-		// au filtre
+	public void setSettings(ArrayList<ArcadSettings> settings) {
 		for (int i = list.size() - 1; i >= 0; i--) {
 			ArcadSettings s = (ArcadSettings) list.get(i);
 			if (keep(s)) {
 				list.remove(i);
 			}
 		}
-		// On ajoute à la liste les settings passés en paramétre
+
 		for (int i = 0; i < settings.size(); i++) {
 			ArcadSettings s = (ArcadSettings) settings.get(i);
 			if (keep(s)) {
@@ -96,20 +75,17 @@ public abstract class RootAndUserMementoTools {
 		save();
 	}
 
-	/**
-	 * @param settings
-	 */
 	protected void doBeforeAdding(ArcadSettings settings) {
 		// Do nothing
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setCurrentSettings(ArcadSettings settings) {
-		for (int i = 0; i < list.size(); i++) {
-			ArcadSettings s = (ArcadSettings) list.get(i);
+		Iterator<ArcadSettings> settingsList = list.iterator();
+		while(settingsList.hasNext()) {
+			ArcadSettings s = settingsList.next();
 			if ((s.getServerName().equalsIgnoreCase(settings.getServerName()))
 					&& (s.getUserName().equalsIgnoreCase(settings.getUserName())) && keyEquals(settings, s)) {
-				list.remove(i);
+				list.remove(s);
 				break;
 			}
 		}
@@ -134,29 +110,27 @@ public abstract class RootAndUserMementoTools {
 		save();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void load() {
-		try {
-			list.clear();
-			XMLMemento x = XMLMemento.createReadRoot(new FileReader(getFileName()));
-			// Récupération des serveurs
-			IMemento[] servers = x.getChildren("server"); //$NON-NLS-1$
-			for (int i = 0; i < servers.length; i++) {
-				String server = servers[i].getString("name"); //$NON-NLS-1$				
-				IMemento[] users = servers[i].getChildren("user"); //$NON-NLS-1$
-				for (int j = 0; j < users.length; j++) {
-					String user = users[j].getString("name"); //$NON-NLS-1$
-					list.add(readKeys(server, user, users[j]));
+		File xmlFile = new File(getFileName());
+		if(xmlFile.exists() && xmlFile.length() > 0){
+			try (FileReader reader = new FileReader(xmlFile)){
+				list.clear();
+				XMLMemento x = XMLMemento.createReadRoot(reader);
+				IMemento[] servers = x.getChildren("server"); //$NON-NLS-1$
+				for (int i = 0; i < servers.length; i++) {
+					String server = servers[i].getString("name"); //$NON-NLS-1$				
+					IMemento[] users = servers[i].getChildren("user"); //$NON-NLS-1$
+					for (int j = 0; j < users.length; j++) {
+						String user = users[j].getString("name"); //$NON-NLS-1$
+						list.add(readKeys(server, user, users[j]));
+					}
 				}
 			}
-		} catch (WorkbenchException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
-					"XMLFilters.loadFilteredElement");//$NON-NLS-1$
-		} catch (FileNotFoundException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_BETATESTING).addDetail(MessageDetail.ERROR,
-					"File : " + getFileName());//$NON-NLS-1$
+			catch (Exception e) {
+				MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
+						"XMLFilters.loadFilteredElement");//$NON-NLS-1$
+			}
 		}
-
 	}
 
 	public void save() {
@@ -180,11 +154,7 @@ public abstract class RootAndUserMementoTools {
 		}
 	}
 
-	/**
-	 * @return Returns the list.
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList getList() {
+	public ArrayList<ArcadSettings> getList() {
 		return list;
 	}
 }

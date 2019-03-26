@@ -13,8 +13,7 @@ import com.arcadsoftware.aev.core.messages.MessageDetail;
 import com.arcadsoftware.aev.core.messages.MessageManager;
 
 public abstract class ExplorerMementoTools extends ExplorerSettings {
-	@SuppressWarnings("unchecked")
-	ArrayList list = new ArrayList();
+	ArrayList<ExplorerSettings> list = new ArrayList<ExplorerSettings>();
 
 	public ExplorerMementoTools(String viewId) {
 		super();
@@ -37,7 +36,6 @@ public abstract class ExplorerMementoTools extends ExplorerSettings {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public void save() {
 		readAll();
 		// Supression des anciennes valeurs
@@ -61,7 +59,7 @@ public abstract class ExplorerMementoTools extends ExplorerSettings {
 	public void restore() {
 		readAll();
 		for (int i = list.size() - 1; i >= 0; i--) {
-			ExplorerSettings es = (ExplorerSettings) list.get(i);
+			ExplorerSettings es = list.get(i);
 			if (isGoodExplorerSettings(es)) {
 				setKeyValue(es.getKeyValue());
 				return;
