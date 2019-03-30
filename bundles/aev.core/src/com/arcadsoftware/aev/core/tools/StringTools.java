@@ -443,7 +443,9 @@ public class StringTools {
 	 * @return <b>null</b> si le nom est valid un message d'erreur sinon
 	 */
 	public static String isNameValid(String name) {
-		if (name.matches("[A-Z]{1}[A-Z_0-9]*")) //$NON-NLS-1$
+		if (name.matches("[A-Z]{1}[A-Z_0-9]*")
+		 // Allow quoted object names
+		 || (name.length()>2 && name.startsWith("\"") && name.endsWith("\"")))
 			return null;
 		return CoreLabels.resString("Name.Notvalid.Message"); //$NON-NLS-1$
 	}
