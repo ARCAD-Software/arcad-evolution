@@ -15,6 +15,7 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -112,6 +113,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			super();
 		}
 
+		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
 			IStructuredSelection structuredSelection = getSelection();
 			// if (!structuredSelection.isEmpty())
@@ -244,6 +246,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		 * 
 		 * @param monitor
 		 */
+		@Override
 		public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 			monitor.beginTask(CoreUILabels.resString("Action.FilterAction.Execute"), 4); //$NON-NLS-1$
 			monitor.worked(1);
@@ -323,9 +326,18 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		viewerIdentifier = getIdentifier();
 		if (viewerIdentifier == null)
 			useUserPreference = false;
+		/*<MR number="2019/00145" version="11.00.04" date="Apr 5, 2019" type="Enh" user="ACL">
 		initialize();
 		internalViewer.getViewer().setContentProvider(createContentProvider());
 		internalViewer.getViewer().setLabelProvider(createLabelProvider(this));
+		*/
+		IBaseLabelProvider labelProvider = createLabelProvider(this);
+		initialize();
+		StructuredViewer structuredViewer = internalViewer.getViewer();
+		if (labelProvider != null)
+			structuredViewer.setLabelProvider(labelProvider);
+		structuredViewer.setContentProvider(createContentProvider());
+		//</MR>
 		
 		setResizeListener();
 
@@ -403,6 +415,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		menuManager = new MenuManager("#PopupMenu"); //$NON-NLS-1$
 		menuManager.setRemoveAllWhenShown(true);
 		menuManager.addMenuListener(new IMenuListener() {
+			@Override
 			public void menuAboutToShow(IMenuManager mManager) {
 				AbstractColumnedViewer.this.fillContextMenu(mManager);
 			}
@@ -426,6 +439,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			}
 		};
 		getViewer().addDoubleClickListener(new IDoubleClickListener() {
+			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				doubleClickAction.run();
 			}
@@ -559,6 +573,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		return true;
 	}
 
+	@Override
 	public abstract String getValue(Object element, int columnIndex);
 
 	/**
@@ -684,6 +699,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 				if (col.getVisible() == ArcadColumn.VISIBLE) {
 					item = createColumn(widget, col.getStyle(), j);
 					DisposeListener listener = new DisposeListener() {
+						@Override
 						public void widgetDisposed(DisposeEvent e) {
 							if (!columnsDisposedByDevelopper) {
 								//saveState();
@@ -915,6 +931,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		this.filter = filter;
 	}
 
+	@Override
 	public void doOnApply() {
 		displayedColumns = displayDuplicate.duplicate();
 		saveState();

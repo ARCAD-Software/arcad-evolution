@@ -587,6 +587,22 @@ public class GuiFormatTools {
 		});
 		return t;
 	}
+	
+	//<MR number="2019/00145" version="11.00.04" date="Apr 5, 2019" type="Enh" user="ACL">
+	/**
+	 * Create (ARIA-compatible) text label 
+	 */
+	public static Label createTextLabel(Composite parent, String label) {
+		Label textLabel = new Label(parent, SWT.NONE);
+		textLabel.setText(label + ':');
+		if (parent.getLayout() instanceof GridLayout) {
+			GridData gridData = new GridData();
+			gridData.horizontalSpan = 2;
+			textLabel.setLayoutData(gridData);
+		}
+		return textLabel;
+	}
+	//</MR>
 
 	public static Text createLabelledText(Composite parent, String label, String defaultText, int limit) {
 		return createLabelledText(parent, label, defaultText, limit, SWT.BORDER, null);
@@ -596,9 +612,13 @@ public class GuiFormatTools {
 	}
 	
 	public static Text createLabelledText(Composite parent, String label, String defaultText, int limit, int style,String help) {
+		/*
 		Label textLabel = new Label(parent, SWT.NONE);
 		textLabel.setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		Label textLabel = createTextLabel(parent, label);
+		
 		Text text = new Text(parent, style);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -631,9 +651,13 @@ public class GuiFormatTools {
 	 * @return Text
 	 */
 	public static Text createLabelledLongText(Composite parent, String label) {
+		/*
 		Label textLabel = new Label(parent, SWT.NONE);
 		textLabel.setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		Label textLabel = createTextLabel(parent, label);
+
 		Text text = new Text(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -655,14 +679,17 @@ public class GuiFormatTools {
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 			textLabel.setLayoutData(gridData);
+			gridData.horizontalSpan=2;
 		}
-		textLabel.setText(label);
+		textLabel.setText(label+':');
+		/*
 		Label twopoints = new Label(parent, SWT.NONE);
 		twopoints.setText(":"); //$NON-NLS-1$
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 			twopoints.setLayoutData(gridData);
 		}
+		*/
 		Label lbl = new Label(parent, style);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -683,9 +710,12 @@ public class GuiFormatTools {
 	
 	
 	public static Text createLabelledDate(Composite parent, String label, String defaultText) {
+		/*
 		Label textLabel = new Label(parent, SWT.NONE);
 		textLabel.setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		Label textLabel = createTextLabel(parent, label);
 		final Text text = new Text(parent, SWT.BORDER);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -706,8 +736,11 @@ public class GuiFormatTools {
 	public static Combo createLabelledCombo(Composite parent, String label, boolean readOnly, String[] items,
 			int selectedIndex) {
 		if (label != null) {
+			/*
 			new Label(parent, SWT.NONE).setText(label);
 			new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+			*/
+			createTextLabel(parent, label);
 		}
 		Combo combo;
 		if (readOnly)
@@ -748,8 +781,11 @@ public class GuiFormatTools {
 	}
 
 	public static Button createLabelledCheckbox(Composite parent, String label, boolean checked) {
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		Button checkbox = new Button(parent, SWT.CHECK);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -826,8 +862,11 @@ public class GuiFormatTools {
 	}
 
 	public static Text createLabelledMultiValues(Composite parent, String label, String dialogLabel) {
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		// Cr�ation du composite de r�ception
 		Composite p = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(2, false);
@@ -950,8 +989,11 @@ public class GuiFormatTools {
 
 	public static Text createLabelledDateWithDateSelector(Composite parent, String label, int style,
 			final String defaultDateText) {
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		// Cr�ation du composite de r�ception
 		Composite p = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(3, false);
@@ -1029,8 +1071,11 @@ public class GuiFormatTools {
 	}	
 	
 	public static Composite createLabelledTime(Composite parent, String label, int style) {
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		Composite p = new Composite(parent, SWT.BORDER);
 		GridLayout layout = new GridLayout((style==0)?3:2, true);
 		layout.marginWidth = 0;
@@ -1065,8 +1110,11 @@ public class GuiFormatTools {
 	 * @return
 	 */
 	public static DateTime createLabelledDateTime(Composite parent, String label, int style) {
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		
 		DateTime time = new DateTime(parent, style);
 		time.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
@@ -1075,9 +1123,11 @@ public class GuiFormatTools {
 	}
 	
 	public static Text createLabelledDateWithDateSelectorNotNull(Composite parent, String label, int style) {
-
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		// Cr�ation du composite de r�ception
 		Composite p = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(2, false);
@@ -1121,8 +1171,11 @@ public class GuiFormatTools {
 
 	public static Text createLabelledTextWithButton(Composite parent, String label, String defaultText,
 			boolean readonly, String buttonText) {
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		// Cr�ation du composite de r�ception
 		Composite p = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(2, false);
@@ -1172,8 +1225,11 @@ public class GuiFormatTools {
 		if (buttonTexts == null){
 			return createLabelledTextWithButton(parent, label, defaultText, readonly, "");
 		}
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		
 		// Reception component creation		
 		int count = buttonTexts.length;
@@ -1441,15 +1497,18 @@ public class GuiFormatTools {
 		Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+			gridData.horizontalSpan=2;
 			textLabel.setLayoutData(gridData);
 			textLabel.setText(label);
 		}
+		/*
 		Label twopoints = new Label(parent, SWT.NONE);
 		twopoints.setText(":"); //$NON-NLS-1$
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 			twopoints.setLayoutData(gridData);
 		}
+		*/
 		Hyperlink link = new Hyperlink(parent, style);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -1500,10 +1559,14 @@ public class GuiFormatTools {
 	}
 
 	public static Spinner createLabelledSpinner(Composite parent, String label, int digits, int maximum) {
+		/*
 		Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
 		textLabel.setText(label);
 		Label twopoints = new Label(parent, SWT.NONE);
 		twopoints.setText(":"); //$NON-NLS-1$
+		*/
+		Label textLabel = createTextLabel(parent, label);
+		
 
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
 		if (parent.getLayout() instanceof GridLayout) {
@@ -1527,10 +1590,13 @@ public class GuiFormatTools {
 	}
 
 	public static DoubleSpinner createLabelledDoubleSpinner(Composite parent, String label, String units, int maximum) {
+		/*
 		Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
 		textLabel.setText(label);
 		Label twopoints = new Label(parent, SWT.NONE);
 		twopoints.setText(":"); //$NON-NLS-1$
+		*/
+		Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
 
 		DoubleSpinner spinner = new DoubleSpinner(parent, SWT.NONE);
 		if (parent.getLayout() instanceof GridLayout) {
@@ -1637,15 +1703,18 @@ public class GuiFormatTools {
 		Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+			gridData.horizontalSpan=2;
 			textLabel.setLayoutData(gridData);
 		}
-		textLabel.setText(label);
+		textLabel.setText(label+':');
+		/*
 		Label twopoints = new Label(parent, SWT.NONE);
 		twopoints.setText(":"); //$NON-NLS-1$
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 			twopoints.setLayoutData(gridData);
 		}
+		*/
 		Period period = new Period(parent, style);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -1660,8 +1729,11 @@ public class GuiFormatTools {
 
 	public static Composite createLabelledComposite(Composite parent, String label, int numberOfColumn,
 			boolean equalWidth) {
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		return createComposite(parent, numberOfColumn, equalWidth);
 	}
 
@@ -1889,9 +1961,12 @@ public class GuiFormatTools {
 
 	public static Text createLabelledTextWithMenuAction(Composite parent, String label, boolean readonly,
 			ImageDescriptor image) {
+		/*
 		Label textLabel = new Label(parent, SWT.NONE);
 		textLabel.setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		Label textLabel = createTextLabel(parent, label);
 		Composite container = GuiFormatTools.createComposite(parent, 2, false);
 		if (parent.getLayout() instanceof GridLayout) {
 			container.setLayoutData(new GridData(GridData.BEGINNING | GridData.FILL_HORIZONTAL));
@@ -1922,9 +1997,12 @@ public class GuiFormatTools {
 
 	public static ArcadColorWidget createLabelledColorWidget(Composite parent, String label) {
 		final ArcadColorWidget widget = new ArcadColorWidget();
+		/*
 		Label textLabel = new Label(parent, SWT.NONE);
 		textLabel.setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		Composite compo = GuiFormatTools.createComposite(parent, 2, false);
 		if (parent.getLayout() instanceof GridLayout) {
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -1988,8 +2066,11 @@ public class GuiFormatTools {
 	public static Text createTextWithTwoOrThreeButtons(Composite parent, String label, String defaultText,
 			boolean readonly, String button1Text, Image img1, String button2Text, Image img2, String button3Text,
 			Image img3) {
+		/*
 		new Label(parent, SWT.NONE).setText(label);
 		new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
+		*/
+		createTextLabel(parent, label);
 		// Cr�ation du composite de r�ception
 		Composite p = new Composite(parent, SWT.NONE);
 		GridLayout layout = null;
@@ -2236,13 +2317,16 @@ public class GuiFormatTools {
 	public static Link createLabelledLink(Composite parent, String label, String text,int style){
 		Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
 		GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+		gridData.horizontalSpan=2;
 		textLabel.setLayoutData(gridData);
 
-		textLabel.setText(label);
+		textLabel.setText(label+':');
+		/*
 		Label twopoints = new Label(parent, SWT.NONE);
 		twopoints.setText(":"); //$NON-NLS-1$
 		gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		twopoints.setLayoutData(gridData);
+		*/
 
 		Link link = new Link(parent, style);
 		gridData = new GridData(GridData.BEGINNING);
