@@ -443,11 +443,18 @@ public class StringTools {
 	 * @return <b>null</b> si le nom est valid un message d'erreur sinon
 	 */
 	public static String isNameValid(String name) {
-		if (name.matches("[A-Z]{1}[A-Z_0-9]*")
-		 // Allow quoted object names
-		 || (name.length()>2 && name.startsWith("\"") && name.endsWith("\"")))
+		if (name.matches("[A-Z]{1}[A-Z_0-9]*"))
 			return null;
 		return CoreLabels.resString("Name.Notvalid.Message"); //$NON-NLS-1$
+	}
+	
+	/**
+	 * @return the trimmed, upper-case version of <code>name</name> if non-null and unquoted, otherwise <code>name</code>
+	 */
+	public static String toIbmiName(String name) {
+		if (name==null || (name.length()>2 && name.startsWith("\"") && name.endsWith("\"")))
+			return name;
+		return name.trim().toUpperCase();
 	}
 	
 	public static boolean containsAny(String aString, CharSequence charSequence){
