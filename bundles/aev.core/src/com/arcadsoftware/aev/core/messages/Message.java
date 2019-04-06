@@ -120,6 +120,14 @@ public class Message implements IMessageDetails {
 		MessageManager.fireMessageChanged(this);
 	}
 
+	protected MessageDetail addMessageDetail(int type,String description){
+		MessageDetail messageDetail = new MessageDetail(this,type,description);	
+		details.add(messageDetail);	
+		if (!isFixedType && type > maxDetailsType)
+			maxDetailsType = type;
+		MessageManager.fireMessageChanged(this);
+		return messageDetail;
+	}
 	/**
 	 * Ajoute un détail au message.<br/>
 	 * Cette methode retourne le message lui-même, de telle sorte que les addDetails peuvent se
@@ -129,10 +137,7 @@ public class Message implements IMessageDetails {
 	 * @param description
 	 */
 	public Message addDetail(int type,String description){
-		details.add(new MessageDetail(this,type,description));	
-		if (!isFixedType && type > maxDetailsType)
-			maxDetailsType = type;
-		MessageManager.fireMessageChanged(this);
+		addMessageDetail(type, description);
 		return this;
 	}
 

@@ -35,11 +35,9 @@ public class MultiMessage extends Message {
 
 	@Override
 	public Message addDetail(int type, String description) {
-		super.addDetail(type, description);
 		// Get created MessageDetail (last MessageDetail in list) and add to hierarchical list as well
-		List<MessageDetail> messageDetails = super.getDetails();
-		detailList.add(
-				messageDetails.get(messageDetails.size()-1));
+		MessageDetail messageDetail = addMessageDetail(type, description);
+		detailList.add(messageDetail);
 		return this;
 	}
 	
