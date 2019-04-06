@@ -6,10 +6,13 @@
  */
 package com.arcadsoftware.aev.core.messages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author MD
  */
-public class MessageDetail {
+public class MessageDetail implements IMessageDetails {
 
 	/**
 	 * Message indiquant qu'une opération c'est bien terminée (ou commence...)
@@ -57,6 +60,7 @@ public class MessageDetail {
 		setDescription(e.getMessage());		
 	}	
 
+	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -94,5 +98,17 @@ public class MessageDetail {
 	@Override
 	public String toString() {
 		return String.format("[%1$s] %2$s", getTypeString(), getDescription());	//$NON-NLS-1$
+	}
+
+	private List<MessageDetail> messageDetails = new ArrayList<MessageDetail>(0);
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List getMessageDetails() {
+		return messageDetails;
+	}
+
+	@Override
+	public int getMaxDetailsType() {
+		return getType();
 	}
 }

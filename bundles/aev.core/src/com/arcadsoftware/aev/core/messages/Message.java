@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.arcadsoftware.aev.core.tools.CoreLabels;
 import com.arcadsoftware.aev.core.tools.StringTools;
@@ -19,7 +20,7 @@ import com.arcadsoftware.aev.core.tools.StringTools;
  * 
  * @author MD
  */
-public class Message {
+public class Message implements IMessageDetails {
 
 
 	// Formater utilisé pour les details datant les messages.
@@ -241,9 +242,7 @@ public class Message {
 		return buffer.toString();
 	}
 	
-	/**
-	 * @return
-	 */
+	@Override
 	public int getMaxDetailsType() {
 		return maxDetailsType;
 	}
@@ -277,6 +276,23 @@ public class Message {
 	 */
 	public void setLevel(int i) {
 		level = i;
+	}
+
+	/*TODO: For Java 1.8?
+	public List<? extends IMessageDetails> getMessageDetails() {
+		return (List<? extends IMessageDetails>) details;
+	}
+	*/
+
+	@Override
+	@SuppressWarnings({ "rawtypes" })
+	public List getMessageDetails() {
+		return details;
+	}
+
+	@Override
+	public String getDescription() {
+		return command;
 	}
 
 }
