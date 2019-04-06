@@ -35,15 +35,19 @@ public class MultiMessage extends Message {
 
 	@Override
 	public Message addDetail(int type, String description) {
-		// TODO Auto-generated method stub
-		return super.addDetail(type, description);
+		super.addDetail(type, description);
+		// Get created MessageDetail (last MessageDetail in list) and add to hierarchical list as well
+		List<MessageDetail> messageDetails = super.getDetails();
+		detailList.add(
+				messageDetails.get(messageDetails.size()-1));
+		return this;
 	}
 	
 	public void addMessage(Message message) {
 		detailList.add(message);
 		
 		// Keep "flattened" view of message details in synch with hierarchical detailList
-		addDetail(message.getMaxDetailsType(), message.getDescription()); // Add message as message-detail entry
+		super.addDetail(message.getMaxDetailsType(), message.getDescription()); // Add message as message-detail entry
 		List<MessageDetail> messageDetails = super.getDetails();
 		messageDetails.addAll(message.getDetails()); // Add all details
 	}
