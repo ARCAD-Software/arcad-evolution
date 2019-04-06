@@ -100,7 +100,7 @@ public class MessageDetail implements IMessageDetails {
 		return String.format("[%1$s] %2$s", getTypeString(), getDescription());	//$NON-NLS-1$
 	}
 
-	private List<MessageDetail> messageDetails = new ArrayList<MessageDetail>(0);
+	private static List<MessageDetail> messageDetails = new ArrayList<MessageDetail>(0);
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List getMessageDetails() {
