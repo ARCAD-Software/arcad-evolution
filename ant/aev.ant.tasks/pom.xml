@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
-		<artifactId>com.arcadsoftware.aev.bundles</artifactId>
+		<artifactId>com.arcadsoftware.aev.ant</artifactId>
 		<version>9.3.1-SNAPSHOT</version>
 	</parent>
 
