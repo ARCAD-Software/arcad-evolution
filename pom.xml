@@ -7,11 +7,12 @@
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev</artifactId>
-	<version>9.3.1-SNAPSHOT</version>
+	<version>9.3.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<scm>
 		<connection>scm:git:git@rdanghub01plv.quarcad.net:RetD/aev.git</connection>
+<tag>HEAD</tag>
 	</scm>
 	
 	<properties>
