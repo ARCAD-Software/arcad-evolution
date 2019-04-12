@@ -77,6 +77,11 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 		this.messages = messages;
 		this.levelFilter = levelFilter;
 	}
+	
+	@Override
+	protected boolean isResizable() {
+		return true;
+	}
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
