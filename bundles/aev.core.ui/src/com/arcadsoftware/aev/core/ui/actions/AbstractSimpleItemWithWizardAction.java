@@ -119,7 +119,7 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 	protected boolean execute() {
 		wizard = createWizard(this, getWizardTitle());
 		if (wizard != null) {
-			ArcadWizardDialog dialog = new ArcadWizardDialog(EvolutionCoreUIPlugin.getDefault().getPluginShell(),
+			dialog = new ArcadWizardDialog(EvolutionCoreUIPlugin.getDefault().getPluginShell(),
 					wizard);
 			dialog.setPageSize(getWidth(), getHeight());
 			dialog.create();
@@ -129,6 +129,11 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 			return wizard.isExecutionSucceed();
 		}
 		return true;
+	}
+	
+	ArcadWizardDialog dialog;
+	protected ArcadWizardDialog getDialog() {
+		return dialog;
 	}
 
 	/**

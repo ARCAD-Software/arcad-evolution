@@ -131,7 +131,7 @@ public abstract class AbstractMultiItemWithWizardAction extends AbstractMultiIte
 			return super.execute();
 		wizard = createWizard(this, getWizardTitle());
 		if (wizard != null) {
-			ArcadWizardDialog dialog = new ArcadWizardDialog(EvolutionCoreUIPlugin.getDefault().getPluginShell(),
+			dialog = new ArcadWizardDialog(EvolutionCoreUIPlugin.getDefault().getPluginShell(),
 					wizard);
 			dialog.setPageSize(550, 400);
 			dialog.create();
@@ -140,6 +140,11 @@ public abstract class AbstractMultiItemWithWizardAction extends AbstractMultiIte
 			return wizard.isExecutionSucceed();
 		}
 		return false;
+	}
+	
+	ArcadWizardDialog dialog;
+	protected ArcadWizardDialog getDialog() {
+		return dialog;
 	}
 
 	protected boolean useWizard() {
