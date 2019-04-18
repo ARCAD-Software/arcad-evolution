@@ -307,6 +307,10 @@ public class Message implements IMessageDetails {
 	}
 	
 	protected int style=StatusManager.NONE;
+	/**
+	 * @returns the style associated with the message, {@link StatusManager#NONE} by default
+	 * @see StatusManager#handle(org.eclipse.core.runtime.IStatus, int)
+	 */
 	public int getStyle() {
 		return style;
 	}
