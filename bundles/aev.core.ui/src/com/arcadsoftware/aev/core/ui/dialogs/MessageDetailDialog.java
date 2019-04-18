@@ -103,6 +103,11 @@ public class MessageDetailDialog extends ArcadDialog implements IMessagesListene
 	public MessageDetailDialog(Shell parentShell) {
 		super(parentShell);
 	}
+	
+	@Override
+	protected boolean isResizable() {
+		return true;
+	}
 
 	protected void updateDialog() {
 		if ((detailsList != null) && !detailsList.getTable().isDisposed()) {
