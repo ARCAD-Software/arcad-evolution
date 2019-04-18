@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
  * Multi-Message class that allows embedded Message detail (see {@link MultiStatus})
@@ -18,19 +19,7 @@ public class MultiMessage extends Message {
 	
 	public MultiMessage(String command) {
 		super(command);
-	}
-
-	public MultiMessage(String command, int type, String description) {
-		super(command, type, description);
-	}
-
-	public MultiMessage(String command, int type, int level, String description) {
-		super(command, type, level, description);
-	}
-
-	public MultiMessage(String command, int type, int level,
-			String description, boolean fixedType) {
-		super(command, type, level, description, fixedType);
+		style = StatusManager.SHOW | StatusManager.BLOCK;
 	}
 
 	@Override

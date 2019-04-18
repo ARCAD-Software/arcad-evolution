@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.eclipse.ui.statushandlers.StatusManager;
+
 import com.arcadsoftware.aev.core.tools.CoreLabels;
 import com.arcadsoftware.aev.core.tools.StringTools;
 
@@ -59,18 +61,22 @@ public class Message implements IMessageDetails {
 		maxDetailsType = type;
 	}	
 
-	public Message(String command,int type,int level, String description) {
-		this(command, type, level, description, false);
-	}
-
-	public Message(String command,int type,int level, String description, boolean fixedType) {
+	public Message(String command,int type,int level, String description, boolean fixedType, int style) {
 		this(command);
 		if(!StringTools.isEmpty(description))
 			addDetail(type,description);
 		maxDetailsType = type;
 		this.level = level;
 		this.isFixedType = fixedType;
+		this.style = style;
 	}	
+	public Message(String command,int type,int level, String description, boolean fixedType) {
+		this(command, type, level, description, fixedType, StatusManager.NONE);
+	}
+
+	public Message(String command,int type,int level, String description) {
+		this(command, type, level, description, false);
+	}
 
 	/**
 	 * @return
@@ -298,6 +304,11 @@ public class Message implements IMessageDetails {
 	@Override
 	public String getDescription() {
 		return command;
+	}
+	
+	protected int style=StatusManager.NONE;
+	public int getStyle() {
+		return style;
 	}
 
 }
