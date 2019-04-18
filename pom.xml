@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
 		<artifactId>super-pom</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev</artifactId>
@@ -97,24 +97,8 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>			
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>com.arcadsoftware</groupId>
-					<artifactId>unleash-maven-plugin</artifactId>
-					<version>2.9.4</version>
-					<dependencies>
-						<dependency>
-							<groupId>com.arcadsoftware</groupId>
-							<artifactId>unleash-scm-provider-git</artifactId>
-							<version>2.2.1</version>
-						</dependency>
-					</dependencies>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<modules>

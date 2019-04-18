@@ -8,4 +8,25 @@
 
 	<artifactId>com.arcadsoftware.aev.update</artifactId>
 	<packaging>eclipse-repository</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.arcadsoftware</groupId>
+				<artifactId>p2-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<serverId>software-factory</serverId>
+					<url>${artifactory.url}/p2-local/</url>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
