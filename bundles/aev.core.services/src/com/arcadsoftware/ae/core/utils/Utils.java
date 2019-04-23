@@ -169,7 +169,7 @@ public class Utils {
 	public static String substitute(String s,
 									String oldPattern,
 									String newPattern){
-		return substitute(s,oldPattern,newPattern,1);
+		return substitute(s,oldPattern, newPattern, -1);
 	}		
 	
 	public static String substituteProperty(String value,String propertyName){
