@@ -12,7 +12,7 @@
 
 	<scm>
 		<connection>scm:git:git@rdanghub01plv.quarcad.net:RetD/aev.git</connection>
-<tag>HEAD</tag>
+		<tag>HEAD</tag>
 	</scm>
 	
 	<properties>
