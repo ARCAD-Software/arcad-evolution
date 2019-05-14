@@ -1,13 +1,7 @@
-/ant/*/
-/ant/*/target/
-/bundles/*/bin/
-/bundles/*/target/
-/features/*/target/
-/releng/*/bin/
-/releng/*/target/
-/.project
-/.settings/
-/*/.*
+
 .*
 !.gitignore
 !.mvn
+**/.*
+**/target
+**/bin
