@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution Core UI
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui;singleton:=true
-Bundle-Version: 9.3.2.qualifier
+Bundle-Version: 9.3.3.qualifier
 Bundle-Activator: com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin
 Bundle-Vendor: ARCAD Software
 Bundle-Localization: plugin
