@@ -9,12 +9,16 @@
       Contains the ARCAD Evolution Services bundles and its dependencies.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="http://www.arcadsoftware.com">
+      (c) ARCAD-Software, All Rights Reserved.
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="http://www.arcadsoftware.com">
+      General ARCAD-Software Commercial License
+      (c) 2019, ARCAD Software, all rights reserved.
+      The software and documentation cannot be used without explicit
+      authorization of ARCAD-Software.
+      Please refer to the global ARCAD products licence for details.
    </license>
 
    <plugin
