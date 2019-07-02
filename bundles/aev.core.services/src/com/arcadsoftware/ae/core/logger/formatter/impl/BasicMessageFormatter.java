@@ -23,14 +23,16 @@ public class BasicMessageFormatter extends AbstractMessageFormatter {
 	
 	public String format(AbstractMessage message) {
         StringBuffer sb = new StringBuffer(createHeader(message));
-        sb.append('(');
-        for (int i=0;i<message.getDatas().size();i++) {
-        	MessageData md = (MessageData)message.getDatas().get(i);
-            String key = md.getKey();
-            String value = md.getData();
-            sb.append(key).append('=').append(value).append(';');
+        if(!message.getDatas().isEmpty()){
+            sb.append('(');
+            for (int i=0;i<message.getDatas().size();i++) {
+                MessageData md = (MessageData)message.getDatas().get(i);
+                String key = md.getKey();
+                String value = md.getData();
+                sb.append(key).append('=').append(value).append(';');
+            }
+            sb.append(')');
         }
-        sb.append(')');
         return sb.toString();
 	}
 
