@@ -82,6 +82,7 @@
 						<plugin id="net.sf.jmimemagic"/>
 						<plugin id="org.apache.servicemix.bundles.xpp3"/>
 						<plugin id="org.apache.servicemix.bundles.hsqldb"/>
+						<plugin id="com.thoughtworks.xstream"/>
 					</excludes>
 				</configuration>
 			</plugin>
