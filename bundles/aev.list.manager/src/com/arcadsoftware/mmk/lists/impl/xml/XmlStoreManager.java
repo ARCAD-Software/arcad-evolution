@@ -1,33 +1,41 @@
 package com.arcadsoftware.mmk.lists.impl.xml;
 
-import static com.arcadsoftware.mmk.lists.EListConstants.*;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_COL;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_COLUMNDEF;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_COMMENT;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_CONTENT;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_DESCRIPTION;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_HEADER;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_LIST;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_METADATAS;
+import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_ROW;
 
 import java.io.File;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.xmlpull.v1.XmlPullParserFactory;
+import org.xmlpull.v1.XmlSerializer;
 
-import org.xmlpull.mxp1_serializer.MXSerializer;
 import com.arcadsoftware.ae.core.exceptions.ArcadException;
 import com.arcadsoftware.mmk.lists.IXmlLists;
 import com.arcadsoftware.mmk.lists.managers.AbstractStoreManager;
 import com.arcadsoftware.mmk.lists.metadata.ListColumnDef;
 
 public class XmlStoreManager extends AbstractStoreManager {
-	SimpleDateFormat sd = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
+	private final static SimpleDateFormat sd = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
 	
-	IXmlLists xmlList;
-	MXSerializer serializer = null;
+	private IXmlLists xmlList;
+	private XmlSerializer serializer;
 	
 	public XmlStoreManager(IXmlLists xmlList) {
 		super(xmlList.getList());
 		this.xmlList = xmlList;
 	}
 	
-	private void createHeaderSection(MXSerializer serializer) throws IOException {		
+	private void createHeaderSection(XmlSerializer serializer) throws IOException {		
 		serializer.startTag(null,LST_TAG_HEADER.getValue());
 		serializer.attribute(null,"createdThe",sd.format(list.getHeader().getCreatedThe()));
 		serializer.attribute(null,"createdBy",list.getHeader().getCreatedBy());
@@ -50,7 +58,7 @@ public class XmlStoreManager extends AbstractStoreManager {
 		serializer.endTag(null,LST_TAG_HEADER.getValue());
 	}	
 	
-	private void createMetadataSection(MXSerializer serializer) throws IOException {			
+	private void createMetadataSection(XmlSerializer serializer) throws IOException {			
 		serializer.startTag(null,LST_TAG_METADATAS.getValue());	
 		serializer.attribute(null,"id",list.getMetadatas().getId());
 		serializer.attribute(null,"version",list.getMetadatas().getVersion());		
@@ -69,7 +77,7 @@ public class XmlStoreManager extends AbstractStoreManager {
 		serializer.endTag(null,LST_TAG_METADATAS.getValue());
 	}	
 	
-	private void createItemSection(MXSerializer serializer) throws IOException {	
+	private void createItemSection(XmlSerializer serializer) throws IOException {	
 		serializer.startTag(null,LST_TAG_ROW.getValue());
 		int count = list.getMetadatas().count();
 		for (int i=0;i<count;i++) {
@@ -90,14 +98,11 @@ public class XmlStoreManager extends AbstractStoreManager {
 		String fileName = xmlList.getXmlFileName();
 		//xmlList.getList().initStoreItem();
 		File f = new File(fileName);
-
-		serializer = new MXSerializer();			
-		FileWriter writer;
 		try {
-			writer = new FileWriter(f);
-	        serializer.setOutput(writer);	
+			serializer = XmlPullParserFactory.newInstance().newSerializer();
+	        serializer.setOutput(new FileWriter(f));	
 	        return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new ArcadException(e.getMessage(),e);
 		}
 	}
@@ -128,8 +133,7 @@ public class XmlStoreManager extends AbstractStoreManager {
 			//Cela pouvait générait une erreur si tentative de remplacement
 			//du fichier dnas une même session JVM
 			//System.out.println("close-1");
-			serializer.getWriter().flush();
-			serializer.getWriter().close();
+			serializer.flush();
 			//System.out.println("close-2");
 			return true;
 		} catch (IOException e) {

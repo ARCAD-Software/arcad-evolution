@@ -20,10 +20,9 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.logger,
  com.arcadsoftware.ae.core.translation,
  com.arcadsoftware.ae.core.utils,
- org.apache.commons.io;version="2.0.1",
+ org.apache.commons.io,
  org.hsqldb.jdbc,
  org.xmlpull.mxp1,
- org.xmlpull.mxp1_serializer;version="1.1.4.c",
- org.xmlpull.v1;version="1.1.4.c"
+ org.xmlpull.v1
 Bundle-ClassPath: .
 Bundle-Version: 9.3.3.qualifier
