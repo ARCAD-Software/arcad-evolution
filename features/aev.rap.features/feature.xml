@@ -6,7 +6,7 @@
       provider-name="ARCAD-Software">
 
    <description>
-      Contains the ARCAD Evolution RCP bundle and its dependencies.
+      Contains the ARCAD Evolution RAP bundle and its dependencies.
    </description>
 
    <copyright url="http://www.arcadsoftware.com">
@@ -26,12 +26,45 @@
          version="0.0.0"/>
 
    <requires>
-      <import plugin="org.eclipse.core.runtime"/>
       <import plugin="com.arcadsoftware.aev.core.ui"/>
       <import plugin="com.arcadsoftware.aev.core"/>
+      <import plugin="com.ibm.icu"/>
+      <import plugin="javax.xml"/>
+      <import plugin="org.apache.felix.gogo.command"/>
+      <import plugin="org.apache.felix.gogo.runtime"/>
+      <import plugin="org.apache.felix.gogo.shell"/>
+      <import plugin="org.eclipse.core.commands"/>
+      <import plugin="org.eclipse.core.contenttype"/>
+      <import plugin="org.eclipse.core.databinding"/>
+      <import plugin="org.eclipse.core.databinding.beans"/>
+      <import plugin="org.eclipse.core.databinding.observable"/>
+      <import plugin="org.eclipse.core.databinding.property"/>
+      <import plugin="org.eclipse.core.expressions"/>
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.eclipse.core.jobs"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.equinox.app"/>
+      <import plugin="org.eclipse.equinox.common"/>
+      <import plugin="org.eclipse.equinox.console"/>
+      <import plugin="org.eclipse.equinox.http.registry"/>
+      <import plugin="org.eclipse.equinox.http.servlet"/>
+      <import plugin="org.eclipse.equinox.http.servletbridge"/>
+      <import plugin="org.eclipse.equinox.preferences"/>
+      <import plugin="org.eclipse.equinox.registry"/>
+      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipse.osgi.services"/>
+      <import plugin="org.eclipse.rap.filedialog"/>
+      <import plugin="org.eclipse.rap.fileupload"/>
+      <import plugin="org.eclipse.rap.jface"/>
+      <import plugin="org.eclipse.rap.jface.databinding"/>
+      <import plugin="org.eclipse.rap.rwt" version="2.0.0" match="compatible"/>
+      <import plugin="org.eclipse.rap.rwt.osgi"/>
       <import plugin="org.eclipse.rap.ui" version="2.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.rap.ui.forms" version="2.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.rap.rwt.supplemental.filedialog" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.rap.ui.views" version="2.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.rap.ui.workbench" version="2.1.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin

@@ -4,14 +4,13 @@ Bundle-Name: ARCAD-Evolution Core UI RAP
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui.rap
 Bundle-Version: 9.3.3.qualifier
 Bundle-Activator: com.arcadsoftware.aev.core.ui.rap.Activator
-Require-Bundle: org.eclipse.core.runtime,
- com.arcadsoftware.aev.core.ui,
+Require-Bundle: com.arcadsoftware.aev.core.ui,
  com.arcadsoftware.aev.core,
- org.eclipse.rap.ui;bundle-version="2.1.0",
- org.eclipse.rap.ui.forms;bundle-version="2.1.0",
- org.eclipse.rap.rwt.supplemental.filedialog;bundle-version="2.0.0"
+ org.eclipse.rap.ui;bundle-version="3.1.0",
+ org.eclipse.rap.ui.forms;bundle-version="3.1.0",
+ org.eclipse.rap.filedialog;bundle-version="3.1.2"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: ARCAD-Software
 Export-Package: com.arcadsoftware.aev.core.ui.common,
  com.arcadsoftware.aev.core.ui.rap,

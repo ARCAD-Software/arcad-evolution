@@ -8,7 +8,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
-
 import com.arcadsoftware.aev.core.ui.tools.IFileManagerProvider;
 
 public class FileManagerProvider implements IFileManagerProvider {
@@ -18,9 +17,8 @@ public class FileManagerProvider implements IFileManagerProvider {
 	}
 	
 	public String selectFile(Shell shell, int actionStyle, String title,final String[] fileExtensions) {
-		
 		final FileDialog fileDialog = new FileDialog( shell, SWT.OPEN | SWT.APPLICATION_MODAL );
-		fileDialog.setFilterExtensions(fileExtensions);
+		//fileDialog.setFilterExtensions(fileExtensions);
 		fileDialog.setText(title);
 		return fileDialog.open();
 	}
