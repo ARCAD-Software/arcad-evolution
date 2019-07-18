@@ -20,7 +20,7 @@
       authorization of ARCAD-Software.
       Please refer to the global ARCAD products licence for details.
    </license>
-   
+
    <includes
          id="com.arcadsoftware.aev.services.features"
          version="0.0.0"/>
@@ -40,16 +40,17 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.servicemix.bundles.xpp3"
+         id="org.apache.servicemix.bundles.hsqldb"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.servicemix.bundles.hsqldb"
+         id="com.thoughtworks.xstream"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>
