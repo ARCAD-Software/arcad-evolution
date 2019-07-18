@@ -59,12 +59,12 @@
       <import plugin="org.eclipse.rap.fileupload"/>
       <import plugin="org.eclipse.rap.jface"/>
       <import plugin="org.eclipse.rap.jface.databinding"/>
-      <import plugin="org.eclipse.rap.rwt" version="2.0.0" match="compatible"/>
+      <import plugin="org.eclipse.rap.rwt"/>
       <import plugin="org.eclipse.rap.rwt.osgi"/>
-      <import plugin="org.eclipse.rap.ui" version="2.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.rap.ui.forms" version="2.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.rap.ui.views" version="2.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.rap.ui.workbench" version="2.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.rap.ui"/>
+      <import plugin="org.eclipse.rap.ui.forms"/>
+      <import plugin="org.eclipse.rap.ui.views"/>
+      <import plugin="org.eclipse.rap.ui.workbench"/>
    </requires>
 
    <plugin
