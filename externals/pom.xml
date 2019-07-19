@@ -10,6 +10,6 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>org.eclipse.rap.ui.views.properties.tabbed</module>
+		<module>aev.rap.ui.views.properties.tabbed</module>
 	</modules>
 </project>
