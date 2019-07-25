@@ -21,6 +21,7 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.translation,
  com.arcadsoftware.ae.core.utils,
  org.apache.commons.io,
+ org.hsqldb,
  org.hsqldb.jdbc,
  org.xmlpull.mxp1,
  org.xmlpull.v1
