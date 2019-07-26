@@ -11,24 +11,4 @@
 
 	<artifactId>com.arcadsoftware.aev.rap.features</artifactId>
 	<packaging>eclipse-feature</packaging>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-packaging-plugin</artifactId>
-				<version>1.3.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>package-feature</goal>
-						</goals>
-						<configuration>
-							<deployableFeature>true</deployableFeature>							
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>

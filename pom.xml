@@ -119,7 +119,6 @@
 
 	<modules>
 		<module>bundles</module>
-		<module>externals</module>
 		<module>ant</module>
 		<module>features</module>
 		<module>releng</module>
