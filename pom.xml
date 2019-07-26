@@ -98,6 +98,7 @@
 						<plugin id="org.eclipse.rap.ui.forms" />
 						<plugin id="org.eclipse.rap.ui.views" />
 						<plugin id="org.eclipse.rap.ui.workbench" />
+						<feature id="com.arcadsoftware.rap.feature" />
 					</excludes>
 				</configuration>
 			</plugin>
