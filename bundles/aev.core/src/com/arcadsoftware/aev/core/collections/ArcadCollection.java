@@ -1,8 +1,8 @@
 /*
- * Créé le 26 avr. 04
+ * Crï¿½ï¿½ le 26 avr. 04
  *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * Pour changer le modï¿½le de ce fichier gï¿½nï¿½rï¿½, allez ï¿½ :
+ * Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 package com.arcadsoftware.aev.core.collections;
 
@@ -31,11 +31,13 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 	@Override
 	public void add(IArcadCollectionItem c) {
 		list.add(c);
+		c.setParent(this);
 	}
 
 	@Override
 	public void insert(int index, IArcadCollectionItem c) {
 		list.add(index, c);
+		c.setParent(this);
 	}
 
 	@Override
@@ -57,16 +59,25 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 	
 	@Override
 	public void delete(int index) {
-		list.remove(index);
+		IArcadCollectionItem item = list.remove(index);
+		if(item != null){
+			item.unsetParent(this);
+		}
 	}
 
 	public void delete(IArcadCollectionItem c) {
 		list.remove(c);
+		c.unsetParent(this);
 		doAfterItemsRemoved(c);
 	}
 
 	@Override
 	public void clear() {
+		for(IArcadCollectionItem item : list){
+			if(item != null){
+				item.unsetParent(this);
+			}
+		}
 		list.clear();
 	}
 
