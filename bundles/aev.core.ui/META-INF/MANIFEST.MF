@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution Core UI
+Automatic-Module-Name: com.arcadsoftware.aev.core.ui
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui;singleton:=true
-Bundle-Version: 9.3.3.qualifier
+Bundle-Version: 9.4.0.qualifier
 Bundle-Activator: com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin
 Bundle-Vendor: ARCAD Software
 Bundle-Localization: plugin
@@ -25,6 +26,7 @@ Export-Package: com.arcadsoftware.aev.core.ui,
  com.arcadsoftware.aev.core.ui.listeners,
  com.arcadsoftware.aev.core.ui.listeners.columned,
  com.arcadsoftware.aev.core.ui.mementos,
+ com.arcadsoftware.aev.core.ui.model,
  com.arcadsoftware.aev.core.ui.monitors,
  com.arcadsoftware.aev.core.ui.perspectives,
  com.arcadsoftware.aev.core.ui.preferences,
@@ -47,7 +49,7 @@ Require-Bundle: com.arcadsoftware.aev.core,
  org.eclipse.ui;resolution:=optional,
  org.eclipse.ui.forms;resolution:=optional,
  org.eclipse.rap.ui;resolution:=optional,
- org.eclipse.rap.ui.forms;bundle-version="1.4.0";resolution:=optional,
+ org.eclipse.rap.ui.forms;resolution:=optional,
  org.eclipse.rap.jface;resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

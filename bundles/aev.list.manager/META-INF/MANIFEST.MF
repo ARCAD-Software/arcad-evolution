@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution List Manager
+Automatic-Module-Name: com.arcadsoftware.aev.list.manager
 Bundle-SymbolicName: com.arcadsoftware.aev.list.manager
 Bundle-Vendor: ARCAD Software
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
@@ -15,7 +16,8 @@ Export-Package: com.arcadsoftware.mmk.lists,
  com.arcadsoftware.mmk.lists.impl.storeitem,
  com.arcadsoftware.mmk.lists.impl.xml,
  com.arcadsoftware.mmk.lists.managers,
- com.arcadsoftware.mmk.lists.metadata
+ com.arcadsoftware.mmk.lists.metadata,
+ com.arcadsoftware.mmk.lists.test
 Import-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.logger,
  com.arcadsoftware.ae.core.translation,
@@ -26,4 +28,4 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  org.xmlpull.mxp1,
  org.xmlpull.v1
 Bundle-ClassPath: .
-Bundle-Version: 9.3.3.qualifier
+Bundle-Version: 9.4.0.qualifier

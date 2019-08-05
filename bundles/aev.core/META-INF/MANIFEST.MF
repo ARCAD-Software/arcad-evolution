@@ -2,21 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution Core
 Bundle-SymbolicName: com.arcadsoftware.aev.core;singleton:=true
-Bundle-Version: 9.3.3.qualifier
+Bundle-Version: 9.4.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: com.arcadsoftware.aev.core.EvolutionCorePlugin
 Bundle-Vendor: ARCAD Software
 Bundle-Localization: plugin
+Automatic-Module-Name: com.arcadsoftware.aev.core
 Export-Package: com.arcadsoftware.aev.core,
  com.arcadsoftware.aev.core.collections,
  com.arcadsoftware.aev.core.messages,
  com.arcadsoftware.aev.core.model,
  com.arcadsoftware.aev.core.tools
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.resources,
- org.eclipse.ui;resolution:=optional,
- org.eclipse.rap.ui;bundle-version="2.1.0";resolution:=optional,
- org.eclipse.rap.ui.forms;bundle-version="1.4.0";resolution:=optional
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.apache.commons.lang3,
  org.apache.commons.lang3.math,
