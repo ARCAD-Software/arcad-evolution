@@ -30,7 +30,6 @@ public class ColumnedSortCriteriaList extends AbstractColumnedCriteriaList {
 	 * Initialize the table data. Create COUNT criteria and add them them to the
 	 * collection of criteria
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void initData() {
 		ColumnedSortCriteria criterion;
@@ -57,7 +56,6 @@ public class ColumnedSortCriteriaList extends AbstractColumnedCriteriaList {
 	/**
 	 * Add a new criterion to the collection of criteria
 	 */
-	@SuppressWarnings("unchecked")
 	public void addCriterion() {
 		ColumnedSortCriteria criterion = new ColumnedSortCriteria(criteria.size() + 1, columnNames[0]);
 		criteria.add(criteria.size(), criterion);

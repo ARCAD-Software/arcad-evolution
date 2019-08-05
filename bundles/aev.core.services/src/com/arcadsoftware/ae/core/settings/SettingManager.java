@@ -29,7 +29,7 @@ public class SettingManager {
 	}
 	
 	public static boolean setBeanStringValue(Object bean,String setterName, String value) {
-		Class beanClass = bean.getClass();
+		Class<? extends Object> beanClass = bean.getClass();
 		try {
 			setterName = setterName.substring(0,1).toUpperCase()+setterName.substring(1);
 			Method method = beanClass.getMethod("set"+setterName, String.class); //$NON-NLS-1$
@@ -49,7 +49,7 @@ public class SettingManager {
 	}	
 	
 	public static boolean setBeanBooleanValue(Object bean,String setterName, boolean value) {
-		Class beanClass = bean.getClass();
+		Class<? extends Object> beanClass = bean.getClass();
 		try {
 			setterName = setterName.substring(0,1).toUpperCase()+setterName.substring(1);
 			Method method = beanClass.getMethod("set"+setterName, Boolean.class); //$NON-NLS-1$

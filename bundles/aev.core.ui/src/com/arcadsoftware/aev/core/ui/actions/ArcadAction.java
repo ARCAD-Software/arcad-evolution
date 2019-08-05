@@ -247,9 +247,8 @@ public class ArcadAction extends Action {
 	 * @param totalNumberOfStep
 	 *            : nombre d'�tape du doBeforeRun
 	 */
-	@SuppressWarnings("unchecked")
 	private void fireBegin(String message, int totalNumberOfStep) {
-		Iterator it = monitorManager.iterator();
+		Iterator<?> it = monitorManager.iterator();
 		while (it.hasNext()) {
 			IMonitor monitor = (IMonitor) it.next();
 			monitor.begin(message, totalNumberOfStep);
@@ -264,9 +263,8 @@ public class ArcadAction extends Action {
 	 * @param numberOfStep
 	 *            : nombre d'�tape de l'initialisation
 	 */
-	@SuppressWarnings("unchecked")
 	private void fireInitialize(String message, int numberOfStep) {
-		Iterator it = monitorManager.iterator();
+		Iterator<?> it = monitorManager.iterator();
 		while (it.hasNext()) {
 			IMonitor monitor = (IMonitor) it.next();
 			monitor.initialize(message, numberOfStep);
@@ -282,9 +280,8 @@ public class ArcadAction extends Action {
 	 * @param numberOfStep
 	 *            : nombre d'�tape de l'action
 	 */
-	@SuppressWarnings("unchecked")
 	private void fireBeforeExecute(String message, int numberOfStep) {
-		Iterator it = monitorManager.iterator();
+		Iterator<?> it = monitorManager.iterator();
 		while (it.hasNext()) {
 			IMonitor monitor = (IMonitor) it.next();
 			monitor.beforeExecute(message, numberOfStep);
@@ -299,9 +296,8 @@ public class ArcadAction extends Action {
 	 * @param numberOfStep
 	 *            : nombre d'�tape franchie
 	 */
-	@SuppressWarnings("unchecked")
 	protected void fireProgress(String message, int numberOfStep) {
-		Iterator it = monitorManager.iterator();
+		Iterator<?> it = monitorManager.iterator();
 		while (it.hasNext()) {
 			IMonitor monitor = (IMonitor) it.next();
 			monitor.progress(message, numberOfStep);
@@ -317,9 +313,8 @@ public class ArcadAction extends Action {
 	 * @param numberOfStep
 	 *            : nombre d'�tape de l'action
 	 */
-	@SuppressWarnings("unchecked")
 	private void fireAfterExecute(String message, int numberOfStep) {
-		Iterator it = monitorManager.iterator();
+		Iterator<?> it = monitorManager.iterator();
 		while (it.hasNext()) {
 			IMonitor monitor = (IMonitor) it.next();
 			monitor.afterExecute(message, numberOfStep);
@@ -329,9 +324,8 @@ public class ArcadAction extends Action {
 	/**
 	 * Notifie l'ensemble des IMonitor de la fin de l'action
 	 */
-	@SuppressWarnings("unchecked")
 	private void fireEnd(String message) {
-		Iterator it = monitorManager.iterator();
+		Iterator<?> it = monitorManager.iterator();
 		while (it.hasNext()) {
 			IMonitor monitor = (IMonitor) it.next();
 			monitor.end(message);

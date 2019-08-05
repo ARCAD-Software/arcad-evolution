@@ -4,7 +4,6 @@
  */
 package com.arcadsoftware.aev.core.ui.tools;
 
-import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 
 import com.arcadsoftware.aev.core.messages.MessageManager;
@@ -33,9 +32,8 @@ public class CorePreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	@Override
 	public void initializeDefaultPreferences() {
-		Preferences store = EvolutionCoreUIPlugin.getDefault().getPluginPreferences();
 
-		EvolutionCoreUIPlugin.getDefault().getPluginPreferences().setDefault(EvolutionCoreUIPlugin.PREF_MESSAGES_LEVEL,
+		EvolutionCoreUIPlugin.getDefault().getPreferenceStore().setDefault(EvolutionCoreUIPlugin.PREF_MESSAGES_LEVEL,
 				MessageManager.LEVEL_PRODUCTION);
 
 		// /////////////////////////////////////////////////////////////////////////////////

@@ -62,7 +62,7 @@ public class XMLUtils {
 		if (parseRoot) {
 			return parser.parse(root); 
 		} else {
-	        for ( Iterator i = root.elementIterator(parser.getRootName()); i.hasNext(); ) {
+	        for ( Iterator<?> i = root.elementIterator(parser.getRootName()); i.hasNext(); ) {
 	        	Element instElement = (Element) i.next();
 	        	if (!parser.parse(instElement)){
 	        		return false;
@@ -86,7 +86,7 @@ public class XMLUtils {
 		if (parseRoot) {
 			return parser.parse(root); 
 		} else {
-	        for ( Iterator i = root.elementIterator(parser.getRootName()); i.hasNext(); ) {
+	        for ( Iterator<?> i = root.elementIterator(parser.getRootName()); i.hasNext(); ) {
 	        	Element instElement = (Element) i.next();
 	        	if (!parser.parse(instElement)){
 	        		return false;
@@ -110,7 +110,7 @@ public class XMLUtils {
 		Document document = DocumentHelper.createDocument();
 		document.addDocType(rootName,null,null);
 		document.setXMLEncoding("ISO-8859-1"); //$NON-NLS-1$
-		Element root = document.addElement(rootName);
+		document.addElement(rootName);
         XMLWriter writer;
 		writer = new XMLWriter(new FileWriter( fileName));
         writer.write(document);

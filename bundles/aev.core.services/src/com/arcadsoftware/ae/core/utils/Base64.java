@@ -35,11 +35,6 @@ public final class Base64 {
      int i1 = (l - 1) / 19 + 1;
      char ac[] = null;
      ac = new char[l * 4 + i1];
-     boolean flag = false;
-     boolean flag1 = false;
-     boolean flag2 = false;
-     boolean flag3 = false;
-     boolean flag4 = false;
      int j1 = 0;
      int k1 = 0;
      int l1 = 0;
@@ -122,10 +117,6 @@ public final class Base64 {
      byte abyte0[] = null;
      byte byte0 = 0;
      byte byte1 = 0;
-     boolean flag = false;
-     boolean flag1 = false;
-     boolean flag2 = false;
-     boolean flag3 = false;
      char c = '\0';
      char c1 = '\0';
      char c2 = '\0';
@@ -208,16 +199,6 @@ public final class Base64 {
      return i;
  }
 
- private static final int BASELENGTH = 255;
- private static final int LOOKUPLENGTH = 64;
- private static final int TWENTYFOURBITGROUP = 24;
- private static final int EIGHTBIT = 8;
- private static final int SIXTEENBIT = 16;
- private static final int SIXBIT = 6;
- private static final int FOURBYTE = 4;
- private static final int SIGN = -128;
- private static final char PAD = 61;
- private static final boolean fDebug = false;
  private static final byte base64Alphabet[];
  private static final char lookUpBase64Alphabet[];
 

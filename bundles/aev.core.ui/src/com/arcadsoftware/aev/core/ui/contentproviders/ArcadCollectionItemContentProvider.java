@@ -31,7 +31,6 @@ public class ArcadCollectionItemContentProvider implements IStructuredContentPro
 	 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
 	 * .lang.Object)
 	 */
-	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		if (inputElement instanceof ArcadCollection) {
 			return ((ArcadCollection) inputElement).toArray();
@@ -40,7 +39,7 @@ public class ArcadCollectionItemContentProvider implements IStructuredContentPro
 		} else if (inputElement instanceof IObjectArrayProvider) {
 			return ((IObjectArrayProvider) inputElement).getObjectArray();
 		} else if (inputElement instanceof ArrayList) {
-			return ((ArrayList) inputElement).toArray();		
+			return ((ArrayList<?>) inputElement).toArray();		
 		}
 		return EMPTYARRAY;
 	}

@@ -12,13 +12,13 @@ import org.osgi.framework.BundleContext;
 import com.arcadsoftware.aev.core.model.ArcadPlugin;
 import com.arcadsoftware.aev.core.tools.ArcadCoreUtilsHelper;
 import com.arcadsoftware.aev.core.tools.CoreLabels;
-import com.arcadsoftware.aev.core.tools.IHelperRessource;
+import com.arcadsoftware.aev.core.tools.IHelperLabel;
 import com.arcadsoftware.aev.core.tools.Utils;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class EvolutionCorePlugin extends ArcadPlugin implements IHelperRessource {
+public class EvolutionCorePlugin extends ArcadPlugin implements IHelperLabel {
 
 	public static final String COMPLIANT_FILENAME = "compliant.xml"; //$NON-NLS-1$
 
@@ -34,7 +34,7 @@ public class EvolutionCorePlugin extends ArcadPlugin implements IHelperRessource
 		super();
 		plugin = this;
 		Utils.getInstance().setHelper(new ArcadCoreUtilsHelper());
-		CoreLabels.getInstance().setHelper(this);
+		CoreLabels.getInstance().setLabelHelper(this);
 		try {
 			resourceBundle = ResourceBundle.getBundle("com.arcadsoftware.aev.core.EvolutionCorePluginResources");//$NON-NLS-1$
 		} catch (MissingResourceException x) {
@@ -76,11 +76,6 @@ public class EvolutionCorePlugin extends ArcadPlugin implements IHelperRessource
 		return resourceBundle;
 	}
 
-	@Override
-	protected void initializeImageRegistry() {
-		// Do nothing
-	}
-
 	public static String getCompliantFileName() {
 		try {
 			return getDefault().getPluginPath() + File.separatorChar + COMPLIANT_FILENAME;
@@ -90,8 +85,13 @@ public class EvolutionCorePlugin extends ArcadPlugin implements IHelperRessource
 	}
 
 	@Override
-	public String resString(String key) {
-		return getResourceString(key);
+	public String resString(String key, Object...params) {
+		try {
+			return String.format(getResourceString(key), params);
+		}
+		catch(Exception e) {
+			return getResourceString(key);
+		}
 	}
 
 	@Override

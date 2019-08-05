@@ -6,7 +6,7 @@ import java.util.Hashtable;
 
 public class ExtensionFileFilter {
 	private boolean allowDirectories;
-	private Hashtable extensionsTable = new Hashtable();
+	private Hashtable<String, Boolean> extensionsTable = new Hashtable<String, Boolean>();
 	private boolean allowAll = false;
 
 	public ExtensionFileFilter(boolean allowDirectories) {
@@ -47,7 +47,7 @@ public class ExtensionFileFilter {
 	    	return(true);
 	    }
 	    //Recherche en ignorant le caseSensitive
-	    Enumeration keys = extensionsTable.keys();
+	    Enumeration<String> keys = extensionsTable.keys();
 	    while(keys.hasMoreElements()) {
 	    	String possibleExtension = (String)keys.nextElement();
 	    	Boolean caseFlag =

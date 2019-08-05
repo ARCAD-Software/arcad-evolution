@@ -60,7 +60,6 @@ public class ShowPropertyDialogAction extends ArcadAction {
 	 * 
 	 * @see org.eclipse.jface.action.IAction#run()
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		boolean isnull = false;
@@ -75,7 +74,7 @@ public class ShowPropertyDialogAction extends ArcadAction {
 		if (element != null) {
 			PropertyPageContributorManager.getManager().contribute(pageManager, element);
 			// testing if there are pages in the manager
-			Iterator pages = pageManager.getElements(PreferenceManager.PRE_ORDER).iterator();
+			Iterator<?> pages = pageManager.getElements(PreferenceManager.PRE_ORDER).iterator();
 			String name = defineName();
 			if (!pages.hasNext()) {
 				MessageDialog.openInformation(shell, CoreUILabels.resString("msg.commonTitle"), //$NON-NLS-1$

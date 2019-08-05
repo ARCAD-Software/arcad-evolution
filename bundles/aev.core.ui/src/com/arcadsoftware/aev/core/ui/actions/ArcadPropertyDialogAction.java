@@ -104,7 +104,7 @@ public class ArcadPropertyDialogAction extends PropertyDialogAction {
 		// return;
 		PropertyPageContributorManager.getManager().contribute(pageManager, element);
 		// testing if there are pages in the manager
-		Iterator pages = pageManager.getElements(PreferenceManager.PRE_ORDER).iterator();
+		Iterator<?> pages = pageManager.getElements(PreferenceManager.PRE_ORDER).iterator();
 
 		String name = getName(element);
 		if (!pages.hasNext()) {

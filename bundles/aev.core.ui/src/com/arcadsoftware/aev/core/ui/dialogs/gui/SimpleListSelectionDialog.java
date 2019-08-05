@@ -29,8 +29,7 @@ import com.arcadsoftware.aev.core.ui.dialogs.ArcadCenteredDialog;
  */
 public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 
-	@SuppressWarnings("unchecked")
-	private ArrayList list;
+	private ArrayList<?> list;
 
 	protected static int DIALOG_WIDTH = 350;
 	protected static int DIALOG_HEIGHT = 400;
@@ -42,9 +41,8 @@ public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 	private Object selectedObject = null;
 	private int selectedIndex = -1;
 
-	@SuppressWarnings("unchecked")
 	public SimpleListSelectionDialog(Shell parentShell, String title, String description, String columnTitle,
-			ArrayList list) {
+			ArrayList<?> list) {
 		super(parentShell, DIALOG_WIDTH, DIALOG_HEIGHT, title);
 		this.list = list;
 		this.columnTitle = columnTitle;
@@ -144,9 +142,8 @@ public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 	 * @param freeInput
 	 * @return Object
 	 */
-	@SuppressWarnings("unchecked")
 	public static Object selectObject(Shell parentShell, String title, String description, String columnTitle,
-			ArrayList list) {
+			ArrayList<?> list) {
 
 		SimpleListSelectionDialog dialog = new SimpleListSelectionDialog(parentShell, title, description, columnTitle,
 				list);
@@ -164,9 +161,8 @@ public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 	 * @param freeInput
 	 * @return int
 	 */
-	@SuppressWarnings("unchecked")
 	public static int selectIndex(Shell parentShell, String title, String description, String columnTitle,
-			ArrayList list) {
+			ArrayList<?> list) {
 
 		SimpleListSelectionDialog dialog = new SimpleListSelectionDialog(parentShell, title, description, columnTitle,
 				list);

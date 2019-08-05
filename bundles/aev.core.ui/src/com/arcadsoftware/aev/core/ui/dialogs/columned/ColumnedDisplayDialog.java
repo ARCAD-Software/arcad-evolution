@@ -57,8 +57,7 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 	ArcadColumns displayedColumns = new ArcadColumns();
 	ArcadColumns maskedColumns = new ArcadColumns();
 
-	@SuppressWarnings("unchecked")
-	private ArrayList listeners = new ArrayList();
+	private ArrayList<IDialogListener> listeners = new ArrayList<IDialogListener>();
 
 	Table maskedIdentifierTable;
 	private Table displayedIdentifierTable;
@@ -88,10 +87,9 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 		newShell.setLocation(x, y);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void initColumns() {
 		maskedColumns = new ArcadColumns();
-		Iterator it = referenceColumns.getList().iterator();
+		Iterator<?> it = referenceColumns.getList().iterator();
 		while (it.hasNext()) {
 			ArcadColumn column = (ArcadColumn) it.next();
 			if (column.getVisible() == ArcadColumn.VISIBLE)
@@ -428,7 +426,6 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 		return referenceColumns;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addListener(IDialogListener listener) {
 		listeners.add(listener);
 	}
@@ -437,9 +434,8 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 		listeners.remove(listener);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void fireDialogListener() {
-		Iterator it = listeners.iterator();
+		Iterator<IDialogListener> it = listeners.iterator();
 		while (it.hasNext())
 			((IDialogListener) it.next()).doOnApply();
 	}

@@ -67,11 +67,10 @@ public class ColumnedExportAction extends ArcadAction {
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean process() {
 		try {
 			StringBuffer data = new StringBuffer();
-			ArrayList elements = new ArrayList();
+			ArrayList<Object> elements = new ArrayList<Object>();
 
 			Item[] items = viewer instanceof AbstractColumnedTableViewer ? ((AbstractColumnedTableViewer) viewer)
 					.getTable().getItems() : ((AbstractColumnedTreeViewer) viewer).getTree().getItems();
@@ -80,7 +79,7 @@ public class ColumnedExportAction extends ArcadAction {
 			}
 
 			ArcadColumns columns = viewer.getDisplayedColumns().duplicate();
-			ArrayList list = new ArrayList();
+			ArrayList<String> list = new ArrayList<String>();
 			String separator = parametersPage.getSeparator();
 			if (separator.equals("\\t")) //$NON-NLS-1$
 				separator = "	"; //$NON-NLS-1$
@@ -104,7 +103,7 @@ public class ColumnedExportAction extends ArcadAction {
 
 			if (parametersPage.isIncludeHeader()) {
 				// String[] userNameValues = columns.getUserNameValues();
-				Iterator iterator = columns.getList().iterator();
+				Iterator<?> iterator = columns.getList().iterator();
 				data.append(((ArcadColumn) iterator.next()).getUserName());
 				while (iterator.hasNext()) {
 					ArcadColumn column = (ArcadColumn) iterator.next();
@@ -115,7 +114,7 @@ public class ColumnedExportAction extends ArcadAction {
 			}
 
 			if (viewer.isFiltered() && parametersPage.isOnlyDisplayedFilteredData()) {
-				ArrayList filteredElements = new ArrayList();
+				ArrayList<Object> filteredElements = new ArrayList<Object>();
 				for (int i = 0; i < elements.size(); i++) {
 					boolean inFilteredData = viewer.getFilter().select(viewer.getViewer(), elements, elements.get(i));
 					if (inFilteredData)
@@ -127,7 +126,7 @@ public class ColumnedExportAction extends ArcadAction {
 			// Attention le viewer.getInput() ne donne que les éléments de
 			// premier niveau pour les arbres...
 			if (viewer instanceof AbstractColumnedTreeViewer) {
-				ArrayList treeElements = new ArrayList();
+				ArrayList<Object> treeElements = new ArrayList<Object>();
 				for (int i = 0; i < elements.size(); i++) {
 					completeElementListOfRoot(getTreeItem(elements.get(i)), treeElements);
 				}
@@ -185,8 +184,7 @@ public class ColumnedExportAction extends ArcadAction {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	private ArrayList completeElementListOfRoot(TreeItem treeItem, ArrayList list) {
+	private ArrayList<Object> completeElementListOfRoot(TreeItem treeItem, ArrayList<Object> list) {
 		Object o = treeItem.getData();
 		list.add(o);
 		TreeItem[] items = treeItem.getItems();

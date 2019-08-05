@@ -16,7 +16,7 @@ public class FileUtils {
 		destFile.setLastModified(lm);	
 	}	
 	
-	public static void getStructure(File root,ArrayList structure,FileFilter filter) throws IOException{
+	public static void getStructure(File root,ArrayList<String> structure,FileFilter filter) throws IOException{
 		if (root.isDirectory()){
 			File[] kids;
 			if (filter!=null)

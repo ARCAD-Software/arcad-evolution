@@ -3,17 +3,12 @@
  */
 package com.arcadsoftware.aev.core.tools;
 
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
-
-
-
 /**
  * @author MD
  */
 public class CoreLabels {
     private static CoreLabels instance;
-    private IHelperRessource _helper = null;          
+    private IHelperLabel helperLabel = null;          
 
     public CoreLabels() {
         super();
@@ -25,33 +20,17 @@ public class CoreLabels {
         return instance;
     }
     
-    public void setHelper(IHelperRessource helper) {
-        _helper = helper;        
+    public void setLabelHelper(IHelperLabel helperLabel) {
+    	this.helperLabel = helperLabel;        
     }
     
-    public IHelperRessource getHelper() {
-        if (_helper==null)
-            _helper = new DefaultLabelsHelper();
-        return _helper;
+    public IHelperLabel getHelper() {
+        if (helperLabel == null)
+        	helperLabel = new DefaultLabelsHelper();
+        return helperLabel;
     }
     
-    public static String resString(String res) {
-        return getInstance().getHelper().resString(res);
-    }
-    
-    public static ImageDescriptor getImageDescriptor(String key){
-    	return getInstance().getHelper().getImageDescriptor(key);
-    }
-    
-    public static Image getImage(String key) {
-		return getInstance().getHelper().getImage(key);
-	}
-    
-    public static Image getCompositeImage(String key,String decoKey){
-    	return getInstance().getHelper().getCompositeImage(key, decoKey);
-    }
-    
-    public static ImageDescriptor getCompositeImageDescriptor(String key,String decoKey){
-    	return getInstance().getHelper().getCompositeImageDescriptor(key, decoKey);
+    public static String resString(String res, Object...params) {
+        return getInstance().getHelper().resString(res, params);
     }
 }

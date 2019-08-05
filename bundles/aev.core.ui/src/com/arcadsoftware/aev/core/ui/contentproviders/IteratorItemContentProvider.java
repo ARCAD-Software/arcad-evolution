@@ -7,11 +7,10 @@ import org.eclipse.jface.viewers.Viewer;
 
 public class IteratorItemContentProvider implements IStructuredContentProvider {
 
-	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		if (inputElement instanceof Iterator) {
 			Object[] result = new Object[0];
-			Iterator it = (Iterator) inputElement;
+			Iterator<?> it = (Iterator<?>) inputElement;
 			int index = 0;
 			while (it.hasNext()) {
 				Object[] tmp = new Object[result.length + 1];

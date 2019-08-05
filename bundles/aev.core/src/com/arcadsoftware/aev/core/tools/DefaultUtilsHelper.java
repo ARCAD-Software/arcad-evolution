@@ -10,14 +10,16 @@ import java.io.File;
  */
 public class DefaultUtilsHelper implements IHelper, IHelperLabel {
 	private static String COMPLIANT_FILENAME = "compliant.xml"; //$NON-NLS-1$
-
+	private DefaultLabelsHelper labelsHelper;
+	
 	public DefaultUtilsHelper() {
 		super();
+		this.labelsHelper = new DefaultLabelsHelper();
 	}
 
     @Override
-	public String resString(String res) {
-		return res;
+	public String resString(String res, Object...params) {
+		return this.labelsHelper.resString(res, params);
 	}
 
     @Override

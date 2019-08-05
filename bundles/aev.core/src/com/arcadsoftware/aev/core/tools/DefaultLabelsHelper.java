@@ -3,42 +3,23 @@
  */
 package com.arcadsoftware.aev.core.tools;
 
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
-
-
 /**
  * @author MD
  */
-public class DefaultLabelsHelper implements IHelperRessource {
+public class DefaultLabelsHelper implements IHelperLabel {
 
     public DefaultLabelsHelper() {
         super();
     }
 
     @Override
-	public String resString(String res) {
-        return res;
+	public String resString(String res, Object...params) {
+        try {
+        	return String.format(res, params);
+        }
+        catch(Exception e) {
+        	e.printStackTrace();
+        	return res;
+        }
     }
-
-    @Override
-	public ImageDescriptor getImageDescriptor(String key) {
-		return null;
-	}
-
-    @Override
-	public Image getImage(String key) {
-		return null;
-	}
-
-    @Override
-	public Image getCompositeImage(String key, String decoKey) {
-		return null;
-	}
-
-    @Override
-	public ImageDescriptor getCompositeImageDescriptor(String key, String decoKey) {
-		return null;
-	}
-
 }

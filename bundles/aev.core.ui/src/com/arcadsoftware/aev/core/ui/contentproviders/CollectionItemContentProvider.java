@@ -20,10 +20,9 @@ public class CollectionItemContentProvider implements IStructuredContentProvider
 	 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
 	 * .lang.Object)
 	 */
-	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		if (inputElement instanceof Collection) {
-			Collection colllection = (Collection) inputElement;
+			Collection<?> colllection = (Collection<?>) inputElement;
 			return colllection.toArray();
 		}
 		return new Object[0];

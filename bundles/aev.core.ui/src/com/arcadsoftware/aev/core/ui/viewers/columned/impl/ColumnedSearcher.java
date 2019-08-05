@@ -94,12 +94,11 @@ public class ColumnedSearcher implements IColumnedSearcher {
 		this.casse = casse;
 	}
 
-	@SuppressWarnings("unchecked")
 	private String regexEtoile(String s) {
 		String result = s;
 		if (s.lastIndexOf("*") >= 0) { //$NON-NLS-1$
 			String f = new String();
-			ArrayList list = new ArrayList();
+			ArrayList<String> list = new ArrayList<String>();
 			char[] c = s.toCharArray();
 			for (int j = 0; j < c.length; j++) {
 				if (c[j] == '*')

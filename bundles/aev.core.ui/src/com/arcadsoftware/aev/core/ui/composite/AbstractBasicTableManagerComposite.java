@@ -75,9 +75,8 @@ public abstract class AbstractBasicTableManagerComposite extends AbstractArcadCo
 			init();
 		}
 		
-		@SuppressWarnings("rawtypes")
 		@Override
-		protected List getNextActions() {
+		protected List<Action> getNextActions() {
 			return AbstractBasicTableManagerComposite.this.getActions();
 		}
 

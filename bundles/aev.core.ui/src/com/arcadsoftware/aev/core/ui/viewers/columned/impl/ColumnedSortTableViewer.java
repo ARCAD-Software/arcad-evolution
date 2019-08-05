@@ -154,8 +154,7 @@ public class ColumnedSortTableViewer extends TableViewer {
 		return new String[] {};
 	}
 
-	@SuppressWarnings("unchecked")
-	public List getColumnNames() {
+	public List<String> getColumnNames() {
 		return Arrays.asList(columnNames);
 	}
 }

@@ -23,7 +23,7 @@ public class ClassUtils {
 		    //If the classname is correctly declared
 		    if ((classname!=null) && classname.length()!=0) {
 		    	//create the transformer
-		        Class transformerClass = Class.forName(classname,true,classLoader);
+		        Class<?> transformerClass = Class.forName(classname,true,classLoader);
 		        Object transformer = transformerClass.newInstance();
 		        return transformer;
 		    } else {
@@ -39,7 +39,7 @@ public class ClassUtils {
 	throws ClassNotFoundException, InstantiationException, IllegalAccessException {	    
 	    if ((classname!=null) && classname.length()!=0) {
 	    	//create the transformer
-	        Class transformerClass = Class.forName(classname);
+	        Class<?> transformerClass = Class.forName(classname);
 	        Object transformer = transformerClass.newInstance();
 	        return transformer;
 	    } else {

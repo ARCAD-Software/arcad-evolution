@@ -53,14 +53,13 @@ public class SettingParser implements IXMLContentParser {
 		section.setLabel(label);
 		section.setHelp(help);		
 		ArrayList<ConsoleField> fields = new ArrayList<ConsoleField>();
-        for ( Iterator i = node.elementIterator(); i.hasNext(); ) {
+        for ( Iterator<?> i = node.elementIterator(); i.hasNext(); ) {
         	Element prop = (Element) i.next();
         	ConsoleField field = null;
     		String id = getAttributeValue(prop, "id");		
     		String pLabel = getAttributeValue(prop, "label");
     		String pHelp = getAttributeValue(prop, "help");
-    		String pDefault = getAttributeValue(prop, "default");
-    		String pType = getAttributeValue(prop, "type");
+    		String pDefault = getAttributeValue(prop, "default");    		
     		
         	if (prop.getName().equalsIgnoreCase("property")) {
 	    		field = new ConsoleProperty();
@@ -69,7 +68,7 @@ public class SettingParser implements IXMLContentParser {
 	    		cp.setId(id);
 	    		cp.setDefaultvalue(pDefault);
 	    		cp.setValue(data);
-	            for ( Iterator j = prop.elementIterator("item"); j.hasNext(); ) {
+	            for ( Iterator<?> j = prop.elementIterator("item"); j.hasNext(); ) {
 	            	Element item = (Element) j.next();
 	            	String itemValue = item.getText();
 	            	cp.getList().add(itemValue);

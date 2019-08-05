@@ -23,8 +23,7 @@ public class SimpleDateVerifierListener implements Listener {
 
 	Text text;
 	String format = null;
-	@SuppressWarnings("unchecked")
-	ArrayList sepList = new ArrayList();
+	ArrayList<String> sepList = new ArrayList<String>();
 	boolean valid = false;
 	final Calendar calendar = Calendar.getInstance();
 
@@ -59,7 +58,6 @@ public class SimpleDateVerifierListener implements Listener {
 		return value.substring(dStartPos, dStartPos + 2);
 	}
 
-	@SuppressWarnings("unchecked")
 	private boolean analyseFormat(String analyseFormat) {
 		if (analyseFormat == null)
 			return false;

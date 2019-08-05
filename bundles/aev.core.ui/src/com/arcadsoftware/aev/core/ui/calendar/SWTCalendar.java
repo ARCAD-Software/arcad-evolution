@@ -29,7 +29,7 @@ import java.util.*;
 
 public class SWTCalendar extends Composite {
 
-	private List listeners;
+	private List<SWTCalendarListener> listeners;
 
     private SWTYearChooser yearChooser;
     private SWTMonthChooser monthChooser;
@@ -38,7 +38,7 @@ public class SWTCalendar extends Composite {
     public SWTCalendar(Composite parent, int style) {
         super(parent, style);
 
-        listeners = new ArrayList();
+        listeners = new ArrayList<SWTCalendarListener>();
 
         GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
@@ -85,7 +85,7 @@ public class SWTCalendar extends Composite {
     }
 
     public void notifyListeners(Calendar calendar) {
-        Iterator i = listeners.iterator();
+        Iterator<SWTCalendarListener> i = listeners.iterator();
         while (i.hasNext()) {
             SWTCalendarListener l = (SWTCalendarListener) i.next();
             Event event = new Event();
@@ -101,7 +101,6 @@ public class SWTCalendar extends Composite {
         return dayChooser.getCalendar();
     }
 
-    @SuppressWarnings("unchecked")
 	public void addSWTCalendarListener(SWTCalendarListener listener) {
         this.listeners.add(listener);
     }

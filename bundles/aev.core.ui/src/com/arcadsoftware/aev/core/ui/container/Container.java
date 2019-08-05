@@ -95,8 +95,8 @@ public abstract class Container implements IContainer, IRefreshControl {
 		if (getActions() != null)
 			getActions().fillToolbarAction(manager);
 	}
-
-	@SuppressWarnings("unchecked")
+	
+	@Override
 	public Object getAdapter(Class adapter) {
 		return null;
 	}

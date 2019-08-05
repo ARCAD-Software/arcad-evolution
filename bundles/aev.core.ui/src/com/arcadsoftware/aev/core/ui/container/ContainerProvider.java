@@ -82,8 +82,9 @@ public abstract class ContainerProvider implements IContainer {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Object getAdapter(Class adapter) {
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Object getAdapter(Class paramClass) {	
 		return null;
 	}
 

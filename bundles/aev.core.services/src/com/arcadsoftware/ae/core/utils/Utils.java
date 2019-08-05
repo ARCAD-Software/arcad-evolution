@@ -25,7 +25,7 @@ import java.util.Properties;
  */
 public class Utils {
 	protected static final String ARCAD_HOME = "ARCAD_HOME";
-    private static final Class[] parameters = new Class[]{URL.class};
+    private static final Class<?>[] parameters = new Class[]{URL.class};
     
     public static void addFile(String s) throws IOException {
         File f = new File(s);
@@ -33,12 +33,12 @@ public class Utils {
     }
     
     public static void addFile(File f) throws IOException {
-        addURL(f.toURL());
+        addURL(f.toURI().toURL());
     }
         
     public static void addURL(URL u) throws IOException {   	
         URLClassLoader sysloader = (URLClassLoader)ClassLoader.getSystemClassLoader();
-        Class sysclass = URLClassLoader.class;    
+        Class<URLClassLoader> sysclass = URLClassLoader.class;    
         try {
             Method method = sysclass.getDeclaredMethod("addURL",parameters);
             method.setAccessible(true);
@@ -62,7 +62,7 @@ public class Utils {
 			ArrayList<URL> l = new ArrayList<URL>(files.length);		
 			for (int i=0;i<files.length;i++){
 				try {
-					URL u = files[i].toURL(); 
+					URL u = files[i].toURI().toURL(); 
 					l.add(u);
 				} catch (MalformedURLException e) {
 					
@@ -196,7 +196,7 @@ public class Utils {
 	
 
 	public static String[] toSubstitute(String value){
-		ArrayList l = new ArrayList();
+		ArrayList<String> l = new ArrayList<String>();
 		//Recherche d'une propriété		
 		String s = new String(value);
 		int start = s.indexOf("${",0);

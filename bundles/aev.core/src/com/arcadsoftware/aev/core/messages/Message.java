@@ -1,5 +1,5 @@
 /*
- * Créé le 5 mai 04
+ * Crï¿½ï¿½ le 5 mai 04
  *
  */
 package com.arcadsoftware.aev.core.messages;
@@ -12,23 +12,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.eclipse.ui.statushandlers.StatusManager;
-
 import com.arcadsoftware.aev.core.tools.CoreLabels;
 import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
- * Description d'un message à collectionner.
+ * Description d'un message ï¿½ collectionner.
  * 
  * @author MD
  */
 public class Message implements IMessageDetails {
 
-
-	// Formater utilisé pour les details datant les messages.
-	private static final SimpleDateFormat dateForMessage = new SimpleDateFormat("HH:mm:ss (dd.MM.yyyy)"); //$NON-NLS-1$
+	public static final int STYLE_NONE = 0;
+	public static final int STYLE_LOG = 0x01;
+	public static final int STYLE_SHOW = 0x02;
+	public static final int STYLE_BLOCK = 0x04;
 	
-
+	// Formater utilisÃ© pour les details datant les messages.
+	private static final SimpleDateFormat dateForMessage = new SimpleDateFormat("HH:mm:ss (dd.MM.yyyy)"); //$NON-NLS-1$
 
 	private ArrayList<MessageDetail> details = new ArrayList<MessageDetail>();
 	private String command;
@@ -36,6 +36,7 @@ public class Message implements IMessageDetails {
 	private int level;
 	protected boolean isFixedType = false;
 	protected Date creationDate = new Date();
+	protected int style = STYLE_NONE;
 	
 	/**
 	 * 
@@ -48,12 +49,12 @@ public class Message implements IMessageDetails {
 	}
 	
 	/**
-	 * Création d'un message avec un détail (Type,description) et de
-	 * niveau Développement.
+	 * Crï¿½ation d'un message avec un dï¿½tail (Type,description) et de
+	 * niveau Dï¿½veloppement.
 	 *
-	 * @param command le texte de la commande (titre) associé au message.
-	 * @param type le type du détail (Completion, diagnostic, warning, error).
-	 * @param description le contenu du détail.
+	 * @param command le texte de la commande (titre) associï¿½ au message.
+	 * @param type le type du dï¿½tail (Completion, diagnostic, warning, error).
+	 * @param description le contenu du dï¿½tail.
 	 */
 	public Message(String command,int type,String description) {
 		this(command);
@@ -71,7 +72,7 @@ public class Message implements IMessageDetails {
 		this.style = style;
 	}	
 	public Message(String command,int type,int level, String description, boolean fixedType) {
-		this(command, type, level, description, fixedType, StatusManager.NONE);
+		this(command, type, level, description, fixedType, STYLE_NONE);
 	}
 
 	public Message(String command,int type,int level, String description) {
@@ -100,7 +101,7 @@ public class Message implements IMessageDetails {
 	}
 
 	/**
-	 * Retourne la liste des détails du message
+	 * Retourne la liste des dï¿½tails du message
 	 * @return
 	 */
 	public MessageDetail[] toArray() {
@@ -135,8 +136,8 @@ public class Message implements IMessageDetails {
 		return messageDetail;
 	}
 	/**
-	 * Ajoute un détail au message.<br/>
-	 * Cette methode retourne le message lui-même, de telle sorte que les addDetails peuvent se
+	 * Ajoute un dï¿½tail au message.<br/>
+	 * Cette methode retourne le message lui-mï¿½me, de telle sorte que les addDetails peuvent se
 	 * succeder.
 	 * 
 	 * @param type
@@ -148,7 +149,7 @@ public class Message implements IMessageDetails {
 	}
 
 	/**
-	 * Ajoute des détails relatifs à l'exception.
+	 * Ajoute des dï¿½tails relatifs ï¿½ l'exception.
 	 * 
 	 * @param e
 	 * @return
@@ -158,7 +159,7 @@ public class Message implements IMessageDetails {
 	}
 
 	/**
-	 * Ajoute des détails relatifs à l'exception.
+	 * Ajoute des dï¿½tails relatifs ï¿½ l'exception.
 	 * 
 	 * @param throwable
 	 */
@@ -187,7 +188,7 @@ public class Message implements IMessageDetails {
 	}
 	
 	/**
-	 * Ajoute un détail indiquant la date courante.
+	 * Ajoute un dï¿½tail indiquant la date courante.
 	 *
 	 */
 	public void addDate() {
@@ -195,7 +196,7 @@ public class Message implements IMessageDetails {
 	}
 	
 	/** 
-	 * Supprime tous les détails.
+	 * Supprime tous les dï¿½tails.
 	 *
 	 */
 	public void clear(){
@@ -289,24 +290,16 @@ public class Message implements IMessageDetails {
 		level = i;
 	}
 
-	/*TODO: For Java 1.8?
-	public List<? extends IMessageDetails> getMessageDetails() {
-		return (List<? extends IMessageDetails>) details;
-	}
-	*/
-
 	@Override
-	@SuppressWarnings({ "rawtypes" })
-	public List getMessageDetails() {
+	public List<? extends IMessageDetails> getMessageDetails() {
 		return details;
 	}
 
 	@Override
 	public String getDescription() {
 		return command;
-	}
+	}	
 	
-	protected int style=StatusManager.NONE;
 	/**
 	 * @returns the style associated with the message, {@link StatusManager#NONE} by default
 	 * @see StatusManager#handle(org.eclipse.core.runtime.IStatus, int)

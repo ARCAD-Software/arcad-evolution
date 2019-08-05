@@ -54,6 +54,7 @@ public class ArcadTableViewerColumnSorter extends ViewerSorter {
 	 * @see org.eclipse.jface.viewers.ViewerSorter#compare(org.eclipse.jface.viewers .Viewer, java.lang.Object,
 	 * java.lang.Object)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
 		int cat1 = category(e1);
@@ -79,9 +80,9 @@ public class ArcadTableViewerColumnSorter extends ViewerSorter {
 				if (value1 != null && value1 instanceof Comparable && value2 != null && value2 instanceof Comparable
 						&& value1.getClass().equals(value2.getClass())) {
 					if (isReversed())
-						return ((Comparable) value2).compareTo(value1);
+						return ((Comparable<Object>) value2).compareTo(value1);
 					else
-						return ((Comparable) value1).compareTo(value2);
+						return ((Comparable<Object>) value1).compareTo(value2);
 				} else {
 					name1 = lprov.getColumnText(e1, currentColumnIndex);
 					name2 = lprov.getColumnText(e2, currentColumnIndex);

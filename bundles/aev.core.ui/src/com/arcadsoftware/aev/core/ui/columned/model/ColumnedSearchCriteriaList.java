@@ -44,7 +44,6 @@ public class ColumnedSearchCriteriaList extends AbstractColumnedCriteriaList {
 	/**
 	 * Add a new criterion to the collection of criteria
 	 */
-	@SuppressWarnings("unchecked")
 	public void addCriterion() {
 		ColumnedSearchCriteria criterion = new ColumnedSearchCriteria(criteria.size() + 1, columnNames[0]);
 		criteria.add(criteria.size(), criterion);
@@ -54,7 +53,6 @@ public class ColumnedSearchCriteriaList extends AbstractColumnedCriteriaList {
 	 * Initialize the table data. Create COUNT criteria and add them them to the
 	 * collection of criteria
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void initData() {
 		ColumnedSearchCriteria criterion;

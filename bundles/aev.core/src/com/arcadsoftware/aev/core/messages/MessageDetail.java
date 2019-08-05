@@ -1,8 +1,8 @@
 /*
- * Créé le 5 mai 04
+ * Crï¿½ï¿½ le 5 mai 04
  *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * Pour changer le modï¿½le de ce fichier gï¿½nï¿½rï¿½, allez ï¿½ :
+ * Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 package com.arcadsoftware.aev.core.messages;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class MessageDetail implements IMessageDetails {
 
 	/**
-	 * Message indiquant qu'une opération c'est bien terminée (ou commence...)
+	 * Message indiquant qu'une opï¿½ration c'est bien terminï¿½e (ou commence...)
 	 */	
 	public static final int COMPLETION = 1;	
 
@@ -39,10 +39,12 @@ public class MessageDetail implements IMessageDetails {
 	 */	
 	public static final int EXCEPTION = 16;	
 
+	private static final List<? extends IMessageDetails> messageDetails = new ArrayList<MessageDetail>(0);
+	
 	private int type;
 	private String description;
 	private Message parentMessage;
-
+	
 	public MessageDetail(Message parent,int type,String description) {
 		super();
 		parentMessage = parent;
@@ -51,7 +53,7 @@ public class MessageDetail implements IMessageDetails {
 	}	
 
 	/**
-	 * Création du détail du message à partir d'une exception.
+	 * Crï¿½ation du dï¿½tail du message ï¿½ partir d'une exception.
 	 * @param e exception originelle.
 	 */
 	public MessageDetail(Exception e) {
@@ -100,10 +102,10 @@ public class MessageDetail implements IMessageDetails {
 		return String.format("[%1$s] %2$s", getTypeString(), getDescription());	//$NON-NLS-1$
 	}
 
-	private static final List<MessageDetail> messageDetails = new ArrayList<MessageDetail>(0);
-	@SuppressWarnings("rawtypes")
+	
+	
 	@Override
-	public List getMessageDetails() {
+	public List<? extends IMessageDetails> getMessageDetails() {
 		return messageDetails;
 	}
 

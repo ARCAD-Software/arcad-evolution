@@ -339,14 +339,13 @@ public class MessageDetailDialog extends ArcadDialog implements IMessagesListene
 	 * org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(
 	 * org.eclipse.jface.viewers.SelectionChangedEvent)
 	 */
-	@SuppressWarnings("unchecked")
 	public void selectionChanged(SelectionChangedEvent event) {
 		IStructuredSelection selection = (IStructuredSelection) detailsList.getSelection();
 
 		if (selection.isEmpty())
 			return;
 
-		Iterator iterator = selection.iterator();
+		Iterator<?> iterator = selection.iterator();
 
 		if ((iterator.hasNext()) && (detail != null) && !detail.isDisposed()) {
 			detail.setText(((MessageDetail) iterator.next()).getDescription());

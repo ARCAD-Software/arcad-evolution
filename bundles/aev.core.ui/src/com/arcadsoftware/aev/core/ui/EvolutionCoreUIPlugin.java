@@ -13,8 +13,9 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 
-import com.arcadsoftware.aev.core.model.ArcadPlugin;
-import com.arcadsoftware.aev.core.tools.IHelperRessource;
+import com.arcadsoftware.aev.core.tools.IHelperLabel;
+import com.arcadsoftware.aev.core.ui.model.ArcadUIPlugin;
+import com.arcadsoftware.aev.core.ui.model.IHelperImage;
 import com.arcadsoftware.aev.core.ui.selectionproviders.ArcadItemSelectionChangedProvider;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.IFileManagerProvider;
@@ -22,7 +23,7 @@ import com.arcadsoftware.aev.core.ui.tools.IFileManagerProvider;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class EvolutionCoreUIPlugin extends ArcadPlugin implements IHelperRessource {
+public class EvolutionCoreUIPlugin extends ArcadUIPlugin implements IHelperImage, IHelperLabel {
 
 	private static ArcadItemSelectionChangedProvider changedProvider = new ArcadItemSelectionChangedProvider();
 	public static final String PREF_MESSAGE_LEVELVIEW = "ARCADCORE_Message_LevelViewFilter"; //$NON-NLS-1$
@@ -81,7 +82,8 @@ public class EvolutionCoreUIPlugin extends ArcadPlugin implements IHelperRessour
 	public EvolutionCoreUIPlugin() {
 		super();
 		plugin = this;
-		CoreUILabels.getInstance().setHelper(this);
+		CoreUILabels.getInstance().setImageHelper(this);
+		CoreUILabels.getInstance().setLabelHelper(this);
 		try {
 			resourceBundle = ResourceBundle.getBundle(
 					"com.arcadsoftware.aev.core.ui.EvolutionResources", Locale.getDefault()); //$NON-NLS-1$
@@ -270,8 +272,13 @@ public class EvolutionCoreUIPlugin extends ArcadPlugin implements IHelperRessour
 	}
 
 	@Override
-	public String resString(String key) {
-		return getResourceString(key);
+	public String resString(String key, Object...params) {
+		try {
+			return String.format(getResourceString(key), params);
+		}
+		catch(Exception e) {
+			return getResourceString(key);
+		}
 	}
 
 	public void initializeDefaultPreferences() {

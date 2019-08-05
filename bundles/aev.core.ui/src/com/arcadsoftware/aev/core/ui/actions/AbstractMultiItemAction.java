@@ -96,27 +96,22 @@ public abstract class AbstractMultiItemAction extends ArcadAction {
 	 * @param object
 	 * @return boolean
 	 */
-	@SuppressWarnings("unused")
 	public boolean checkBeforeProcessing(ArcadCollection items) {
 		return true;
 	}
 
-	@SuppressWarnings("unused")
 	public void doBeforeProcessing(ArcadCollection items) {
 		// Do nothing
 	}
 
-	@SuppressWarnings("unused")
 	public void doAfterProcessing(ArcadCollection items) {
 		// Do nothing
 	}
 
-	@SuppressWarnings("unused")
 	public void doAfterProcessingOnItem(ArcadEntity item) {
 		// Do nothing
 	}
 
-	@SuppressWarnings("unused")
 	public boolean doBeforeProcessingOnItem(ArcadEntity item) {
 		return true;
 	}

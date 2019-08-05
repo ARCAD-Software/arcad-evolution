@@ -11,8 +11,7 @@ import com.arcadsoftware.aev.core.ui.mementos.TableMementoTools;
  * @author MD
  */
 public class ArcadColumns {
-	@SuppressWarnings("unchecked")
-	private ArrayList list = new ArrayList();
+	private ArrayList<ArcadColumn> list = new ArrayList<ArcadColumn>();
 
 	/**
 	 * 
@@ -41,7 +40,6 @@ public class ArcadColumns {
 		return list.size();
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean add(ArcadColumn c) {
 		return list.add(c);
 	}
@@ -188,8 +186,7 @@ public class ArcadColumns {
 	/**
 	 * @return Returns the list.
 	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList getList() {
+	public ArrayList<ArcadColumn> getList() {
 		return list;
 	}
 
@@ -197,8 +194,7 @@ public class ArcadColumns {
 	 * @param list
 	 *            The list to set.
 	 */
-	@SuppressWarnings("unchecked")
-	public void setList(ArrayList list) {
+	public void setList(ArrayList<ArcadColumn> list) {
 		this.list = list;
 	}
 

@@ -1,4 +1,4 @@
-package com.arcadsoftware.aev.core.tools;
+package com.arcadsoftware.aev.core.ui.model;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;

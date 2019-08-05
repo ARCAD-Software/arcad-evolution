@@ -7,10 +7,9 @@ import org.eclipse.jface.viewers.Viewer;
 
 public class ListItemContentProvider implements IStructuredContentProvider {
 
-	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 		if (inputElement instanceof List) {
-			List list = (List) inputElement;
+			List<?> list = (List<?>) inputElement;
 			return list.toArray();
 		}
 		return new Object[0];

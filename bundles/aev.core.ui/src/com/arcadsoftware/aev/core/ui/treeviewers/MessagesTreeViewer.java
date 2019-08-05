@@ -79,9 +79,8 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 	static protected class MessageContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public Object[] getElements(Object inputElement) {
-			return ((AbstractList) inputElement).toArray(new Message[((AbstractList) inputElement).size()]);
+			return ((AbstractList<?>) inputElement).toArray(new Message[((AbstractList<?>) inputElement).size()]);
 		}
 
 		@Override
@@ -194,7 +193,7 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 //		dialog.setFilterExtensions(new String[] { "*.xml", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
 //		String fileName = dialog.open();
 		if (fileName != null)
-			MessageManager.exportMessagesToXMLFile(fileName, (AbstractList) getInput());
+			MessageManager.exportMessagesToXMLFile(fileName, (AbstractList<Message>) getInput());
 	}
 
 	/**
@@ -203,7 +202,7 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 	 */
 	public void clear() {
 		if (getInput() != null) {
-			Iterator iterator = ((AbstractList) getInput()).iterator();
+			Iterator<?> iterator = ((AbstractList<?>) getInput()).iterator();
 			while (iterator.hasNext()) {
 				((Message) iterator.next()).setLevel(MessageManager.LEVEL_DELETED);
 			}
@@ -223,7 +222,7 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 		if (selection.isEmpty())
 			return;
 
-		Iterator iterator = selection.iterator();
+		Iterator<?> iterator = selection.iterator();
 
 		while (iterator.hasNext()) {
 			((Message) iterator.next()).setLevel(MessageManager.LEVEL_DELETED);
@@ -240,7 +239,7 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 		if (selection.isEmpty())
 			return;
 
-		Iterator iterator = selection.iterator();
+		Iterator<?> iterator = selection.iterator();
 
 		if (iterator.hasNext()) {
 			MessageDetailDialog dialog = new MessageDetailDialog(getViewer().getControl().getShell());

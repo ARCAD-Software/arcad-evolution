@@ -45,8 +45,7 @@ public class ContainerTreeViewer extends AbstractColumnedTreeViewer {
 	// on détermine quel est le plus grand id pour cet arbre
 	public static final int MAXCONTAINER_NUMBER = 0;
 
-	@SuppressWarnings("unchecked")
-	private ArrayList containerList = new ArrayList();
+	private ArrayList<Integer> containerList = new ArrayList<Integer>();
 	IContainer dropSource;
 	Action doubleClickAction = null;
 	private ViewPart view;
@@ -61,7 +60,6 @@ public class ContainerTreeViewer extends AbstractColumnedTreeViewer {
 		init(containers);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void init(int[] containers) {
 		for (int i = 0; i < containers.length; i++) {
 			containerList.add(new Integer(containers[i]));

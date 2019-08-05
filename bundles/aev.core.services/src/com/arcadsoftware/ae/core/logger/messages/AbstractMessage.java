@@ -136,7 +136,7 @@ public abstract class AbstractMessage {
 	/**
 	 * @return Renvoie datas.
 	 */
-	public ArrayList getDatas() {
+	public ArrayList<MessageData> getDatas() {
 		return datas;
 	}
 	/**

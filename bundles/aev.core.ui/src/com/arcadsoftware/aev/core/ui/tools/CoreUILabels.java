@@ -3,52 +3,51 @@ package com.arcadsoftware.aev.core.ui.tools;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
-import com.arcadsoftware.aev.core.tools.DefaultLabelsHelper;
-import com.arcadsoftware.aev.core.tools.IHelperRessource;
+import com.arcadsoftware.aev.core.tools.CoreLabels;
+import com.arcadsoftware.aev.core.ui.model.IHelperImage;
 
-public class CoreUILabels {
+public class CoreUILabels extends CoreLabels{
 	
 	private static CoreUILabels instance;
-    private IHelperRessource helper = null;            
     
+	private IHelperImage helperImage;
+	
     public CoreUILabels() {
         super();
     }
     
     public static CoreUILabels getInstance() {
-        if (instance==null)
+        if (instance == null)
             instance = new CoreUILabels();
         return instance;
     }
     
-    public void setHelper(IHelperRessource helper) {
-        this.helper = helper;        
+    public void setImageHelper(IHelperImage helperImage) {
+        this.helperImage = helperImage;        
     }
     
-    public IHelperRessource getHelper() {
-        if (helper==null)
-            helper = new DefaultLabelsHelper();
-        return helper;
-    }
+    public IHelperImage getImageHelper() {
+		return helperImage;
+	}
     
     public static String resString(String res) {
         return getInstance().getHelper().resString(res); 
     }
     
     public static ImageDescriptor getImageDescriptor(String key){
-    	return getInstance().getHelper().getImageDescriptor(key);
+    	return getInstance().getImageHelper().getImageDescriptor(key);
     }
     
     public static Image getImage(String key) {
-		return getInstance().getHelper().getImage(key);
+		return getInstance().getImageHelper().getImage(key);
 	}
     
     public static Image getCompositeImage(String key,String decoKey){
-    	return getInstance().getHelper().getCompositeImage(key, decoKey);
+    	return getInstance().getImageHelper().getCompositeImage(key, decoKey);
     }
     
     public static ImageDescriptor getCompositeImageDescriptor(String key,String decoKey){
-    	return getInstance().getHelper().getCompositeImageDescriptor(key, decoKey);
+    	return getInstance().getImageHelper().getCompositeImageDescriptor(key, decoKey);
     }
       
 }

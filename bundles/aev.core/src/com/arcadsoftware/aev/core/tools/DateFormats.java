@@ -2,7 +2,6 @@ package com.arcadsoftware.aev.core.tools;
 
 import java.text.Format;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.FastDateFormat;
