@@ -28,4 +28,4 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  org.xmlpull.mxp1,
  org.xmlpull.v1
 Bundle-ClassPath: .
-Bundle-Version: 9.4.0.qualifier
+Bundle-Version: 9.5.0.qualifier
