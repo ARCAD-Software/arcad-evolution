@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.arcadsoftware.ae.core.logger.formatter.AbstractMessageFormatter;
@@ -94,6 +96,7 @@ public abstract class AbstractMessageRouter {
     }
     
     protected class DualStream extends PrintStream{
+    	private final SimpleDateFormat timeStampFormat = new SimpleDateFormat("[yyyy-MM-dd][HH:mm:ss] ");    	
     	protected boolean canLog;
     	protected boolean isErrorStream;
     	protected File standardLogFile;
@@ -129,21 +132,19 @@ public abstract class AbstractMessageRouter {
     		}
     	}
     	
-    	protected void writeLine(File logFile, String message) {
-    		FileOutputStream fos = null;
-    		message += "\n";
-    		try{
-    			fos = new FileOutputStream(logFile, true);
+    	protected void writeLine(File logFile, String message) {    		
+    		message = getTimeStamp() + message + "\n";
+    		try(FileOutputStream fos = new FileOutputStream(logFile, true)){
     			fos.write(message.getBytes("UTF-8"));
     			fos.flush();
     		}
-			catch (Exception e) {}
-    		finally{
-    			if(fos != null)
-					try {fos.close();} catch (IOException e) {}
-    		}
+			catch (Exception e) {}    		
 		}
 
+    	private String getTimeStamp(){
+    		return timeStampFormat.format(new Date());
+    	}
+    	
 		protected File getLogFile(File logFile) {
     		try {
 				if(logFile.exists()){
