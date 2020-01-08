@@ -21,4 +21,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: net.sf.jmimemagic,
- org.apache.commons.io
+ org.apache.commons.io;version="[2.6.0,3.0.0)"
