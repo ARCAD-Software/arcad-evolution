@@ -73,15 +73,15 @@ import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedSorter;
 public abstract class AbstractColumnedViewer implements IColumnResolver, IDialogListener {
 
 	private MenuManager menuManager;
-	Action doubleClickAction = null;
+	private Action doubleClickAction = null;
 	private String viewerIdentifier;
 	protected AbstractInternalColumnedViewer internalViewer;
 	protected ArcadColumns referenceColumns;
 	protected ArcadColumns displayedColumns;
-	ArcadColumns displayDuplicate;
+	private ArcadColumns displayDuplicate;
 
 	private IColumnedSearcher searcher = null;
-	ColumnedViewerFilter filter = null;
+	private ColumnedViewerFilter filter = null;
 
 	protected HeaderListener hdl = new HeaderListener();
 	protected boolean sortOnColumn = false;
@@ -94,7 +94,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 
 	protected ColumnedSorter sorter;
 
-	
+	private boolean showDefaultActions;
 	/**
 	 * indicateur si le dispose des colonnes est appelé explicitement par le développeur. Utile car Eclipse n'effectue
 	 * pas le meme traitement dans le cas d'un dispose appelé en interne ou explicitement par le développeur. C'est le
@@ -523,11 +523,16 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	 * @return Action[] : Table des actions à ajouter dans le menu contextuel.
 	 */
 	protected Action[] makeActions() {
-		ShowPreferencesAction showPreferencesAction = new ShowPreferencesAction();
-		ShowSearchEditorAction showSearchEditorAction = new ShowSearchEditorAction();
-		ShowFilterEditorAction showFilterAction = new ShowFilterEditorAction();
-		ShowExportAction showExportAction = new ShowExportAction();
-		return new Action[] { showPreferencesAction, showFilterAction, showSearchEditorAction, showExportAction };
+		if(doShowDefaultActions()) {
+			ShowPreferencesAction showPreferencesAction = new ShowPreferencesAction();
+			ShowSearchEditorAction showSearchEditorAction = new ShowSearchEditorAction();
+			ShowFilterEditorAction showFilterAction = new ShowFilterEditorAction();
+			ShowExportAction showExportAction = new ShowExportAction();
+			return new Action[] { showPreferencesAction, showFilterAction, showSearchEditorAction, showExportAction };
+		}
+		else {
+			return new Action[0];
+		}
 	}
 
 	
@@ -967,6 +972,14 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 
 	public IStructuredSelection getSelection() {
 		return (IStructuredSelection) getViewer().getSelection();
+	}
+	
+	public void setShowDefaultActions(boolean showDefaultActions) {
+		this.showDefaultActions = showDefaultActions;
+	}
+	
+	public boolean doShowDefaultActions() {
+		return showDefaultActions;
 	}
 
 }
