@@ -172,6 +172,7 @@ public class ColumnedExportAction extends ArcadAction {
 			}
 			return false;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
