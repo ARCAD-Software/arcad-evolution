@@ -94,7 +94,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 
 	protected ColumnedSorter sorter;
 
-	private boolean showDefaultActions;
+	private boolean hideDefaultActions;
 	/**
 	 * indicateur si le dispose des colonnes est appelé explicitement par le développeur. Utile car Eclipse n'effectue
 	 * pas le meme traitement dans le cas d'un dispose appelé en interne ou explicitement par le développeur. C'est le
@@ -523,7 +523,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	 * @return Action[] : Table des actions à ajouter dans le menu contextuel.
 	 */
 	protected Action[] makeActions() {
-		if(doShowDefaultActions()) {
+		if(!doHideDefaultActions()) {
 			ShowPreferencesAction showPreferencesAction = new ShowPreferencesAction();
 			ShowSearchEditorAction showSearchEditorAction = new ShowSearchEditorAction();
 			ShowFilterEditorAction showFilterAction = new ShowFilterEditorAction();
@@ -974,12 +974,12 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		return (IStructuredSelection) getViewer().getSelection();
 	}
 	
-	public void setShowDefaultActions(boolean showDefaultActions) {
-		this.showDefaultActions = showDefaultActions;
+	public void setHideDefaultActions(boolean hideDefaultActions) {
+		this.hideDefaultActions = hideDefaultActions;
 	}
 	
-	public boolean doShowDefaultActions() {
-		return showDefaultActions;
+	public boolean doHideDefaultActions() {
+		return hideDefaultActions;
 	}
 
 }
