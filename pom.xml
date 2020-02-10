@@ -36,7 +36,6 @@
 				<version>${tycho.version}</version>
 				<configuration>
 					<executionEnvironment>JavaSE-1.8</executionEnvironment>
-					<pomDependencies>consider</pomDependencies>
 					<target>
 						<artifact>
 							<groupId>com.arcadsoftware</groupId>
