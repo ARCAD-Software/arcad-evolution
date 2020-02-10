@@ -51,5 +51,5 @@ Require-Bundle: com.arcadsoftware.aev.core,
  org.eclipse.rap.ui;resolution:=optional,
  org.eclipse.rap.ui.forms;resolution:=optional,
  org.eclipse.rap.jface;resolution:=optional
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

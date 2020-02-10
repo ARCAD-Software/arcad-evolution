@@ -97,7 +97,7 @@ public abstract class Container implements IContainer, IRefreshControl {
 	}
 	
 	@Override
-	public Object getAdapter(Class adapter) {
+	public <T> T getAdapter(Class<T> clazz) {	
 		return null;
 	}
 

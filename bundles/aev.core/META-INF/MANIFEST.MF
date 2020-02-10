@@ -15,7 +15,7 @@ Export-Package: com.arcadsoftware.aev.core,
  com.arcadsoftware.aev.core.tools
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.apache.commons.lang3;version="[3.6.0,4.0.0)",
  org.apache.commons.lang3.math;version="[3.6.0,4.0.0)",
  org.apache.commons.lang3.time;version="[3.6.0,4.0.0)",

@@ -23,12 +23,10 @@ public class SelectionChangedProvider {
 
 	// TODO [ListenerList] Verifier si le parametre passe dans le constructeur
 	// est correct
-	private ListenerList selectionChangedListeners = new ListenerList(ListenerList.EQUALITY);
+	private ListenerList<ISelectionChangedListener> selectionChangedListeners = new ListenerList<ISelectionChangedListener>(ListenerList.EQUALITY);
 
 	public void fireSelectionChanged(final SelectionChangedEvent event) {
-		Object[] listeners = selectionChangedListeners.getListeners();
-		for (int i = 0; i < listeners.length; ++i) {
-			final ISelectionChangedListener l = (ISelectionChangedListener) listeners[i];
+		for (final ISelectionChangedListener l : selectionChangedListeners) {			
 			SafeRunner.run(new SafeRunnable() {
 				public void run() {
 					l.selectionChanged(event);

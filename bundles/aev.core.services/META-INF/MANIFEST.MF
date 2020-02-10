@@ -4,7 +4,7 @@ Bundle-Name: ARCAD-Evolution Core Services
 Automatic-Module-Name: com.arcadsoftware.aev.core.services
 Bundle-SymbolicName: com.arcadsoftware.aev.core.services
 Bundle-Vendor: ARCAD Software
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.hsqldb,
  com.arcadsoftware.ae.core.logger,

@@ -82,9 +82,8 @@ public abstract class ContainerProvider implements IContainer {
 		return null;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public Object getAdapter(Class paramClass) {	
+	public <T> T getAdapter(Class<T> clazz) {
 		return null;
 	}
 

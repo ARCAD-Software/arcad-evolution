@@ -10,7 +10,11 @@
 	<name>ARCAD-Evolution Core</name>
 	<packaging>eclipse-plugin</packaging>
 	<artifactId>com.arcadsoftware.aev.core</artifactId>
-
+	
+	<properties>
+		<buildDirectory>bin/</buildDirectory>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>dom4j</groupId>
