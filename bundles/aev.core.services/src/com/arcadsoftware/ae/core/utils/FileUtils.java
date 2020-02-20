@@ -40,10 +40,7 @@ public class FileUtils {
 	
 	public static boolean copyFile(File sourceFile, File destFile,boolean keepModificationDate){
 		boolean result;
-		try(
-			InputStream in = new FileInputStream(sourceFile);
-			OutputStream out = new FileOutputStream(destFile);
-		) {			
+		try {			
 			if (destFile.exists() && destFile.isFile()) {
 				destFile.delete();
 			}
@@ -52,7 +49,8 @@ public class FileUtils {
 				parent.mkdirs();
 			}
 			
-			
+			InputStream in = new FileInputStream(sourceFile);
+			OutputStream out = new FileOutputStream(destFile);
 	
 			byte[] buffer = new byte[64 * 1024];
 			int count = 0;
