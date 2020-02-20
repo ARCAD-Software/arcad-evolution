@@ -1,5 +1,6 @@
 package com.arcadsoftware.ae.core.utils;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -40,6 +41,8 @@ public class FileUtils {
 	
 	public static boolean copyFile(File sourceFile, File destFile,boolean keepModificationDate){
 		boolean result;
+		InputStream in = null;
+		OutputStream out = null;
 		try {			
 			if (destFile.exists() && destFile.isFile()) {
 				destFile.delete();
@@ -49,8 +52,8 @@ public class FileUtils {
 				parent.mkdirs();
 			}
 			
-			InputStream in = new FileInputStream(sourceFile);
-			OutputStream out = new FileOutputStream(destFile);
+			in = new FileInputStream(sourceFile);
+			out = new FileOutputStream(destFile);
 	
 			byte[] buffer = new byte[64 * 1024];
 			int count = 0;
@@ -58,6 +61,9 @@ public class FileUtils {
 				out.write(buffer, 0, count);
 				count = in.read(buffer, 0, buffer.length);
 			} while (count != -1);
+
+			closeCloseable(in);
+			closeCloseable(out);
 						
 			if (keepModificationDate){
 				keepModificationDate(sourceFile, destFile);
@@ -65,10 +71,22 @@ public class FileUtils {
 			result = true;			
 		} catch (IOException ioe){
 			result = false;								
+		}finally{
+			closeCloseable(in);
+			closeCloseable(out);
 		}
 
 		return result;		
 	}
+	
+	private static void closeCloseable(Closeable closeable ){
+		if (closeable != null)
+			try {
+				closeable.close();
+			} catch (IOException e) {
+		}		
+	}
+	
 	
 	public static boolean duplicate(String sourceFolder, String targetFolder,boolean structureOnly) {
 		File targetDirectory = new File(targetFolder);
