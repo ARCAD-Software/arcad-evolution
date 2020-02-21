@@ -24,7 +24,6 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.utils,
  org.hsqldb,
  org.hsqldb.jdbc,
- org.xmlpull.mxp1,
  org.xmlpull.v1
 Bundle-ClassPath: .
 Bundle-Version: 9.5.0.qualifier

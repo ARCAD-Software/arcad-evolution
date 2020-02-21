@@ -7,8 +7,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.xmlpull.mxp1.MXParser;
+import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.arcadsoftware.mmk.lists.AbstractList;
 import com.arcadsoftware.mmk.lists.IXmlLists;
@@ -39,7 +40,7 @@ public class XmlParseList extends AbstractLoggedObject{
 	}		
 	
 	
-	private void parseHeaderTag(MXParser parser,String name) throws XmlPullParserException, IOException{
+	private void parseHeaderTag(XmlPullParser parser,String name) throws XmlPullParserException, IOException{
 		if (name.equals(LST_TAG_HEADER.getValue())) {
 			//Traitement des attributs
 			int count = parser.getAttributeCount();
@@ -59,13 +60,13 @@ public class XmlParseList extends AbstractLoggedObject{
 			int eventType = parser.nextTag();
 			while(true) {		                    
 	            String tag = parser.getName();
-	            if(eventType == MXParser.START_TAG) {
+	            if(eventType == XmlPullParser.START_TAG) {
 	            	if (tag.equals("description")) {
 	            		xmlList.getList().getHeader().setDescription(parser.nextText());
 	            	} else if (tag.equals("comment")) {
 	            		xmlList.getList().getHeader().setComment(parser.nextText());
 	            	}
-	            } else if(eventType == MXParser.END_TAG) {	            	
+	            } else if(eventType == XmlPullParser.END_TAG) {	            	
 	            	if (tag.equals(LST_TAG_HEADER.getValue()))
 	            		break;
 	            }
@@ -74,7 +75,7 @@ public class XmlParseList extends AbstractLoggedObject{
 		}
 	}	
 	
-	private ListMetaDatas parseMetaTag(MXParser parser,String name) throws XmlPullParserException, IOException{
+	private ListMetaDatas parseMetaTag(XmlPullParser parser,String name) throws XmlPullParserException, IOException{
 		if (name.equals(LST_TAG_METADATAS.getValue())) {
 			//xmlList.getList().getMetadatas().clear();
 			ListMetaDatas storedMetadata = new ListMetaDatas();
@@ -82,7 +83,7 @@ public class XmlParseList extends AbstractLoggedObject{
 			int eventType = parser.nextTag();
 			while(true) {		                    
 	            String tag = parser.getName();
-	            if(eventType == MXParser.START_TAG) {	  
+	            if(eventType == XmlPullParser.START_TAG) {	  
 	            	if (tag.equals(LST_TAG_COLUMNDEF.getValue())) {
 	            		ListColumnDef cd = new ListColumnDef();
 	        			int count = parser.getAttributeCount();
@@ -101,7 +102,7 @@ public class XmlParseList extends AbstractLoggedObject{
 	        			}
 	        			storedMetadata.addColumnDef(cd);
 	            	}
-	            } else if(eventType == MXParser.END_TAG) {
+	            } else if(eventType == XmlPullParser.END_TAG) {
 	            	if (tag.equals(LST_TAG_METADATAS.getValue())) {
 	            		//TODO [LM] c'est le bon endroit pour valider les
 	            		//métadatas stockées en terme d'Id et de version.
@@ -119,7 +120,7 @@ public class XmlParseList extends AbstractLoggedObject{
 		return null;		
 	}	
 	
-	private void parseColTag(MXParser parser,String name,int initialEventType) throws XmlPullParserException, IOException{
+	private void parseColTag(XmlPullParser parser,String name,int initialEventType) throws XmlPullParserException, IOException{
 		int eventType= initialEventType;
 		//if (name.equals("col")) {
 			//int eventType = parser.nextTag();
@@ -127,12 +128,12 @@ public class XmlParseList extends AbstractLoggedObject{
 				xmlList.getList().initStoreItem();
 			while(true) {		                    
 	            String tag = parser.getName();
-	            if(eventType == MXParser.START_TAG) {
+	            if(eventType == XmlPullParser.START_TAG) {
 	    			//int count = parser.getAttributeCount();
 	    			String atId = parser.getAttributeValue(0);	    				    			
     				String atValue = parser.getAttributeValue(1);
     				xmlList.getList().getStoreItem().setValue(atId,atValue);	 	    			
-	            } else if(eventType == MXParser.END_TAG) {
+	            } else if(eventType == XmlPullParser.END_TAG) {
 	            	
 	            	if (tag.equals("col"))
 	            		break;
@@ -147,14 +148,14 @@ public class XmlParseList extends AbstractLoggedObject{
 	}
 	
 	
-	private void parseRowTag(MXParser parser,String name) throws XmlPullParserException, IOException{
+	private void parseRowTag(XmlPullParser parser,String name) throws XmlPullParserException, IOException{
 		if (name.equals(LST_TAG_ROW.getValue())) {
 			int eventType = parser.nextTag();
 			while(true) {		                    
 	            String tag = parser.getName();
-	            if(eventType == MXParser.START_TAG) {	            	
+	            if(eventType == XmlPullParser.START_TAG) {	            	
 	            	parseColTag(parser,tag,eventType);
-	            } else if(eventType == MXParser.END_TAG) {	            	
+	            } else if(eventType == XmlPullParser.END_TAG) {	            	
 	            	if (tag.equals(LST_TAG_ROW.getValue())){
 	            		fireElementBrowsed(xmlList.getList().getStoreItem());
 	            		break;
@@ -165,31 +166,29 @@ public class XmlParseList extends AbstractLoggedObject{
 		}
 	}	
 
-	public void parse(){		
+	public void parse() {		
 		String fileName = xmlList.getXmlFileName();
 		//xmlList.getList().initStoreItem();
 		File f = new File(fileName);
-		if (f.exists()) {			
-			MXParser parser = new MXParser();
-			try {
-				FileReader reader = new FileReader(f);	 
+		if (f.exists()) {		
+			try (final FileReader reader = new FileReader(f)){
+				final XmlPullParser parser = createParser();
 				parser.setInput(reader);
 				int eventType = parser.getEventType();
 				do {						
 	                while(true) {
 	                    String tag = parser.getName();
-	                    if(eventType == MXParser.START_TAG) {		                    	
+	                    if(eventType == XmlPullParser.START_TAG) {		                    	
 	                    	parseHeaderTag(parser,tag);
 	                    	parseMetaTag(parser,tag);
 	                    	parseRowTag(parser,tag);		                    			                    			                    	
-	                    } else if(eventType == MXParser.END_TAG) {
+	                    } else if(eventType == XmlPullParser.END_TAG) {
 	                    	break;
 	                    }
 	                    eventType = parser.nextTag();
 	                 }	
 	                eventType = parser.next();
-				} while (eventType != MXParser.END_DOCUMENT);
-				reader.close();
+				} while (eventType != XmlPullParser.END_DOCUMENT);
 			} catch (FileNotFoundException e1) {
 				logError(AbstractList.MODULE_NAME+"::XmlParseList",e1);
 			} catch (XmlPullParserException e1) {
@@ -200,28 +199,27 @@ public class XmlParseList extends AbstractLoggedObject{
 		}
 	}
 	
-	public void parseInfoOnly(){
+	public void parseInfoOnly() {
 		String fileName = xmlList.getXmlFileName();
 		//xmlList.getList().initStoreItem();
 		File f = new File(fileName);
-		if (f.exists()) {
-			MXParser parser = new MXParser();			
-			try {
-				FileReader reader = new FileReader(f);	 
+		if (f.exists()) {				
+			try (final FileReader reader = new FileReader(f)){
+				final XmlPullParser parser = createParser();
 				parser.setInput(reader);
 				int eventType = parser.getEventType();
 				boolean found = false;
 				do {						
 	                while(true) {		                    
 	                    String tag = parser.getName();
-	                    if(eventType == MXParser.START_TAG) {
+	                    if(eventType == XmlPullParser.START_TAG) {
 	                    	parseHeaderTag(parser,tag);
 	                    	ListMetaDatas md = parseMetaTag(parser,tag);
 	                    	if (md!=null) {
 	                    		xmlList.getList().setMetadatas(md);
 	                    		xmlList.getList().initStoreItem();
 	                    	}
-	                    } else if(eventType == MXParser.END_TAG) {
+	                    } else if(eventType == XmlPullParser.END_TAG) {
 	                		if (tag.equals(LST_TAG_METADATAS.getValue())) {
 	                			found = true;
 	                		}
@@ -230,8 +228,7 @@ public class XmlParseList extends AbstractLoggedObject{
 	                    eventType = parser.nextTag();
 	                 }	
 	                eventType = parser.next();
-				} while ((eventType != MXParser.END_DOCUMENT) && !found);
-				reader.close();
+				} while ((eventType != XmlPullParser.END_DOCUMENT) && !found);
 			} catch (FileNotFoundException e1) {
 				logError(AbstractList.MODULE_NAME+"::XmlParseList",e1);
 			} catch (XmlPullParserException e1) {
@@ -243,5 +240,7 @@ public class XmlParseList extends AbstractLoggedObject{
 	}	
 	
 	
-	
+	private XmlPullParser createParser() throws XmlPullParserException {
+		return XmlPullParserFactory.newInstance().newPullParser();
+	}
 }
