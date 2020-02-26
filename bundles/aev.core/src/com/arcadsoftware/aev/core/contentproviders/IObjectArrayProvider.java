@@ -1,7 +1,7 @@
 /*
- * Créé le 5 nov. 07
+ * Crï¿½ï¿½ le 5 nov. 07
  */
-package com.arcadsoftware.aev.core.ui.contentproviders;
+package com.arcadsoftware.aev.core.contentproviders;
 
 public interface IObjectArrayProvider {
 	public Object[] getObjectArray();	

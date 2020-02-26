@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 import com.arcadsoftware.aev.core.collections.ArcadCollection;
+import com.arcadsoftware.aev.core.contentproviders.IObjectArrayProvider;
 
 /**
  * @author MD
