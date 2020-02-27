@@ -13,7 +13,17 @@
 		<plugins>
 			<plugin>
 				<groupId>com.arcadsoftware</groupId>
-				<artifactId>p2-maven-plugin</artifactId>
+				<artifactId>software-factory-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>publish-p2</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<componentId>update</componentId>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
