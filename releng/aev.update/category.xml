@@ -18,14 +18,24 @@
    <feature id="com.arcadsoftware.aev.list.features" version="0.0.0">
       <category name="aev_features"/>
    </feature>
-   <bundle id="com.arcadsoftware.aev.core" version="0.0.0"/>
-   <bundle id="com.arcadsoftware.aev.core.source" version="0.0.0"/>
-   <bundle id="com.arcadsoftware.aev.core.ui" version="0.0.0"/>
-   <bundle id="com.arcadsoftware.aev.core.ui.source" version="0.0.0"/>
-   <bundle id="com.arcadsoftware.aev.core.ui.rap" version="0.0.0"/>
-   <bundle id="com.arcadsoftware.aev.core.ui.rap.source" version="0.0.0"/>
-   <bundle id="com.arcadsoftware.aev.core.ui.rcp" version="0.0.0"/>
-   <bundle id="com.arcadsoftware.aev.core.ui.rcp.source" version="0.0.0"/>
-   <bundle id="com.arcadsoftware.aev.core.services" version="0.0.0"/>
+   <feature id="com.arcadsoftware.aev.services.features.source" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   <feature id="com.arcadsoftware.aev.core.features.source" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   <feature id="com.arcadsoftware.aev.core.ui.features.source" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   <feature id="com.arcadsoftware.aev.rap.features.source" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   <feature id="com.arcadsoftware.aev.rcp.features.source" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   <feature id="com.arcadsoftware.aev.list.features.source" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   
    <category-def name="aev_features" label="ARCAD-Evolution features"/>
 </site>
