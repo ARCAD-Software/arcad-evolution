@@ -26,5 +26,5 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  org.hsqldb.jdbc,
  org.xmlpull.v1
 Bundle-ClassPath: .
-Bundle-Version: 9.6.0.qualifier
+Bundle-Version: 10.0.0.qualifier
 Require-Bundle: org.apache.commons.io;bundle-version="[2.6.0,3.0.0)"
