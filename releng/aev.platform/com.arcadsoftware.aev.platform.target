@@ -15,7 +15,7 @@
             <unit id="com.arcadsoftware.asteroids.commons.feature.feature.group" version="0.0.0"/>
             <unit id="com.arcadsoftware.asteroids.spring.feature.feature.group" version="0.0.0"/>
             <unit id="com.arcadsoftware.asteroids.jdbc.feature.feature.group" version="0.0.0"/>
-            <repository location="http://rdanart01plv.quarcad.net/asteroids/3.0.0/update"/>
+            <repository location="http://rdanart01plv.quarcad.net/asteroids/master/update"/>
         </location>
         <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
             <unit id="com.arcadsoftware.rap.feature.feature.group" version="0.0.0"/>
