@@ -6,12 +6,10 @@
  */
 package com.arcadsoftware.aev.core.ui.wizards;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 
+import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
@@ -21,8 +19,6 @@ import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
  * @author MLafon
  */
 abstract public class ArcadWizardPage extends WizardPage {
-	
-	public static final String WIZARDIMG_ID = "com.arcadsoftware.aev.core.ui.branding.wizard";
 	
 	public static final ImageDescriptor ARCAD_IMDDESCRIPTOR_WIZARD = CoreUILabels
 			.getImageDescriptor(EvolutionCoreUIPlugin.IMG_WIZARD);
@@ -44,25 +40,12 @@ abstract public class ArcadWizardPage extends WizardPage {
 	}
 
 	private ImageDescriptor getWizardImage(){
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] elements = registry.getConfigurationElementsFor(WIZARDIMG_ID);
-		IConfigurationElement selectElement = null;
-		for (IConfigurationElement element : elements) {
-			selectElement = element;
-			break;
-		}	
-		if (selectElement!=null) {
-			String bundleId = selectElement.getAttribute("bundleid");
-			String path = selectElement.getAttribute("path");
-			if ((bundleId==null) || (bundleId.length()==0)){
-				bundleId = EvolutionCoreUIPlugin.getDefault().getBundle().getSymbolicName();
-			}
-			return EvolutionCoreUIPlugin.getDefault().getRegisteredImageDescriptor(bundleId+":"+path);
-		} else {
-			return ARCAD_IMDDESCRIPTOR_WIZARD;
-		}		
-		
-
+		return ServiceRegistry.getInstance()
+							.map(registry -> registry.lookup(IWizardBranding.class)
+													 .map(IWizardBranding::getBrandingImage)
+													 .orElse(ARCAD_IMDDESCRIPTOR_WIZARD))
+							.orElse(ARCAD_IMDDESCRIPTOR_WIZARD);
+							
 	}
 	
 	
@@ -80,7 +63,7 @@ abstract public class ArcadWizardPage extends WizardPage {
 	 * 
 	 * @return l'ID de la page
 	 */
-	abstract protected String getPageHelpContextId();
+	 protected abstract String getPageHelpContextId();
 
 	/*
 	 * (non-Javadoc)

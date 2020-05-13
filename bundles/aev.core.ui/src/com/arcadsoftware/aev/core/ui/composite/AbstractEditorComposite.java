@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import com.arcadsoftware.aev.core.model.ArcadListenerList;
-import com.arcadsoftware.aev.core.ui.composite.DoubleSpinner;
 import com.arcadsoftware.aev.core.ui.editors.AbstractArcadEditorPart;
 import com.arcadsoftware.aev.core.ui.listeners.IDirtyListener;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
