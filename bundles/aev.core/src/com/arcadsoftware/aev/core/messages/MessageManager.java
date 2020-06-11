@@ -1,5 +1,5 @@
 /*
- * Créé le 5 mai 04
+ * Crï¿½ï¿½ le 5 mai 04
  *
  */
 package com.arcadsoftware.aev.core.messages;
@@ -21,8 +21,8 @@ import com.arcadsoftware.aev.core.tools.CoreLabels;
 import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
- * Gestionnaire des messages. Cette classe statique est appelée dans
- * toutes les opération à risque pour controler le bon déroulement de l'opération.
+ * Gestionnaire des messages. Cette classe statique est appelï¿½e dans
+ * toutes les opï¿½ration ï¿½ risque pour controler le bon dï¿½roulement de l'opï¿½ration.
  * 
  * @author MD
  */
@@ -36,43 +36,43 @@ public class MessageManager implements IDiagnosisProvider {
 	public static int level_PluginsStatus = LEVEL_BETATESTING;
 
 	/** 
-	 * Affiche les détails de messages de type COMPLETION.<br>
-	 * Equivalent à MessageDetail.COMPLETION, peut être utilisé en tant
-	 * que paramètre des methodes d'ajout de messages et détails.
+	 * Affiche les dï¿½tails de messages de type COMPLETION.<br>
+	 * Equivalent ï¿½ MessageDetail.COMPLETION, peut ï¿½tre utilisï¿½ en tant
+	 * que paramï¿½tre des methodes d'ajout de messages et dï¿½tails.
 	 */
 	public static final int SHOW_COMPLETION = MessageDetail.COMPLETION;
 	/** 
-	 * Affiche les détails de messages de type DIAGNOSTIC.<br>
-	 * Equivalent à MessageDetail.DIAGNOSTIC, peut être utilisé en tant
-	 * que paramètre des methodes d'ajout de messages et détails.
+	 * Affiche les dï¿½tails de messages de type DIAGNOSTIC.<br>
+	 * Equivalent ï¿½ MessageDetail.DIAGNOSTIC, peut ï¿½tre utilisï¿½ en tant
+	 * que paramï¿½tre des methodes d'ajout de messages et dï¿½tails.
 	 */
 	public static final int SHOW_DIAGNOSTIC = MessageDetail.DIAGNOSTIC;
 	/** 
-	 * Affiche les détails de messages de type WARNING.<br>
-	 * Equivalent à MessageDetail.WARNING, peut être utilisé en tant
-	 * que paramètre des methodes d'ajout de messages et détails.
+	 * Affiche les dï¿½tails de messages de type WARNING.<br>
+	 * Equivalent ï¿½ MessageDetail.WARNING, peut ï¿½tre utilisï¿½ en tant
+	 * que paramï¿½tre des methodes d'ajout de messages et dï¿½tails.
 	 */
 	public static final int SHOW_WARNING = MessageDetail.WARNING;
 	/** 
-	 * Affiche les détails de messages de type ERROR.<br>
-	 * Equivalent à MessageDetail.ERROR, peut être utilisé en tant
-	 * que paramètre des methodes d'ajout de messages et détails.
+	 * Affiche les dï¿½tails de messages de type ERROR.<br>
+	 * Equivalent ï¿½ MessageDetail.ERROR, peut ï¿½tre utilisï¿½ en tant
+	 * que paramï¿½tre des methodes d'ajout de messages et dï¿½tails.
 	 */
 	public static final int SHOW_ERROR = MessageDetail.ERROR;
 	/** 
-	 * Affiche les détails de messages de type EXCEPTION.<br>
-	 * Equivalent à MessageDetail.EXCEPTION, peut être utilisé en tant
-	 * que paramètre des methodes d'ajout de messages et détails.
+	 * Affiche les dï¿½tails de messages de type EXCEPTION.<br>
+	 * Equivalent ï¿½ MessageDetail.EXCEPTION, peut ï¿½tre utilisï¿½ en tant
+	 * que paramï¿½tre des methodes d'ajout de messages et dï¿½tails.
 	 */
 	public static final int SHOW_EXCEPTION = MessageDetail.EXCEPTION;
 	/** 
-	 * Affiche tous les détails de messages de type erreur (Warning, erreur, ou exception).<br>
-	 * Ne peut pas être utilisé en tant que paramètre des methodes d'ajout de messages et détails.
+	 * Affiche tous les dï¿½tails de messages de type erreur (Warning, erreur, ou exception).<br>
+	 * Ne peut pas ï¿½tre utilisï¿½ en tant que paramï¿½tre des methodes d'ajout de messages et dï¿½tails.
 	 */
 	public static final int SHOW_ANYERROR = SHOW_WARNING | SHOW_ERROR | SHOW_EXCEPTION;
 	/** 
-	 * Affiche tous les détails de messages.<br>
-	 * Ne peut pas être utilisé en tant que paramètre des methodes d'ajout de messages et détails.
+	 * Affiche tous les dï¿½tails de messages.<br>
+	 * Ne peut pas ï¿½tre utilisï¿½ en tant que paramï¿½tre des methodes d'ajout de messages et dï¿½tails.
 	 */
 	public static final int SHOW_ALL = SHOW_COMPLETION | SHOW_DIAGNOSTIC | SHOW_WARNING | SHOW_ERROR | SHOW_EXCEPTION;
 	
@@ -88,12 +88,12 @@ public class MessageManager implements IDiagnosisProvider {
 
 	
 //	/**
-//	 * Listener utilisé pour récupérer les log d'un plugin (durant un block process).
+//	 * Listener utilisï¿½ pour rï¿½cupï¿½rer les log d'un plugin (durant un block process).
 //	 */
 //	private static ILogListener arcadLogListener = new ILogListener() {
 //		public void logging(IStatus status, String plugin) {
 //
-//			// Mapping entre séverité et message type.
+//			// Mapping entre sï¿½veritï¿½ et message type.
 //			Message message = addMessage(plugin,status.getSeverity() << 1,level_PluginsStatus,status.getMessage());
 //
 //			IStatus[] children = status.getChildren();
@@ -146,7 +146,7 @@ public class MessageManager implements IDiagnosisProvider {
 	/**
 	 * Supprime tous les messages du gestionnaire.
 	 * Attention cette suppression entraine la perte 
-	 * de toutes les informations de débugage.
+	 * de toutes les informations de dï¿½bugage.
 	 * 
 	 */
 	public static void clear() {
@@ -157,12 +157,12 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 	
 	/**
-	 * Débute un block de messages.
-	 * La chaîne blockContext peut définir un Message qui sera ajouté an entête du block, si 
-	 * cette chaîne est nulle alors aucun message n'est ajouté.
+	 * Dï¿½bute un block de messages.
+	 * La chaï¿½ne blockContext peut dï¿½finir un Message qui sera ajoutï¿½ an entï¿½te du block, si 
+	 * cette chaï¿½ne est nulle alors aucun message n'est ajoutï¿½.
 	 * 
-	 * @param plugin le plugin responsable du block de message (peut être null). 
-	 * @param blockContext message englobant les messages jusqu'à terminaison du block. 
+	 * @param plugin le plugin responsable du block de message (peut ï¿½tre null). 
+	 * @param blockContext message englobant les messages jusqu'ï¿½ terminaison du block. 
 	 */
 	public static Message beginMessageBlock(String blockContext) {
 		if (contextPlugins.isEmpty())
@@ -176,7 +176,7 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 	
 	/**
-	 * Termine un block et retourne la liste des messages à afficher...
+	 * Termine un block et retourne la liste des messages ï¿½ afficher...
 	 * 
 	 * @param dialogParentShell 
 	 */
@@ -203,20 +203,27 @@ public class MessageManager implements IDiagnosisProvider {
 	
 	/**
 	 * Ajoute un message dans le gestionnaire.
-	 * (Message visible dans tous les modes d'exécution).
-	 * @param command : Commande exécutée
-	 * @param type : Type d'erreur générée (voir MessageDetail)
+	 * (Message visible dans tous les modes d'exï¿½cution).
+	 * @param command : Commande exï¿½cutï¿½e
+	 * @param type : Type d'erreur gï¿½nï¿½rï¿½e (voir MessageDetail)
 	 * @param description : Texte de l'erreur
 	 */
 	public static Message addMessage(String command,int type,String description){
 		return addMessage(command,type,LEVEL_PRODUCTION,description);
 	}
+	
+	public static Message addErrorMessage(String command, String description){
+		return addMessage(command, MessageDetail.ERROR, description);
+	}
+	public static Message addErrorMessage(String command){
+		return addErrorMessage(command, "");
+	}
 
 	/**
-	 * Ajoute un message dans le gestionnaire. (Message visible dans tous les modes d'exécution).
-	 * Le type du message est fixe, donc l'ajout de détails n'influera pas sur le type affiché du message.
-	 * @param command : Commande exécutée
-	 * @param type : Type d'erreur générée (voir MessageDetail)
+	 * Ajoute un message dans le gestionnaire. (Message visible dans tous les modes d'exï¿½cution).
+	 * Le type du message est fixe, donc l'ajout de dï¿½tails n'influera pas sur le type affichï¿½ du message.
+	 * @param command : Commande exï¿½cutï¿½e
+	 * @param type : Type d'erreur gï¿½nï¿½rï¿½e (voir MessageDetail)
 	 * @param description : Texte de l'erreur
 	 */
 	public static Message addFixedTypeMessage(String command, int type, String description){
@@ -225,9 +232,9 @@ public class MessageManager implements IDiagnosisProvider {
 	
 	/**
 	 * Ajoute un message dans le gestionnaire.
-	 * (Message visible uniquement dans les modes betatest et développement).
-	 * @param command : Commande exécutée
-	 * @param type : Type d'erreur générée (voir MessageDetail)
+	 * (Message visible uniquement dans les modes betatest et dï¿½veloppement).
+	 * @param command : Commande exï¿½cutï¿½e
+	 * @param type : Type d'erreur gï¿½nï¿½rï¿½e (voir MessageDetail)
 	 * @param description : Texte de l'erreur
 	 */
 	public static Message addMessageBeta(String command,int type,String description){
@@ -236,9 +243,9 @@ public class MessageManager implements IDiagnosisProvider {
 
 	/**
 	 * Ajoute un message dans le gestionnaire.
-	 * (Message visible uniquement dans le mode d'exécution développement).
-	 * @param command : Commande exécutée
-	 * @param type : Type d'erreur générée (voir MessageDetail)
+	 * (Message visible uniquement dans le mode d'exï¿½cution dï¿½veloppement).
+	 * @param command : Commande exï¿½cutï¿½e
+	 * @param type : Type d'erreur gï¿½nï¿½rï¿½e (voir MessageDetail)
 	 * @param description : Texte de l'erreur
 	 */
 	public static Message addMessageDev(String command,int type,String description){
@@ -246,11 +253,11 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 
 	/**
-	 * Ajoute un message décrivant l'exception.
+	 * Ajoute un message dï¿½crivant l'exception.
 	 * (Message visible uniquement en mode BetaTest ou Developpement).
 	 * 
-	 * @param e l'exception associée au message.
-	 * @return le messgae qui vient d'être ajouté.
+	 * @param e l'exception associï¿½e au message.
+	 * @return le messgae qui vient d'ï¿½tre ajoutï¿½.
 	 */
 	public static Message addExceptionBeta(Throwable e) {
 		return addException(e,LEVEL_BETATESTING);
@@ -263,7 +270,7 @@ public class MessageManager implements IDiagnosisProvider {
 	//</MR>
 
 	/**
-	 * Ajout d'un message lié au déclenchement d'un exception.
+	 * Ajout d'un message liï¿½ au dï¿½clenchement d'un exception.
 	 * @param e
 	 * @param level
 	 */
@@ -275,7 +282,7 @@ public class MessageManager implements IDiagnosisProvider {
 		if (m == null)
 			m = EXCEPTION_THROWN;
 		Message message = new Message(m,SHOW_EXCEPTION, level, EXCEPTION_THROWN);
-		//<FM number="2011/00454" version="08.12.02" date="9 déc. 2011" user="MLAFON">
+		//<FM number="2011/00454" version="08.12.02" date="9 dï¿½c. 2011" user="MLAFON">
 		messages.add(message);
 		fireAddMessage(message,e);
 		//</FM>
@@ -322,14 +329,14 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 	
 	/**
-	 * Ajout d'un message avec un premier détail.
-	 * (Seule opération créant véritablement un objet Message). 
+	 * Ajout d'un message avec un premier dï¿½tail.
+	 * (Seule opï¿½ration crï¿½ant vï¿½ritablement un objet Message). 
 	 * 
-	 * @param command Le texte de la commande utilisé ou titre du message. 
-	 * @param type Type du premier détail du message (MEssageDetail.*)
-	 * @param level Niveau lisé au niveau d'exécution de la machine LEVEL_*
-	 * @param description Texte du premier détail.
-	 * @return le message créé.
+	 * @param command Le texte de la commande utilisï¿½ ou titre du message. 
+	 * @param type Type du premier dï¿½tail du message (MEssageDetail.*)
+	 * @param level Niveau lisï¿½ au niveau d'exï¿½cution de la machine LEVEL_*
+	 * @param description Texte du premier dï¿½tail.
+	 * @return le message crï¿½ï¿½.
 	 */	
 	public static Message addMessage(String command,int type,int level,String description){
 		return addMessage(command, type, level, description, false);
@@ -340,9 +347,9 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 	
 	/**
-	 * Ajout d'un message précréé.
+	 * Ajout d'un message prï¿½crï¿½ï¿½.
 	 * 
-	 * @param msg Le message à ajouter.
+	 * @param msg Le message ï¿½ ajouter.
 	 * @return
 	 */
 	public static Message addMessage(Message msg) {
@@ -357,8 +364,8 @@ public class MessageManager implements IDiagnosisProvider {
 	/**
 	 *  
 	 * @param index : position du message
-	 * @return Renvoit le message situé à la position "index". Si index est inférieur à 0 ou si index est supérieur à la taille du 
-	 * gestionnaire la valeur null est retournée.  
+	 * @return Renvoit le message situï¿½ ï¿½ la position "index". Si index est infï¿½rieur ï¿½ 0 ou si index est supï¿½rieur ï¿½ la taille du 
+	 * gestionnaire la valeur null est retournï¿½e.  
 	 */
 	public static Message getMessageAt(int index) {
 		if ((index>-1) && (index<messages.size())) {		
@@ -368,10 +375,10 @@ public class MessageManager implements IDiagnosisProvider {
 	}	
 	
 	/**
-	 * Supprime le message situé à la position "index".Si index est inférieur 
-	 * à 0 ou si index est supérieur à la taille du gestionnaire aucune
-	 * suppression n'est effectuée  
-	 * @param index : position du message à supprimer
+	 * Supprime le message situï¿½ ï¿½ la position "index".Si index est infï¿½rieur 
+	 * ï¿½ 0 ou si index est supï¿½rieur ï¿½ la taille du gestionnaire aucune
+	 * suppression n'est effectuï¿½e  
+	 * @param index : position du message ï¿½ supprimer
 	 */
 	public static void removeMessageAt(int index) {
 		if ((index>-1) && (index<messages.size())) {		
@@ -406,15 +413,15 @@ public class MessageManager implements IDiagnosisProvider {
 	 * @param fileName
 	 *            Nom du fichier XML.
 	 * @param messages
-	 *            Liste des messages à exporter (si cette liste est nulle c'est
-	 *            la liste complète qui est utilisée).
+	 *            Liste des messages ï¿½ exporter (si cette liste est nulle c'est
+	 *            la liste complï¿½te qui est utilisï¿½e).
 	 */
 	public static void exportMessagesToXMLFile(String fileName, AbstractList<Message> messageList) {
 		AbstractList<Message> msgs = messageList;
 		if (messageList == null)
 			msgs = messages;
 
-		// TODO [DL] voir pourquoi file n'est jamais utilisé
+		// TODO [DL] voir pourquoi file n'est jamais utilisï¿½
 		FileOutputStream file = null;
 		try {
 			file = new FileOutputStream(fileName);
@@ -509,7 +516,7 @@ public class MessageManager implements IDiagnosisProvider {
 	// messageList = messages;
 
 	// // TODO [Optionnel] Ajouter le support XML, incompatible avec la jt400
-	// utilisée et la jvm 1.3.
+	// utilisï¿½e et la jvm 1.3.
 
 	// FileOutputStream file;
 	// try {
@@ -595,7 +602,7 @@ public class MessageManager implements IDiagnosisProvider {
 	// addExceptionBeta(e1);
 	// }
 	// // VERSION PROPRE :
-	// // Problème d'accessibilité du parser xml dans la jdk1.3 ... il faut
+	// // Problï¿½me d'accessibilitï¿½ du parser xml dans la jdk1.3 ... il faut
 	// mettre en ligne J2EE.jar.
 
 	// // DocumentBuilderFactory dFactory =
