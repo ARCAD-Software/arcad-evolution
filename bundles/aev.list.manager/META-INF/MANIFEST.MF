@@ -22,9 +22,9 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.logger,
  com.arcadsoftware.ae.core.translation,
  com.arcadsoftware.ae.core.utils,
- org.apache.commons.io,
  org.hsqldb,
  org.hsqldb.jdbc,
  org.xmlpull.v1
 Bundle-ClassPath: .
 Bundle-Version: 10.0.0.qualifier
+Require-Bundle: org.apache.commons.io
