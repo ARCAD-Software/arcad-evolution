@@ -27,4 +27,4 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  org.xmlpull.v1
 Bundle-ClassPath: .
 Bundle-Version: 10.0.0.qualifier
-Require-Bundle: org.apache.commons.io
+Require-Bundle: org.apache.commons.io;bundle-version="2.6.0"
