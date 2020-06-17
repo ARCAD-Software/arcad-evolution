@@ -40,11 +40,9 @@ abstract public class ArcadWizardPage extends WizardPage {
 	}
 
 	private ImageDescriptor getWizardImage(){
-		return ServiceRegistry.getInstance()
-							.map(registry -> registry.lookup(IWizardBranding.class)
-													 .map(IWizardBranding::getBrandingImage)
-													 .orElse(ARCAD_IMDDESCRIPTOR_WIZARD))
-							.orElse(ARCAD_IMDDESCRIPTOR_WIZARD);
+		return ServiceRegistry	.lookup(IWizardBranding.class)
+							 	.map(IWizardBranding::getBrandingImage)
+							 	.orElse(ARCAD_IMDDESCRIPTOR_WIZARD);
 							
 	}
 	

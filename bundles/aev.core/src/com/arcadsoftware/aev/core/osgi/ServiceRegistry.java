@@ -22,71 +22,85 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true)
 public final class ServiceRegistry {
 	private static Optional<ServiceRegistry> instance;
-	
+
 	private final Map<Class<?>, ServiceRegistration<?>> registrations = new HashMap<>();
 	private BundleContext bundleContext;
-	
-	public static Optional<ServiceRegistry> getInstance() {
+
+	private static Optional<ServiceRegistry> getInstance() {
 		return instance;
 	}
-	
+
 	@Activate
 	public void activate(final BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
-		instance = Optional.of(this);  
+		instance = Optional.of(this);
 	}
-	
+
 	@Deactivate
 	public void deactivate() {
 		this.bundleContext = null;
 		this.registrations.clear();
 		instance = Optional.empty();
 	}
-	
-	public <T> List<T> lookupAll(final Class<T> clazz) {
+
+	public static <T> List<T> lookupAll(final Class<T> clazz) {
 		final BundleContext context = getBundleContext();
-		try {
-			return getBundleContext().getServiceReferences(clazz, null)
-									 .stream()
-									 .map(context::getService).collect(Collectors.toList());
+		if (context != null) {
+			try {
+				return context.getServiceReferences(clazz, null)
+						.stream()
+						.map(context::getService).collect(Collectors.toList());
+			} catch (InvalidSyntaxException e) {
+				e.printStackTrace();
+			}
 		}
-		catch (InvalidSyntaxException e) {
-			e.printStackTrace();
-			return Collections.emptyList();
-		}		
-	}
-	
-	public <T> Optional<T> lookup(final Class<T> clazz) {
-		final BundleContext context = getBundleContext();
-		final ServiceReference<T> reference = getBundleContext().getServiceReference(clazz);
-		if (reference == null) {
-			return Optional.empty();
-		} else {
-			return Optional.ofNullable(context.getService(reference));
-		}
+		return Collections.emptyList();
 	}
 
-	public <T> Optional<T> lookup(final Class<T> clazz, final String filter) {
+	public static <T> Optional<T> lookup(final Class<T> clazz) {
+		final BundleContext context = getBundleContext();
+		if (context != null) {
+			final ServiceReference<T> reference = context.getServiceReference(clazz);
+			if (reference != null) {
+				return Optional.ofNullable(context.getService(reference));
+			}
+		}
+		return Optional.empty();
+	}
+
+	public static <T> Optional<T> lookup(final Class<T> clazz, final String filter) {
 		try {
 			final BundleContext context = getBundleContext();
-			final Collection<ServiceReference<T>> references = context.getServiceReferences(clazz, filter);
-			return Optional.ofNullable(references.stream().map(context::getService).findFirst().orElse(null));
-		} catch (final InvalidSyntaxException e) {
-			e.printStackTrace();
-			return Optional.empty();
+			if (context != null) {
+				final Collection<ServiceReference<T>> references = context.getServiceReferences(clazz, filter);
+				return Optional.ofNullable(references.stream().map(context::getService).findFirst().orElse(null));
+			}
+		}
+		catch (final InvalidSyntaxException e) {
+			e.printStackTrace();			
+		}
+		return Optional.empty();
+	}
+
+	public static synchronized <T> void register(final Class<T> clazz, final T service) {
+		final Map<Class<?>, ServiceRegistration<?>> regs = getRegistrations();
+		final BundleContext context = getBundleContext();
+		if(regs != null && context != null) {
+			final ServiceRegistration<?> oldRegistration = regs.remove(clazz);
+			if (oldRegistration != null) {
+				oldRegistration.unregister();
+			}
+			
+			final ServiceRegistration<T> newRegistration = context.registerService(clazz, service, null);
+			regs.put(clazz, newRegistration);
 		}
 	}
 
-	public synchronized <T> void register(final Class<T> clazz, final T service) {
-		final ServiceRegistration<?> oldRegistration = registrations.remove(clazz);
-		if (oldRegistration != null) {
-			oldRegistration.unregister();
-		}
-		final ServiceRegistration<T> newRegistration = getBundleContext().registerService(clazz, service, null);
-		registrations.put(clazz, newRegistration);
+	private static BundleContext getBundleContext() {
+		return getInstance().map(sr -> sr.bundleContext).orElse(null);
 	}
 
-	private BundleContext getBundleContext() {
-		return bundleContext;
+	public static Map<Class<?>, ServiceRegistration<?>> getRegistrations() {
+		return getInstance().map(sr -> sr.registrations).orElse(null);
 	}
 }
