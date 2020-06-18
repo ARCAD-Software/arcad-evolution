@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution Core UI RAP
 Automatic-Module-Name: com.arcadsoftware.aev.core.ui.rap
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui.rap
-Bundle-Version: 10.0.0.qualifier
+Bundle-Version: 10.1.0.qualifier
 Bundle-Activator: com.arcadsoftware.aev.core.ui.rap.Activator
 Require-Bundle: com.arcadsoftware.aev.core.ui,
  com.arcadsoftware.aev.core,

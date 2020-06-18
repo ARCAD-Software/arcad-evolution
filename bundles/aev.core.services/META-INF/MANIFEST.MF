@@ -26,4 +26,4 @@ Import-Package: org.dom4j,
  org.springframework.context.support,
  org.springframework.core
 Bundle-ClassPath: .
-Bundle-Version: 10.0.0.qualifier
+Bundle-Version: 10.1.0.qualifier
