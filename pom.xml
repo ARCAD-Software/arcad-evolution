@@ -85,6 +85,7 @@
 						<plugin id="org.eclipse.rap.ui.views"/>
 						<plugin id="org.eclipse.rap.ui.workbench"/>
 						<feature id="com.arcadsoftware.rap.feature"/>
+						<feature id="com.arcadsoftware.asteroids.spring.feature"/>
 					</excludes>
 				</configuration>
 			</plugin>

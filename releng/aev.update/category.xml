@@ -39,6 +39,8 @@
    <feature id="com.arcadsoftware.aev.list.features.source" version="0.0.0">
       <category name="aev_features"/>
    </feature>
-   
+   <feature id="com.arcadsoftware.aev.spring.features.source" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
    <category-def name="aev_features" label="ARCAD-Evolution features"/>
 </site>
