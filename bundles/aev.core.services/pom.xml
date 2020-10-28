@@ -6,10 +6,6 @@
 		<version>10.1.0-SNAPSHOT</version>
 	</parent>
 
-	<properties>
-		<spring.version>3.2.18.RELEASE</spring.version>
-	</properties>
-
 	<name>ARCAD-Evolution Core Services</name>
 	<packaging>eclipse-plugin</packaging>
 	<artifactId>com.arcadsoftware.aev.core.services</artifactId>
