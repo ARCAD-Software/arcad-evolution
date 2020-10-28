@@ -21,6 +21,10 @@
       Please refer to the global ARCAD products licence for details.
    </license>
 
+   <includes
+         id="com.arcadsoftware.aev.spring.features"
+         version="0.0.0"/>
+
    <plugin
          id="com.arcadsoftware.aev.list.manager"
          download-size="0"
