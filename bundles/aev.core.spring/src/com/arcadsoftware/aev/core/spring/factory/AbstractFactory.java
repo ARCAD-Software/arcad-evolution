@@ -1,9 +1,12 @@
-package com.arcadsoftware.ae.core.utils;
+package com.arcadsoftware.aev.core.spring.factory;
 
 
 import java.io.File;
 
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import com.arcadsoftware.ae.core.utils.Utils;
+
 
 public abstract class AbstractFactory {
 	protected static File arcadHomeFolder = null;

@@ -11,6 +11,7 @@
 
 	<modules>
 		<module>aev.core.services</module>
+		<module>aev.core.spring</module>
 		<module>aev.list.manager</module>
 		<module>aev.core</module>
 		<module>aev.core.ui</module>

@@ -5,20 +5,24 @@
 package com.arcadsoftware.aev.core.messages;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.AbstractList;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.apache.commons.io.FileUtils;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.arcadsoftware.aev.core.tools.CoreLabels;
 import com.arcadsoftware.aev.core.tools.StringTools;
+import com.arcadsoftware.aev.core.tools.XMLTools;
 
 /**
  * Gestionnaire des messages. Cette classe statique est appel�e dans
@@ -78,34 +82,13 @@ public class MessageManager implements IDiagnosisProvider {
 	
 
 
-	// Compter de blocks d'update...
-	private static ArrayList<Object> contextPlugins = new ArrayList<Object>();
-	private static final ArrayList<IMessagesListener> listenerList = new ArrayList<IMessagesListener>();
+	private static List<Object> contextPlugins = new ArrayList<>();
+	private static final List<IMessagesListener> listenerList = new ArrayList<>();
 	
-	private static final ArrayList<Message> messages = new ArrayList<Message>();
+	private static final List<Message> messages = new ArrayList<>();
 	private static final MessageManager instance = new MessageManager();
 	private static int firstBlockMessage = 0;
 
-	
-//	/**
-//	 * Listener utilis� pour r�cup�rer les log d'un plugin (durant un block process).
-//	 */
-//	private static ILogListener arcadLogListener = new ILogListener() {
-//		public void logging(IStatus status, String plugin) {
-//
-//			// Mapping entre s�verit� et message type.
-//			Message message = addMessage(plugin,status.getSeverity() << 1,level_PluginsStatus,status.getMessage());
-//
-//			IStatus[] children = status.getChildren();
-//			for (int i=0; i < children.length;i++) {
-//				message.addDetail(children[i].getSeverity() << 1,children[i].getMessage());
-//			}
-//		}
-//	}; 
-//	
-	/**
-	 * 
-	 */
 	public MessageManager() {
 		super();
 	}
@@ -180,25 +163,21 @@ public class MessageManager implements IDiagnosisProvider {
 	 * 
 	 * @param dialogParentShell 
 	 */
-	public static ArrayList<Message> endMessageBlock(int showParam) {
-		if (contextPlugins.isEmpty() && (messages.size() > firstBlockMessage)) {
-			
-			ArrayList<Message> filteredMessages = new ArrayList<Message>(messages.size() - firstBlockMessage);
+	public static List<Message> endMessageBlock(int showParam) {
+		if (contextPlugins.isEmpty() && (messages.size() > firstBlockMessage)) {			
+			List<Message> filteredMessages = new ArrayList<>(messages.size() - firstBlockMessage);
 
 			for(int i = firstBlockMessage;i < messages.size(); i++) {
 				Message message = messages.get(i);
-				//SJU: retour homologation defect 1377 (affichage intempestif du dialog)
-				//if (message.isVisibleTo(showParam)) {
 				if ((showParam & message.getMaxDetailsType()) != 0 ) {
 					filteredMessages.add(message);
 				}
 			}
-			if (filteredMessages.size() == 0)
-				return null;
-			return filteredMessages;
-		} else {
-			return null;
+			if (!filteredMessages.isEmpty()) {
+				return filteredMessages;
+			}
 		}
+		return Collections.emptyList();
 	}
 	
 	/**
@@ -285,27 +264,18 @@ public class MessageManager implements IDiagnosisProvider {
 		//<FM number="2011/00454" version="08.12.02" date="9 d�c. 2011" user="MLAFON">
 		messages.add(message);
 		fireAddMessage(message,e);
-		//</FM>
-		ByteArrayOutputStream out = null;
-		try {
-			out = new ByteArrayOutputStream();
-			e.printStackTrace(new PrintWriter(out,true));
-			out.flush();
-			String s = out.toString();
-			out.close();
+		//</FM>		
+		try(final ByteArrayOutputStream out = new ByteArrayOutputStream()) {			
+			try(PrintWriter writer = new PrintWriter(out, true)){
+				e.printStackTrace(writer);
+			}
+
+			final String s = out.toString();
 			if ((s != null) && (s.length() > 0)) {
 				message.addDetail(SHOW_EXCEPTION,s);
 			}
 		} catch (IOException e1) {
 			message.addDetail(SHOW_EXCEPTION,e1.getLocalizedMessage());
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
 		}
 		if (level <= LEVEL_BETATESTING) {
 			message.addDate();
@@ -353,11 +323,8 @@ public class MessageManager implements IDiagnosisProvider {
 	 * @return
 	 */
 	public static Message addMessage(Message msg) {
-		//ML: suppression du filtre en dur...
-		//if (level <= ArcadCorePlugin.getDefault().getMessagesLevel()) {
-			messages.add(msg);
-			fireAddMessage(msg, null);
-		//}
+		messages.add(msg);
+		fireAddMessage(msg, null);
 		return msg;
 	}
 
@@ -369,7 +336,7 @@ public class MessageManager implements IDiagnosisProvider {
 	 */
 	public static Message getMessageAt(int index) {
 		if ((index>-1) && (index<messages.size())) {		
-			return (Message)messages.get(index);
+			return messages.get(index);
 		}
 		return null;
 	}	
@@ -381,8 +348,8 @@ public class MessageManager implements IDiagnosisProvider {
 	 * @param index : position du message � supprimer
 	 */
 	public static void removeMessageAt(int index) {
-		if ((index>-1) && (index<messages.size())) {		
-			Message message = (Message)messages.remove(index);
+		if ((index>-1) && (index < messages.size())) {		
+			Message message = messages.remove(index);
 			fireMessageDeleted(message);
 		}
 	}	
@@ -395,14 +362,14 @@ public class MessageManager implements IDiagnosisProvider {
 	
 	public static void print() {
 		for (int i = 0; i < messageCount(); i++) {
-			getMessageAt(i).print();	
+			Optional.ofNullable(getMessageAt(i)).ifPresent(Message::print);	
 		}
 	}
 
 	/**
 	 * @return
 	 */
-	public static ArrayList<Message> getMessagesList() {
+	public static List<Message> getMessagesList() {
 		return messages;
 	}
 
@@ -416,287 +383,91 @@ public class MessageManager implements IDiagnosisProvider {
 	 *            Liste des messages � exporter (si cette liste est nulle c'est
 	 *            la liste compl�te qui est utilis�e).
 	 */
-	public static void exportMessagesToXMLFile(String fileName, AbstractList<Message> messageList) {
-		AbstractList<Message> msgs = messageList;
-		if (messageList == null)
+	public static void exportMessagesToXMLFile(final String fileName, final List<Message> messageList) {
+		List<Message> msgs = messageList;
+		if (messageList == null) {
 			msgs = messages;
-
-		// TODO [DL] voir pourquoi file n'est jamais utilis�
-		FileOutputStream file = null;
-		try {
-			file = new FileOutputStream(fileName);
-		} catch (FileNotFoundException e) {
-			addExceptionBeta(e);
+		}
+		final File file = new File(fileName);
+		try (final FileOutputStream fileOutput = FileUtils.openOutputStream(file)){
+			//This will create the parent path and try to open the file
+		}
+		catch (Exception e) {
+			addException(e);
 			return;
 		}
-
-		Document document = null;
+		
 		try {
-			document = DocumentHelper.parseText("<messageList></messageList>"); //$NON-NLS-1$
-
-			document.addDocType("messageList", "SYSTEM", "http://eclipse.arcadsoftware.com/xml/messagesexport.dtd"); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-			Element root = document.getRootElement();
-
-			for (int i = 0; i < msgs.size(); i++) {
-				if (msgs.get(i) instanceof Message) {
-					Message message = (Message) msgs.get(i);
-					Element msg = root.addElement("message"); //$NON-NLS-1$
-					msg.addAttribute("command", message.getCommand()); //$NON-NLS-1$
-					String level = StringTools.EMPTY;
-					switch (message.getLevel()) {
-					case LEVEL_PRODUCTION: {
+			final Document document = XMLTools.createNewXMLDocument();
+			final Element root = document.createElement("messageList");
+			
+			for (final Message message : msgs) {
+				final Element msg = document.createElement("message");
+				msg.setAttribute("command", message.getCommand()); //$NON-NLS-1$
+				final String level;
+				switch (message.getLevel()) {
+					case LEVEL_PRODUCTION: 
 						level = "production"; //$NON-NLS-1$
 						break;
-					}
-					case LEVEL_BETATESTING: {
+					
+					case LEVEL_BETATESTING: 
 						level = "betatest"; //$NON-NLS-1$
 						break;
-					}
-					case LEVEL_DEVELOPMENT: {
+					
+					case LEVEL_DEVELOPMENT: 
 						level = "development"; //$NON-NLS-1$
 						break;
-					}
-					default: {
+					
+					default: 
 						level = "unknown"; //$NON-NLS-1$
-					}
-					}
-					msg.addAttribute("level", level); //$NON-NLS-1$
+				
+				}
+				msg.setAttribute("level", level); //$NON-NLS-1$
 
-					for (int j = 0; j < message.detailCount(); j++) {
-						MessageDetail detail = message.getDetailAt(j);
-						Element dtl = msg.addElement("detail"); //$NON-NLS-1$
-						String type = StringTools.EMPTY;
-						switch (detail.getType()) {
-						case MessageDetail.COMPLETION: {
+				for (final MessageDetail detail : message.getDetails()) {
+					final Element dtl = document.createElement("detail");
+					final String type;
+					switch (detail.getType()) {
+						case MessageDetail.COMPLETION: 
 							type = "completion"; //$NON-NLS-1$
 							break;
-						}
-						case MessageDetail.DIAGNOSTIC: {
+						
+						case MessageDetail.DIAGNOSTIC: 
 							type = "diagnostic"; //$NON-NLS-1$
 							break;
-						}
-						case MessageDetail.ERROR: {
+						
+						case MessageDetail.ERROR: 
 							type = "error"; //$NON-NLS-1$
 							break;
-						}
-						case MessageDetail.EXCEPTION: {
+						
+						case MessageDetail.EXCEPTION: 
 							type = "exception"; //$NON-NLS-1$
 							break;
-						}
-						case MessageDetail.WARNING: {
+						
+						case MessageDetail.WARNING: 
 							type = "warning"; //$NON-NLS-1$
 							break;
-						}
+						
 						default:
 							type = "unknown"; //$NON-NLS-1$
-						}
-						dtl.addAttribute("type", type); //$NON-NLS-1$
-						msg.addCDATA((detail.getDescription() != null ? detail.getDescription() : StringTools.EMPTY)
-								.concat("\n")); //$NON-NLS-1$ 
 					}
+					dtl.setAttribute("type", type); //$NON-NLS-1$
+					if(!StringTools.isEmpty(detail.getDescription())) {
+						final CDATASection desc = document.createCDATASection(detail.getDescription());
+						dtl.appendChild(desc);
+					}
+					msg.appendChild(dtl);
 				}
+				root.appendChild(msg);
 			}
-		} catch (DocumentException e) {
+			document.appendChild(root);
+			XMLTools.writeXMLDocumentToFile(document, file, StandardCharsets.UTF_8.name());
+		}
+		catch (Exception e) {
 			addExceptionBeta(e);
-		}
-		if (document != null) {
-			try {
-				file.write(document.asXML().getBytes());
-				file.close();
-			} catch (IOException e) {
-				addExceptionBeta(e);
-			}
-		}
+		}		
 	}
-
-	// public static void exportMessagesToXMLFile(String fileName,ArrayList
-	// messageList) {
-
-	// if (messageList == null)
-	// messageList = messages;
-
-	// // TODO [Optionnel] Ajouter le support XML, incompatible avec la jt400
-	// utilis�e et la jvm 1.3.
-
-	// FileOutputStream file;
-	// try {
-	// file = new FileOutputStream(fileName);
-	// } catch (FileNotFoundException e) {
-	// addExceptionBeta(e);
-	// return;
-	// }
-
-	// try {
-	//	file.write("<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n".getBytes()); //$NON-NLS-1$
-	//	file.write("<?xml-stylesheet type=\"text/xsl\" href=\"http://eclipse.arcadsoftware.com/xml/messagesexport.xsl\"?>\n".getBytes()); //$NON-NLS-1$
-	//	file.write("<!DOCTYPE messageList SYSTEM \"http://eclipse.arcadsoftware.com/xml/messagesexport.dtd\">".getBytes()); //$NON-NLS-1$
-	//	file.write("<messageList>\n".getBytes()); //$NON-NLS-1$
-
-	// for (int i = 0; i < messageList.size(); i++) {
-	// if (messageList.get(i) instanceof Message) {
-	// Message message = (Message) messageList.get(i);
-	//	file.write("<message command=\"".getBytes());  //$NON-NLS-1$
-	// file.write(message.getCommand().getBytes());
-	//	file.write("\" level=\"".getBytes()); //$NON-NLS-1$
-	// switch (message.getLevel()) {
-	// case LEVEL_PRODUCTION : {
-	//	file.write("production".getBytes()); //$NON-NLS-1$
-	// break;
-	// }
-	// case LEVEL_BETATESTING : {
-	//	file.write("betatest".getBytes()); //$NON-NLS-1$
-	// break;
-	// }
-	// case LEVEL_DEVELOPMENT : {
-	//	file.write("development".getBytes()); //$NON-NLS-1$
-	// break;
-	// }
-	// default: {
-	//	file.write("unknown".getBytes()); //$NON-NLS-1$
-	// }
-	// }
-	//	file.write("\">\n".getBytes()); //$NON-NLS-1$
-	// for(int j = 0; j < message.detailCount(); j++) {
-	// MessageDetail detail = message.getDetailAt(j);
-	//	file.write("<detail type=\"".getBytes()); //$NON-NLS-1$
-	// switch (detail.getType()) {
-	// case MessageDetail.COMPLETION : {
-	//	file.write("completion".getBytes()); //$NON-NLS-1$
-	// break;
-	// }
-	// case MessageDetail.DIAGNOSTIC : {
-	//	file.write("diagnostic".getBytes()); //$NON-NLS-1$
-	// break;
-	// }
-	// case MessageDetail.ERROR : {
-	//	file.write("error".getBytes()); //$NON-NLS-1$
-	// break;
-	// }
-	// case MessageDetail.EXCEPTION : {
-	//	file.write("exception".getBytes()); //$NON-NLS-1$
-	// break;
-	// }
-	// case MessageDetail.WARNING : {
-	//	file.write("warning".getBytes()); //$NON-NLS-1$
-	// break;
-	// }
-	// default :
-	//	file.write("unknown".getBytes()); //$NON-NLS-1$
-	// }
-	//	file.write("\"><![CDATA[".getBytes()); //$NON-NLS-1$
-	// if (detail.getDescription() != null)
-	// file.write(detail.getDescription().getBytes());
-	//	file.write("]]></detail>\n".getBytes()); //$NON-NLS-1$
-	// }
-	//	file.write("</message>\n".getBytes()); //$NON-NLS-1$
-	// }
-	// }
-	//	file.write("</messageList>".getBytes()); //$NON-NLS-1$
-	// } catch (IOException e2) {
-	// addExceptionBeta(e2);
-	// }
-
-	// try {
-	// file.close();
-	// } catch (IOException e1) {
-	// addExceptionBeta(e1);
-	// }
-	// // VERSION PROPRE :
-	// // Probl�me d'accessibilit� du parser xml dans la jdk1.3 ... il faut
-	// mettre en ligne J2EE.jar.
-
-	// // DocumentBuilderFactory dFactory =
-	// DocumentBuilderFactory.newInstance();
-	// // DocumentBuilder dBuilder;
-	// // try {
-	// // dBuilder = dFactory.newDocumentBuilder();
-	// // } catch (ParserConfigurationException e3) {
-	// // addExceptionBeta(e3);
-	// // return;
-	// // }
-	// // Document doc = dBuilder.newDocument();
-
-	// // // Attache la fiche de mise en forme d'arcad.
-	////	ProcessingInstruction stylesheet = doc.createProcessingInstruction("xml-stylesheet","type=\"text/xsl\" href=\"http://eclipse.arcadsoftware.com/xml/messagesexport.xsl\""); //$NON-NLS-1$ //$NON-NLS-2$
-	// // doc.appendChild(stylesheet);
-
-	////	Element mesListElement = doc.createElement("messageList"); //$NON-NLS-1$
-	// // doc.appendChild(mesListElement);
-
-	// // for (int i = 0; i < messageList.size(); i++) {
-	// // if (messageList.get(i) instanceof Message) {
-	// // Message message = (Message) messageList.get(i);
-	////	Element mesElement = doc.createElement("message"); //$NON-NLS-1$
-	////	mesElement.setAttribute("command",message.getCommand()); //$NON-NLS-1$
-	// // mesListElement.appendChild(mesElement);
-	// // for(int j = 0; j < message.detailCount(); j++) {
-	// // MessageDetail detail = message.getDetailAt(j);
-	////	Element detElement = doc.createElement("detail"); //$NON-NLS-1$
-	// // switch (detail.getType()) {
-	// // case MessageDetail.COMPLETION : {
-	////	detElement.setAttribute("type","completion"); //$NON-NLS-1$ //$NON-NLS-2$
-	// // break;
-	// // }
-	// // case MessageDetail.DIAGNOSTIC : {
-	////	detElement.setAttribute("type","diagnostic"); //$NON-NLS-1$ //$NON-NLS-2$
-	// // break;
-	// // }
-	// // case MessageDetail.ERROR : {
-	////	detElement.setAttribute("type","error"); //$NON-NLS-1$ //$NON-NLS-2$
-	// // break;
-	// // }
-	// // case MessageDetail.EXCEPTION : {
-	////	detElement.setAttribute("type","exception"); //$NON-NLS-1$ //$NON-NLS-2$
-	// // break;
-	// // }
-	// // case MessageDetail.WARNING : {
-	////	detElement.setAttribute("type","warning"); //$NON-NLS-1$ //$NON-NLS-2$
-	// // break;
-	// // }
-	////	default : detElement.setAttribute("type","unknown"); //$NON-NLS-1$ //$NON-NLS-2$
-	// // }
-	// // mesElement.appendChild(detElement);
-	// //
-	// detElement.appendChild(doc.createCDATASection(detail.getDescription()));
-	// // }
-	// // }
-	// // }
-
-	// //Create a transformer to write the file out
-	// // TransformerFactory tFactory = TransformerFactory.newInstance();
-	// // Transformer transformer;
-	// // try {
-	// // transformer = tFactory.newTransformer();
-	////	transformer.setOutputProperty(OutputKeys.ENCODING,"iso-8859-1"); //$NON-NLS-1$
-	////	transformer.setOutputProperty(OutputKeys.VERSION,"1.0"); //$NON-NLS-1$
-	////	transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"http://eclipse.arcadsoftware.com/xml/messagesexport.dtd"); //$NON-NLS-1$
-	////	transformer.setOutputProperty(OutputKeys.INDENT,"yes"); //$NON-NLS-1$
-	// // } catch (TransformerConfigurationException e) {
-	// // addExceptionBeta(e);
-	// // return;
-	// // }
-
-	// // StreamResult result;
-	// // try {
-	// // result = new StreamResult(new FileOutputStream(fileName));
-	// // } catch (FileNotFoundException e1) {
-	// // addExceptionBeta(e1);
-	// // return;
-	// // }
-	// // try {
-	// // transformer.transform(new DOMSource(doc), result);
-	// // } catch (TransformerException e2) {
-	// // addExceptionBeta(e2);
-	// // return;
-	// // }
-	// // try {
-	// // result.getOutputStream().close();
-	// // } catch (IOException e4) {
-	// // addExceptionBeta(e4);
-	// // }
-	// }
 	
-
 	@Override
 	public String getDiagnosisFileName() {
 		return "Message_manager.log";
@@ -705,7 +476,7 @@ public class MessageManager implements IDiagnosisProvider {
 	@Override
 	public String getDiagnosisContent() {
 		char ln = Character.LINE_SEPARATOR;
-		StringBuffer content = new StringBuffer();
+		StringBuilder content = new StringBuilder();
 		
 		//Copy the array to avoir concurrent modification exception
 		for(Message message : messages){

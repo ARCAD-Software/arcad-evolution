@@ -1,6 +1,6 @@
 package com.arcadsoftware.ae.core.logger.messages.impl;
 
-import org.dom4j.Element;
+import org.w3c.dom.Element;
 
 import com.arcadsoftware.ae.core.logger.messages.IMessageXmlPartProvider;
 
@@ -24,7 +24,7 @@ implements IMessageXmlPartProvider{
 	}
 
 	public void setXMLHeaderPart(Element root) {
-		root.addAttribute("status",String.valueOf(status));		
+		root.setAttribute("status",String.valueOf(status));		
 	}
 
 	public void setXMLPart(Element root) {

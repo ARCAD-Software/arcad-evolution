@@ -1,6 +1,6 @@
 package com.arcadsoftware.ae.core.logger.messages;
 
-import org.dom4j.Element;
+import org.w3c.dom.Element;
 
 public interface IMessageXmlPartProvider {
 	

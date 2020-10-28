@@ -10,8 +10,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.UUID;
 
-
-
 import com.arcadsoftware.ae.core.exceptions.ArcadException;
 import com.arcadsoftware.ae.core.translation.Translator;
 import com.arcadsoftware.ae.core.utils.Utils;

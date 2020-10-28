@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="com.arcadsoftware.aev.rap.features"
-      label="ARCAD-Evolution RAP"
+      id="com.arcadsoftware.aev.spring.features"
+      label="ARCAD-Evolution Spring"
       version="10.1.0.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
-      Contains the ARCAD Evolution RAP bundle and its dependencies.
+      Contains the ARCAD Evolution Services bundles and its dependencies.
    </description>
 
    <copyright url="http://www.arcadsoftware.com">
@@ -21,16 +21,8 @@
       Please refer to the global ARCAD products licence for details.
    </license>
 
-   <includes
-         id="com.arcadsoftware.aev.core.ui.features"
-         version="0.0.0"/>
-
-   <includes
-         id="com.arcadsoftware.rap.feature"
-         version="0.0.0"/>
-
    <plugin
-         id="com.arcadsoftware.aev.core.ui.rap"
+         id="com.arcadsoftware.aev.core.spring"
          download-size="0"
          install-size="0"
          version="0.0.0"

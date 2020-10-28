@@ -1,19 +1,22 @@
 package com.arcadsoftware.ae.core.logger.formatter.impl;
 
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.dom4j.Attribute;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.arcadsoftware.ae.core.logger.formatter.AbstractMessageFormatter;
 import com.arcadsoftware.ae.core.logger.messages.AbstractMessage;
 import com.arcadsoftware.ae.core.logger.messages.IMessageXmlPartProvider;
 import com.arcadsoftware.ae.core.logger.messages.MessageData;
 import com.arcadsoftware.ae.core.logger.messages.Messages;
+import com.arcadsoftware.ae.core.utils.XMLUtils;
 
 public class XmlMessageFormatter extends AbstractMessageFormatter {
 	
@@ -34,19 +37,19 @@ public class XmlMessageFormatter extends AbstractMessageFormatter {
 	private Document document;
 	
 	
-	private Element createRoot() { 
-		document = DocumentHelper.createDocument();
-		document.addDocType(ROOTNAME,null,null);
-		document.setXMLEncoding("ISO-8859-1");
-		Element root = document.addElement(ROOTNAME);
+	private Element createRoot() throws ParserConfigurationException { 
+		document = XMLUtils.createNewXMLDocument();
+		final Element root = document.createElement(ROOTNAME);
+		document.appendChild(root);
 		return root;	
 	} 		
 		
-	private Element createMessageRoot(AbstractMessage message,Element root) { 		
-		Element msgElement = root.addElement(MSG_ROOTNAME);
-		msgElement.addAttribute(ATTR_SERVICE,message.getServiceName());		
-		msgElement.addAttribute(ATTR_TYPE,message.getMessageType());	
-		msgElement.addAttribute(ATTR_DATE,df.format(new Date()));		
+	private Element createMessageRoot(AbstractMessage message,Element root) {
+		final Element msgElement = document.createElement(MSG_ROOTNAME);
+		root.appendChild(msgElement);
+		msgElement.setAttribute(ATTR_SERVICE,message.getServiceName());		
+		msgElement.setAttribute(ATTR_TYPE,message.getMessageType());	
+		msgElement.setAttribute(ATTR_DATE,df.format(new Date()));		
 		if (message instanceof IMessageXmlPartProvider) {
 			((IMessageXmlPartProvider)message).setXMLHeaderPart(msgElement);
 		}		
@@ -56,18 +59,21 @@ public class XmlMessageFormatter extends AbstractMessageFormatter {
 	private void createMessage(AbstractMessage message,Element root) {
 		Element messageRoot = createMessageRoot(message,root);
 		if (!message.getMessageText().equals("")){
-			Element e = messageRoot.addElement(ITEM_TEXT);
-			e.setText(message.getMessageText());
+			final Element textElement = document.createElement(ITEM_TEXT);
+			messageRoot.appendChild(textElement);
+			textElement.setTextContent(message.getMessageText());
 		}
 		int count = message.getMessageCount();
-		if (count>0) {
-			Element dataset = messageRoot.addElement(ITEM_DATASET);
-			dataset.addAttribute(ATTR_COUNT,String.valueOf(count));
+		if (count > 0) {
+			final Element dataset = document.createElement(ITEM_DATASET);
+			messageRoot.appendChild(dataset);
+			dataset.setAttribute(ATTR_COUNT,String.valueOf(count));
 			for (int i=0;i<count;i++) {
 				MessageData msg = message.messageDataAt(i);
-				Element data = dataset.addElement(ITEM_DATA);
-				data.addAttribute(ATTR_KEY,msg.getKey());
-				data.addAttribute(ATTR_VALUE,msg.getData());			
+				final Element data = document.createElement(ITEM_DATA);
+				dataset.appendChild(data);
+				data.setAttribute(ATTR_KEY,msg.getKey());
+				data.setAttribute(ATTR_VALUE,msg.getData());			
 			}		
 		}
 		if (message instanceof IMessageXmlPartProvider) {
@@ -81,35 +87,41 @@ public class XmlMessageFormatter extends AbstractMessageFormatter {
 			
 	public String format(Messages messages) {
 		int count = messages.messageCount();
-		Element root = createRoot();
-		for (int i=0;i<count;i++){
-			AbstractMessage msg = messages.messageAt(i);
-			format(msg,root);
-		}
-		String data = document.asXML(); 
-		document.clearContent();
-		return data;
+		try {
+			final Element root = createRoot();
+			for (int i=0;i<count;i++){
+				AbstractMessage msg = messages.messageAt(i);
+				format(msg,root);
+			}
 		
+			String data = XMLUtils.outputXMLDocumentToString(document, StandardCharsets.UTF_8.name()); 
+			document = XMLUtils.createNewXMLDocument();
+			return data;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}		
 	}	
 
-	public static boolean isStatusOk(String message,String type) {
+	public static boolean isStatusOk(String message, String type) {
 		try {   		    		    		
-			Document doc = DocumentHelper.parseText(message);
-			Element root = doc.getRootElement();
-			
-			Element msgNode = root.element(MSG_ROOTNAME);
-			if (msgNode!=null) {
-				Attribute attr = msgNode.attribute(ATTR_TYPE);
-				if (attr!=null) {
-					if (attr.getValue().equals(type)) {
-						Attribute attrValue = msgNode.attribute("status");
-						if (attrValue!=null) {
-							return attrValue.getValue().equals(String.valueOf(true));
+			final Document doc = XMLUtils.loadXMLFromString(message);
+			final NodeList msgNodes = doc.getElementsByTagName(MSG_ROOTNAME);
+			if(msgNodes != null && msgNodes.getLength() > 0) {
+				final Node node = msgNodes.item(0);
+				if (node instanceof Element) {
+					final Element msgNode = (Element) node;
+					String attr = msgNode.getAttribute(ATTR_TYPE);
+					if (attr != null && attr.equals(type)) {
+						String attrValue = msgNode.getAttribute("status");
+						if (attrValue != null) {
+							return attrValue.equals(String.valueOf(true));
 						}
-					}
-				}				
+					}				
+				}
 			}
-		} catch (DocumentException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}			
 		return false;

@@ -1,17 +1,17 @@
 package com.arcadsoftware.ae.core.settings;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
-import org.dom4j.Attribute;
-import org.dom4j.Element;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.arcadsoftware.ae.core.utils.IXMLContentParser;
 
 public class SettingParser implements IXMLContentParser {
 	
-	
-	Setting setting;
+	private Setting setting;
 	
 	public SettingParser(){
 		setting = new Setting();
@@ -19,22 +19,6 @@ public class SettingParser implements IXMLContentParser {
 	
 	public String getRootName() {
 		return "configuration";
-	}
-
-	/**
-	 * Returns the value of the attribute defined by <code>attributeName</code>.<br>
-	 * If the attribute doesn't exist, returns an empty string
-	 * @param node the parent node
-	 * @param attributeName The attribute Name
-	 * @return the content of the attribute or an empty string
-	 */
-	protected String getAttributeValue(Element node,String attributeName) {
-    	Attribute attribute = 
-    		node.attribute(attributeName);
-    	if (attribute!=null) {
-    		return attribute.getStringValue();
-    	}
-    	return ""; //$NON-NLS-1$
 	}
 	
 	public boolean parse(Element node) {
@@ -52,30 +36,34 @@ public class SettingParser implements IXMLContentParser {
 		section.setId(sectionId);
 		section.setLabel(label);
 		section.setHelp(help);		
-		ArrayList<ConsoleField> fields = new ArrayList<ConsoleField>();
-        for ( Iterator<?> i = node.elementIterator(); i.hasNext(); ) {
-        	Element prop = (Element) i.next();
+		final List<ConsoleField> fields = new ArrayList<>();
+		final NodeList nodes = node.getChildNodes();
+        for ( int i = 0; i < nodes.getLength(); i++ ) {
+        	final Node child = nodes.item(i);
         	ConsoleField field = null;
-    		String id = getAttributeValue(prop, "id");		
-    		String pLabel = getAttributeValue(prop, "label");
-    		String pHelp = getAttributeValue(prop, "help");
-    		String pDefault = getAttributeValue(prop, "default");    		
+    		String id = getAttributeValue(child, "id");		
+    		String pLabel = getAttributeValue(child, "label");
+    		String pHelp = getAttributeValue(child, "help");
+    		String pDefault = getAttributeValue(child, "default");    		
     		
-        	if (prop.getName().equalsIgnoreCase("property")) {
+    		final String nodeName = child.getNodeName();
+        	if (nodeName.equalsIgnoreCase("property")) {
 	    		field = new ConsoleProperty();
 	    		ConsoleProperty cp = (ConsoleProperty)field;
-	    		String data= prop.getText(); 
+	    		String data= child.getTextContent(); 
 	    		cp.setId(id);
 	    		cp.setDefaultvalue(pDefault);
 	    		cp.setValue(data);
-	            for ( Iterator<?> j = prop.elementIterator("item"); j.hasNext(); ) {
-	            	Element item = (Element) j.next();
-	            	String itemValue = item.getText();
-	            	cp.getList().add(itemValue);
-	            }
-        	} else if (prop.getName().equalsIgnoreCase("text")) {
+	    		final NodeList items = child.getChildNodes();
+	            for ( int j = 0; j < items.getLength(); i++ ) {
+	            	final Node item = items.item(j);
+	            	if(item.getNodeName().equalsIgnoreCase("item")) {
+	            		cp.getList().add(item.getTextContent());	
+	            	}
+	            }	            
+        	} else if (nodeName.equalsIgnoreCase("text")) {
         		field = new ConsoleText();
-        	} else if (prop.getName().equalsIgnoreCase("set")) {
+        	} else if (nodeName.equalsIgnoreCase("set")) {
         		field = new ConsoleSet();        		
         	}
         	if (field!=null){

@@ -22,6 +22,7 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.logger,
  com.arcadsoftware.ae.core.translation,
  com.arcadsoftware.ae.core.utils,
+ com.arcadsoftware.aev.core.spring.factory,
  org.hsqldb,
  org.hsqldb.jdbc,
  org.xmlpull.v1

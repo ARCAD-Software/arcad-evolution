@@ -15,46 +15,11 @@
 
    <license url="http://www.arcadsoftware.com">
       General ARCAD-Software Commercial License
-      (c) 2019, ARCAD Software, all rights reserved.
+      (c) 2020, ARCAD Software, all rights reserved.
       The software and documentation cannot be used without explicit
       authorization of ARCAD-Software.
       Please refer to the global ARCAD products licence for details.
    </license>
-
-   <plugin
-         id="org.apache.servicemix.bundles.dom4j"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.spring-beans"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.spring-context"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.spring-core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.spring-expression"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="com.arcadsoftware.aev.core.services"

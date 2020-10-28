@@ -1,36 +1,35 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers;
 
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_PROP_DIR;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_SETTING_FILENAME;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_TAG_HEADER;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_TAG_ROOT;
+
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.io.XMLWriter;
-import org.dom4j.io.XPP3Reader;
-import org.xmlpull.v1.XmlPullParserException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-
-//import com.arcadsoftware.ae.core.logger.MessageLogger;
+import com.arcadsoftware.ae.core.utils.XMLUtils;
 import com.arcadsoftware.mmk.anttasks.AntFactory;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.IRollbackableTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.settings.RollbackSettings;
-
-import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.*;
 
 public abstract class AbstractRollbackableHelper {
 	protected String dataDirectory = null;
 	protected Document document;	
 	private String rollbackDir = "";
 	private String rollbackId = "";	
-	
+	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmssSSSS");
 	private String rollbackIdProperty = null;
 		
 	
@@ -48,28 +47,28 @@ public abstract class AbstractRollbackableHelper {
 	}
 		
 
-	private synchronized String computeId(){
-		SimpleDateFormat fd = new SimpleDateFormat("yyyyMMddhhmmssSSS");
-		try {
-			Thread.sleep(2);
-		} catch (InterruptedException e) {}		
-		return fd.format(new Date());		
+	private String computeId(){				
+		return UUID.randomUUID().toString();		
 	}		
 	
 	public Element createRoot(){
-		document = DocumentHelper.createDocument();
-		document.addDocType(RB_TAG_ROOT.getValue(),null,null);
-
-		Element root = document.addElement(RB_TAG_ROOT.getValue());
-		return root;
-		
+		try {
+			document = XMLUtils.createNewXMLDocument();
+			final Element root = document.createElement(RB_TAG_ROOT.getValue());
+			document.appendChild(root);
+			return root;
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			return null;
+		}			
 	}	
 	
-	public Element createHeader(Element root){		
-		Element header = root.addElement(RB_TAG_HEADER.getValue());
-		header.addAttribute("date",new SimpleDateFormat("yyyyMMdd-HHmmssSSSS").format(new Date()));
-		header.addAttribute("user",System.getProperty("user.name"));		
-		header.addAttribute("rollback.dir",getBackupRoot());
+	public Element createHeader(Element root){
+		final Element header = document.createElement(RB_TAG_HEADER.getValue());
+		root.appendChild(header);
+		header.setAttribute("date",dateFormat.format(new Date()));
+		header.setAttribute("user",System.getProperty("user.name"));		
+		header.setAttribute("rollback.dir",getBackupRoot());
 		return header;
 	}
 	
@@ -106,21 +105,15 @@ public abstract class AbstractRollbackableHelper {
 		return rollbackDir+File.separator+getTransactionId();
 	}
 	
-	public boolean writeDocument() {	
-		File f = new File(getBackupRoot());
-		if (!f.exists())
-			f.mkdirs();
-		String fileName = getBackupRoot()+File.separator+RB_SETTING_FILENAME.getValue();
-        // lets write to a file
-        XMLWriter writer;
+	public boolean writeDocument() {
 		try {
-			writer = 
-				new XMLWriter(new FileWriter( fileName));
-	        writer.write( document );
-	        writer.close();	
+			File f = new File(getBackupRoot(), RB_SETTING_FILENAME.getValue());
+			f.getParentFile().mkdirs();
+			XMLUtils.writeXMLDocumentToFile(document, f, StandardCharsets.UTF_8.name());	
 	        return true;
-		} catch (IOException e) {
-			if (task!=null) {
+		}
+		catch (Exception e) {
+			if (task != null) {
 				task.getTask().getProject().log(e.getLocalizedMessage(),e,Project.MSG_ERR);
 			}
 			return false;
@@ -160,28 +153,17 @@ public abstract class AbstractRollbackableHelper {
 	
 	//<FM number="2010/00474" version="01.00.00" date="Nov 25, 2011 user="FPO">
 	public boolean updateRollbackFile(){
-		String fileName = getBackupRoot()+File.separator+RB_SETTING_FILENAME.getValue();
-		File in = new File(fileName);
-		XPP3Reader reader;
+		File in = new File( getBackupRoot(), RB_SETTING_FILENAME.getValue());
 		try {
-			reader = 
-				new XPP3Reader();
-			document = reader.read(in);
-		} catch (DocumentException e) {
-			if (task!=null) {
-				task.getTask().getProject().log(e.getLocalizedMessage(),e,Project.MSG_ERR);
-			}
-		} catch (XmlPullParserException e) {
-			if (task!=null) {
-				task.getTask().getProject().log(e.getLocalizedMessage(),e,Project.MSG_ERR);
-			}
-		} catch (IOException e) {
+			document = XMLUtils.loadXMLFromFile(in);		
+		}
+		catch (Exception e) {
 			if (task!=null) {
 				task.getTask().getProject().log(e.getLocalizedMessage(),e,Project.MSG_ERR);
 			}
 
 		}
-		Element root = document.getRootElement();
+		final Element root = XMLUtils.getRoot(document);
 		createRollbackData(root);
 		return writeDocument();		
 	}

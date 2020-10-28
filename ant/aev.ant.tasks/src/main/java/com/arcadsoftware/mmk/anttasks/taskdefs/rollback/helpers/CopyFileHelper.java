@@ -3,12 +3,13 @@ package com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.util.FileUtils;
-import org.dom4j.Element;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
+import com.arcadsoftware.ae.core.utils.XMLUtils;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.IRollbackableTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask;
 
@@ -136,32 +137,33 @@ public class CopyFileHelper extends AbstractRollbackableTaskHelper {
 		Element action = super.createRollbackData(e);
 		//Traitement des fichiers modifiés
 		for (int i=0;i<updatedfiles.size();i++) {
-			Element copyAction = action.addElement("backup");
-			copyAction.addAttribute("src",updatedfiles.get(i));
+			final Element copyAction = XMLUtils.addElement(document, action, "backup");
+			copyAction.setAttribute("src",updatedfiles.get(i));
 			String path = 
 				FileUtils.getFileUtils().removeLeadingPath(					  
 				  	   new File(getBackupRoot()),
 				  	   new File(dataDirectory));
-			copyAction.addAttribute("datadir",path);			
-			copyAction.addAttribute("status",UPDATED);			
+			copyAction.setAttribute("datadir",path);			
+			copyAction.setAttribute("status",UPDATED);			
 		}			
 		//Traitement des fichiers ajoutés	
 		for (int i=0;i<createdfiles.size();i++) {
-			Element copyAction = action.addElement("backup");
-			copyAction.addAttribute("src",createdfiles.get(i));
-			copyAction.addAttribute("datadir","");			
-			copyAction.addAttribute("status",CREATED);			
+			Element copyAction = XMLUtils.addElement(document, action, "backup");
+			copyAction.setAttribute("src",createdfiles.get(i));
+			copyAction.setAttribute("datadir","");			
+			copyAction.setAttribute("status",CREATED);			
 		}			
 		return action;
 	}		
 
 	public boolean rollback(ArcadRollbackTask rollbackTask,Element e) {
-        for ( Iterator i = e.elementIterator("backup"); i.hasNext(); ) {
-            Element backupAction = (Element) i.next();
-            String fileName = backupAction.attributeValue("src");
-            String status = backupAction.attributeValue("status");
-            String datadir = backupAction.attributeValue("datadir");            
-            if (fileName!=null) {            	
+		final NodeList backupActions = e.getElementsByTagName("backup");
+        for ( int i = 0; i < backupActions.getLength(); i++ ) {
+            final Element backupAction = (Element) backupActions.item(i);
+            final String fileName = backupAction.getAttribute("src");
+            final String status = backupAction.getAttribute("status");
+            final String datadir = backupAction.getAttribute("datadir");            
+            if (fileName != null) {            	
 	            restoreFile(datadir,fileName,status);
             }
             	

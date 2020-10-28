@@ -35,13 +35,11 @@ public abstract class AbstractXmlFileListTask extends AbstractListTask {
 	 * @see com.arcadsoftware.mmk.anttasks.taskdefs.AbstractArcadAntTask#doExecute()
 	 */
 	@Override
-	public void doExecute() throws BuildException {
+	public void doExecute() {
   
 		list = (AbstractXmlList)AntFactory.getInstance().getBean(listType);
     	list.setXmlFileName(getFilename());	
-    	//list.getCashManager().setFlushImmediat(false);
     	processExecution();
-    	//list.getCashManager().flush();
 	}
 
 	public void updateHeaderInfo(String description,String comment){
@@ -59,7 +57,7 @@ public abstract class AbstractXmlFileListTask extends AbstractListTask {
 	
 	
 	
-	public abstract void processExecution() throws BuildException;
+	public abstract void processExecution() ;
 
 	/**
 	 * Renvoit 

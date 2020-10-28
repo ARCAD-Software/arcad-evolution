@@ -2,6 +2,5 @@
 .*
 !.gitignore
 !.mvn
-**/.*
 **/target
 **/bin

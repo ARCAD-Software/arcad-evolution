@@ -3,12 +3,13 @@ package com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.util.FileUtils;
-import org.dom4j.Element;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
+import com.arcadsoftware.ae.core.utils.XMLUtils;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.IRollbackableTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask;
 
@@ -76,14 +77,14 @@ public class DeleteFileHelper extends AbstractRollbackableTaskHelper {
 	}		
 	
 	private void insertDeleteElement(Element action,String fileName,String type) {		
-		Element deleteAction = action.addElement("backup");
-		deleteAction.addAttribute("src",fileName);
+		Element deleteAction = XMLUtils.addElement(document, action, "backup");
+		deleteAction.setAttribute("src",fileName);
 		String path = 
 			FileUtils.getFileUtils().removeLeadingPath(					  
 			  	   new File(getBackupRoot()),
 			  	   new File(dataDirectory));
-		deleteAction.addAttribute("datadir",path);						
-		deleteAction.addAttribute("type",type);			
+		deleteAction.setAttribute("datadir",path);						
+		deleteAction.setAttribute("type",type);			
 	}
 	
 	
@@ -102,11 +103,12 @@ public class DeleteFileHelper extends AbstractRollbackableTaskHelper {
 	}		
 	
 	public boolean rollback(ArcadRollbackTask rollbackTask,Element e) {
-        for ( Iterator i = e.elementIterator("backup"); i.hasNext(); ) {
-            Element backupAction = (Element) i.next();
-            String fileName = backupAction.attributeValue("src");
-            String datadir = backupAction.attributeValue("datadir");
-            String type = backupAction.attributeValue("type");                        
+		final NodeList backupActions = e.getElementsByTagName("backup");
+        for ( int i = 0; i < backupActions.getLength(); i++ ) {
+            final Element backupAction = (Element) backupActions.item(i);
+            final String fileName = backupAction.getAttribute("src");
+            final String datadir = backupAction.getAttribute("datadir");
+            final String type = backupAction.getAttribute("type");                        
             if (fileName!=null) {            	
 	            restore(datadir,fileName,type);
             } else {

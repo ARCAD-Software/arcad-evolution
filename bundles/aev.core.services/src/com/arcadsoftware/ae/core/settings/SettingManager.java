@@ -1,28 +1,17 @@
 package com.arcadsoftware.ae.core.settings;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import org.dom4j.DocumentException;
 
 import com.arcadsoftware.ae.core.utils.XMLUtils;
 
 public class SettingManager {
 
-
-	
 	public static Setting loadSettings(String xmlFilename) {
 		SettingParser parser = new SettingParser();
 		try {
 			XMLUtils.loadXmlDocument(xmlFilename,  parser);
 			return parser.getSetting();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (DocumentException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -35,15 +24,7 @@ public class SettingManager {
 			Method method = beanClass.getMethod("set"+setterName, String.class); //$NON-NLS-1$
 			method.invoke(bean, value);
 			return true;
-		} catch (SecurityException e) {
-			return false;
-		} catch (NoSuchMethodException e) {
-			return false;
-		} catch (IllegalArgumentException e) {
-			return false;
-		} catch (IllegalAccessException e) {
-			return false;
-		} catch (InvocationTargetException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}	
@@ -55,15 +36,7 @@ public class SettingManager {
 			Method method = beanClass.getMethod("set"+setterName, Boolean.class); //$NON-NLS-1$
 			method.invoke(bean, value);
 			return true;
-		} catch (SecurityException e) {
-			return false;
-		} catch (NoSuchMethodException e) {
-			return false;
-		} catch (IllegalArgumentException e) {
-			return false;
-		} catch (IllegalAccessException e) {
-			return false;
-		} catch (InvocationTargetException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}		

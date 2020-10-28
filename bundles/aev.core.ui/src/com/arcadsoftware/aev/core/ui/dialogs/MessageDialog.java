@@ -6,7 +6,6 @@
  */
 package com.arcadsoftware.aev.core.ui.dialogs;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -33,7 +32,6 @@ import com.arcadsoftware.aev.core.ui.treeviewers.MessagesTreeViewer;
  */
 public class MessageDialog extends ArcadDialog implements IMessagesListener {
 
-	// public static Message begin(Plugin plugin, String blockContext) {
 	/**
 	 * Débute un block d'enregistrement de messges pour la dialog.
 	 * 
@@ -55,7 +53,7 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 		if (showParameter == 0)
 			showParameter = MessageManager.SHOW_ALL;
 
-		ArrayList<Message> list = MessageManager.endMessageBlock(showParameter);
+		List<Message> list = MessageManager.endMessageBlock(showParameter);
 		if (list != null) {
 			MessageDialog dialog = new MessageDialog(shell, list, showParameter);
 			MessageManager.addListener(dialog);
@@ -112,18 +110,16 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 		// messages affichés.
 		String text = CoreUILabels.resString("MessageDialog.Messages"); //$NON-NLS-1$
 		switch (EvolutionCoreUIPlugin.getDefault().getMessagesLevel()) {
-		case MessageManager.LEVEL_DEVELOPMENT: {
-			text += CoreUILabels.resString("MessageDialog.Level.Development"); //$NON-NLS-1$
-			break;
-		}
-		case MessageManager.LEVEL_BETATESTING: {
-			text += CoreUILabels.resString("MessageDialog.Level.BetaTest"); //$NON-NLS-1$
-			break;
-		}
-		case MessageManager.LEVEL_PRODUCTION: {
-			text += CoreUILabels.resString("MessageDialog.Level.Production"); //$NON-NLS-1$
-			break;
-		}
+			case MessageManager.LEVEL_DEVELOPMENT: 
+				text += CoreUILabels.resString("MessageDialog.Level.Development"); //$NON-NLS-1$
+				break;
+					
+			case MessageManager.LEVEL_PRODUCTION: 
+				text += CoreUILabels.resString("MessageDialog.Level.Production"); //$NON-NLS-1$
+				break;
+			
+			default:
+				text += CoreUILabels.resString("MessageDialog.Level.BetaTest"); //$NON-NLS-1$
 		}
 		newShell.setText(text);
 	}

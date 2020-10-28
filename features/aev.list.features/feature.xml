@@ -15,15 +15,11 @@
 
    <license url="http://www.arcadsoftware.com">
       General ARCAD-Software Commercial License
-      (c) 2019, ARCAD Software, all rights reserved.
+      (c) 2020, ARCAD Software, all rights reserved.
       The software and documentation cannot be used without explicit
       authorization of ARCAD-Software.
       Please refer to the global ARCAD products licence for details.
    </license>
-
-   <includes
-         id="com.arcadsoftware.aev.services.features"
-         version="0.0.0"/>
 
    <plugin
          id="com.arcadsoftware.aev.list.manager"

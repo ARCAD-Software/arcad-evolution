@@ -15,8 +15,6 @@ import com.arcadsoftware.mmk.lists.metadata.ListMetaDatas;
 import com.arcadsoftware.mmk.lists.metadata.StoreItem;
 
 
-
-
 public abstract class AbstractList  extends AbstractLoggedObject
 implements IContentAction{
 	

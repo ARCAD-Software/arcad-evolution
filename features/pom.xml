@@ -10,6 +10,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>aev.spring.features</module>
 		<module>aev.services.features</module>
 		<module>aev.list.features</module>
 		<module>aev.core.features</module>

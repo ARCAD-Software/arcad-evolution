@@ -15,7 +15,7 @@
 
    <license url="http://www.arcadsoftware.com">
       General ARCAD-Software Commercial License
-      (c) 2019, ARCAD Software, all rights reserved.
+      (c) 2020, ARCAD Software, all rights reserved.
       The software and documentation cannot be used without explicit
       authorization of ARCAD-Software.
       Please refer to the global ARCAD products licence for details.
@@ -35,13 +35,6 @@
 
    <plugin
          id="org.apache.commons.lang3"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.servicemix.bundles.dom4j"
          download-size="0"
          install-size="0"
          version="0.0.0"

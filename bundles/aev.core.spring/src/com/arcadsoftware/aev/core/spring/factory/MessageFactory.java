@@ -1,8 +1,7 @@
-package com.arcadsoftware.ae.core.logger;
+package com.arcadsoftware.aev.core.spring.factory;
 
 import java.io.File;
-
-import com.arcadsoftware.ae.core.utils.AbstractFactory;
+import com.arcadsoftware.ae.core.logger.MessageLogger;
 
 public class MessageFactory extends AbstractFactory {
 	private static MessageFactory instance = new MessageFactory();

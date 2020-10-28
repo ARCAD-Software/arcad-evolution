@@ -1,25 +1,29 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl;
 
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_ACTIONCODE_COPY;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_ACTIONCODE_DELETE;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_PROP_DIR;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_PROP_ID;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_SETTING_FILENAME;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_TAG_ACTION;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_TAG_CODE;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.util.FileUtils;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-
+import com.arcadsoftware.ae.core.utils.XMLUtils;
 import com.arcadsoftware.mmk.anttasks.taskdefs.AbstractArcadAntTask;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.CopyFileHelper;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.DeleteFileHelper;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.settings.RollbackSettings;
-
-import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.*;
 
 public class ArcadRollbackTask extends AbstractArcadAntTask {
 	
@@ -101,23 +105,22 @@ public class ArcadRollbackTask extends AbstractArcadAntTask {
 	
 	
 	private boolean loadDocument(){
-		String fileName = getSettingFileName();
-		File f = new File(fileName);
-	    SAXReader xmlReader = new SAXReader();
+		File f = new File(getSettingFileName());	    
 	    try {
-			document = xmlReader.read(f);
+			document = XMLUtils.loadXMLFromFile(f);
 			return true;
-		} catch (DocumentException e) {
+		} catch (Exception e) {
 			throw new BuildException(e.getMessage(),e,getLocation());
 		}
 	}
 	
 	private boolean restoreAction() {			
-		Element root = document.getRootElement();
+		Element root = XMLUtils.getRoot(document);
         // iterate through child elements of root with element name "foo"
-        for ( Iterator i = root.elementIterator( RB_TAG_ACTION.getValue() ); i.hasNext(); ) {        	
-            Element action = (Element) i.next();
-            String code = action.attributeValue(RB_TAG_CODE.getValue());
+		final NodeList nodes = root.getElementsByTagName(RB_TAG_ACTION.getValue());
+        for ( int i = 0; i < nodes.getLength(); i++ ) {        	
+            Element action = (Element) nodes.item(i);
+            String code = action.getAttribute(RB_TAG_CODE.getValue());
             if (code.equals(RB_ACTIONCODE_COPY.getValue())) {
             	restoreCopy(action);
             } else if (code.equals(RB_ACTIONCODE_DELETE.getValue())) {

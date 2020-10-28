@@ -1,12 +1,15 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers;
 
-import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.*;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_TAG_ACTION;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_TAG_CODE;
+import static com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants.RB_TAG_VERSION;
 
 import java.io.File;
 
 import org.apache.tools.ant.BuildException;
-import org.dom4j.Element;
+import org.w3c.dom.Element;
 
+import com.arcadsoftware.ae.core.utils.XMLUtils;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.IRollbackableTask;
 
 public abstract class AbstractRollbackableTaskHelper 
@@ -57,9 +60,9 @@ extends AbstractRollbackableHelper {
 		
 	@Override
 	public Element createRollbackData(Element e) {		
-		Element action = e.addElement(RB_TAG_ACTION.getValue());
-		action.addAttribute(RB_TAG_CODE.getValue(),task.getActionCode());		
-		action.addAttribute(RB_TAG_VERSION.getValue(),task.getVersion());		
+		final Element action = XMLUtils.addElement(document, e, RB_TAG_ACTION.getValue());
+		action.setAttribute(RB_TAG_CODE.getValue(),task.getActionCode());		
+		action.setAttribute(RB_TAG_VERSION.getValue(),task.getVersion());		
 		return action;
 	}		
 	
