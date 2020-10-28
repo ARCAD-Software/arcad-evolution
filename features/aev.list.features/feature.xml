@@ -22,7 +22,7 @@
    </license>
 
    <includes
-         id="com.arcadsoftware.aev.spring.features"
+         id="com.arcadsoftware.aev.services.features"
          version="0.0.0"/>
 
    <plugin
