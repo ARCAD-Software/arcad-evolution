@@ -91,6 +91,10 @@ public class XMLTools {
 				.collect(Collectors.toList()); //
 	}
 
+	public static Element getElement(final Node node, final String elementName) {
+		return getElements(node, elementName).stream().findFirst().orElse(null);
+	}
+	
 	public static List<Element> getElements(final Node node, final String elementName) {
 		return getNodes(node, elementName, Element.class);
 	}
