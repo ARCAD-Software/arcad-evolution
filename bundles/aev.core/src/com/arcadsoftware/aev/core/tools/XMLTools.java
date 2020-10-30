@@ -37,6 +37,12 @@ import com.arcadsoftware.aev.core.messages.MessageManager;
  */
 public class XMLTools {
 
+	public static Element addElement(final Node node, final String tagName){
+		final Element element = node.getOwnerDocument().createElement(tagName);
+		node.appendChild(element);
+		return element;
+	}
+	
 	public static Document createNewXMLDocument() throws ParserConfigurationException {
 		return getDocumentBuilderFactory().newDocumentBuilder().newDocument();
 	}
