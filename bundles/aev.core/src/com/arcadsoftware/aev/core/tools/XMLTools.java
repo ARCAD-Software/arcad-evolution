@@ -159,7 +159,7 @@ public class XMLTools {
 		return loadXMLFromReader(new StringReader(resolveSpecialEntities(xml)));
 	}
 
-	public static String outputXMLDocumentToString(final Document document, final String encoding) {
+	public static String outputXMLDocumentToString(final Node document, final String encoding) {
 		try (StringWriter stringWriter = new StringWriter()) {
 			final DOMSource source = new DOMSource(document);
 			final StreamResult output = new StreamResult(stringWriter);
