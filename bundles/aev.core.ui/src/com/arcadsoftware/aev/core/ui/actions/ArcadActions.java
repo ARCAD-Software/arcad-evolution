@@ -1,12 +1,7 @@
-/*
- * Créé le 25 mai 04
- *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
- */
 package com.arcadsoftware.aev.core.ui.actions;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -17,81 +12,59 @@ import com.arcadsoftware.aev.core.ui.container.ContainerProvider;
 
 /**
  * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
  */
 public abstract class ArcadActions {
 
-	@SuppressWarnings("rawtypes")
-	private ArrayList actions = new ArrayList();
+	private final ArrayList<ArcadAction> actions = new ArrayList<>();
 	private Container container;
 	private ContainerProvider containerProvider;
 
 	public ArcadActions() {
-	
+
 	}
-	
-	public ArcadActions(Container container) {
+
+	public ArcadActions(final Container container) {
 		this.container = container;
 	}
-	
-	public ArcadAction[] getActions() {
-		ArcadAction[] a = new ArcadAction[actions.size()];
-		for (int i = 0; i < actions.size(); i++) {
-			a[i] = (ArcadAction) actions.get(i);
-		}
-		return a;
-	}
 
-	public void mergeAction(ArcadActions actionToMerge) {
-		ArcadAction[] a = actionToMerge.getActions();
-		if (a.length > 0)
-			addSeparator();
-		for (int i = 0; i < a.length; i++) {
-			addAction(a[i]);
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public void addAction(ArcadAction a) {
+	public void addAction(final ArcadAction a) {
 		actions.add(a);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addSeparator() {
-		actions.add(new Separator());
+		actions.add(new ArcadSeparator());
 	}
 
-	public abstract void makeAction();
-
-	public void fillMenuAction(IMenuManager manager) {
-		for (int i = 0; i < actions.size(); i++) {
-			if (actions.get(i) instanceof ArcadAction){
-				ArcadAction a = (ArcadAction) actions.get(i);
-				if (match(a)) {
-					manager.add(a);
+	public void fillMenuAction(final IMenuManager manager) {
+		for (final ArcadAction action : actions) {
+			if (action.isNotSeparator()) {
+				if (match(action)) {
+					manager.add(action);
 				}
-			} else if (actions.get(i) instanceof Separator) {
-				manager.add((Separator) actions.get(i));
+			} else {
+				manager.add(new Separator());
 			}
 		}
 		manager.add(new Separator());
 	}
 
-	protected boolean match(ArcadAction a){
-		return true;
-	}
-	
-	public void fillToolbarAction(IToolBarManager manager) {
-		for (int i = 0; i < actions.size(); i++) {
-			if (actions.get(i) instanceof ArcadAction)
-				manager.add((ArcadAction) actions.get(i));
-			else if (actions.get(i) instanceof Separator)
-				manager.add((Separator) actions.get(i));
+	public void fillToolbarAction(final IToolBarManager manager) {
+		for (final ArcadAction action : actions) {
+			if (action.isNotSeparator()) {
+				manager.add(action);
+			} else {
+				manager.add(new Separator());
+			}
 		}
 		manager.add(new Separator());
+	}
+
+	public ArcadAction[] getActions() {
+		return actions //
+				.stream() //
+				.filter(ArcadAction::isNotSeparator) //
+				.collect(Collectors.toList()) //
+				.toArray(new ArcadAction[0]);
 	}
 
 	public Container getContainer() {
@@ -102,11 +75,27 @@ public abstract class ArcadActions {
 		return containerProvider;
 	}
 
-	public void setContainer(Container container) {
+	public abstract void makeAction();
+
+	protected boolean match(final ArcadAction a) {
+		return true;
+	}
+
+	public void mergeAction(final ArcadActions actionToMerge) {
+		final ArcadAction[] a = actionToMerge.getActions();
+		if (a.length > 0) {
+			addSeparator();
+		}
+		for (final ArcadAction element : a) {
+			addAction(element);
+		}
+	}
+
+	public void setContainer(final Container container) {
 		this.container = container;
 	}
 
-	public void setContainerProvider(ContainerProvider provider) {
+	public void setContainerProvider(final ContainerProvider provider) {
 		containerProvider = provider;
 	}
 }

@@ -335,5 +335,8 @@ public class ArcadAction extends Action {
 	public MonitorManager getMonitorManager() {
 		return monitorManager;
 	}
-
+	
+	public boolean isNotSeparator() {
+		return true;
+	}
 }
