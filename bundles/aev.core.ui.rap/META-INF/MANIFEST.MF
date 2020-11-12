@@ -4,7 +4,6 @@ Bundle-Name: ARCAD-Evolution Core UI RAP
 Automatic-Module-Name: com.arcadsoftware.aev.core.ui.rap
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui.rap
 Bundle-Version: 10.1.0.qualifier
-Bundle-Activator: com.arcadsoftware.aev.core.ui.rap.Activator
 Require-Bundle: com.arcadsoftware.aev.core.ui,
  com.arcadsoftware.aev.core,
  org.eclipse.rap.ui;bundle-version="3.1.0",
@@ -14,6 +13,8 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: ARCAD-Software
 Export-Package: com.arcadsoftware.aev.core.ui.common,
- com.arcadsoftware.aev.core.ui.rap,
  com.arcadsoftware.aev.core.ui.rap.dialogs,
  com.arcadsoftware.aev.core.ui.rap.tools
+Import-Package: org.osgi.service.component.annotations;resolution:=optional
+Service-Component: OSGI-INF/com.arcadsoftware.aev.core.ui.rap.dialogs.RAPDialogConstantFiller.xml,
+ OSGI-INF/com.arcadsoftware.aev.core.ui.rap.tools.FileManagerProvider.xml

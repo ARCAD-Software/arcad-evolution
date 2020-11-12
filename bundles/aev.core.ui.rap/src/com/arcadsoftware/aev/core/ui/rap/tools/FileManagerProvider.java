@@ -7,11 +7,12 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.service.component.annotations.Component;
 
 import com.arcadsoftware.aev.core.ui.tools.IFileManagerProvider;
 
-public class FileManagerProvider implements IFileManagerProvider {
-	
+@Component(service = IFileManagerProvider.class)
+public class FileManagerProvider implements IFileManagerProvider {	
 	public String selectDirectory(Shell shell, int actionStyle, String title) {
 		return null;
 	}

@@ -1,12 +1,14 @@
 package com.arcadsoftware.aev.core.ui.rap.dialogs;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.osgi.service.component.annotations.Component;
 
 import com.arcadsoftware.aev.core.ui.dialogs.DialogConstantProvider;
 import com.arcadsoftware.aev.core.ui.dialogs.IDialogConstantFiller;
 
+@Component( service = IDialogConstantFiller.class )
 public class RAPDialogConstantFiller implements IDialogConstantFiller {
-
+		
 	public void fill(DialogConstantProvider provider) {
 		provider.OK_LABEL = IDialogConstants.get().OK_LABEL;
 		provider.CANCEL_LABEL = IDialogConstants.get().CANCEL_LABEL;
