@@ -13,6 +13,8 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 
+import com.arcadsoftware.aev.core.osgi.ServiceNotFoundException;
+import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 import com.arcadsoftware.aev.core.tools.IHelperLabel;
 import com.arcadsoftware.aev.core.ui.model.ArcadUIPlugin;
 import com.arcadsoftware.aev.core.ui.model.IHelperImage;
@@ -303,14 +305,9 @@ public class EvolutionCoreUIPlugin extends ArcadUIPlugin implements IHelperImage
 	public void setMessagesLevel(int value) {
 		getPreferenceStore().setValue(PREF_MESSAGES_LEVEL, value);
 	}
-	
-	
 
 	public IFileManagerProvider getFileManagerProvider(){
-		return fileManagerProvider;
-	}
-	public void setFileManagerProvider(IFileManagerProvider fileManagerProvider){
-		this.fileManagerProvider = fileManagerProvider;
-	}		
-	
+		return ServiceRegistry	.lookup(IFileManagerProvider.class)
+								.orElseThrow(() -> new ServiceNotFoundException(IFileManagerProvider.class));
+	}	
 }

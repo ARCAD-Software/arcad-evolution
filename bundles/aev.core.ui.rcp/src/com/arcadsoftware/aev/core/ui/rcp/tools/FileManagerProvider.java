@@ -7,12 +7,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.jmimemagic.Magic;
-import net.sf.jmimemagic.MagicException;
-import net.sf.jmimemagic.MagicMatch;
-import net.sf.jmimemagic.MagicMatchNotFoundException;
-import net.sf.jmimemagic.MagicParseException;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.filesystem.EFS;
@@ -25,11 +19,19 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
+import org.osgi.service.component.annotations.Component;
 
 import com.arcadsoftware.aev.core.messages.MessageManager;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.tools.IFileManagerProvider;
 
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicException;
+import net.sf.jmimemagic.MagicMatch;
+import net.sf.jmimemagic.MagicMatchNotFoundException;
+import net.sf.jmimemagic.MagicParseException;
+
+@Component(service = IFileManagerProvider.class)
 public class FileManagerProvider implements IFileManagerProvider {
 
 	public static final String BIN_EXTENSION = "bin"; //$NON-NLS-1$	

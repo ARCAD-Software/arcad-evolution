@@ -1,6 +1,6 @@
 package com.arcadsoftware.aev.core.ui.dialogs;
 
-
+import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 
 public class DialogConstantProvider {
 	
@@ -25,24 +25,15 @@ public class DialogConstantProvider {
     public String FINISH_LABEL;
     public String HELP_LABEL; 
 	
-    private static IDialogConstantFiller filler = null; 
-    
 	private static DialogConstantProvider instance = new DialogConstantProvider();
 	
 	private DialogConstantProvider(){
-		
+		ServiceRegistry
+			.lookup(IDialogConstantFiller.class)
+			.ifPresent(f -> f.fill(this));
 	}
 	
-	public static DialogConstantProvider getInstance(){
-		if (filler!=null){
-			filler.fill(instance);
-		}
+	public static DialogConstantProvider getInstance(){		
 		return instance;
-	}
-
-	public static void setFiller( IDialogConstantFiller constantFiller){
-		filler =constantFiller; 
-	}
-
-	 
+	}	 
 }

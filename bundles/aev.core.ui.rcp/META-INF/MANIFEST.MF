@@ -4,7 +4,6 @@ Bundle-Name: ARCAD-Evolution Core UI RCP
 Automatic-Module-Name: com.arcadsoftware.aev.core.ui.rcp
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui.rcp
 Bundle-Version: 10.1.0.qualifier
-Bundle-Activator: com.arcadsoftware.aev.core.ui.rcp.AEVRCPPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  com.arcadsoftware.aev.core,
@@ -15,10 +14,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.io;bundle-version="[2.6.0,3.0.0)"
 Bundle-Vendor: ARCAD Software
 Export-Package: com.arcadsoftware.aev.core.ui.common,
- com.arcadsoftware.aev.core.ui.rcp,
  com.arcadsoftware.aev.core.ui.rcp.dialogs,
  com.arcadsoftware.aev.core.ui.rcp.tools
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: net.sf.jmimemagic
+Import-Package: net.sf.jmimemagic,
+ org.osgi.service.component.annotations;resolution:=optional
+Service-Component: OSGI-INF/com.arcadsoftware.aev.core.ui.rcp.tools.FileManagerProvider.xml,
+ OSGI-INF/com.arcadsoftware.aev.core.ui.rcp.dialogs.RCPDialogConstantFiller.xml
