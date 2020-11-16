@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
 		<artifactId>software-factory</artifactId>
-		<version>3.2.0</version>
+		<version>3.2.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev</artifactId>
@@ -16,6 +16,17 @@
 	</scm>
 	
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.sonatype.clm</groupId>
+					<artifactId>clm-maven-plugin</artifactId>
+					<configuration>
+						<applicationId>aev</applicationId>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
