@@ -16,17 +16,6 @@
 	</scm>
 	
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>com.sonatype.clm</groupId>
-					<artifactId>clm-maven-plugin</artifactId>
-					<configuration>
-						<applicationId>aev</applicationId>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -109,6 +98,20 @@
 				<artifactId>software-factory-maven-plugin</artifactId>
 				<configuration>						
 					<siteId>aev</siteId>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.sonatype.clm</groupId>
+				<artifactId>clm-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>evaluate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<applicationId>aev</applicationId>
 				</configuration>
 			</plugin>
 		</plugins>
