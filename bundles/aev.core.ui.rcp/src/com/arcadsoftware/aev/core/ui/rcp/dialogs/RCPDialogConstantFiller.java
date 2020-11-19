@@ -6,7 +6,7 @@ import org.osgi.service.component.annotations.Component;
 import com.arcadsoftware.aev.core.ui.dialogs.DialogConstantProvider;
 import com.arcadsoftware.aev.core.ui.dialogs.IDialogConstantFiller;
 
-@Component( service = IDialogConstantFiller.class )
+@Component( service = IDialogConstantFiller.class, immediate = true )
 public class RCPDialogConstantFiller implements IDialogConstantFiller {
 	public void fill(DialogConstantProvider provider) {
 		provider.OK_LABEL = IDialogConstants.OK_LABEL;

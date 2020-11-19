@@ -1,5 +1,6 @@
 package com.arcadsoftware.aev.core.ui.dialogs;
 
+import com.arcadsoftware.aev.core.osgi.ServiceNotFoundException;
 import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 
 public class DialogConstantProvider {
@@ -30,7 +31,8 @@ public class DialogConstantProvider {
 	private DialogConstantProvider(){
 		ServiceRegistry
 			.lookup(IDialogConstantFiller.class)
-			.ifPresent(f -> f.fill(this));
+			.orElseThrow(() -> new ServiceNotFoundException(IDialogConstantFiller.class))
+			.fill(this);			
 	}
 	
 	public static DialogConstantProvider getInstance(){		
