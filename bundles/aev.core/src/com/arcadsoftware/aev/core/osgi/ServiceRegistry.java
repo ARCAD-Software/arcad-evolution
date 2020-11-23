@@ -82,6 +82,14 @@ public final class ServiceRegistry {
 		return Optional.empty();
 	}
 
+	public static <T> T lookupOrDie(final Class<T> clazz){
+		return lookup(clazz).orElseThrow(() -> new ServiceNotFoundException(clazz)); 
+	}
+	
+	public static <T> T lookupOrDie(final Class<T> clazz, final String filter){
+		return lookup(clazz, filter).orElseThrow(() -> new ServiceNotFoundException(clazz)); 
+	}
+	
 	public static synchronized <T> void register(final Class<T> clazz, final T service) {
 		final Map<Class<?>, ServiceRegistration<?>> regs = getRegistrations();
 		final BundleContext context = getBundleContext();
@@ -95,7 +103,7 @@ public final class ServiceRegistry {
 			regs.put(clazz, newRegistration);
 		}
 	}
-
+	
 	private static BundleContext getBundleContext() {
 		return getInstance().map(sr -> sr.bundleContext).orElse(null);
 	}
