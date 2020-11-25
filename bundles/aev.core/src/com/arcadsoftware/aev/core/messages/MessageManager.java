@@ -177,7 +177,8 @@ public class MessageManager implements IDiagnosisProvider {
 				return filteredMessages;
 			}
 		}
-		return Collections.emptyList();
+		//return Collections.emptyList();
+		return null;
 	}
 	
 	/**
