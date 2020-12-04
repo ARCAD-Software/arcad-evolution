@@ -2,7 +2,7 @@
 <feature
       id="com.arcadsoftware.aev.rap.features"
       label="ARCAD-Evolution RAP"
-      version="10.1.0.qualifier"
+      version="10.2.0.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
