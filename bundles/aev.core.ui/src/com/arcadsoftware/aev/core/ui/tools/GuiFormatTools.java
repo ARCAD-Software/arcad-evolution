@@ -85,6 +85,7 @@ import com.arcadsoftware.aev.core.ui.dialogs.gui.MultiValueDialog;
 import com.arcadsoftware.aev.core.ui.listeners.IModifyListener;
 import com.arcadsoftware.aev.core.ui.listeners.SimpleDateVerifierListener;
 import com.arcadsoftware.aev.core.ui.widgets.ArcadColorWidget;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author MD
@@ -1016,7 +1017,7 @@ public class GuiFormatTools {
 		final GuiFormatTools.CalendarManager manager = GuiFormatTools.instance.new CalendarManager(valueText, style);
 
 		Button browseButton = new Button(p, SWT.PUSH);
-		browseButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.CALENDAR_ICON));
+		browseButton.setImage(Icon.CALENDAR_SELECT_DAY.image());
 		gridData = new GridData();
 		gridData.heightHint = 21;
 		browseButton.setLayoutData(gridData);
@@ -1030,7 +1031,7 @@ public class GuiFormatTools {
 		});
 
 		Button clearButton = new Button(p, SWT.PUSH);
-		clearButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ACT_ERASE));
+		clearButton.setImage(Icon.CLEANUP.image());
 		clearButton.setToolTipText(CoreUILabels.resString("CalendarEdit.ClearButtton.Tooltips"));//$NON-NLS-1$
 		gridData = new GridData();
 		gridData.heightHint = 21;
@@ -1150,7 +1151,7 @@ public class GuiFormatTools {
 		final GuiFormatTools.CalendarManager manager = GuiFormatTools.instance.new CalendarManager(valueText, style);
 
 		Button browseButton = new Button(p, SWT.PUSH);
-		browseButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.CALENDAR_ICON));
+		browseButton.setImage(Icon.CALENDAR_SELECT_DAY.image());
 		gridData = new GridData();
 		gridData.heightHint = 21;
 		browseButton.setLayoutData(gridData);
@@ -2040,7 +2041,7 @@ public class GuiFormatTools {
 				widget.setColorUI(null);
 			}
 		});
-		erase.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ACT_ERASE));
+		erase.setImage(Icon.CLEANUP.image());
 		erase.setToolTipText(CoreUILabels.resString("CalendarEdit.ClearButtton.Tooltips"));//$NON-NLS-1$
 		return widget;
 	}

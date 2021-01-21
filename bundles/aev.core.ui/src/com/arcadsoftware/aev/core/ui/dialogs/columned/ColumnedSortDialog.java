@@ -15,13 +15,13 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import com.arcadsoftware.aev.core.tools.StringTools;
-import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumns;
 import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSortCriteria;
 import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSortCriteriaList;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedSortTableViewer;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author dlelong
@@ -162,7 +162,7 @@ public class ColumnedSortDialog extends ColumnedDialog {
 
 	private void createToolbarButtonBar(Composite parent) {
 		upButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_BEGINNING);
-		upButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_SELECT_PREV));
+		upButton.setImage(Icon.PREVIOUS_ARROW.image());
 		upButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -172,7 +172,7 @@ public class ColumnedSortDialog extends ColumnedDialog {
 		});
 
 		downButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_END);
-		downButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_SELECT_NEXT));
+		downButton.setImage(Icon.NEXT_ARROW.image());
 		downButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

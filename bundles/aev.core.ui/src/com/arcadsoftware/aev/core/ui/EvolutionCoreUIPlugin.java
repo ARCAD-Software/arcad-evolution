@@ -1,4 +1,4 @@
-package com.arcadsoftware.aev.core.ui;
+        package com.arcadsoftware.aev.core.ui;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -31,49 +31,8 @@ public class EvolutionCoreUIPlugin extends ArcadUIPlugin implements IHelperImage
 	public static final String PREF_MESSAGE_LEVELVIEW = "ARCADCORE_Message_LevelViewFilter"; //$NON-NLS-1$
 	public static final String PREF_MESSAGES_LEVEL = "ACP_MESSAGES_LEVEL_PREF"; //$NON-NLS-1$
 
-	// ICONES
-	public static final String ACT_REFRESH = "refresh.gif"; //$NON-NLS-1$
-	public static final String ICO_ARCAD = "arcad16.gif"; //$NON-NLS-1$
-	public static final String ICO_CLEAR = "removeAll.gif"; //$NON-NLS-1$
-	public static final String ICO_SAVEAS = "saveas.gif"; //$NON-NLS-1$
-	public static final String ICO_CLEARSELECTION = "remove.gif"; //$NON-NLS-1$
-	public final static String ICO_CLM_ADD = "clm/add.png"; //$NON-NLS-1$
-	public final static String ICO_CLM_ADD_ALL = "clm/add_all.png";//$NON-NLS-1$
-	public final static String ICO_CLM_REMOVE = "clm/remove.png";//$NON-NLS-1$
-	public final static String ICO_CLM_REMOVE_ALL = "clm/remove_all.png";//$NON-NLS-1$
-	public final static String ICO_CLM_SELECT_NEXT = "clm/select_next.gif";//$NON-NLS-1$
-	public final static String ICO_CLM_SELECT_PREV = "clm/select_prev.gif"; //$NON-NLS-1$
-	public static final String ICO_MES_COMPL = "mes/compl.gif"; //$NON-NLS-1$
-	public static final String ICO_MES_DIAG = "mes/diag.gif"; //$NON-NLS-1$
-	public static final String ICO_MES_ERROR = "mes/error.gif"; //$NON-NLS-1$
-	public static final String ICO_MES_EXCEP = "mes/excep.gif"; //$NON-NLS-1$
-	public static final String ICO_MES_WARN = "mes/warn.gif"; //$NON-NLS-1$
-	public static final String ICO_MESDETAIL_COMPL = "mes/dtl_compl.gif"; //$NON-NLS-1$
-	public static final String ICO_MESDETAIL_DIAG = "mes/dtl_diag.gif"; //$NON-NLS-1$
-	public static final String ICO_MESDETAIL_ERROR = "mes/dtl_error.gif"; //$NON-NLS-1$
-	public static final String ICO_MESDETAIL_EXCEP = "mes/dtl_excep.gif"; //$NON-NLS-1$
-	public static final String ICO_MESDETAIL_WARN = "mes/dtl_warn.gif"; //$NON-NLS-1$
-	public static final String ACT_PROPERTIES = "properties.png"; //$NON-NLS-1$
-	public static final String ACT_SORT = "sort.png"; //$NON-NLS-1$
-	public static final String ACT_PREFS = "prefs.png"; //$NON-NLS-1$
-	public static final String ACT_SEARCH = "search.png"; //$NON-NLS-1$
-	public static final String ACT_FILTER = "filter.png"; //$NON-NLS-1$
-	public static final String ACT_FIND = "find.png"; //$NON-NLS-1$
-	public static final String ACT_EXPORT = "export.png"; //$NON-NLS-1$
-	public static final String ACT_SYNC = "synced.gif"; //$NON-NLS-1$
-	public static final String IMG_WIZARD = "wizard.gif"; //$NON-NLS-1$
-	public static final String ARROW_COLLAPSED = "arw_col.gif"; //$NON-NLS-1$
-	public static final String ARROW_EXPANDED = "arw_exp.gif"; //$NON-NLS-1$
-	public static final String ACT_ERASE = "erase.png"; //$NON-NLS-1$
-	public static final String ICO_SRVMAN = "srvman.gif"; //$NON-NLS-1$
-	public static final String ICO_CHECKED = "checked.gif"; //$NON-NLS-1$
-	public static final String ICO_UNCHECKED = "unchecked.gif"; //$NON-NLS-1$
-	public static final String CALENDAR_ICON = "calendar.gif"; //$NON-NLS-1$
-
 	private static EvolutionCoreUIPlugin plugin;
 	private ResourceBundle resourceBundle;
-	
-	
 	
 	IFileManagerProvider fileManagerProvider = null;
 	
@@ -171,44 +130,7 @@ public class EvolutionCoreUIPlugin extends ArcadUIPlugin implements IHelperImage
 
 	@Override
 	protected void initializeImageRegistry() {
-		String path = getIconPath();
-		putImageInRegistry(ACT_REFRESH, path + ACT_REFRESH);
-		putImageInRegistry(ICO_ARCAD, path + ICO_ARCAD);
-		putImageInRegistry(ICO_CLEAR, path + ICO_CLEAR);
-		putImageInRegistry(ICO_SAVEAS, path + ICO_SAVEAS);
-		putImageInRegistry(ICO_CLEARSELECTION, path + ICO_CLEARSELECTION);
-		putImageInRegistry(ICO_CLM_ADD, path + ICO_CLM_ADD);
-		putImageInRegistry(ICO_CLM_ADD_ALL, path + ICO_CLM_ADD_ALL);
-		putImageInRegistry(ICO_CLM_REMOVE, path + ICO_CLM_REMOVE);
-		putImageInRegistry(ICO_CLM_REMOVE_ALL, path + ICO_CLM_REMOVE_ALL);
-		putImageInRegistry(ICO_CLM_SELECT_NEXT, path + ICO_CLM_SELECT_NEXT);
-		putImageInRegistry(ICO_CLM_SELECT_PREV, path + ICO_CLM_SELECT_PREV);
-		putImageInRegistry(ICO_MES_COMPL, path + ICO_MES_COMPL);
-		putImageInRegistry(ICO_MES_DIAG, path + ICO_MES_DIAG);
-		putImageInRegistry(ICO_MES_ERROR, path + ICO_MES_ERROR);
-		putImageInRegistry(ICO_MES_EXCEP, path + ICO_MES_EXCEP);
-		putImageInRegistry(ICO_MES_WARN, path + ICO_MES_WARN);
-		putImageInRegistry(ICO_MESDETAIL_COMPL, path + ICO_MESDETAIL_COMPL);
-		putImageInRegistry(ICO_MESDETAIL_DIAG, path + ICO_MESDETAIL_DIAG);
-		putImageInRegistry(ICO_MESDETAIL_ERROR, path + ICO_MESDETAIL_ERROR);
-		putImageInRegistry(ICO_MESDETAIL_EXCEP, path + ICO_MESDETAIL_EXCEP);
-		putImageInRegistry(ICO_MESDETAIL_WARN, path + ICO_MESDETAIL_WARN);
-		putImageInRegistry(ACT_PROPERTIES, path + ACT_PROPERTIES);
-		putImageInRegistry(ACT_SORT, path + ACT_SORT);
-		putImageInRegistry(ACT_PREFS, path + ACT_PREFS);
-		putImageInRegistry(ACT_SEARCH, path + ACT_SEARCH);
-		putImageInRegistry(ACT_FILTER, path + ACT_FILTER);
-		putImageInRegistry(ACT_FIND, path + ACT_FIND);
-		putImageInRegistry(ACT_EXPORT, path + ACT_EXPORT);
-		putImageInRegistry(ACT_SYNC, path + ACT_SYNC);
-		putImageInRegistry(IMG_WIZARD, path + IMG_WIZARD);
-		putImageInRegistry(ARROW_COLLAPSED, path + ARROW_COLLAPSED);
-		putImageInRegistry(ARROW_EXPANDED, path + ARROW_EXPANDED);
-		putImageInRegistry(ACT_ERASE, path + ACT_ERASE);
-		putImageInRegistry(ICO_SRVMAN, path + ICO_SRVMAN);
-		putImageInRegistry(ICO_CHECKED, path + ICO_CHECKED);
-		putImageInRegistry(ICO_UNCHECKED, path + ICO_UNCHECKED);
-		putImageInRegistry(CALENDAR_ICON, path + CALENDAR_ICON);
+		//Nothing to load
 	}
 
 	public static ArcadItemSelectionChangedProvider getChangedProvider() {

@@ -10,18 +10,14 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 
 import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
-import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
-import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
+import com.arcadsoftware.documentation.brands.Brand;
 
 /**
  * @author MD
  * @author MLafon
  */
-abstract public class ArcadWizardPage extends WizardPage {
-	
-	public static final ImageDescriptor ARCAD_IMDDESCRIPTOR_WIZARD = CoreUILabels
-			.getImageDescriptor(EvolutionCoreUIPlugin.IMG_WIZARD);
+public abstract class ArcadWizardPage extends WizardPage {
 
 	/**
 	 * @param pageName
@@ -42,7 +38,7 @@ abstract public class ArcadWizardPage extends WizardPage {
 	private ImageDescriptor getWizardImage(){
 		return ServiceRegistry	.lookup(IWizardBranding.class)
 							 	.map(IWizardBranding::getBrandingImage)
-							 	.orElse(ARCAD_IMDDESCRIPTOR_WIZARD);
+							 	.orElseGet(Brand.ARCAD_LOGO_64::imageDescriptor);
 							
 	}
 	

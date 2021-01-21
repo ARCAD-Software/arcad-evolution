@@ -19,13 +19,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-
 import com.arcadsoftware.aev.core.messages.MessageManager;
 import com.arcadsoftware.aev.core.tools.StringTools;
-import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.calendar.SWTCalendarDialog;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author mlafon
@@ -49,9 +48,9 @@ public class CalendarEdit extends ButtonEdit {
 		setLayout(new GridLayout(4, false));
 		dialog = new SWTCalendarDialog(getShell());
 		setDateFormatPattern(CoreUILabels.resString("CalendarEdit.Format_Date")); //$NON-NLS-1$
-		getButton().setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.CALENDAR_ICON));
+		getButton().setImage(Icon.CALENDAR_SELECT_DAY.image());
 		clearButton = new Button(this, SWT.PUSH);
-		clearButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ACT_ERASE));
+		clearButton.setImage(Icon.CLEANUP.image());
 		clearButton.setToolTipText(CoreUILabels.resString("CalendarEdit.ClearButtton.Tooltips")); //$NON-NLS-1$
 		clearButton.setLayoutData(new GridData());
 		clearButton.addListener(SWT.Selection, new Listener() {

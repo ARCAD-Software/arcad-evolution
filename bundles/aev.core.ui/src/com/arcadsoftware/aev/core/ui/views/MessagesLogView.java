@@ -11,8 +11,6 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
@@ -31,6 +29,7 @@ import com.arcadsoftware.aev.core.ui.IDocProvider;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 import com.arcadsoftware.aev.core.ui.treeviewers.MessagesTreeViewer;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * 
@@ -45,7 +44,7 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 	private Action exportAction;
 	public MessagesTreeViewer tree;
 
-	static private class FilterAction extends Action {
+	private static class FilterAction extends Action {
 
 		private int level;
 		private MessagesTreeViewer tree;
@@ -68,7 +67,6 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 				tree.setFilterLevel(tree.getFilterLevel() & (~level));
 			else
 				tree.setFilterLevel(tree.getFilterLevel() | level);
-			// setChecked(!isChecked());
 		}
 
 	}
@@ -86,21 +84,13 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		// TODO [DL] enlever ce bouchon quand ça s'initialisera correctement
-		// tree = new MessagesTreeViewer(parent,SWT.NONE | SWT.FULL_SELECTION,
-		// EvolutionCoreUIPlugin.getDefault().getMessageLevelFilter());
 		tree = new MessagesTreeViewer(parent, SWT.NONE | SWT.FULL_SELECTION, MessageDetail.COMPLETION
 				| MessageDetail.ERROR | MessageDetail.DIAGNOSTIC | MessageDetail.EXCEPTION | MessageDetail.WARNING);
 		tree.getTree().setHeaderVisible(false);
 		tree.getTree().setLinesVisible(false);
 		tree.setInput(MessageManager.getMessagesList());
 		GuiFormatTools.setHelp(tree.getViewer().getControl(), IDocProvider.HLP_MESSAGESLOG);
-		tree.getViewer().addDoubleClickListener(new IDoubleClickListener() {
-			@Override
-			public void doubleClick(DoubleClickEvent event) {
-				tree.showDetails();
-			}
-		});
+		tree.getViewer().addDoubleClickListener(event -> tree.showDetails());
 
 		clearSelectionAction = new Action() {
 			@Override
@@ -110,8 +100,7 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 		};
 		clearSelectionAction.setText(CoreUILabels.resString("MessagesLogView.ClearSelection")); //$NON-NLS-1$
 		clearSelectionAction.setToolTipText(CoreUILabels.resString("MessagesLogView.ClearSelectionHint")); //$NON-NLS-1$
-		clearSelectionAction.setImageDescriptor(CoreUILabels
-				.getImageDescriptor(EvolutionCoreUIPlugin.ICO_CLEARSELECTION));
+		clearSelectionAction.setImageDescriptor(Icon.REMOVE.imageDescriptor());
 		clearAllAction = new Action() {
 			@Override
 			public void run() {
@@ -120,7 +109,7 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 		};
 		clearAllAction.setText(CoreUILabels.resString("MessagesLogView.Clear")); //$NON-NLS-1$
 		clearAllAction.setToolTipText(CoreUILabels.resString("MessagesLogView.ClearHint")); //$NON-NLS-1$
-		clearAllAction.setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ICO_CLEAR));
+		clearAllAction.setImageDescriptor(Icon.CLEANUP.imageDescriptor());
 		exportAction = new Action() {
 			@Override
 			public void run() {
@@ -129,7 +118,7 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 		};
 		exportAction.setText(CoreUILabels.resString("MessagesLogView.Export")); //$NON-NLS-1$
 		exportAction.setToolTipText(CoreUILabels.resString("MessagesLogView.ExportHint")); //$NON-NLS-1$
-		exportAction.setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ICO_SAVEAS));
+		exportAction.setImageDescriptor(Icon.SAVE.imageDescriptor());
 
 		IActionBars bars = getViewSite().getActionBars();
 

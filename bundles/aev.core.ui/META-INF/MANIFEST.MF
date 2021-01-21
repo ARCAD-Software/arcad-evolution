@@ -53,3 +53,5 @@ Require-Bundle: com.arcadsoftware.aev.core,
  org.eclipse.rap.jface;resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Import-Package: com.arcadsoftware.documentation.brands,
+ com.arcadsoftware.documentation.icons

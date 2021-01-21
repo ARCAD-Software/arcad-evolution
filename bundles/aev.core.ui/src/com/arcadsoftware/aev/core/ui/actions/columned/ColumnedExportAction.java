@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.TreeItem;
 
+import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 import com.arcadsoftware.aev.core.tools.StringTools;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.actions.ArcadAction;
@@ -21,9 +23,10 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedTreeViewer
 import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedTreeViewer;
 import com.arcadsoftware.aev.core.ui.wizards.ArcadWizardDialog;
-import com.arcadsoftware.aev.core.ui.wizards.ArcadWizardPage;
+import com.arcadsoftware.aev.core.ui.wizards.IWizardBranding;
 import com.arcadsoftware.aev.core.ui.wizards.columned.ColumnedCSVExportWizard;
 import com.arcadsoftware.aev.core.ui.wizards.columned.ColumnedParametersWizardPage;
+import com.arcadsoftware.documentation.brands.Brand;
 
 /**
  * @author dlelong
@@ -41,8 +44,14 @@ public class ColumnedExportAction extends ArcadAction {
 	public WizardPage[] getPages() {
 		parametersPage = new ColumnedParametersWizardPage(CoreUILabels.resString("action.columned.wizardPage.title"), //$NON-NLS-1$
 				CoreUILabels.resString("action.columned.wizardPage.title"), //$NON-NLS-1$
-				ArcadWizardPage.ARCAD_IMDDESCRIPTOR_WIZARD);
+				getWizardImage());
 		return new WizardPage[] { parametersPage };
+	}
+
+	private ImageDescriptor getWizardImage() {
+		return ServiceRegistry.lookup(IWizardBranding.class) //
+				.map(IWizardBranding::getBrandingImage) //
+				.orElseGet(Brand.ARCAD_LOGO_64::imageDescriptor);
 	}
 
 	public ColumnedCSVExportWizard createWizard() {
@@ -110,7 +119,7 @@ public class ColumnedExportAction extends ArcadAction {
 					data.append(separator);
 					data.append(column.getUserName());
 				}
-				data.append('\n'); //$NON-NLS-1$
+				data.append('\n'); // $NON-NLS-1$
 			}
 
 			if (viewer.isFiltered() && parametersPage.isOnlyDisplayedFilteredData()) {
@@ -143,13 +152,13 @@ public class ColumnedExportAction extends ArcadAction {
 						isFirstData = false;
 					String value = viewer.getValue(elements.get(i), columns.items(j).getPosition());
 					// replace any line return with space since line return is special items separator
-					if (value != null){
+					if (value != null) {
 						value = value.replaceAll("\r\n", " ");
 						value = value.replaceAll("\n", " ");
 					}
 					data.append(value);
 				}
-				data.append('\n'); //$NON-NLS-1$
+				data.append('\n'); // $NON-NLS-1$
 			}
 
 			String filePath = parametersPage.getFilePath();

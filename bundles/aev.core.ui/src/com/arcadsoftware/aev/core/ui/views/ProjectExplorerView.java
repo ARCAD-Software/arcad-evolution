@@ -35,6 +35,7 @@ import com.arcadsoftware.aev.core.ui.mementos.DefaultExplorerMementoTools;
 import com.arcadsoftware.aev.core.ui.mementos.ExplorerMementoTools;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.treeviewers.ContainerTreeViewer;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
@@ -121,8 +122,7 @@ public abstract class ProjectExplorerView extends ArcadTableView implements IPar
 							.getShellProvider(), viewer.getViewer());
 					showPropertiesAction.setText(CoreUILabels.resString("ArcadTableView.properties.Text")); //$NON-NLS-1$
 					showPropertiesAction.setToolTipText(CoreUILabels.resString("ArcadTableView.properties.Tooltip")); //$NON-NLS-1$
-					showPropertiesAction.setImageDescriptor(CoreUILabels
-							.getImageDescriptor(EvolutionCoreUIPlugin.ACT_PROPERTIES));
+					showPropertiesAction.setImageDescriptor(Icon.PROPERTIES.imageDescriptor());
 					manager.add(showPropertiesAction);
 				}
 			}
@@ -156,7 +156,7 @@ public abstract class ProjectExplorerView extends ArcadTableView implements IPar
 		};
 		refreshAction.setText(CoreUILabels.resString("ProjectExplorerView.refreshAction.Text")); //$NON-NLS-1$
 		refreshAction.setToolTipText(CoreUILabels.resString("ProjectExplorerView.refreshAction.Tooltips")); //$NON-NLS-1$
-		refreshAction.setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_REFRESH));
+		refreshAction.setImageDescriptor(Icon.REFRESH.imageDescriptor());
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
-import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author mlafon
@@ -64,7 +64,7 @@ public abstract class ArcadDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_ARCAD));
+		newShell.setImage(Icon.ARCAD.image());
 	}
 
 	protected static Shell getPluginShell() {

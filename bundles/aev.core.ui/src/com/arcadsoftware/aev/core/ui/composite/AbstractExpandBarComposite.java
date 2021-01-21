@@ -10,9 +10,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
-import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author MD
@@ -32,7 +31,6 @@ public abstract class AbstractExpandBarComposite extends Composite {
 	Composite userArea = null;
 
 	boolean expanded = true;
-	String imageId = EvolutionCoreUIPlugin.ARROW_EXPANDED;
 
 	Label moreParameter = null;
 
@@ -63,7 +61,6 @@ public abstract class AbstractExpandBarComposite extends Composite {
 
 	void collapse() {
 		userArea.dispose();
-		imageId = getCollapsedIconKey();
 		GridData gridData = (GridData) this.getLayoutData();
 		if (orientation == ORIENTATION_HORIZONTAL)
 			gridData.heightHint = headerHeihght + OFFSET;
@@ -76,7 +73,6 @@ public abstract class AbstractExpandBarComposite extends Composite {
 	void expand() {
 		createBodyAreaComposite();
 		doOnExpand(userArea);
-		imageId = getExpandedIconKey();
 		GridData gridData = (GridData) this.getLayoutData();
 		if (orientation == ORIENTATION_HORIZONTAL)
 			gridData.heightHint = headerHeihght + bodyHeight + OFFSET;
@@ -107,20 +103,28 @@ public abstract class AbstractExpandBarComposite extends Composite {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// Si le controle est déployé
-				if (expanded)
+				if (expanded) {
 					collapse();
-				else
+				}
+				else {
 					expand();
+				}
+				setImage();
 				expanded = !expanded;
-				moreParameter.setImage(CoreUILabels.getImage(imageId));
+				
 				GuiFormatTools.allLayout(AbstractExpandBarComposite.this);
 			}
+
+			
 		});
-		moreParameter.setImage(CoreUILabels.getImage(getExpandedIconKey()));
+		moreParameter.setImage(Icon.COLLAPSE.image());
 
 		formatTitle(labelTitle);
 	}
-
+	
+	private void setImage() {
+		moreParameter.setImage(expanded ? Icon.COLLAPSE.image() : Icon.EXPAND.image());		
+	}
 	/**
 	 * Méthode permettant de définir les contrôles à ajouter à la barre.
 	 * 
@@ -139,14 +143,6 @@ public abstract class AbstractExpandBarComposite extends Composite {
 		// Do nothing
 	}
 
-	public String getCollapsedIconKey() {
-		return EvolutionCoreUIPlugin.ARROW_COLLAPSED;
-	}
-
-	public String getExpandedIconKey() {
-		return EvolutionCoreUIPlugin.ARROW_EXPANDED;
-	}
-
 	public boolean isExpanded() {
 		return expanded;
 	}
@@ -155,12 +151,14 @@ public abstract class AbstractExpandBarComposite extends Composite {
 		if (flag == expanded)
 			return;
 		// Si le controle est déployé
-		if (flag)
+		if (flag) {
 			expand();
-		else
+		}
+		else {
 			collapse();
+		}
 		this.expanded = flag;
-		moreParameter.setImage(CoreUILabels.getImage(imageId));
+		setImage();
 		GuiFormatTools.allLayout(AbstractExpandBarComposite.this);
 	}
 }

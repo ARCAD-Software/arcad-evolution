@@ -35,6 +35,7 @@ import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.actions.ArcadPropertyDialogAction;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author MD
@@ -166,8 +167,7 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 						.getShellProvider(), viewer.getViewer());
 				showPropertiesAction.setText(CoreUILabels.resString("ArcadTableView.properties.Text")); //$NON-NLS-1$
 				showPropertiesAction.setToolTipText(CoreUILabels.resString("ArcadTableView.properties.Tooltip")); //$NON-NLS-1$
-				showPropertiesAction.setImageDescriptor(CoreUILabels
-						.getImageDescriptor(EvolutionCoreUIPlugin.ACT_PROPERTIES));
+				showPropertiesAction.setImageDescriptor(Icon.PROPERTIES.imageDescriptor());
 			}
 		}
 		if (doubleClickAction == null) {
@@ -191,7 +191,7 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 				}
 			};
 			synchronizeAction.setToolTipText(CoreUILabels.resString("Action.synchronizeAction.Tooltip"));//$NON-NLS-1$
-			synchronizeAction.setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_SYNC));
+			synchronizeAction.setImageDescriptor(Icon.SYNCHRONIZE.imageDescriptor());
 			synchronizeAction.setChecked(true);
 		}
 		defineActions();

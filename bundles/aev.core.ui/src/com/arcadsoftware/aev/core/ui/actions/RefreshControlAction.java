@@ -9,8 +9,8 @@ package com.arcadsoftware.aev.core.ui.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 
-import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author mlafon
@@ -44,7 +44,7 @@ public class RefreshControlAction extends Action {
 		this.control = control;
 		setText(CoreUILabels.resString("RefreshControlAction.Refresh")); //$NON-NLS-1$
 		setToolTipText(longText);
-		setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_REFRESH));
+		setImageDescriptor(Icon.REFRESH.imageDescriptor());
 	}
 
 	@Override

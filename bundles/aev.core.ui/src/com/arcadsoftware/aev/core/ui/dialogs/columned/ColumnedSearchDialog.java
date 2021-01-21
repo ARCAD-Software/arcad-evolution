@@ -25,6 +25,7 @@ import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSearchCriteriaList;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedSearchTableViewer;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author dlelong
@@ -163,7 +164,7 @@ public class ColumnedSearchDialog extends ColumnedDialog {
 
 	private void createToolbarButtonBar(Composite parent) {
 		upButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_BEGINNING);
-		upButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_SELECT_PREV));
+		upButton.setImage(Icon.PREVIOUS_ARROW.image());
 		upButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -173,7 +174,7 @@ public class ColumnedSearchDialog extends ColumnedDialog {
 		});
 
 		downButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_END);
-		downButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_SELECT_NEXT));
+		downButton.setImage(Icon.NEXT_ARROW.image());
 		downButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

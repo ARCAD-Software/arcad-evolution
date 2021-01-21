@@ -11,11 +11,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.calendar.SWTCalendar;
 import com.arcadsoftware.aev.core.ui.calendar.SWTCalendarDialog;
 import com.arcadsoftware.aev.core.ui.calendar.SWTTimeChooser;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
+import com.arcadsoftware.documentation.icons.Icon;
 
 
 public class CalendarDialog extends Dialog {
@@ -116,7 +116,7 @@ public class CalendarDialog extends Dialog {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText(CoreUILabels.resString("Label.Calendar")); //$NON-NLS-1$
-		newShell.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.CALENDAR_ICON));
+		newShell.setImage(Icon.CALENDAR_SELECT_DAY.image());
 	}
 
 }

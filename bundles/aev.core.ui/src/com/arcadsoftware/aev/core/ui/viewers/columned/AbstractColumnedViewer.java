@@ -65,6 +65,7 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnResolver;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnedSearcher;
 import com.arcadsoftware.aev.core.ui.viewers.sorters.ArcadTableViewerColumnSorter;
 import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedSorter;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author MD
@@ -132,7 +133,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			super();
 			setText(CoreUILabels.resString("action.columned.preferences.text")); //$NON-NLS-1$
 			setToolTipText(CoreUILabels.resString("action.columned.preferences.tooltip")); //$NON-NLS-1$
-			setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_PREFS));
+			setImageDescriptor(Icon.PREFERENCES.imageDescriptor());
 		}
 
 		@Override
@@ -160,7 +161,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			super();
 			setText(CoreUILabels.resString("action.columned.searchEditor.text")); //$NON-NLS-1$
 			setToolTipText(CoreUILabels.resString("action.columned.searchEditor.tooltip")); //$NON-NLS-1$
-			setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_SEARCH));
+			setImageDescriptor(Icon.SEARCH.imageDescriptor());
 		}
 
 		@Override
@@ -196,7 +197,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			super();
 			setText(CoreUILabels.resString("action.columned.filterEditor.text")); //$NON-NLS-1$
 			setToolTipText(CoreUILabels.resString("action.columned.filterEditor.tooltip")); //$NON-NLS-1$
-			setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_FILTER));
+			setImageDescriptor(Icon.FILTER.imageDescriptor());
 		}
 
 		@Override
@@ -271,7 +272,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			super();
 			setText(CoreUILabels.resString("action.columned.export.text")); //$NON-NLS-1$
 			setToolTipText(CoreUILabels.resString("action.columned.export.tooltip")); //$NON-NLS-1$
-			setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_EXPORT));
+			setImageDescriptor(Icon.EXPORT.imageDescriptor());
 		}
 
 		@Override

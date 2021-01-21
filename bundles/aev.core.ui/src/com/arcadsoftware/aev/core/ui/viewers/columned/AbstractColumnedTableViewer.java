@@ -29,6 +29,7 @@ import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedInternalTableViewer;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedTableViewer;
 import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedSorter;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author MD
@@ -42,7 +43,7 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 			super();
 			setText(CoreUILabels.resString("action.columned.sortEditor.text")); //$NON-NLS-1$
 			setToolTipText(CoreUILabels.resString("action.columned.sortEditor.tooltip")); //$NON-NLS-1$
-			setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_SORT));
+			setImageDescriptor(Icon.SORT.imageDescriptor());
 		}
 
 		@Override
@@ -75,6 +76,7 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 				} catch (InterruptedException e) {
 					MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
 							this.getClass().toString());
+					Thread.currentThread().interrupt();
 				}
 			}
 		}

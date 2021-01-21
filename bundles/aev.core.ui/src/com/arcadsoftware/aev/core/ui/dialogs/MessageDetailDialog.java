@@ -29,9 +29,8 @@ import com.arcadsoftware.aev.core.messages.Message;
 import com.arcadsoftware.aev.core.messages.MessageDetail;
 import com.arcadsoftware.aev.core.messages.MessageManager;
 import com.arcadsoftware.aev.core.tools.StringTools;
-import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.IDocProvider;
-import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
+import com.arcadsoftware.aev.core.ui.messages.MessageIconHelper;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 
 /**
@@ -180,31 +179,9 @@ public class MessageDetailDialog extends ArcadDialog implements IMessagesListene
 		@Override
 		public Image getImage(Object element) {
 			if (element instanceof Message) {
-				switch (((Message) element).getMaxDetailsType()) {
-				case MessageDetail.COMPLETION:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_COMPL);
-				case MessageDetail.DIAGNOSTIC:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_DIAG);
-				case MessageDetail.ERROR:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_ERROR);
-				case MessageDetail.WARNING:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_WARN);
-				default/* case MessageDetail.EXCEPTION */:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_EXCEP);
-				}
+				return MessageIconHelper.getMessageIcon((Message) element).image();
 			} else if (element instanceof MessageDetail) {
-				switch (((MessageDetail) element).getType()) {
-				case MessageDetail.COMPLETION:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MESDETAIL_COMPL);
-				case MessageDetail.DIAGNOSTIC:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MESDETAIL_DIAG);
-				case MessageDetail.ERROR:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MESDETAIL_ERROR);
-				case MessageDetail.WARNING:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MESDETAIL_WARN);
-				default/* case MessageDetail.EXCEPTION */:
-					return CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MESDETAIL_EXCEP);
-				}
+				return MessageIconHelper.getMessageDetailIcon((MessageDetail) element).image();
 			}
 			return null;
 		}
@@ -250,22 +227,8 @@ public class MessageDetailDialog extends ArcadDialog implements IMessagesListene
 			} else {
 				newShell.setText(message.getCommand());
 			}
-			switch (message.getMaxDetailsType()) {
-			case MessageDetail.COMPLETION:
-				newShell.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_COMPL));
-				break;
-			case MessageDetail.DIAGNOSTIC:
-				newShell.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_DIAG));
-				break;
-			case MessageDetail.ERROR:
-				newShell.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_ERROR));
-				break;
-			case MessageDetail.WARNING:
-				newShell.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_WARN));
-				break;
-			default/* case MessageDetail.EXCEPTION */:
-				newShell.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_MES_EXCEP));
-			}
+			
+			newShell.setImage(MessageIconHelper.getMessageIcon(message).image());
 		}
 	}
 

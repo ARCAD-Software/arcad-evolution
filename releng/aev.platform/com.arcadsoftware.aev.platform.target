@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
 <target name="AEV Build Platform" sequenceNumber="1">
     <locations>
         <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
@@ -20,5 +21,10 @@
             <unit id="com.arcadsoftware.rap.feature.feature.group" version="0.0.0"/>
             <repository location="http://rdanart01plv.quarcad.net/rap/3.1.0/update"/>
         </location>
+        <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+			<repository location="http://rdanart01plv.quarcad.net/documentation/master/update"/>
+			<unit id="com.arcadsoftware.documentation.brands" version="0.0.0"/>
+		<unit id="com.arcadsoftware.documentation.icons" version="0.0.0"/>
+	</location>
     </locations>
 </target>

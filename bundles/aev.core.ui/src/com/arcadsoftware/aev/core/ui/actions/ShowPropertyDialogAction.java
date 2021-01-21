@@ -17,6 +17,7 @@ import com.arcadsoftware.aev.core.tools.StringTools;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.dialogs.ArcadPropertyDialog;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
+import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author MD
@@ -44,7 +45,7 @@ public class ShowPropertyDialogAction extends ArcadAction {
 	protected void setInterface() {
 		setText(CoreUILabels.resString("action.properties.text")); //$NON-NLS-1$
 		setToolTipText(CoreUILabels.resString("action.properties.tooltip")); //$NON-NLS-1$		
-		setImageDescriptor(CoreUILabels.getImageDescriptor(EvolutionCoreUIPlugin.ACT_PROPERTIES));
+		setImageDescriptor(Icon.PROPERTIES.imageDescriptor());
 	}
 
 	protected IAdaptable defineElement() {
@@ -63,9 +64,7 @@ public class ShowPropertyDialogAction extends ArcadAction {
 	@Override
 	public void run() {
 		boolean isnull = false;
-		// TODO [DL] tester propertyPage
 		PropertyPageManager pageManager = new PropertyPageManager();
-		// PreferenceManager pageManager = new PreferenceManager();
 		String title = StringTools.EMPTY;
 		if (element == null) {
 			element = defineElement();

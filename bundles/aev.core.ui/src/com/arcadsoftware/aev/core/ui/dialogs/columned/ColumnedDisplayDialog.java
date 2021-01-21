@@ -29,13 +29,13 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.arcadsoftware.aev.core.tools.StringTools;
-import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumn;
 import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumns;
 import com.arcadsoftware.aev.core.ui.dialogs.DialogConstantProvider;
 import com.arcadsoftware.aev.core.ui.listeners.columned.IDialogListener;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
+import com.arcadsoftware.documentation.icons.Icon;
 
 public class ColumnedDisplayDialog extends ColumnedDialog {
 	private Button applyButton;
@@ -300,7 +300,7 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 
 	private void createToolbarButtonBar(Composite parent) {
 		upButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_BEGINNING);
-		upButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_SELECT_PREV));
+		upButton.setImage(Icon.PREVIOUS_ARROW.image());
 		upButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -308,7 +308,7 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 			}
 		});
 		downButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_END);
-		downButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_SELECT_NEXT));
+		downButton.setImage(Icon.NEXT_ARROW.image());
 		downButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -320,7 +320,7 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 	private void createToolbarMoveButtonBar(Composite parent) {
 		displayedButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_CENTER
 				| GridData.HORIZONTAL_ALIGN_CENTER);
-		displayedButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_ADD));
+		displayedButton.setImage(Icon.ADD.image());
 		displayedButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -332,7 +332,7 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 
 		allDisplayedButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_CENTER
 				| GridData.HORIZONTAL_ALIGN_CENTER);
-		allDisplayedButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_ADD_ALL));
+		allDisplayedButton.setImage(Icon.ADD_ALL.image());
 		allDisplayedButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -344,7 +344,7 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 
 		maskedButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_CENTER
 				| GridData.HORIZONTAL_ALIGN_CENTER);
-		maskedButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_REMOVE));
+		maskedButton.setImage(Icon.REMOVE.image());
 		maskedButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -356,7 +356,7 @@ public class ColumnedDisplayDialog extends ColumnedDialog {
 
 		allMaskedButton = GuiFormatTools.createButton(parent, StringTools.EMPTY, GridData.VERTICAL_ALIGN_CENTER
 				| GridData.HORIZONTAL_ALIGN_CENTER);
-		allMaskedButton.setImage(CoreUILabels.getImage(EvolutionCoreUIPlugin.ICO_CLM_REMOVE_ALL));
+		allMaskedButton.setImage(Icon.REMOVE_ALL.image());
 		allMaskedButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
