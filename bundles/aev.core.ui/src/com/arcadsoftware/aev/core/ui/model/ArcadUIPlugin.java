@@ -25,7 +25,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import com.arcadsoftware.aev.core.messages.MessageManager;
 import com.arcadsoftware.aev.core.model.IArcadPlugin;
 
-public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPlugin, IHelperImage {	
+public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPlugin, IHelperImage {
+	protected static final String ICON_PATH = "icons/";
+	
 	private class DecoratorImageDescriptor extends CompositeImageDescriptor {
 		private ImageData baseImage;
 		private ImageData overlay;
@@ -81,6 +83,10 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 			}
 		}
 		return null;
+	}
+	
+	public static String getIconPath() {
+		return ICON_PATH;
 	}
 	
 	public ImageDescriptor getPluginImage(String fileName) {
