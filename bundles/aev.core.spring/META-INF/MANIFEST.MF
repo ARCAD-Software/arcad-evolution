@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution Core Spring
 Automatic-Module-Name: com.arcadsoftware.aev.core.spring
-Bundle-SymbolicName: com.arcadsoftware.aev.core.spring
+Bundle-SymbolicName: com.arcadsoftware.aev.core.spring;singleton:=true
 Bundle-Vendor: ARCAD Software
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.arcadsoftware.ae.core.logger,
@@ -15,3 +15,4 @@ Import-Package: com.arcadsoftware.ae.core.logger,
 Bundle-ClassPath: .
 Bundle-Version: 10.2.0.qualifier
 Export-Package: com.arcadsoftware.aev.core.spring.factory
+Bundle-ActivationPolicy: lazy
