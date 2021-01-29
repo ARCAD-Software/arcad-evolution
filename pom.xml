@@ -68,7 +68,7 @@
 						<plugin id="net.sf.jmimemagic"/>
 						<plugin id="org.apache.servicemix.bundles.xpp3"/>
 						<plugin id="org.apache.servicemix.bundles.hsqldb"/>
-						<plugin id="org.apache.servicemix.bundles.xstream"/>
+						<plugin id="xstream"/>
 						<plugin id="com.ibm.icu"/>
 						<plugin id="javax.xml"/>
 						<plugin id="org.eclipse.core.filesystem"/>
