@@ -81,7 +81,7 @@ public class ShowPropertyDialogAction extends ArcadAction {
 				return;
 			}
 			//
-			StringBuffer sb = new StringBuffer(CoreUILabels.resString("msg.propertyPageTitle"));//$NON-NLS-1$ 
+			StringBuilder sb = new StringBuilder(CoreUILabels.resString("msg.propertyPageTitle"));//$NON-NLS-1$ 
 			sb.append(name);
 			title = sb.toString();
 

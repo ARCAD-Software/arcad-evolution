@@ -164,7 +164,7 @@ public class MultiValueDialog extends ArcadCenteredDialog {
 	 */
 	@Override
 	protected void okPressed() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.getItemCount(); i++) {
 			if (i > 0)
 				sb.append(';'); //$NON-NLS-1$

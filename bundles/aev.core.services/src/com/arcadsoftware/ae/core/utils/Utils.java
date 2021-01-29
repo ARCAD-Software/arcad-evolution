@@ -121,7 +121,7 @@ public class Utils {
 	}		
 	
     public static String stackTrace(Throwable e) {
-    	StringBuffer sb = new StringBuffer();
+    	StringBuilder sb = new StringBuilder();
     	sb.append(e.getMessage()).append('\n');
     	StackTraceElement[] ste =  e.getStackTrace();
     	for (int i=0;i<ste.length;i++) {
@@ -153,7 +153,7 @@ public class Utils {
 		while ((pos!=-1) && follow ){
 			i++;
 			start=pos+newPattern.length();
-			StringBuffer sb = new StringBuffer(s1.substring(0,pos));		
+			StringBuilder sb = new StringBuilder(s1.substring(0,pos));		
 			sb.append(newPattern);
 			st = pos+oldPattern.length();
 			sb.append(s1.substring(st,s1.length()));
@@ -174,7 +174,7 @@ public class Utils {
 	
 	public static String substituteProperty(String value,String propertyName){
 		if (System.getProperty(propertyName)!=null){
-			StringBuffer toReplace = new StringBuffer();
+			StringBuilder toReplace = new StringBuilder();
 			toReplace.append("${").append(propertyName).append('}');			
 			value = Utils.substitute(value,toReplace.toString(),System.getProperty(propertyName),-1);
 		}
@@ -182,15 +182,15 @@ public class Utils {
 	}
 	
 	
-	public static StringBuffer replicateToStringBuffer(char c,int size) {
-		StringBuffer s = new StringBuffer("");//$NON-NLS-1$ 
+	public static StringBuilder replicateToStringBuilder(char c,int size) {
+		StringBuilder s = new StringBuilder("");//$NON-NLS-1$ 
 		for(int i=1;i<=size;i++){
 			s.append(c);
 		}
 		return s;
 	}
 	public static String replicate(char c,int size) {		
-		StringBuffer s = replicateToStringBuffer(c,size);
+		StringBuilder s = replicateToStringBuilder(c,size);
 		return s.toString();
 	}   	
 	
@@ -216,8 +216,8 @@ public class Utils {
 	public static String quotedString(String s) {
 		if (s==null)
 			return "";
-		StringBuffer sb = new StringBuffer(s);
-		StringBuffer result = new StringBuffer();		
+		StringBuilder sb = new StringBuilder(s);
+		StringBuilder result = new StringBuilder();		
 		int size = s.length();
 		for (int i=0;i<size;i++) {
 			if (sb.charAt(i)=='\'') {
@@ -249,7 +249,7 @@ public class Utils {
 	}		
 	//--------------------------------------------------------------------------
 	public static final String lpad(String s,int length, char paddedChar) {
-		StringBuffer sb = new StringBuffer(s);
+		StringBuilder sb = new StringBuilder(s);
 		if (s.length() < length) {
 			while(sb.length()<length)
 				sb.insert(0, paddedChar);			
@@ -259,7 +259,7 @@ public class Utils {
 	}
 	//--------------------------------------------------------------------------
 	public static final String rpad(String s,int length, char paddedChar) {
-		StringBuffer sb = new StringBuffer(s);
+		StringBuilder sb = new StringBuilder(s);
 		if (s.length() < length) {
 			while(sb.length()<length)
 				sb.append(paddedChar);			
@@ -296,7 +296,7 @@ public class Utils {
 		if (!hasLength(str)) {
 			return str;
 		}
-		StringBuffer buf = new StringBuffer(str);
+		StringBuilder buf = new StringBuilder(str);
 		while (buf.length() > 0 && buf.charAt(0) == leadingCharacter) {
 			buf.deleteCharAt(0);
 		}
@@ -313,7 +313,7 @@ public class Utils {
 		if (!hasLength(str)) {
 			return str;
 		}
-		StringBuffer buf = new StringBuffer(str);
+		StringBuilder buf = new StringBuilder(str);
 		while (buf.length() > 0 && buf.charAt(buf.length() - 1) == trailingCharacter) {
 			buf.deleteCharAt(buf.length() - 1);
 		}
@@ -351,7 +351,7 @@ public class Utils {
     
 	public static String readTextFile(String fileName) {
 		BufferedReader in = null;
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
         try {        	
         	in = new BufferedReader(new FileReader(fileName));
             

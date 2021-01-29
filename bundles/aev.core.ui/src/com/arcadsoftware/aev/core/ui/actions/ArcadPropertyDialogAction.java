@@ -112,7 +112,7 @@ public class ArcadPropertyDialogAction extends PropertyDialogAction {
 					CoreUILabels.resString("msg.noPropertyPage")); //$NON-NLS-1$
 			return;
 		}
-		StringBuffer sb = new StringBuffer(CoreUILabels.resString("msg.propertyPageTitle"));//$NON-NLS-1$ 
+		StringBuilder sb = new StringBuilder(CoreUILabels.resString("msg.propertyPageTitle"));//$NON-NLS-1$ 
 		sb.append(name);
 		title = sb.toString();
 		ArcadPropertyDialog propertyDialog = new ArcadPropertyDialog(shell, pageManager, getStructuredSelection());

@@ -238,7 +238,7 @@ public class Message implements IMessageDetails {
 	@Override
 	public String toString() {
 		char ln = Character.LINE_SEPARATOR;
-		StringBuffer buffer = new StringBuffer(String.format(
+		StringBuilder buffer = new StringBuilder(String.format(
 			"[%1$s] %2$s", 
 			//FormatDateTools.getFormattedDateTime(creationDate), 
 			new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(creationDate), 

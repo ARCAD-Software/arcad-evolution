@@ -952,7 +952,7 @@ public class GuiFormatTools {
 				java.util.List<String> selection = getFileManagerProvider().selectFiles(
 						EvolutionCoreUIPlugin.getShell(), actionStyle, title,fileExtensions);
 				if (selection != null && selection.size() > 0){
-					StringBuffer fileList = new StringBuffer();
+					StringBuilder fileList = new StringBuilder();
 					for (String file : selection) {
 						if (fileList.length() > 0)
 							fileList.append(';');

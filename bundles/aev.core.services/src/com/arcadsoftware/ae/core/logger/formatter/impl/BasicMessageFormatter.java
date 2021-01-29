@@ -13,7 +13,7 @@ public class BasicMessageFormatter extends AbstractMessageFormatter {
 	SimpleDateFormat sp = new SimpleDateFormat("yyyyMMdd-hh:mm:ss:SSS"); 
 
     private String createHeader(AbstractMessage message) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append('[').append(sp.format(new Date())).append(']')
           .append('[').append(message.getServiceName()).append(']')
           .append('[').append(message.getMessageType()).append(']')                    
@@ -22,7 +22,7 @@ public class BasicMessageFormatter extends AbstractMessageFormatter {
     }
 	
 	public String format(AbstractMessage message) {
-        StringBuffer sb = new StringBuffer(createHeader(message));
+        StringBuilder sb = new StringBuilder(createHeader(message));
         if(!message.getDatas().isEmpty()){
             sb.append('(');
             for (int i=0;i<message.getDatas().size();i++) {
@@ -37,7 +37,7 @@ public class BasicMessageFormatter extends AbstractMessageFormatter {
 	}
 
 	public String format(Messages messages) {
-		StringBuffer sb = new StringBuffer();		
+		StringBuilder sb = new StringBuilder();		
 		int count = messages.messageCount();
 		for (int i=0;i<count;i++){
 			AbstractMessage message = 

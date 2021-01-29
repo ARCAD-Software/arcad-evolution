@@ -46,15 +46,15 @@ public class SimpleDateVerifierListener implements Listener {
 		valid = analyseFormat(format);
 	}
 
-	private String getCenturyPart(StringBuffer value) {
+	private String getCenturyPart(StringBuilder value) {
 		return value.substring(yStartPos, yStartPos + yLength);
 	}
 
-	private String getMonthPart(StringBuffer value) {
+	private String getMonthPart(StringBuilder value) {
 		return value.substring(mStartPos, mStartPos + 2);
 	}
 
-	private String getDayPart(StringBuffer value) {
+	private String getDayPart(StringBuilder value) {
 		return value.substring(dStartPos, dStartPos + 2);
 	}
 
@@ -90,7 +90,7 @@ public class SimpleDateVerifierListener implements Listener {
 	}
 
 	private boolean processBackspace(Event e) {
-		StringBuffer buffer = new StringBuffer(e.text);
+		StringBuilder buffer = new StringBuilder(e.text);
 		char[] chars = new char[buffer.length()];
 		buffer.getChars(0, chars.length, chars, 0);
 
@@ -112,7 +112,7 @@ public class SimpleDateVerifierListener implements Listener {
 	}
 
 	private boolean checkInput(Event e) {
-		StringBuffer buffer = new StringBuffer(e.text);
+		StringBuilder buffer = new StringBuilder(e.text);
 		char[] chars = new char[buffer.length()];
 		buffer.getChars(0, chars.length, chars, 0);
 		int start = e.start;
@@ -138,7 +138,7 @@ public class SimpleDateVerifierListener implements Listener {
 		return true;
 	}
 
-	private boolean checkDate(StringBuffer date) {
+	private boolean checkDate(StringBuilder date) {
 		calendar.set(Calendar.YEAR, 1901);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 1);
@@ -178,7 +178,7 @@ public class SimpleDateVerifierListener implements Listener {
 		if (ignore)
 			return;
 		e.doit = false;
-		StringBuffer buffer = new StringBuffer(e.text);
+		StringBuilder buffer = new StringBuilder(e.text);
 		char[] chars = new char[buffer.length()];
 		buffer.getChars(0, chars.length, chars, 0);
 		// Gestion du caractère d'effacement
@@ -190,7 +190,7 @@ public class SimpleDateVerifierListener implements Listener {
 		// Création d'un texte de sumulation pour controle de validité
 		String newText = buffer.toString();
 		int length = newText.length();
-		StringBuffer date = new StringBuffer(text.getText());
+		StringBuilder date = new StringBuilder(text.getText());
 		date.replace(e.start, e.start + length, newText);
 		// Controle de validité de la date
 		if (!checkDate(date))

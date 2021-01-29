@@ -25,7 +25,7 @@ public abstract class HSQLDBConnector {
 	public abstract IHSQLDBConfiguration createDbConfig();
 	
 	private String createConnectionString() {
-		StringBuffer sb = new StringBuffer("jdbc:hsqldb:");
+		StringBuilder sb = new StringBuilder("jdbc:hsqldb:");
 		sb.append(dbConfig.getDblocation());				
 		return sb.toString();
 	}

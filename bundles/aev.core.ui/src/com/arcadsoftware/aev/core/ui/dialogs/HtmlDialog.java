@@ -79,7 +79,7 @@ public class HtmlDialog extends ArcadResizableDialog {
 	}
 
 	private String prepareHTML() {
-		StringBuffer html = new StringBuffer("<html>"); //$NON-NLS-1$
+		StringBuilder html = new StringBuilder("<html>"); //$NON-NLS-1$
 		html.append("<title>") //$NON-NLS-1$
 				.append(title).append("</title>"); //$NON-NLS-1$
 		if (!htmlBody.trim().startsWith("<body>")) //$NON-NLS-1$

@@ -78,7 +78,7 @@ public class ColumnedExportAction extends ArcadAction {
 
 	public boolean process() {
 		try {
-			StringBuffer data = new StringBuffer();
+			StringBuilder data = new StringBuilder();
 			ArrayList<Object> elements = new ArrayList<Object>();
 
 			Item[] items = viewer instanceof AbstractColumnedTableViewer ? ((AbstractColumnedTableViewer) viewer)
