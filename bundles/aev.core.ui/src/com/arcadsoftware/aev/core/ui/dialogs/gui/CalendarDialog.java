@@ -17,25 +17,17 @@ import com.arcadsoftware.aev.core.ui.calendar.SWTTimeChooser;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.documentation.icons.Icon;
 
-
 public class CalendarDialog extends Dialog {
-
-	private SWTCalendar calendarControl;
-	private SWTTimeChooser timeChooser;
-	private Calendar calendar;
-
-	boolean showTime = true;
-	boolean showDate = true;
 
 	/**
 	 * Ouvre une fenètre de saisie de date.
-	 * 
+	 *
 	 * @param parentShell
 	 * @param calendar
 	 * @return Calendar
 	 */
-	public static Calendar showCalendarDialog(Shell parentShell, Calendar calendar) {
-		SWTCalendarDialog dialog = new SWTCalendarDialog(parentShell);
+	public static Calendar showCalendarDialog(final Shell parentShell, final Calendar calendar) {
+		final SWTCalendarDialog dialog = new SWTCalendarDialog(parentShell);
 		dialog.setCalendar(calendar);
 		if (dialog.open() == OK) {
 			return dialog.getCalendar();
@@ -43,10 +35,18 @@ public class CalendarDialog extends Dialog {
 		return calendar;
 	}
 
+	private Calendar calendar;
+	private SWTCalendar calendarControl;
+
+	boolean showDate = true;
+	boolean showTime = true;
+
+	private SWTTimeChooser timeChooser;
+
 	/**
 	 * @param parentShell
 	 */
-	public CalendarDialog(Shell parentShell, boolean showDate, boolean showTime) {
+	public CalendarDialog(final Shell parentShell, final boolean showDate, final boolean showTime) {
 		super(parentShell);
 		setBlockOnOpen(true);
 		calendar = Calendar.getInstance();
@@ -56,14 +56,22 @@ public class CalendarDialog extends Dialog {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets
-	 * .Composite)
+	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets .Shell)
 	 */
 	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite composite = (Composite) super.createDialogArea(parent);
+	protected void configureShell(final Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText(CoreUILabels.resString("Label.Calendar")); //$NON-NLS-1$
+		newShell.setImage(Icon.CALENDAR_SELECT_DAY.image());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets .Composite)
+	 */
+	@Override
+	protected Control createDialogArea(final Composite parent) {
+		final Composite composite = (Composite) super.createDialogArea(parent);
 		if (showDate) {
 			calendarControl = new SWTCalendar(composite, SWT.BORDER);
 			calendarControl.setCalendar(calendar);
@@ -75,48 +83,37 @@ public class CalendarDialog extends Dialog {
 		return composite;
 	}
 
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
-		if ((calendarControl != null) && !calendarControl.isDisposed()) {
-			if (showDate)
-				calendarControl.setCalendar(calendar);
-			if (showTime)
-				timeChooser.setTime(calendar);
-		}
-	}
-
 	public Calendar getCalendar() {
 		return calendar;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.jface.dialogs.Dialog#okPressed()
 	 */
 	@Override
 	protected void okPressed() {
 
-		if (showDate)
+		if (showDate) {
 			calendar = calendarControl.getCalendar();
-		if (showTime)
+		}
+		if (showTime) {
 			calendar = timeChooser.getTime(timeChooser.getTime(calendar));
+		}
 
 		super.okPressed();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets
-	 * .Shell)
-	 */
-	@Override
-	protected void configureShell(Shell newShell) {
-		super.configureShell(newShell);
-		newShell.setText(CoreUILabels.resString("Label.Calendar")); //$NON-NLS-1$
-		newShell.setImage(Icon.CALENDAR_SELECT_DAY.image());
+	public void setCalendar(final Calendar calendar) {
+		this.calendar = calendar;
+		if (calendarControl != null && !calendarControl.isDisposed()) {
+			if (showDate) {
+				calendarControl.setCalendar(calendar);
+			}
+			if (showTime) {
+				timeChooser.setTime(calendar);
+			}
+		}
 	}
 
 }

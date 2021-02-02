@@ -23,15 +23,8 @@ import com.arcadsoftware.documentation.icons.Icon;
  * @author MD
  */
 public class ShowPropertyDialogAction extends ArcadAction {
-	protected Shell shell;
 	protected IAdaptable element = null;
-
-	public ShowPropertyDialogAction(IAdaptable element) {
-		super();
-		this.shell = EvolutionCoreUIPlugin.getShell();
-		this.element = element;
-		setInterface();
-	}
+	protected Shell shell;
 
 	/**
 	 * @param shell
@@ -41,11 +34,11 @@ public class ShowPropertyDialogAction extends ArcadAction {
 		this(null);
 	}
 
-	@Override
-	protected void setInterface() {
-		setText(CoreUILabels.resString("action.properties.text")); //$NON-NLS-1$
-		setToolTipText(CoreUILabels.resString("action.properties.tooltip")); //$NON-NLS-1$		
-		setImageDescriptor(Icon.PROPERTIES.imageDescriptor());
+	public ShowPropertyDialogAction(final IAdaptable element) {
+		super();
+		shell = EvolutionCoreUIPlugin.getShell();
+		this.element = element;
+		setInterface();
 	}
 
 	protected IAdaptable defineElement() {
@@ -58,13 +51,12 @@ public class ShowPropertyDialogAction extends ArcadAction {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.jface.action.IAction#run()
 	 */
 	@Override
 	public void run() {
 		boolean isnull = false;
-		PropertyPageManager pageManager = new PropertyPageManager();
+		final PropertyPageManager pageManager = new PropertyPageManager();
 		String title = StringTools.EMPTY;
 		if (element == null) {
 			element = defineElement();
@@ -73,26 +65,35 @@ public class ShowPropertyDialogAction extends ArcadAction {
 		if (element != null) {
 			PropertyPageContributorManager.getManager().contribute(pageManager, element);
 			// testing if there are pages in the manager
-			Iterator<?> pages = pageManager.getElements(PreferenceManager.PRE_ORDER).iterator();
-			String name = defineName();
+			final Iterator<?> pages = pageManager.getElements(PreferenceManager.PRE_ORDER).iterator();
+			final String name = defineName();
 			if (!pages.hasNext()) {
 				MessageDialog.openInformation(shell, CoreUILabels.resString("msg.commonTitle"), //$NON-NLS-1$
 						CoreUILabels.resString("msg.noPropertyPage")); //$NON-NLS-1$
 				return;
 			}
 			//
-			StringBuilder sb = new StringBuilder(CoreUILabels.resString("msg.propertyPageTitle"));//$NON-NLS-1$ 
+			final StringBuilder sb = new StringBuilder(CoreUILabels.resString("msg.propertyPageTitle"));//$NON-NLS-1$
 			sb.append(name);
 			title = sb.toString();
 
-			ArcadPropertyDialog propertyDialog = new ArcadPropertyDialog(shell, pageManager, new StructuredSelection(
-					new Object[] { element }));
+			final ArcadPropertyDialog propertyDialog = new ArcadPropertyDialog(shell, pageManager,
+					new StructuredSelection(
+							new Object[] { element }));
 			propertyDialog.create();
 			propertyDialog.doAfterCreation();
 			propertyDialog.getShell().setText(title);
 			propertyDialog.open();
 		}
-		if (isnull)
+		if (isnull) {
 			element = null;
+		}
+	}
+
+	@Override
+	protected void setInterface() {
+		setText(CoreUILabels.resString("action.properties.text")); //$NON-NLS-1$
+		setToolTipText(CoreUILabels.resString("action.properties.tooltip")); //$NON-NLS-1$
+		setImageDescriptor(Icon.PROPERTIES.imageDescriptor());
 	}
 }

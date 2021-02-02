@@ -18,61 +18,58 @@ import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 
 /**
  * @author MD
- *
  */
 public class AbstractArcadComposite extends Composite {
-	protected String errorMessage = null;
-    /**
-     * @param parent
-     * @param style
-     */
-    public AbstractArcadComposite(Composite parent, int style) {
-        super(parent, style);
-    }
+	public static Shell getCurrentShell() {
+		return EvolutionCoreUIPlugin.getShell();
+	}
 
-    public static void showError(String message) {
-        MessageDialog.openError(getCurrentShell(),
-        		CoreUILabels.resString("msg.commonTitle"), //$NON-NLS-1$
-                                message);    
-    }      
-    
-    public static Shell getCurrentShell() {
-        return EvolutionCoreUIPlugin.getShell();        
-    }
-    
+	public static void showError(final String message) {
+		MessageDialog.openError(getCurrentShell(),
+				CoreUILabels.resString("msg.commonTitle"), //$NON-NLS-1$
+				message);
+	}
+
+	protected String errorMessage = null;
+
+	/**
+	 * @param parent
+	 * @param style
+	 */
+	public AbstractArcadComposite(final Composite parent, final int style) {
+		super(parent, style);
+	}
+
+	public void dataDateToWidgetDate(final Text widget, String data) {
+		final String format = (String) widget.getData();
+		final SimpleDateFormat f = new SimpleDateFormat(format);
+		if (data == null || data.equals("")) { //$NON-NLS-1$
+			data = f.format(new Date());
+		} else {
+			final SimpleDateFormat nativeFormat = new SimpleDateFormat("yyyyMMdd"); //$NON-NLS-1$
+			try {
+				final Date date = nativeFormat.parse(data);
+				data = f.format(date);
+			} catch (final ParseException e) {
+				data = f.format(new Date());
+			}
+		}
+		widget.setText(data);
+	}
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
 
-
-	public void setErrorMessage(String errorMessage) {
+	public void setErrorMessage(final String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
 
-	
 	protected boolean setMessage() {
-		if (errorMessage==null)
+		if (errorMessage == null) {
 			return true;
-		else
-			return false;
-	}
-	
-	
-
-	public void dataDateToWidgetDate(Text widget,String data){		
-		String format = (String)widget.getData();
-		SimpleDateFormat f = new SimpleDateFormat(format);
-		if ((data==null) || (data.equals(""))){ //$NON-NLS-1$								 				
-			data = f.format(new Date());				
 		} else {
-			SimpleDateFormat nativeFormat = new SimpleDateFormat("yyyyMMdd"); //$NON-NLS-1$
-			try {				
-				Date date = nativeFormat.parse(data);
-				data = f.format(date);
-			} catch (ParseException e) {
-				data = f.format(new Date());
-			}				
+			return false;
 		}
-		widget.setText(data);				
-	}    
+	}
 }

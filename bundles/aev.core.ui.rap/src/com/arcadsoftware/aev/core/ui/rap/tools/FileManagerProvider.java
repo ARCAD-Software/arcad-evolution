@@ -12,40 +12,46 @@ import org.osgi.service.component.annotations.Component;
 import com.arcadsoftware.aev.core.ui.tools.IFileManagerProvider;
 
 @Component(service = IFileManagerProvider.class)
-public class FileManagerProvider implements IFileManagerProvider {	
-	public String selectDirectory(Shell shell, int actionStyle, String title) {
+public class FileManagerProvider implements IFileManagerProvider {
+	@Override
+	public boolean isSelectorAvailable() {
+		return false;
+	}
+
+	@Override
+	public void openFile(final File file) {
+		// We do nothing under RAP Execution
+	}
+
+	@Override
+	public void openFileFromStream(final InputStream stream, final String tempFileName) {
+		// We do nothing under RAP Execution
+	}
+
+	@Override
+	public String selectDirectory(final Shell shell, final int actionStyle, final String title) {
 		return null;
 	}
-	
-	public String selectFile(Shell shell, int actionStyle, String title,final String[] fileExtensions) {
-		final FileDialog fileDialog = new FileDialog( shell, SWT.OPEN | SWT.APPLICATION_MODAL );
-		//fileDialog.setFilterExtensions(fileExtensions);
+
+	@Override
+	public String selectFile(final Shell shell, final int actionStyle, final String title,
+			final String[] fileExtensions) {
+		final FileDialog fileDialog = new FileDialog(shell, SWT.OPEN | SWT.APPLICATION_MODAL);
+		// fileDialog.setFilterExtensions(fileExtensions);
 		fileDialog.setText(title);
 		return fileDialog.open();
 	}
 
-	
-	public String selectFile(Shell shell, int actionStyle, String title,
-			String[] fileExtensions, String filename) {
-		return null;
-	}
-	
-	public void openFileFromStream(InputStream stream, String tempFileName) {
-		//We do nothing under RAP Execution		
-	}
-	
-	public void openFile(File file) {
-		//We do nothing under RAP Execution				
-	}
-
 	@Override
-	public List<String> selectFiles(Shell shell, int actionStyle, String title,final String[] fileExtensions) {
+	public String selectFile(final Shell shell, final int actionStyle, final String title,
+			final String[] fileExtensions, final String filename) {
 		return null;
 	}
 
 	@Override
-	public boolean isSelectorAvailable() {
-		return false;
-	}	
-	
+	public List<String> selectFiles(final Shell shell, final int actionStyle, final String title,
+			final String[] fileExtensions) {
+		return null;
+	}
+
 }

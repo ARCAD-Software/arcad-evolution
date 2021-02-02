@@ -13,34 +13,34 @@ public class Period extends Composite {
 
 	protected Text beginText;
 	protected Text endText;
-	
-	public Period(Composite parent, int style) {
+
+	public Period(final Composite parent, final int style) {
 		super(parent, style);
-		createContent();		
+		createContent();
 	}
-	
-	protected void createContent(){
-		setLayout(new GridLayout(3,false));
+
+	protected void createContent() {
+		setLayout(new GridLayout(3, false));
 		setLayoutData(new GridData(GridData.FILL_BOTH));
-		beginText = GuiFormatTools.createLabelledDateWithDateSelector(this, 
-						CoreUILabels.resString("Period.beginDate"), SWT.NONE, "*"); //$NON-NLS-1$ //$NON-NLS-2$
-		endText = GuiFormatTools.createLabelledDateWithDateSelector(this, 
+		beginText = GuiFormatTools.createLabelledDateWithDateSelector(this,
+				CoreUILabels.resString("Period.beginDate"), SWT.NONE, "*"); //$NON-NLS-1$ //$NON-NLS-2$
+		endText = GuiFormatTools.createLabelledDateWithDateSelector(this,
 				CoreUILabels.resString("Period.endDate"), SWT.NONE, "*"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
-	
-	public Text getBeginText(){
+
+	public Text getBeginText() {
 		return beginText;
 	}
-	
-	public Text getEndText(){
+
+	public Text getEndText() {
 		return endText;
 	}
-	
-	public void setBeginDate(String beginDate){
+
+	public void setBeginDate(final String beginDate) {
 		beginText.setText(beginDate);
 	}
-	
-	public void setEndDate(String endDate){
+
+	public void setEndDate(final String endDate) {
 		endText.setText(endDate);
 	}
 }

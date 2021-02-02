@@ -1,27 +1,24 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.lists;
 
+public abstract class AbstractXmlFileListCountedCheckedTask
+		extends AbstractXmlFileListCountedTask {
+	protected boolean checkIfExists = false;
+	protected boolean replaceIfExists = false;
 
-public abstract class AbstractXmlFileListCountedCheckedTask 
-extends AbstractXmlFileListCountedTask {
-	protected boolean checkIfExists = false; 
-	protected boolean replaceIfExists = false; 
-
-	
 	/**
-	 * @param checkIfExists the checkIfExists to set
+	 * @param checkIfExists
+	 *            the checkIfExists to set
 	 */
-	public void setCheckIfExists(boolean checkIfExists) {
+	public void setCheckIfExists(final boolean checkIfExists) {
 		this.checkIfExists = checkIfExists;
 	}
 
 	/**
-	 * @param replaceIfExists the replaceIfExists to set
+	 * @param replaceIfExists
+	 *            the replaceIfExists to set
 	 */
-	public void setReplaceIfExists(boolean replaceIfExists) {
+	public void setReplaceIfExists(final boolean replaceIfExists) {
 		this.replaceIfExists = replaceIfExists;
-	}	
+	}
 
-	
-	
-	
 }

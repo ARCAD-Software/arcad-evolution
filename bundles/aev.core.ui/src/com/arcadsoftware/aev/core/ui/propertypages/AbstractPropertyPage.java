@@ -24,61 +24,21 @@ public abstract class AbstractPropertyPage extends ArcadPropertyPage {
 		super();
 	}
 
-	public abstract boolean checkElement(Object o);
-
 	public abstract ArcadEntity affectElement(Object o);
 
-	public abstract boolean readElement(Object o);
-
-	protected abstract void fillWithItem(ArcadEntity itemToFill);
-
-	protected abstract void fillWithContent();
-
-	protected void doApply() {
-		// Do nothing
-	}
-
-	/**
-	 * Cette méthode est à surcharger lorsque l'on ne veut pas que la page soit
-	 * éditable (mode consultation).
-	 * 
-	 * @param itemEditable
-	 * @return booelan : si la page est éditable dans sa globalité ou non.
-	 */
-	protected boolean isEditable(ArcadEntity itemEditable) {
-		return true;
-	}
+	public abstract boolean checkElement(Object o);
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.propertypages.ArcadPropertyPage#setValue()
+	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse .swt.widgets.Composite)
 	 */
 	@Override
-	protected void setValue() {
-		Object o = getElement();
-		if (checkElement(o)) {
-			item = affectElement(o);
-			if (readElement(o))
-				fillWithItem(item);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse
-	 * .swt.widgets.Composite)
-	 */
-	@Override
-	protected Control createContents(Composite parent) {
+	protected Control createContents(final Composite parent) {
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		parent.setLayoutData(gridData);
 
-		Composite composite = new Composite(parent, SWT.NONE);
-		GridLayout grid = new GridLayout(3, false);
+		final Composite composite = new Composite(parent, SWT.NONE);
+		final GridLayout grid = new GridLayout(3, false);
 		grid.marginHeight = 0;
 		grid.marginWidth = 0;
 		composite.setLayout(grid);
@@ -96,44 +56,42 @@ public abstract class AbstractPropertyPage extends ArcadPropertyPage {
 		} else {
 			// La gestion de l'édition des contrôles se fait de manière plus
 			// fine.
-			Control[] c = doRightManagement();
+			final Control[] c = doRightManagement();
 			setControlsNotEditable(c);
 		}
 		return composite;
 	}
 
-	private void setControlsNotEditable(Control[] control) {
-		for (int i = 0; i < control.length; i++) {
-			control[i].setEnabled(false);
-		}
+	protected void doApply() {
+		// Do nothing
 	}
 
 	/**
-	 * Cette méthode est à surcharger pour choisir de manière plus fine (en
-	 * fonction de droits, par exemple) les contrôles qui ne doivent pas être
-	 * "éditables".
-	 * 
-	 * @return Control[] : tableau des contrôles qui ne doivent pas être
-	 *         éditables.
+	 * Cette méthode est à surcharger pour choisir de manière plus fine (en fonction de droits, par exemple) les
+	 * contrôles qui ne doivent pas être "éditables".
+	 *
+	 * @return Control[] : tableau des contrôles qui ne doivent pas être éditables.
 	 */
 	protected Control[] doRightManagement() {
 		return new Control[0];
 	}
 
-	private void setCompositeNotEditable(Composite composite) {
-		composite.setEnabled(false);
-		this.noDefaultAndApplyButton();
-		Control[] ctrls = composite.getChildren();
-		for (int i = 0; i < ctrls.length; i++) {
-			if (!(ctrls[i] instanceof Label))
-				ctrls[i].setEnabled(false);
-		}
+	protected abstract void fillWithContent();
 
+	protected abstract void fillWithItem(ArcadEntity itemToFill);
+
+	/**
+	 * Cette méthode est à surcharger lorsque l'on ne veut pas que la page soit éditable (mode consultation).
+	 *
+	 * @param itemEditable
+	 * @return booelan : si la page est éditable dans sa globalité ou non.
+	 */
+	protected boolean isEditable(final ArcadEntity itemEditable) {
+		return true;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.jface.preference.PreferencePage#performApply()
 	 */
 	@Override
@@ -148,13 +106,47 @@ public abstract class AbstractPropertyPage extends ArcadPropertyPage {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.jface.preference.IPreferencePage#performOk()
 	 */
 	@Override
 	public boolean performOk() {
 		performApply();
 		return super.performOk();
+	}
+
+	public abstract boolean readElement(Object o);
+
+	private void setCompositeNotEditable(final Composite composite) {
+		composite.setEnabled(false);
+		noDefaultAndApplyButton();
+		final Control[] ctrls = composite.getChildren();
+		for (int i = 0; i < ctrls.length; i++) {
+			if (!(ctrls[i] instanceof Label)) {
+				ctrls[i].setEnabled(false);
+			}
+		}
+
+	}
+
+	private void setControlsNotEditable(final Control[] control) {
+		for (final Control element : control) {
+			element.setEnabled(false);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.propertypages.ArcadPropertyPage#setValue()
+	 */
+	@Override
+	protected void setValue() {
+		final Object o = getElement();
+		if (checkElement(o)) {
+			item = affectElement(o);
+			if (readElement(o)) {
+				fillWithItem(item);
+			}
+		}
 	}
 
 }

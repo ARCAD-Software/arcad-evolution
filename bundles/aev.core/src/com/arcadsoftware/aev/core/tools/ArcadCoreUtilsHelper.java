@@ -10,25 +10,25 @@ import com.arcadsoftware.aev.core.EvolutionCorePlugin;
  */
 public class ArcadCoreUtilsHelper implements IHelper {
 	public ArcadCoreUtilsHelper() {
-        super();
-    }
-
-    @Override
-	public void beginAction(){
-    	//Do nothing
-    }
-    
-    @Override
-	public void endAction(){
-		//Do nothing
-	}	
-
-    @Override
-	public String getBasedLocation(){
-	  return EvolutionCorePlugin.getDefault().getStateLocation().toString();	    
+		super();
 	}
 
-    @Override
+	@Override
+	public void beginAction() {
+		// Do nothing
+	}
+
+	@Override
+	public void endAction() {
+		// Do nothing
+	}
+
+	@Override
+	public String getBasedLocation() {
+		return EvolutionCorePlugin.getDefault().getStateLocation().toString();
+	}
+
+	@Override
 	public String getCompliantFileName() {
 		return EvolutionCorePlugin.getCompliantFileName();
 	}

@@ -7,12 +7,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.arcadsoftware.aev.core.messages.MessageDetail;
 import com.arcadsoftware.aev.core.messages.MessageManager;
-import com.arcadsoftware.aev.core.ui.actions.AbstractMultiItemWithWizardAction;
 import com.arcadsoftware.aev.core.ui.actions.AbstractMultiItemAction.RunWithProgress;
+import com.arcadsoftware.aev.core.ui.actions.AbstractMultiItemWithWizardAction;
 
 /**
  * @author MD
- * 
  */
 public class AbstractMultiItemWizard extends AbstractWizard {
 
@@ -20,20 +19,19 @@ public class AbstractMultiItemWizard extends AbstractWizard {
 
 	/**
 	 * Constructeur de la classe.<br>
-	 * 
+	 *
 	 * @param action
 	 *            {@link com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction
-	 *            AbstractSimpleItemWithWizardAction} Action utilisant cet
-	 *            assistant
+	 *            AbstractSimpleItemWithWizardAction} Action utilisant cet assistant
 	 * @param title
 	 *            String : Titre de l'assistant
 	 */
-	public AbstractMultiItemWizard(AbstractMultiItemWithWizardAction action, String title) {
+	public AbstractMultiItemWizard(final AbstractMultiItemWithWizardAction action, final String title) {
 		this(title);
 		this.action = action;
 	}
 
-	public AbstractMultiItemWizard(String title) {
+	public AbstractMultiItemWizard(final String title) {
 		super();
 		setNeedsProgressMonitor(true);
 		setWindowTitle(title);
@@ -42,59 +40,21 @@ public class AbstractMultiItemWizard extends AbstractWizard {
 	/**
 	 * Méthode d'ajout des pages de l'assistant.<br>
 	 * Cette méthode fait appel à la méthode
-	 * {@link com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction#getPages()
-	 * getPages()} de la classe action passé en paramétre au constructeur pour
-	 * récupérer les pages spécifiques nécessaires à l'exécution de l'action.<br>
-	 * Cette méthode permet aussi d'intégrer automatiquement la page de type
-	 * {@link SimpleItemCommandWizardPage SimpleItemCommandWizardPage}
-	 * permettant l'affichage du résumé et du prompt de commande.
-	 * 
+	 * {@link com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction#getPages() getPages()} de la classe
+	 * action passé en paramétre au constructeur pour récupérer les pages spécifiques nécessaires à l'exécution de
+	 * l'action.<br>
+	 * Cette méthode permet aussi d'intégrer automatiquement la page de type {@link SimpleItemCommandWizardPage
+	 * SimpleItemCommandWizardPage} permettant l'affichage du résumé et du prompt de commande.
+	 *
 	 * @see org.eclipse.jface.wizard.IWizard#addPages()
 	 * @see com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction#getPages()
 	 */
 	@Override
 	public void addPages() {
 		pages = action.getPages();
-		for (int i = 0; i < pages.length; i++) {
-			addPage(pages[i]);
+		for (final AbstractSimpleItemWizardPage page : pages) {
+			addPage(page);
 		}
-	}
-
-	/**
-	 * Méthode permettant le déclenchement de l'action.<br>
-	 * Cette méthode est appelé lorsque l'utilisateur clique sur le bouton
-	 * "Terminer" de l'assistant.<br>
-	 * Cette méthode a été redéfinie pour :
-	 * <ul>
-	 * <li>Tenir compte des modifications éventuelles de l'action réalisée.</li>
-	 * <li>Déléguer l'exécution réelle à l'action appelante via l'appel de la
-	 * méthode
-	 * {@link com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction#doExecuteCommand(String)
-	 * doExecuteCommand(String command)}</li>
-	 * </ul>
-	 * 
-	 * @return boolean : <b>True</b> si l'exécution s'est déroulée correctement,
-	 *         <b>false</b> sinon.<br>
-	 *         Ce code retour d'exécution est stocké dans la variable d'instance
-	 *         "executionSucceed" pour pouvoir être utilisé par la suite.
-	 * 
-	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
-	 */
-	@Override
-	public boolean performFinish() {
-		RunWithProgress runCommand = action.getRunnableAction();
-		MessageManager.clear();
-		try {
-			getContainer().run(false, false, runCommand);
-		} catch (InvocationTargetException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
-					this.getClass().toString());
-		} catch (InterruptedException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
-					this.getClass().toString());
-		}
-		executionSucceed = runCommand.getResult();
-		return executionSucceed;
 	}
 
 	/**
@@ -102,6 +62,40 @@ public class AbstractMultiItemWizard extends AbstractWizard {
 	 */
 	public AbstractMultiItemWithWizardAction getAction() {
 		return action;
+	}
+
+	/**
+	 * Méthode permettant le déclenchement de l'action.<br>
+	 * Cette méthode est appelé lorsque l'utilisateur clique sur le bouton "Terminer" de l'assistant.<br>
+	 * Cette méthode a été redéfinie pour :
+	 * <ul>
+	 * <li>Tenir compte des modifications éventuelles de l'action réalisée.</li>
+	 * <li>Déléguer l'exécution réelle à l'action appelante via l'appel de la méthode
+	 * {@link com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction#doExecuteCommand(String)
+	 * doExecuteCommand(String command)}</li>
+	 * </ul>
+	 *
+	 * @return boolean : <b>True</b> si l'exécution s'est déroulée correctement, <b>false</b> sinon.<br>
+	 *         Ce code retour d'exécution est stocké dans la variable d'instance "executionSucceed" pour pouvoir être
+	 *         utilisé par la suite.
+	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
+	 */
+	@Override
+	public boolean performFinish() {
+		final RunWithProgress runCommand = action.getRunnableAction();
+		MessageManager.clear();
+		try {
+			getContainer().run(false, false, runCommand);
+		} catch (final InvocationTargetException e) {
+			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
+					this.getClass().toString());
+		} catch (final InterruptedException e) {
+			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
+					this.getClass().toString());
+			Thread.currentThread().interrupt();
+		}
+		executionSucceed = runCommand.getResult();
+		return executionSucceed;
 	}
 
 }

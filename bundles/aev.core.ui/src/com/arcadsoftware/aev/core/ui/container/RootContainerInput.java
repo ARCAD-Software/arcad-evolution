@@ -11,41 +11,31 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import com.arcadsoftware.aev.core.ui.actions.ArcadActions;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public abstract class RootContainerInput extends Container {
 
 	protected RootContainer rootContainer;
 
-	public RootContainerInput(StructuredViewer viewer) {
+	public RootContainerInput(final StructuredViewer viewer) {
 		super((Container) null);
 		this.viewer = viewer;
 		init(null);
 	}
 
-	protected void init(ContainerProvider parent) {
-		rootContainer = new RootContainer(parent, viewer, getLabel(), getImage(), getChildren());
-		rootContainer.setActions(getRootContainerActions());
+	public RootContainer getRootContainer() {
+		return rootContainer;
 	}
 
 	public abstract ArcadActions getRootContainerActions();
 
-	public boolean hasChildren() {
-		return true;
-	}
-
+	@Override
 	public String getUniqueKey() {
-		if (getParent() != null)
+		if (getParent() != null) {
 			return getParent().getUniqueKey().concat("/ROOT"); //$NON-NLS-1$
+		}
 		return "/ROOT"; //$NON-NLS-1$
-	}
-
-	public void refresh() {
-		viewer.refresh();
 	}
 
 	@Override
@@ -53,7 +43,18 @@ public abstract class RootContainerInput extends Container {
 		return viewer;
 	}
 
-	public RootContainer getRootContainer() {
-		return rootContainer;
+	@Override
+	public boolean hasChildren() {
+		return true;
+	}
+
+	protected void init(final ContainerProvider parent) {
+		rootContainer = new RootContainer(parent, viewer, getLabel(), getImage(), getChildren());
+		rootContainer.setActions(getRootContainerActions());
+	}
+
+	@Override
+	public void refresh() {
+		viewer.refresh();
 	}
 }

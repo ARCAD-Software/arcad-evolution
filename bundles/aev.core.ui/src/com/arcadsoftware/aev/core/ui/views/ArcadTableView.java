@@ -8,13 +8,10 @@ package com.arcadsoftware.aev.core.ui.views;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -43,21 +40,66 @@ import com.arcadsoftware.documentation.icons.Icon;
 public class ArcadTableView extends ViewPart implements ISelectionChangedListener {
 
 	public static final int ACTION_NONE = 0;
-	public static final int ACTION_PROPERTIES = 1;
 	public static final int ACTION_PROMPT = 2;
+	public static final int ACTION_PROPERTIES = 1;
 	public static final int ACTION_SYNCHRONIZE = 4;
 
-	private boolean showActionProperties = false;
-	private String ViewName = "ArcadTableView"; //$NON-NLS-1$
-	protected AbstractColumnedViewer viewer;
-	protected boolean hookTableMenu = true;
-	protected ArcadPropertyDialogAction showPropertiesAction = null;
-	Action doubleClickAction = null;
-	private boolean showSynchronizeAction = false;
-	Action synchronizeAction;
 	protected boolean autoSearch = true;
 	private Cursor cursor;
+	Action doubleClickAction = null;
+	protected boolean hookTableMenu = true;
 	protected String initialTitle;
+	private boolean showActionProperties = false;
+	protected ArcadPropertyDialogAction showPropertiesAction = null;
+	private boolean showSynchronizeAction = false;
+	Action synchronizeAction;
+	protected AbstractColumnedViewer viewer;
+	protected IMemento viewMemento;
+
+	private String ViewName = "ArcadTableView"; //$NON-NLS-1$
+
+	public ArcadTableView() {
+		super();
+	}
+
+	public ArcadTableView(final int style) {
+		this();
+		showActionProperties = (style & ACTION_PROPERTIES) == ACTION_PROPERTIES;
+		showSynchronizeAction = (style & ACTION_SYNCHRONIZE) == ACTION_SYNCHRONIZE;
+	}
+
+	protected String basicTranslate(final String key) {
+		final String res = CoreUILabels.resString("ArcadTableView." + key); //$NON-NLS-1$
+		if (res.equals("ArcadTableView." + key)) {
+			return key;
+		}
+		return res;
+	}
+
+	public void beginAction() {
+		final Shell shell = EvolutionCoreUIPlugin.getDefault().getPluginShell();
+		if (shell.getDisplay() != null) {
+			final Display display = shell.getDisplay();
+			cursor = new Cursor(display, SWT.CURSOR_WAIT);
+			shell.setCursor(cursor);
+		}
+	}
+
+	protected void contributeToActionBars() {
+		final IActionBars bars = getViewSite().getActionBars();
+		fillLocalPullDown(bars.getMenuManager());
+		fillLocalToolBar(bars.getToolBarManager());
+		bars.updateActionBars();
+		bars.getToolBarManager().update(true);
+	}
+
+	@Override
+	public void createPartControl(final Composite parent) {
+		setInterface();
+		initialTitle = getTitle();
+		hookContextMenu();
+		hookDoubleClickAction();
+	}
 
 	protected void defineActions() {
 		// Do nothing
@@ -66,21 +108,21 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 	/**
 	 * @param manager
 	 */
-	protected void defineLocalToolbar(IToolBarManager manager) {
+	protected void defineLocalContextMenu(final IMenuManager manager) {
 		// Do nothing
 	}
 
 	/**
 	 * @param manager
 	 */
-	protected void defineLocalPullDown(IMenuManager manager) {
+	protected void defineLocalPullDown(final IMenuManager manager) {
 		// Do nothing
 	}
 
 	/**
 	 * @param manager
 	 */
-	protected void defineLocalContextMenu(IMenuManager manager) {
+	protected void defineLocalToolbar(final IToolBarManager manager) {
 		// Do nothing
 	}
 
@@ -88,58 +130,64 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 		// Do nothing
 	}
 
-	protected IMemento viewMemento;
-
-	protected void restoreState() {
-		// Do nothing
-	}
-
-	public ArcadTableView() {
-		super();
-	}
-
-	public ArcadTableView(int style) {
-		this();
-		this.showActionProperties = ((style & ACTION_PROPERTIES) == ACTION_PROPERTIES);
-		this.showSynchronizeAction = ((style & ACTION_SYNCHRONIZE) == ACTION_SYNCHRONIZE);
-	}
-
-	protected String basicTranslate(String key) {
-		String res = CoreUILabels.resString("ArcadTableView." + key); //$NON-NLS-1$
-		if (res.equals("ArcadTableView." + key)) //$NON-NLS-1$
-			return key;
-		return res;
-	}
-
-	public void beginAction() {
-		Shell shell = EvolutionCoreUIPlugin.getDefault().getPluginShell();
-		if (shell.getDisplay() != null) {
-			Display display = shell.getDisplay();
-			cursor = new Cursor(display, SWT.CURSOR_WAIT);
-			shell.setCursor(cursor);
-		}
-	}
-
-	public void endAction() {
-		Shell shell = EvolutionCoreUIPlugin.getDefault().getPluginShell();
-		shell.setCursor(null);
-		cursor.dispose();
-	}
-
 	public void doOnSelect() {
 		// Do nothing
 	}
 
+	public void endAction() {
+		final Shell shell = EvolutionCoreUIPlugin.getDefault().getPluginShell();
+		shell.setCursor(null);
+		cursor.dispose();
+	}
+
+	protected void fillContextMenu(final IMenuManager manager) {
+		defineLocalContextMenu(manager);
+		if (showActionProperties) {
+			manager.add(new Separator());
+			manager.add(showPropertiesAction);
+		}
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+	}
+
+	protected void fillLocalPullDown(final IMenuManager manager) {
+		defineLocalPullDown(manager);
+		manager.update(true);
+	}
+
+	protected void fillLocalToolBar(final IToolBarManager manager) {
+		if (showActionProperties) {
+			manager.add(showPropertiesAction);
+			manager.add(new Separator());
+		}
+		if (showSynchronizeAction) {
+			manager.add(synchronizeAction);
+			manager.add(new Separator());
+		}
+		defineLocalToolbar(manager);
+	}
+
+	protected StructuredViewer getStructuredViewer() {
+		return viewer.getViewer();
+	}
+
+	public AbstractColumnedViewer getViewer() {
+		return viewer;
+	}
+
+	public IMemento getViewMemento() {
+		return viewMemento;
+	}
+
+	public String getViewName() {
+		return ViewName;
+	}
+
 	protected void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
+		final MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
 		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				ArcadTableView.this.fillContextMenu(manager);
-			}
-		});
+		menuMgr.addMenuListener(manager -> ArcadTableView.this.fillContextMenu(manager));
 		if (hookTableMenu) {
-			Menu menu = menuMgr.createContextMenu(getStructuredViewer().getControl());
+			final Menu menu = menuMgr.createContextMenu(getStructuredViewer().getControl());
 			getStructuredViewer().getControl().setMenu(menu);
 			// [ML] Le menu popup devrait pouvoir être surclassé par les
 			// Descendants.
@@ -147,17 +195,14 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 		}
 	}
 
-	protected StructuredViewer getStructuredViewer(){
-		return viewer.getViewer();
-	}
-	
-	
 	protected void hookDoubleClickAction() {
-		getStructuredViewer().addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
+		getStructuredViewer().addDoubleClickListener(event -> doubleClickAction.run());
+	}
+
+	@Override
+	public void init(final IViewSite site, final IMemento memento) throws PartInitException {
+		super.init(site, memento);
+		viewMemento = memento;
 	}
 
 	protected void makeAction() {
@@ -180,13 +225,14 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 		}
 
 		if (showSynchronizeAction) {
-			synchronizeAction = new Action(CoreUILabels.resString("Action.synchronizeAction.Text"),//$NON-NLS-1$
+			synchronizeAction = new Action(CoreUILabels.resString("Action.synchronizeAction.Text"), //$NON-NLS-1$
 					IAction.AS_CHECK_BOX) {
 				@Override
 				public void run() {
 					autoSearch = synchronizeAction.isChecked();
-					if (autoSearch)
+					if (autoSearch) {
 						processSelectionChanged();
+					}
 					synchronizationChanged();
 				}
 			};
@@ -197,46 +243,32 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 		defineActions();
 	}
 
-	protected void contributeToActionBars() {
-		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
-		fillLocalToolBar(bars.getToolBarManager());
-		bars.updateActionBars();
-		bars.getToolBarManager().update(true);
+	public void onActivation() {
+		// Do nothing
 	}
 
-	protected void fillLocalPullDown(IMenuManager manager) {
-		defineLocalPullDown(manager);
-		manager.update(true);
+	protected void processSelectionChanged() {
+		// Do nothing
 	}
 
-	protected void fillContextMenu(IMenuManager manager) {
-		defineLocalContextMenu(manager);
-		if (showActionProperties) {
-			manager.add(new Separator());
-			manager.add(showPropertiesAction);
-		}
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-	}
-
-	protected void fillLocalToolBar(IToolBarManager manager) {
-		if (showActionProperties) {
-			manager.add(showPropertiesAction);
-			manager.add(new Separator());
-		}
-		if (showSynchronizeAction) {
-			manager.add(synchronizeAction);
-			manager.add(new Separator());
-		}
-		defineLocalToolbar(manager);
+	protected void restoreState() {
+		// Do nothing
 	}
 
 	@Override
-	public void createPartControl(Composite parent) {
-		setInterface();
-		initialTitle = this.getTitle();
-		hookContextMenu();
-		hookDoubleClickAction();
+	public void selectionChanged(final SelectionChangedEvent event) {
+		// Do nothing
+	}
+
+	@Override
+	public void setFocus() {
+		try {
+			if (viewer != null && getStructuredViewer() != null && viewer.getControl() != null) {
+				getStructuredViewer().getControl().setFocus();
+			}
+		} catch (final Exception e) {
+			// Do nothing
+		}
 	}
 
 	public void setInterface() {
@@ -244,51 +276,11 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 		contributeToActionBars();
 	}
 
-	@Override
-	public void setFocus() {
-		try {
-			if (viewer != null && getStructuredViewer() != null && viewer.getControl() != null)
-				getStructuredViewer().getControl().setFocus();
-		} catch (Exception e) {
-			// Do nothing
-		}
-	}
-
-	protected void processSelectionChanged() {
-		// Do nothing
-	}
-
-	protected void synchronizationChanged() {
-		// Do nothing
-	}
-
-	public void selectionChanged(SelectionChangedEvent event) {
-		// Do nothing
-	}
-
-	public String getViewName() {
-		return ViewName;
-	}
-
-	public void setViewName(String string) {
+	public void setViewName(final String string) {
 		ViewName = string;
 	}
 
-	@Override
-	public void init(IViewSite site, IMemento memento) throws PartInitException {
-		super.init(site, memento);
-		this.viewMemento = memento;
-	}
-
-	public AbstractColumnedViewer getViewer() {
-		return viewer;
-	}
-
-	public IMemento getViewMemento() {
-		return viewMemento;
-	}
-
-	public void onActivation() {
+	protected void synchronizationChanged() {
 		// Do nothing
 	}
 }

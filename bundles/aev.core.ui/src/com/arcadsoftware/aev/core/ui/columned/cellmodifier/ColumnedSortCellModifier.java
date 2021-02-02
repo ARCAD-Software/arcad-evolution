@@ -13,16 +13,16 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedSortTableView
  */
 public class ColumnedSortCellModifier implements ICellModifier {
 
-	private ColumnedSortTableViewer tableViewer;
-	private ArcadColumns referenceColumns;
+	private final ArcadColumns referenceColumns;
+	private final ColumnedSortTableViewer tableViewer;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param ColumnedDialogTableViewer
 	 *            an instance of a ColumnedDialogTableViewer
 	 */
-	public ColumnedSortCellModifier(ColumnedSortTableViewer tableViewer, ArcadColumns referenceColumns) {
+	public ColumnedSortCellModifier(final ColumnedSortTableViewer tableViewer, final ArcadColumns referenceColumns) {
 		super();
 		this.tableViewer = tableViewer;
 		this.referenceColumns = referenceColumns;
@@ -30,44 +30,45 @@ public class ColumnedSortCellModifier implements ICellModifier {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.ICellModifier#canModify(java.lang.Object,
-	 * java.lang.String)
+	 * @see org.eclipse.jface.viewers.ICellModifier#canModify(java.lang.Object, java.lang.String)
 	 */
-	public boolean canModify(Object element, String property) {
-		if (property.equals(ColumnedSortTableViewer.COL_ID))
+	@Override
+	public boolean canModify(final Object element, final String property) {
+		if (property.equals(ColumnedSortTableViewer.COL_ID)) {
 			return false;
+		}
 		return true;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.ICellModifier#getValue(java.lang.Object,
-	 * java.lang.String)
+	 * @see org.eclipse.jface.viewers.ICellModifier#getValue(java.lang.Object, java.lang.String)
 	 */
-	public Object getValue(Object element, String property) {
+	@Override
+	public Object getValue(final Object element, final String property) {
 		// Find the index of the column
-		int columnIndex = tableViewer.getColumnNames().indexOf(property);
+		final int columnIndex = tableViewer.getColumnNames().indexOf(property);
 
 		Object result = null;
-		ColumnedSortCriteria criterion = (ColumnedSortCriteria) element;
+		final ColumnedSortCriteria criterion = (ColumnedSortCriteria) element;
 
 		switch (columnIndex) {
 		case 1: // COLUMN_NAME_COLUMN
 			String stringValue = criterion.getColumnName();
 			String[] choices = tableViewer.getChoices(property);
 			int i = choices.length - 1;
-			while (!stringValue.equals(choices[i]) && i > 0)
+			while (!stringValue.equals(choices[i]) && i > 0) {
 				--i;
+			}
 			result = new Integer(i);
 			break;
 		case 2: // SORT_ORDER_COLUMN
 			stringValue = criterion.getSortOrder();
 			choices = tableViewer.getChoices(property);
 			i = choices.length - 1;
-			while (!stringValue.equals(choices[i]) && i > 0)
+			while (!stringValue.equals(choices[i]) && i > 0) {
 				--i;
+			}
 			result = new Integer(i);
 			break;
 		default:
@@ -78,24 +79,23 @@ public class ColumnedSortCellModifier implements ICellModifier {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.ICellModifier#modify(java.lang.Object,
-	 * java.lang.String, java.lang.Object)
+	 * @see org.eclipse.jface.viewers.ICellModifier#modify(java.lang.Object, java.lang.String, java.lang.Object)
 	 */
-	public void modify(Object element, String property, Object value) {
+	@Override
+	public void modify(final Object element, final String property, final Object value) {
 
 		// Find the index of the column
-		int columnIndex = tableViewer.getColumnNames().indexOf(property);
+		final int columnIndex = tableViewer.getColumnNames().indexOf(property);
 
-		TableItem item = (TableItem) element;
-		ColumnedSortCriteria criterion = (ColumnedSortCriteria) item.getData();
+		final TableItem item = (TableItem) element;
+		final ColumnedSortCriteria criterion = (ColumnedSortCriteria) item.getData();
 		String valueString;
 
 		switch (columnIndex) {
 		case 0: // ID_COLUMN
 			break;
 		case 1: // COLUMN_NAME_COLUMN
-			valueString = tableViewer.getChoices(property)[((Integer) value).intValue()].trim();
+			valueString = tableViewer.getChoices(property)[((Integer) value)].trim();
 			if (!criterion.getColumnName().equals(valueString)) {
 				criterion.setColumnName(valueString);
 				int actualIndex = -1;
@@ -109,7 +109,7 @@ public class ColumnedSortCellModifier implements ICellModifier {
 			}
 			break;
 		case 2: // SORT_ORDER_COLUMN
-			valueString = tableViewer.getChoices(property)[((Integer) value).intValue()].trim();
+			valueString = tableViewer.getChoices(property)[((Integer) value)].trim();
 			if (!criterion.getSortOrder().equals(valueString)) {
 				criterion.setSortOrder(valueString);
 			}

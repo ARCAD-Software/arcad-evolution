@@ -6,40 +6,38 @@ import com.arcadsoftware.mmk.lists.impl.lists.FileList;
 import com.arcadsoftware.mmk.lists.managers.AbstractFiller;
 
 public class DirectoryScanFiller extends AbstractFiller {
-	
-	private String directoryToScan;
 
-	public DirectoryScanFiller(FileList list,String directoryToScan) {
+	private final String directoryToScan;
+
+	public DirectoryScanFiller(final FileList list, final String directoryToScan) {
 		super(list);
 		this.directoryToScan = directoryToScan;
 	}
 
-	private int getFiles(File basedir) {
-		if (basedir.exists()) {
-			int count = 0;
-			File[] files = basedir.listFiles();
-			for (int i= 0;i<files.length;i++){
-				if (files[i].isDirectory()){
-					getFiles(files[i]);
-				} else {										
-					saveItem(getList().toStoreItem(files[i]));
-					count++;
-				}
-			}
-			return count;
-		} 
-		return -1;
-	}	
-	
 	@Override
 	public int fill() {
-		File directoryToScanFile = new File(directoryToScan);
+		final File directoryToScanFile = new File(directoryToScan);
 		if (directoryToScanFile.exists() && directoryToScanFile.isDirectory()) {
 			return getFiles(directoryToScanFile);
 		}
 		return -1;
 	}
-	
 
-	
+	private int getFiles(final File basedir) {
+		if (basedir.exists()) {
+			int count = 0;
+			final File[] files = basedir.listFiles();
+			for (final File file : files) {
+				if (file.isDirectory()) {
+					getFiles(file);
+				} else {
+					saveItem(getList().toStoreItem(file));
+					count++;
+				}
+			}
+			return count;
+		}
+		return -1;
+	}
+
 }

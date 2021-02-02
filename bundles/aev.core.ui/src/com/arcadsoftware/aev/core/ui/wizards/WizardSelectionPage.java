@@ -8,8 +8,6 @@ package com.arcadsoftware.aev.core.ui.wizards;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -20,22 +18,41 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public abstract class WizardSelectionPage extends ArcadWizardPage {
-	protected StructuredViewer viewer;
-	protected SelectionChangedListener selectionChangedListener;
+	protected class SelectionChangedListener implements ISelectionChangedListener {
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged
+		 * (org.eclipse.jface.viewers.SelectionChangedEvent)
+		 */
+		@Override
+		public void selectionChanged(final SelectionChangedEvent event) {
+			setPageComplete(false);
+			// Object selectedVersion = null;
+			if (event.getSelection().isEmpty()) {
+				return;
+			}
+			if (event.getSelection() instanceof IStructuredSelection) {
+				doOnSelect((IStructuredSelection) event.getSelection());
+				setPageComplete(checkSelection((IStructuredSelection) event.getSelection()));
+			}
+		}
+
+	}
+
 	Action doubleClickAction = null;
+	protected SelectionChangedListener selectionChangedListener;
+
+	protected StructuredViewer viewer;
 
 	/**
 	 * @param pageName
 	 * @param title
 	 */
-	public WizardSelectionPage(String pageName, String title) {
+	public WizardSelectionPage(final String pageName, final String title) {
 		super(pageName, title);
 		setPageComplete(false);
 	}
@@ -45,76 +62,27 @@ public abstract class WizardSelectionPage extends ArcadWizardPage {
 	 * @param title
 	 * @param titleImage
 	 */
-	public WizardSelectionPage(String pageName, String title, ImageDescriptor titleImage) {
+	public WizardSelectionPage(final String pageName, final String title, final ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 	}
 
-	public abstract void makeViewer(Composite composite);
-
-	public abstract void makeInput();
-
 	public abstract boolean checkSelection(IStructuredSelection sel);
-
-	protected class SelectionChangedListener implements ISelectionChangedListener {
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged
-		 * (org.eclipse.jface.viewers.SelectionChangedEvent)
-		 */
-		public void selectionChanged(SelectionChangedEvent event) {
-			setPageComplete(false);
-			// Object selectedVersion = null;
-			if (event.getSelection().isEmpty()) {
-				return;
-			}
-			if (event.getSelection() instanceof IStructuredSelection) {
-				doOnSelect((IStructuredSelection) event.getSelection());
-				setPageComplete(checkSelection(((IStructuredSelection) event.getSelection())));
-			}
-		}
-
-	}
-
-	/**
-	 * @param parent
-	 */
-	protected void createExtendedControlBefore(Composite parent) {
-		// Do nothing
-	}
-
-	/**
-	 * @param parent
-	 */
-	protected void createExtendedControlAfter(Composite parent) {
-		// Do nothing
-	}
-
-	/**
-	 * @param sel
-	 */
-	protected void doOnSelect(IStructuredSelection sel) {
-		// Do nothing
-	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets
-	 * .Composite)
+	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets .Composite)
 	 */
-	public void createControl(Composite arg0) {
-		Composite composite = new Composite(arg0, SWT.NONE);
-		GridLayout grid = new GridLayout();
+	@Override
+	public void createControl(final Composite arg0) {
+		final Composite composite = new Composite(arg0, SWT.NONE);
+		final GridLayout grid = new GridLayout();
 		grid.numColumns = 1;
 		composite.setLayout(grid);
 		createExtendedControlBefore(composite);
 		makeViewer(composite);
 
 		if (viewer != null) {
-			GridData gridData = new GridData();
+			final GridData gridData = new GridData();
 			gridData.verticalAlignment = GridData.FILL;
 			gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessVerticalSpace = true;
@@ -139,6 +107,31 @@ public abstract class WizardSelectionPage extends ArcadWizardPage {
 	}
 
 	/**
+	 * @param parent
+	 */
+	protected void createExtendedControlAfter(final Composite parent) {
+		// Do nothing
+	}
+
+	/**
+	 * @param parent
+	 */
+	protected void createExtendedControlBefore(final Composite parent) {
+		// Do nothing
+	}
+
+	protected void doOnDoubleClick() {
+		// Do nothing
+	}
+
+	/**
+	 * @param sel
+	 */
+	protected void doOnSelect(final IStructuredSelection sel) {
+		// Do nothing
+	}
+
+	/**
 	 * @return StructuredViewer
 	 */
 	public StructuredViewer getViewer() {
@@ -146,15 +139,11 @@ public abstract class WizardSelectionPage extends ArcadWizardPage {
 	}
 
 	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
+		viewer.addDoubleClickListener(event -> doubleClickAction.run());
 	}
 
-	protected void doOnDoubleClick() {
-		// Do nothing
-	}
+	public abstract void makeInput();
+
+	public abstract void makeViewer(Composite composite);
 
 }

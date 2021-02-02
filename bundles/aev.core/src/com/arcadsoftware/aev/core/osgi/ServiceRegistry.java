@@ -23,38 +23,16 @@ import org.osgi.service.component.annotations.Deactivate;
 public final class ServiceRegistry {
 	private static Optional<ServiceRegistry> instance;
 
-	private final Map<Class<?>, ServiceRegistration<?>> registrations = new HashMap<>();
-	private BundleContext bundleContext;
+	private static BundleContext getBundleContext() {
+		return getInstance().map(sr -> sr.bundleContext).orElse(null);
+	}
 
 	private static Optional<ServiceRegistry> getInstance() {
 		return instance;
 	}
 
-	@Activate
-	public void activate(final BundleContext bundleContext) {
-		this.bundleContext = bundleContext;
-		instance = Optional.of(this);
-	}
-
-	@Deactivate
-	public void deactivate() {
-		this.bundleContext = null;
-		this.registrations.clear();
-		instance = Optional.empty();
-	}
-
-	public static <T> List<T> lookupAll(final Class<T> clazz) {
-		final BundleContext context = getBundleContext();
-		if (context != null) {
-			try {
-				return context.getServiceReferences(clazz, null)
-						.stream()
-						.map(context::getService).collect(Collectors.toList());
-			} catch (InvalidSyntaxException e) {
-				e.printStackTrace();
-			}
-		}
-		return Collections.emptyList();
+	public static Map<Class<?>, ServiceRegistration<?>> getRegistrations() {
+		return getInstance().map(sr -> sr.registrations).orElse(null);
 	}
 
 	public static <T> Optional<T> lookup(final Class<T> clazz) {
@@ -75,40 +53,62 @@ public final class ServiceRegistry {
 				final Collection<ServiceReference<T>> references = context.getServiceReferences(clazz, filter);
 				return Optional.ofNullable(references.stream().map(context::getService).findFirst().orElse(null));
 			}
-		}
-		catch (final InvalidSyntaxException e) {
-			e.printStackTrace();			
+		} catch (final InvalidSyntaxException e) {
+			e.printStackTrace();
 		}
 		return Optional.empty();
 	}
 
-	public static <T> T lookupOrDie(final Class<T> clazz){
-		return lookup(clazz).orElseThrow(() -> new ServiceNotFoundException(clazz)); 
+	public static <T> List<T> lookupAll(final Class<T> clazz) {
+		final BundleContext context = getBundleContext();
+		if (context != null) {
+			try {
+				return context.getServiceReferences(clazz, null)
+						.stream()
+						.map(context::getService).collect(Collectors.toList());
+			} catch (final InvalidSyntaxException e) {
+				e.printStackTrace();
+			}
+		}
+		return Collections.emptyList();
 	}
-	
-	public static <T> T lookupOrDie(final Class<T> clazz, final String filter){
-		return lookup(clazz, filter).orElseThrow(() -> new ServiceNotFoundException(clazz)); 
+
+	public static <T> T lookupOrDie(final Class<T> clazz) {
+		return lookup(clazz).orElseThrow(() -> new ServiceNotFoundException(clazz));
 	}
-	
+
+	public static <T> T lookupOrDie(final Class<T> clazz, final String filter) {
+		return lookup(clazz, filter).orElseThrow(() -> new ServiceNotFoundException(clazz));
+	}
+
 	public static synchronized <T> void register(final Class<T> clazz, final T service) {
 		final Map<Class<?>, ServiceRegistration<?>> regs = getRegistrations();
 		final BundleContext context = getBundleContext();
-		if(regs != null && context != null) {
+		if (regs != null && context != null) {
 			final ServiceRegistration<?> oldRegistration = regs.remove(clazz);
 			if (oldRegistration != null) {
 				oldRegistration.unregister();
 			}
-			
+
 			final ServiceRegistration<T> newRegistration = context.registerService(clazz, service, null);
 			regs.put(clazz, newRegistration);
 		}
 	}
-	
-	private static BundleContext getBundleContext() {
-		return getInstance().map(sr -> sr.bundleContext).orElse(null);
+
+	private BundleContext bundleContext;
+
+	private final Map<Class<?>, ServiceRegistration<?>> registrations = new HashMap<>();
+
+	@Activate
+	public void activate(final BundleContext bundleContext) {
+		this.bundleContext = bundleContext;
+		instance = Optional.of(this);
 	}
 
-	public static Map<Class<?>, ServiceRegistration<?>> getRegistrations() {
-		return getInstance().map(sr -> sr.registrations).orElse(null);
+	@Deactivate
+	public void deactivate() {
+		bundleContext = null;
+		registrations.clear();
+		instance = Optional.empty();
 	}
 }

@@ -1,107 +1,100 @@
 package com.arcadsoftware.mmk.lists.managers;
 
-import com.arcadsoftware.mmk.lists.AbstractList;
+import com.arcadsoftware.mmk.lists.AbstractArcadList;
 import com.arcadsoftware.mmk.lists.metadata.StoreItem;
-
 
 /**
  * Classe abstraite de gestion du remplissage de liste.<br>
- * <div>
- * <div class="intro">Généralités</div>
- * Cette classe permet de définir une méthode de remplissage d'une 
- * liste par implémentation la méthode {@link #fill() fill()}.<br>
+ * <div> <div class="intro">Généralités</div> Cette classe permet de définir une méthode de remplissage d'une liste par
+ * implémentation la méthode {@link #fill() fill()}.<br>
  * L'ajout d'un élément dans la liste s'effctue en deux temps : <br>
- * - L'affectation des valeurs à l'objet <code>storeItem</code> 
- * de la liste,<br>
+ * - L'affectation des valeurs à l'objet <code>storeItem</code> de la liste,<br>
  * - L'appel à la méthode <code>addItem</code>.<br>
- * Pour affecter des valeurs à l'objet <code>storeItem</code>, vous
- * pouvez utiliser deux méthodes : <br>
+ * Pour affecter des valeurs à l'objet <code>storeItem</code>, vous pouvez utiliser deux méthodes : <br>
  * - L'utilisation de la méthode {@link AbstractList#toStoreItem(Object)() toStoreItem()}
- * <code>toStoreItem(Object element)</code> qui permet de transférer 
- * les données d'un objet quelconque vers un objet de type <code>storeItem</code>,
- * - L'affectation directe via {@link AbstractList#getStoreItem() AbstractList#getStoreItem()}
- * 
- * @author MD
+ * <code>toStoreItem(Object element)</code> qui permet de transférer les données d'un objet quelconque vers un objet de
+ * type <code>storeItem</code>, - L'affectation directe via {@link AbstractArcadList#getStoreItem()
+ * AbstractList#getStoreItem()}
  *
+ * @author MD
  */
-public abstract class AbstractFiller  extends AbstractLoggedObject{
-	
-	private boolean fillMode = true;
-	private AbstractList list;
+public abstract class AbstractFiller extends AbstractLoggedObject {
+
 	boolean checkIfExists;
+	private boolean fillMode = true;
+	private AbstractArcadList list;
 	boolean replaceIfExists;
-	
-	
-	
+
 	public AbstractFiller() {
 		super();
-	}		
-	
-	public AbstractFiller(AbstractList list) {
+	}
+
+	public AbstractFiller(final AbstractArcadList list) {
 		setList(list);
 	}
 
+	public abstract int fill();
+
 	/**
 	 * Renvoit la liste à remplir par le filler.
-	 * @return the list AbstractList : 
+	 * 
+	 * @return the list AbstractList :
 	 */
-	public AbstractList getList() {
+	public AbstractArcadList getList() {
 		return list;
 	}
 
-	/**
-	 * @param list the list to set
-	 */
-	public void setList(AbstractList list) {
-		this.list = list;
-		setLogger(list.getLogger());
-		if (list.getStoreItem().getMetadatas()==null)
-			list.initStoreItem();		
+	public int populate() {
+		if (getList() != null) {
+			if (!fillMode) {
+				getList().getContentManager().getCashManager().setFlushImmediat(false);
+			}
+			final int result = fill();
+			if (!fillMode) {
+				getList().getContentManager().getCashManager().setFlushImmediat(true);
+				getList().getContentManager().getCashManager().flushRequest();
+			}
+			return result;
+		}
+		return -1;
 	}
-	
-	public void toogleToAddMode( boolean checkIfExists, boolean replaceIfExists) {
-		fillMode = false;
-		this.checkIfExists = checkIfExists;
-		this.replaceIfExists = replaceIfExists;
-	}
-	public void toogleToFillMode() {
-		fillMode = true;
-	}
-	
-	
-	public int saveItem(StoreItem item) {
+
+	public int saveItem(final StoreItem item) {
 		int count = 0;
-		if (getList()!=null) {
-			
+		if (getList() != null) {
+
 			if (fillMode) {
 				getList().setStoreItem(item);
 				getList().saveItem();
 				count = 1;
 			} else {
-				count = getList().addItems(item,checkIfExists,replaceIfExists);
-				getList().getContentManager().getCashManager().setFlushImmediat(true);			
+				count = getList().addItems(item, checkIfExists, replaceIfExists);
+				getList().getContentManager().getCashManager().setFlushImmediat(true);
 			}
 		}
 		return count;
 	}
-	
-	public int populate() {
-		if (getList()!=null) {
-			if (!fillMode) {
-				getList().getContentManager().getCashManager().setFlushImmediat(false);			
-			}
-			int result = fill();
-			if (!fillMode) {
-				getList().getContentManager().getCashManager().setFlushImmediat(true);			
-				getList().getContentManager().getCashManager().flushRequest();
-			}		
-			return result;
+
+	/**
+	 * @param list
+	 *            the list to set
+	 */
+	public void setList(final AbstractArcadList list) {
+		this.list = list;
+		setLogger(list.getLogger());
+		if (list.getStoreItem().getMetadatas() == null) {
+			list.initStoreItem();
 		}
-		return -1;
 	}
-	
-	
-	public abstract int fill();	
-	
-	
+
+	public void toogleToAddMode(final boolean checkIfExists, final boolean replaceIfExists) {
+		fillMode = false;
+		this.checkIfExists = checkIfExists;
+		this.replaceIfExists = replaceIfExists;
+	}
+
+	public void toogleToFillMode() {
+		fillMode = true;
+	}
+
 }

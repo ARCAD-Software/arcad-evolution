@@ -13,40 +13,45 @@ import com.arcadsoftware.aev.core.collections.ArcadCollection;
 import com.arcadsoftware.aev.core.collections.IArcadCollectionItem;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class HierarchicTreeContentProvider implements ITreeContentProvider {
 	protected static final Object[] EMPTYARRAY = new Object[0];
 	private int firstDisplayLevel = 1;
 
 	/**
-	 * 
+	 *
 	 */
 	public HierarchicTreeContentProvider() {
 		this(1);
 	}
 
-	public HierarchicTreeContentProvider(int firstDisplayLevel) {
+	public HierarchicTreeContentProvider(final int firstDisplayLevel) {
 		super();
 		this.firstDisplayLevel = firstDisplayLevel;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.
-	 * Object)
+	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
-	public Object[] getChildren(Object parentElement) {
+	@Override
+	public void dispose() {
+		// Do nothing
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang. Object)
+	 */
+	@Override
+	public Object[] getChildren(final Object parentElement) {
 		if (parentElement instanceof IArcadCollectionItem) {
-			IArcadCollectionItem i = (IArcadCollectionItem) parentElement;
-			if (i.getParent() == null)
+			final IArcadCollectionItem i = (IArcadCollectionItem) parentElement;
+			if (i.getParent() == null) {
 				return EMPTYARRAY;
+			}
 			return i.getParent().getChildren(i);
 		}
 		return EMPTYARRAY;
@@ -54,50 +59,14 @@ public class HierarchicTreeContentProvider implements ITreeContentProvider {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object
-	 * )
+	 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java .lang.Object)
 	 */
-	public Object getParent(Object element) {
-		if (element instanceof IArcadCollectionItem) {
-			IArcadCollectionItem i = (IArcadCollectionItem) element;
-			if (i.getParent() == null)
-				return null;
-			return i.getParent().getParent(i);
-		}
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang.
-	 * Object)
-	 */
-	public boolean hasChildren(Object element) {
-		if (element instanceof IArcadCollectionItem) {
-			IArcadCollectionItem i = (IArcadCollectionItem) element;
-			if (i.getParent() == null)
-				return false;
-			return i.getParent().hasChildren(i);
-		}
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
-	 * .lang.Object)
-	 */
-	public Object[] getElements(Object inputElement) {
+	@Override
+	public Object[] getElements(final Object inputElement) {
 		if (inputElement instanceof ArcadCollection) {
-			ArcadCollection c = (ArcadCollection) inputElement;
+			final ArcadCollection c = (ArcadCollection) inputElement;
 			if (c.count() > 0) {
-				Object[] o = c.getElementsByLevel(firstDisplayLevel);
+				final Object[] o = c.getElementsByLevel(firstDisplayLevel);
 				return o;
 			}
 			return EMPTYARRAY;
@@ -107,21 +76,43 @@ public class HierarchicTreeContentProvider implements ITreeContentProvider {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
+	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object )
 	 */
-	public void dispose() {
-		// Do nothing
+	@Override
+	public Object getParent(final Object element) {
+		if (element instanceof IArcadCollectionItem) {
+			final IArcadCollectionItem i = (IArcadCollectionItem) element;
+			if (i.getParent() == null) {
+				return null;
+			}
+			return i.getParent().getParent(i);
+		}
+		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
-	 * .viewers.Viewer, java.lang.Object, java.lang.Object)
+	 * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang. Object)
 	 */
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+	@Override
+	public boolean hasChildren(final Object element) {
+		if (element instanceof IArcadCollectionItem) {
+			final IArcadCollectionItem i = (IArcadCollectionItem) element;
+			if (i.getParent() == null) {
+				return false;
+			}
+			return i.getParent().hasChildren(i);
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface .viewers.Viewer, java.lang.Object,
+	 * java.lang.Object)
+	 */
+	@Override
+	public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
 		// Do nothing
 	}
 

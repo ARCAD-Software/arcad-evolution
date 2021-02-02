@@ -10,20 +10,18 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.graphics.Image;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class RootContainer extends Container {
 
-	protected String rootLabel;
-	protected Image rootImage;
 	protected Object[] children;
+	protected Image rootImage;
+	protected String rootLabel;
 
-	public RootContainer(ContainerProvider parent, StructuredViewer viewer, String rootLabel, Image rootImage,
-			Object[] children) {
+	public RootContainer(final ContainerProvider parent, final StructuredViewer viewer, final String rootLabel,
+			final Image rootImage,
+			final Object[] children) {
 		super(parent);
 		this.viewer = viewer;
 		this.rootLabel = rootLabel;
@@ -31,26 +29,27 @@ public class RootContainer extends Container {
 		this.children = children;
 	}
 
-	public String getLabel() {
-		return rootLabel;
-	}
-
+	@Override
 	public Object[] getChildren() {
 		return children;
 	}
 
-	public boolean hasChildren() {
-		return true;
+	@Override
+	public Image getImage() {
+		return rootImage;
 	}
 
+	@Override
+	public String getLabel() {
+		return rootLabel;
+	}
+
+	@Override
 	public String getUniqueKey() {
-		if (getParent() != null)
+		if (getParent() != null) {
 			return getParent().getUniqueKey().concat("/ROOT"); //$NON-NLS-1$
+		}
 		return "/ROOT"; //$NON-NLS-1$
-	}
-
-	public void refresh() {
-		getViewer().refresh();
 	}
 
 	@Override
@@ -58,7 +57,13 @@ public class RootContainer extends Container {
 		return viewer;
 	}
 
-	public Image getImage() {
-		return rootImage;
+	@Override
+	public boolean hasChildren() {
+		return true;
+	}
+
+	@Override
+	public void refresh() {
+		getViewer().refresh();
 	}
 }

@@ -19,88 +19,89 @@
  */
 package com.arcadsoftware.aev.core.ui.calendar;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Locale;
-import java.text.DateFormatSymbols;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 public class SWTMonthChooser extends Composite implements Listener {
-    private SWTDayChooser dayChooser;
-    private Combo comboBox;
-    private boolean initialized = false;
-    private int month;
-    private Locale locale;
+	private final Combo comboBox;
+	private SWTDayChooser dayChooser;
+	private boolean initialized = false;
+	private Locale locale;
+	private int month;
 
-    public SWTMonthChooser(Composite parent) {
-        super(parent, SWT.NONE);
+	public SWTMonthChooser(final Composite parent) {
+		super(parent, SWT.NONE);
 
-        locale = Locale.getDefault();
-        setLayout(new FillLayout());
-        comboBox = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
-        comboBox.addListener(SWT.Selection, this);
+		locale = Locale.getDefault();
+		setLayout(new FillLayout());
+		comboBox = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
+		comboBox.addListener(SWT.Selection, this);
 
-        initNames();
+		initNames();
 
-        initialized = true;
-        setMonth(Calendar.getInstance().get(Calendar.MONTH));
-    }
+		initialized = true;
+		setMonth(Calendar.getInstance().get(Calendar.MONTH));
+	}
 
-    public void initNames() {
-        DateFormatSymbols dateFormatSymbols = new DateFormatSymbols(locale);
-        String[] monthNames = dateFormatSymbols.getMonths();
+	public int getMonth() {
+		return month;
+	}
 
-        if (comboBox.getItemCount() == 12) {
-            comboBox.removeAll();
-        }
-        for (int i = 0; i < 12; i++) {
-            comboBox.add(monthNames[i]);
-        }
-
-        comboBox.select(month);
-    }
-
-    private void setMonth(int newMonth, boolean select) {
-        if (!initialized) {
-            return;
-        }
-
-        month = newMonth;
-        if (select) {
-            comboBox.select(month);
-        }
-
-        if (dayChooser != null) {
-			dayChooser.setMonth(month);
+	@Override
+	public void handleEvent(final Event event) {
+		final int index = comboBox.getSelectionIndex();
+		if (index >= 0) {
+			setMonth(index, false);
 		}
-    }
+	}
 
-    public void setMonth(int newMonth) {
-        setMonth(newMonth, true);
-    }
+	public void initNames() {
+		final DateFormatSymbols dateFormatSymbols = new DateFormatSymbols(locale);
+		final String[] monthNames = dateFormatSymbols.getMonths();
 
-    public int getMonth() {
-        return month;
-    }
+		if (comboBox.getItemCount() == 12) {
+			comboBox.removeAll();
+		}
+		for (int i = 0; i < 12; i++) {
+			comboBox.add(monthNames[i]);
+		}
 
-    public void handleEvent(Event event) {
-        int index = comboBox.getSelectionIndex();
-        if (index >= 0) {
-            setMonth(index, false);
-        }
-    }
+		comboBox.select(month);
+	}
 
-    public void setDayChooser(SWTDayChooser dayChooser) {
+	public void setDayChooser(final SWTDayChooser dayChooser) {
 		this.dayChooser = dayChooser;
 	}
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
-        initNames();
-    }
+	public void setLocale(final Locale locale) {
+		this.locale = locale;
+		initNames();
+	}
+
+	public void setMonth(final int newMonth) {
+		setMonth(newMonth, true);
+	}
+
+	private void setMonth(final int newMonth, final boolean select) {
+		if (!initialized) {
+			return;
+		}
+
+		month = newMonth;
+		if (select) {
+			comboBox.select(month);
+		}
+
+		if (dayChooser != null) {
+			dayChooser.setMonth(month);
+		}
+	}
 }

@@ -8,36 +8,36 @@ import org.eclipse.swt.widgets.Widget;
 
 /**
  * @author MD
- *
  */
 public class ColumnedTreeViewer extends TreeViewer {
 
-    /**
-     * @param parent
-     */
-    public ColumnedTreeViewer(Composite parent) {
-        super(parent);
-    }
+	/**
+	 * @param parent
+	 */
+	public ColumnedTreeViewer(final Composite parent) {
+		super(parent);
+	}
 
-    /**
-     * @param parent
-     * @param style
-     */
-    public ColumnedTreeViewer(Composite parent, int style) {
-        super(parent, style);
-    }
+	/**
+	 * @param parent
+	 * @param style
+	 */
+	public ColumnedTreeViewer(final Composite parent, final int style) {
+		super(parent, style);
+	}
 
-    /**
-     * @param tree
-     */
-    public ColumnedTreeViewer(Tree tree) {
-        super(tree);
-    }
-    
-    public TreeItem findTreeItem(Object element) {
-		Widget w = findItem(element);
-		if ((w !=null) && (w instanceof TreeItem)) 
-			return (TreeItem)w;
+	/**
+	 * @param tree
+	 */
+	public ColumnedTreeViewer(final Tree tree) {
+		super(tree);
+	}
+
+	public TreeItem findTreeItem(final Object element) {
+		final Widget w = findItem(element);
+		if (w != null && w instanceof TreeItem) {
+			return (TreeItem) w;
+		}
 		return null;
 	}
 

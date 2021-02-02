@@ -14,94 +14,105 @@ import com.arcadsoftware.mmk.anttasks.taskdefs.AbstractArcadAntTask;
 
 public class ArcadReplaceTokenValueTask extends AbstractArcadAntTask {
 
+	private static final String ANY_CHARACTERS_OR_BLANKS_STRING = "[\\s\\S]*?";
+	private static final String ANY_CHARACTERS_STRING = "\\s*";
+	private static final String APOSTROPHE = "\'";
+	private static final String BLANK = " ";
+	private static final int BUFFER_LENGTH = 4096;
+	private static final String CARRIAGE_RETURN = "\r";
+	private static final String CLOSING_TAG = ">";
+
+	private static final String COMMA = ",";
+	private static final String EQUAL = "=";
+	private static final String FIRST = "*FIRST";
+	private static final String LINE_BREAK = "\n";
+	private static final String OPENING_TAG = "<";
+	private static final String QUOTATION_MARK = "\"";
+	private static final String REPLACE_ERROR = "Something goes wrong in the attempt of replacing the value! Replacement does not occur. Check coherence between file and declared token.";
+	private static final String STAR_ALL = "*ALL";
 	String all = "";
-	String[] keys = null;
-	String[] valuesToReplace = null;
+	private boolean allOccurs = false;
 	File file = null;
+	private String filePath = null;
+	private boolean isXmlTagDelimited = false;
+
+	String[] keys = null;
+	private String occurs = null;
+	private int[] occursRank = null;
+	private boolean oneOccur = true;
 	Scanner scanner = null;
-	final String CARRIAGE_RETURN = "\r";
-	final String LINE_BREAK = "\n";
-	final String BLANK = " ";
-	final String COMMA = ",";
-	final String SEMICOLON = ";";
-	final String QUOTATION_MARK = "\"";
-	final String APOSTROPHE = "\'";
-	final String ANY_CHARACTERS_STRING = "\\s*";
-	final String ANY_CHARACTERS_OR_BLANKS_STRING = "[\\s\\S]*?";
-	final String EQUAL = "=";
-	final String CLOSING_TAG = ">";
-	final String OPENING_TAG = "<";
-	final String ALL = "*ALL";
-	final String FIRST = "*FIRST";
-	boolean oneOccur = true;
-	boolean allOccurs = false;
-	int[] occursRank = null;
-	String occurs = null;
-	String token = null;
-	String filePath = null;
-	boolean isXmlTagDelimited = false;
-	String separator = "";
-	
-	/*
-	 * must receive 3 arguments :
-	 * 
-	 * file path
-	 * 
-	 * occurrence rank : if several occurrences to replace, enumerate occurrences ranks with ',' as separator (eg : 1,5,18); special values available : *FIRST, *ALL
-	 * 
-	 * token to replace
-	 * 
-	 * for example with a token : 'program name="test1"'; 
-	 * the search is run with token 'program name='; 
-	 * when token found, old value after '=' is replaced by 'test1';
-	 */
-	@Override
-	public void validateAttributes() {
-		System.out.println("Attributes validation");
-		if ((occurs==null) || (occurs.equals(""))) {
-			occurs = getProject().getProperty("token.occurs");
-			if ((occurs==null) || (occurs.equals(""))) {
-				throw new BuildException("Parameter 'occurs' required");
-			}
-		}
-		if ((filePath==null) || (filePath.equals(""))) {
-			filePath = getProject().getProperty("file.path");
-			if ((filePath==null) || (filePath.equals(""))) {
-				throw new BuildException("Parameter 'filePath' required");
-			}
-		}
-		if ((token==null) || (token.equals(""))) {
-			token = getProject().getProperty("token.string");
-			if ((token==null) || (token.equals(""))) {
-				throw new BuildException("Parameter 'token' required");
-			}
-		}
-	}
+	private String separator = "";
+	private String token = null;
+	String[] valuesToReplace = null;
 
 	@Override
-	public void doExecute() throws BuildException {
+	public void doExecute() {
 		processInit();
 		processExecution();
 		writeFileContent();
 	}
-	
-	public void processExecution() throws BuildException {		
+
+	public File getFile() {
+		return file;
+	}
+
+	public void getFileContent() {
+		final StringBuilder b = new StringBuilder();
+		scanner.useDelimiter(CARRIAGE_RETURN);
+		boolean first = true;
+		while (scanner.hasNext()) {
+			if (!first) {
+				b.append(CARRIAGE_RETURN);
+			}
+			b.append(scanner.next());
+			first = false;
+		}
+		all = b.toString();
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public String getOccurs() {
+		return occurs;
+	}
+
+	public String getSeparator() {
+		return separator;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void initScanner() {
+		scanner = null;
+		try {
+			scanner = new Scanner(file);
+		} catch (final FileNotFoundException e) {
+			throw new BuildException(e);
+		}
+	}
+
+	public void processExecution() {
 		String tokenBefore = "";
 		for (int i = 0; i < keys.length; i++) {
 			if (!tokenBefore.equals(keys[i])) {
-				if (scanner != null)
+				if (scanner != null) {
 					scanner.close();
+				}
 				initScanner();
 			}
 			scanFile(keys[i], valuesToReplace[i]);
 			tokenBefore = keys[i];
 		}
 	}
-	
+
 	public void processInit() {
-		String[] occursArr = occurs.split(COMMA);
+		final String[] occursArr = occurs.split(COMMA);
 		occursRank = new int[occursArr.length];
-		if (occursArr.length == 1 && occursArr[0].equals(ALL)) {
+		if (occursArr.length == 1 && occursArr[0].equals(STAR_ALL)) {
 			oneOccur = false;
 			allOccurs = true;
 		} else if (occursArr.length == 1 && occursArr[0].equals(FIRST)) {
@@ -111,15 +122,15 @@ public class ArcadReplaceTokenValueTask extends AbstractArcadAntTask {
 		} else if (occursArr.length == 1) {
 			oneOccur = true;
 			allOccurs = false;
-			occursRank[0] = new Integer(occursArr[0]).intValue();
+			occursRank[0] = Integer.parseInt(occursArr[0]);
 		} else if (occursArr.length > 1) {
 			oneOccur = false;
 			allOccurs = false;
 			for (int i = 0; i < occursArr.length; i++) {
-				occursRank[i] = new Integer(occursArr[i]).intValue();
+				occursRank[i] = Integer.parseInt(occursArr[i]);
 			}
 		}
-		
+
 		keys = new String[1];
 		valuesToReplace = new String[1];
 
@@ -127,22 +138,22 @@ public class ArcadReplaceTokenValueTask extends AbstractArcadAntTask {
 		String valueToReplace = "";
 		if (token.indexOf(EQUAL) > -1) {
 			key = token.substring(0, token.indexOf(EQUAL));
-			valueToReplace = token.substring(token.indexOf(EQUAL)+1);
+			valueToReplace = token.substring(token.indexOf(EQUAL) + 1);
 			separator = EQUAL;
 		} else if (token.indexOf(CLOSING_TAG) > -1) {
 			key = token.substring(0, token.indexOf(CLOSING_TAG));
-			valueToReplace = token.substring(token.indexOf(CLOSING_TAG)+1);
+			valueToReplace = token.substring(token.indexOf(CLOSING_TAG) + 1);
 			separator = CLOSING_TAG;
 			isXmlTagDelimited = true;
 		} else {
-			throw new BuildException("Invalid token! the token must represent either an xml attribute or tag, either a propertie key. Must contain a separator '>' or '='.");
+			throw new BuildException(
+					"Invalid token! the token must represent either an xml attribute or tag, either a propertie key. Must contain a separator '>' or '='.");
 		}
 		// Trim ahead and trailing blanks in the replacement value
-		//valueToReplace = valueToReplace.trim();
 		// Trim quotation marks or apostrophes in the replacement value
 		int index = valueToReplace.indexOf(QUOTATION_MARK);
 		if (index > -1) {
-			valueToReplace = valueToReplace.substring(index+1);
+			valueToReplace = valueToReplace.substring(index + 1);
 			index = valueToReplace.lastIndexOf(QUOTATION_MARK);
 			if (index > -1) {
 				valueToReplace = valueToReplace.substring(0, index);
@@ -150,7 +161,7 @@ public class ArcadReplaceTokenValueTask extends AbstractArcadAntTask {
 		} else {
 			index = valueToReplace.indexOf(APOSTROPHE);
 			if (index > -1) {
-				valueToReplace = valueToReplace.substring(index+1);
+				valueToReplace = valueToReplace.substring(index + 1);
 				index = valueToReplace.lastIndexOf(APOSTROPHE);
 				if (index > -1) {
 					valueToReplace = valueToReplace.substring(0, index);
@@ -163,181 +174,83 @@ public class ArcadReplaceTokenValueTask extends AbstractArcadAntTask {
 		initScanner();
 		getFileContent();
 	}
-	
-	public void getFileContent() {
-		StringBuffer b = new StringBuffer();
-		scanner.useDelimiter(CARRIAGE_RETURN);
-		boolean first = true;
-		String token = null;
-		while(scanner.hasNext()) {
-			if (!first)
-				b.append(CARRIAGE_RETURN);
-			token = scanner.next();
-			b.append(token);
-			first = false;
-		}
-		all = b.toString();
-		System.out.println(all);
-	}
-	
-	public void initScanner() {
-		scanner = null;
-		try {
-			scanner = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
 
-	public void writeFileContent() {
-		int BUFFER_LENGTH = 4096;
-		FileWriter writer;
-		try {
-			writer = new FileWriter(file);
-			writer.write("");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		BufferedOutputStream bos = null;
-		try {
-			bos = new BufferedOutputStream(new FileOutputStream(file,true));
-			int i = 0;
-			int length = 0;
-			if (all.length() >= BUFFER_LENGTH) 
-				length = BUFFER_LENGTH;
-			else 
-				length = all.length();
-				
-			byte[] allBuff = all.getBytes();
-			int remain = all.length();
-			while (length > 0) {
-				byte[] buffer = new byte[BUFFER_LENGTH];
-				System.arraycopy(allBuff, i, buffer, 0, length);
-				bos.write(buffer,0,length);
-				i += length;
-				remain = remain - length;
-				if (remain > BUFFER_LENGTH)
-					length = BUFFER_LENGTH;
-				else
-					length = remain;
-			}
-			bos.close();
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			try {
-				bos.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-	}
-	
-	public void scanFile(String key, String valueToReplace) {
-		String value = replaceValue(key, valueToReplace);
-		System.out.println(value);	
-	}
-	
-	
-	public String replaceValue(String key, String valueToReplace) {
+	public String replaceValue(final String key, final String valueToReplace) {
 		scanner.reset();
 		String oldValue = null;
-		StringBuffer b =new StringBuffer();
+		final StringBuilder b = new StringBuilder();
 		b.append(ANY_CHARACTERS_STRING).append(key).append(ANY_CHARACTERS_OR_BLANKS_STRING);
-		String delimiter = b.toString();
+		final String delimiter = b.toString();
 		scanner.useDelimiter(delimiter);
-		String find = scanner.next();
 		int idxOccurs = 0;
 		int occur = 0;
-		while(scanner.hasNext()) {
+		while (scanner.hasNext()) {
 			occur++;
-			find = scanner.next();
-			if (allOccurs ||occursRank[idxOccurs] == occur) {
+			String find = scanner.next();
+			if (allOccurs || occursRank[idxOccurs] == occur) {
 				// Search for equal operator
 				int i = find.indexOf(EQUAL);
 				if (i > -1) {
-					find = find.substring(i+1);
+					find = find.substring(i + 1);
 				} else {
-				// Search for closing tag
+					// Search for closing tag
 					i = find.indexOf(CLOSING_TAG);
 					if (i > -1) {
-						find = find.substring(i+1);
+						find = find.substring(i + 1);
 					}
 				}
-				String work = find.trim();
+				final String work = find.trim();
 				// Search for quotation mark before old value
 				i = work.indexOf(QUOTATION_MARK);
 				// Search for quotation mark after old value
-				int j = work.substring(i+1).indexOf(QUOTATION_MARK);
+				int j = work.indexOf(QUOTATION_MARK, i + 1);
 				String keyAndValue = "";
 				String keyAndValueToReplace = "";
 				// There are '"' as delimiters for the value
 				if (i == 0 && j > -1) {
-					oldValue = work.substring(i+1,j+1);
-					System.out.println(oldValue);
-					i = find.indexOf(QUOTATION_MARK);
-					StringBuffer buf = new StringBuffer();
-					//buf.append(key);
-					//buf.append(separator);
-					//buf.append(find.substring(0,i));
+					oldValue = work.substring(i + 1, j + 1);
+
+					StringBuilder buf = new StringBuilder();
+
 					buf.append(QUOTATION_MARK).append(oldValue).append(QUOTATION_MARK);
 					keyAndValue = buf.toString();
-					
-					buf = new StringBuffer();
-					//buf.append(key);
-					//buf.append(separator);
-					//buf.append(find.substring(0,i));
+
+					buf = new StringBuilder();
 					buf.append(QUOTATION_MARK).append(valueToReplace).append(QUOTATION_MARK);
 					keyAndValueToReplace = buf.toString();
-				// Search for apostrophe delimiters
+					// Search for apostrophe delimiters
 				} else {
 					// Search for apostrophe before old value
 					i = work.indexOf(APOSTROPHE);
 					// Search for apostrophe after old value
-					j = work.substring(i+1).indexOf(APOSTROPHE);
+					j = work.indexOf(APOSTROPHE, i + 1);
 					if (i == 0 && j > -1) {
-						oldValue = work.substring(i+1,j+1);
-						System.out.println(oldValue);
-						StringBuffer buf = new StringBuffer();
-						//buf.append(key);
-						//buf.append(separator);
-						//buf.append(find.substring(0,i));
+						oldValue = work.substring(i + 1, j + 1);
+						StringBuilder buf = new StringBuilder();
 						buf.append(APOSTROPHE).append(oldValue).append(APOSTROPHE);
 						keyAndValue = buf.toString();
-						buf = new StringBuffer();
-						//buf.append(key);
-						//buf.append(separator);
-						//buf.append(find.substring(0,i));
+						buf = new StringBuilder();
 						buf.append(APOSTROPHE).append(valueToReplace).append(APOSTROPHE);
 						keyAndValueToReplace = buf.toString();
-					// Search for blank or carriage return or line break delimiters
+						// Search for blank or carriage return or line break delimiters
 					} else {
 						i = work.indexOf(BLANK);
-						// Skip first blank if in position 0 after end of key
-						//if (i == 0) 
-							//i = find.substring(i+1).indexOf(BLANK);
-						// If no blank, search for opening tag
-						//if (i < 0) 
-							j = find.indexOf(OPENING_TAG);
+						j = find.indexOf(OPENING_TAG);
 						// If no closing tag, search for carriage return
-						if (i < 0 && j < 0) 
+						if (i < 0 && j < 0) {
 							i = find.indexOf(CARRIAGE_RETURN);
-						// If no carriage return search for line break
-						if (i < 0 && j < 0) 
-							i = find.indexOf(LINE_BREAK);
-						if (isXmlTagDelimited && j > 0) {
-							oldValue = find.substring(0,j);
-						} else if (i > 0){
-							oldValue = work.substring(0,Math.min(i, work.length()));
-						} else {
-							throw new BuildException("Something goes wrong in the attempt of replacing the value! Replacement does not occur. Check coherence between file and declared token.");
 						}
-						System.out.println(oldValue);
+						// If no carriage return search for line break
+						if (i < 0 && j < 0) {
+							i = find.indexOf(LINE_BREAK);
+						}
+						if (isXmlTagDelimited && j > 0) {
+							oldValue = find.substring(0, j);
+						} else if (i > 0) {
+							oldValue = work.substring(0, Math.min(i, work.length()));
+						} else {
+							throw new BuildException(REPLACE_ERROR);
+						}
 						keyAndValue = oldValue;
 						keyAndValueToReplace = valueToReplace;
 					}
@@ -347,59 +260,107 @@ public class ArcadReplaceTokenValueTask extends AbstractArcadAntTask {
 					x = all.indexOf(keyAndValue);
 				}
 				if (x > -1) {
-					String before = all.substring(0, x);
-					String after = all.substring(x+(keyAndValue).length());
+					final String before = all.substring(0, x);
+					final String after = all.substring(x + keyAndValue.length());
 					all = before + keyAndValueToReplace + after;
-					//System.out.println(all);
 				} else {
-					throw new BuildException("Something goes wrong in the attempt of replacing the value! Replacement does not occur. Check coherence between file and declared token.");
+					throw new BuildException(REPLACE_ERROR);
 				}
-				if (oneOccur)
+				if (oneOccur) {
 					break;
-				if (allOccurs)
+				}
+				if (allOccurs) {
 					continue;
-				if (idxOccurs + 1 < occursRank.length )
+				}
+				if (idxOccurs + 1 < occursRank.length) {
 					idxOccurs++;
-				else 
+				} else {
 					break;
+				}
 			}
 		}
-		if(oldValue == null)
-			throw new BuildException("Something goes wrong in the attempt of replacing the value! Replacement does not occur. Check coherence between file and declared token.");
+		if (oldValue == null) {
+			throw new BuildException(REPLACE_ERROR);
+		}
 		return oldValue;
 	}
 
-	public File getFile() {
-		return file;
+	public void scanFile(final String key, final String valueToReplace) {
+		log(replaceValue(key, valueToReplace));
 	}
 
-	private void setFile(File file) {
+	private void setFile(final File file) {
 		this.file = file;
 	}
 
-	public String getOccurs() {
-		return occurs;
+	public void setFilePath(final String filePath) {
+		this.filePath = filePath;
+		setFile(new File(filePath));
 	}
 
-	public void setOccurs(String occurs) {
+	public void setOccurs(final String occurs) {
 		this.occurs = occurs;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
+	public void setToken(final String token) {
 		this.token = token;
 	}
 
-	public String getFilePath() {
-		return filePath;
+	@Override
+	public void validateAttributes() {
+		if (occurs == null || occurs.equals("")) {
+			occurs = getProject().getProperty("token.occurs");
+			if (occurs == null || occurs.equals("")) {
+				throw new BuildException("Parameter 'occurs' required");
+			}
+		}
+		if (filePath == null || filePath.equals("")) {
+			filePath = getProject().getProperty("file.path");
+			if (filePath == null || filePath.equals("")) {
+				throw new BuildException("Parameter 'filePath' required");
+			}
+		}
+		if (token == null || token.equals("")) {
+			token = getProject().getProperty("token.string");
+			if (token == null || token.equals("")) {
+				throw new BuildException("Parameter 'token' required");
+			}
+		}
 	}
 
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-		setFile(new File(filePath));
+	public void writeFileContent() {
+		try (FileWriter writer = new FileWriter(file)) {
+			writer.write("");
+		} catch (final IOException e) {
+			throw new BuildException(e);
+		}
+
+		try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file, true))) {
+			int i = 0;
+			int length = 0;
+			if (all.length() >= BUFFER_LENGTH) {
+				length = BUFFER_LENGTH;
+			} else {
+				length = all.length();
+			}
+
+			final byte[] allBuff = all.getBytes();
+			int remain = all.length();
+			while (length > 0) {
+				final byte[] buffer = new byte[BUFFER_LENGTH];
+				System.arraycopy(allBuff, i, buffer, 0, length);
+				bos.write(buffer, 0, length);
+				i += length;
+				remain = remain - length;
+				if (remain > BUFFER_LENGTH) {
+					length = BUFFER_LENGTH;
+				} else {
+					length = remain;
+				}
+			}
+		} catch (final IOException e) {
+			throw new BuildException(e);
+		}
 	}
 
 }

@@ -14,13 +14,12 @@ import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 
 /**
  * @author MD
- * 
  */
 public abstract class AbstractArcadPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	/**
-     * 
-     */
+	 * 
+	 */
 	public AbstractArcadPreferencePage() {
 		super();
 	}
@@ -28,7 +27,7 @@ public abstract class AbstractArcadPreferencePage extends PreferencePage impleme
 	/**
 	 * @param title
 	 */
-	public AbstractArcadPreferencePage(String title) {
+	public AbstractArcadPreferencePage(final String title) {
 		super(title);
 	}
 
@@ -36,21 +35,20 @@ public abstract class AbstractArcadPreferencePage extends PreferencePage impleme
 	 * @param title
 	 * @param image
 	 */
-	public AbstractArcadPreferencePage(String title, ImageDescriptor image) {
+	public AbstractArcadPreferencePage(final String title, final ImageDescriptor image) {
 		super(title, image);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
-	public void init(IWorkbench workbench) {
+	@Override
+	public void init(final IWorkbench workbench) {
 		// Do nothing
 	}
 
-	public void showError(String message) {
+	public void showError(final String message) {
 		MessageDialog.openError(EvolutionCoreUIPlugin.getShell(), CoreUILabels.resString("msg.commonTitle"), //$NON-NLS-1$
 				message);
 	}

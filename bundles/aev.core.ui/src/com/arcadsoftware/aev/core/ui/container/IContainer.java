@@ -14,24 +14,35 @@ import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.graphics.Image;
 
 /**
- * @author MD
- *
- * Pour changer le modèle de ce commentaire de type généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
-public interface IContainer extends IAdaptable{
-	String getLabel();
-	Image getImage();	
-	IContainer getParent();
+public interface IContainer extends IAdaptable {
 	Object[] getChildren();
+
+	Image getImage();
+
+	String getLabel();
+
+	IContainer getParent();
+
+	String getUniqueKey();
+
+	StructuredViewer getViewer();
+
 	boolean hasChildren();
-	String getUniqueKey();	
-	public boolean isDragable();
-	public boolean valideDrop(Object source);
-	public boolean valideDrop(TransferData source);	
-	public boolean performDrop(IContainer source);	
-	public void manageMenuAction(IMenuManager manager);	
-	public void manageToolbarAction(IToolBarManager manager);	
-	public boolean isPropertyMenuVisible();
-	public StructuredViewer getViewer();
+
+	boolean isDragable();
+
+	boolean isPropertyMenuVisible();
+
+	void manageMenuAction(IMenuManager manager);
+
+	void manageToolbarAction(IToolBarManager manager);
+
+	boolean performDrop(IContainer source);
+
+	boolean valideDrop(Object source);
+
+	boolean valideDrop(TransferData source);
 }

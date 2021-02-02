@@ -10,21 +10,20 @@ import com.arcadsoftware.mmk.lists.metadata.StoreItem;
 public class TestStoreItemManager extends AbstractStoreItemManager {
 
 	@Override
-	public void createMetadata(ListMetaDatas metadatas) {
+	public void createMetadata(final ListMetaDatas metadatas) {
 		metadatas.setId("");
-		metadatas.setVersion("");		
-		metadatas.addColumnDef("value","arcad.list.text",ListColumnDataType.STRING,true);		
+		metadatas.setVersion("");
+		metadatas.addColumnDef("value", "arcad.list.text", ListColumnDataType.STRING, true);
 	}
 
 	@Override
-	public StoreItem toStoreItem(Object object) {
+	public StoreItem toStoreItem(final Object object) {
 		if (object instanceof File) {
-			StoreItem item = new StoreItem(list.getMetadatas()); 
+			final StoreItem item = new StoreItem(list.getMetadatas());
 			item.setUserValue(
-				new String[]{((File)object).getAbsolutePath()}
-			);	
+					new String[] { ((File) object).getAbsolutePath() });
 			return item;
-		}	
+		}
 		return null;
 	}
 

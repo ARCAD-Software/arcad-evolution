@@ -23,13 +23,7 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
  */
 public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 
-	private String filterViewerId = StringTools.EMPTY;
 	private static ColumnedViewerMementoTools instance;
-	private String filename = null;
-
-	private ColumnedViewerMementoTools() {
-		super();
-	}
 
 	public static ColumnedViewerMementoTools getInstance() {
 		if (instance == null) {
@@ -39,156 +33,39 @@ public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 		return instance;
 	}
 
+	private String filename = null;
+
+	private String filterViewerId = StringTools.EMPTY;
+
+	private ColumnedViewerMementoTools() {
+		super();
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#getFileName
-	 * ()
+	 * @see com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#getFileName ()
 	 */
 	@Override
 	protected String getFileName() {
-		if (this.filename == null)
+		if (filename == null) {
 			filename = EvolutionCoreUIPlugin.getDefault().getStateLocation().toString()
 					+ AbstractColumnedViewer.FILENAME;
-		File directory = new File(EvolutionCoreUIPlugin.getDefault().getStateLocation().toString()
+		}
+		final File directory = new File(EvolutionCoreUIPlugin.getDefault().getStateLocation().toString()
 				+ AbstractColumnedViewer.DIRECTORYNAME);
-		if (!directory.exists())
+		if (!directory.exists()) {
 			directory.mkdir();
-		File file = new File(filename);
+		}
+		final File file = new File(filename);
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
-						"File : " + this.filename);//$NON-NLS-1$
+						"File : " + filename);//$NON-NLS-1$
 			}
 		}
-		return this.filename;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#readKeys
-	 * (java.lang.String, java.lang.String, org.eclipse.ui.IMemento)
-	 */
-	@Override
-	public ArcadSettings readKeys(String serverName, String userName, IMemento user) {
-		IMemento colViewer = user.getChild("columnedViewer");//$NON-NLS-1$
-		String colViewerId = colViewer.getString("id");//$NON-NLS-1$
-		IMemento[] cols = colViewer.getChildren("column");//$NON-NLS-1$
-		ArcadColumns arcCols = new ArcadColumns();
-		for (int i = 0; i < cols.length; i++) {
-			arcCols.add(new ArcadColumn(cols[i].getString("id"), cols[i].getString("label"), //$NON-NLS-1$ //$NON-NLS-2$
-					cols[i].getString("userLabel"), cols[i].getInteger("visible").intValue(), //$NON-NLS-1$ //$NON-NLS-2$
-					cols[i].getInteger("position").intValue(), cols[i].getInteger("width").intValue()));//$NON-NLS-1$ //$NON-NLS-2$
-		}
-
-		ColumnedViewerSettings settings = 
-			new ColumnedViewerSettings(serverName,userName,colViewerId,arcCols);	
-		
-		IMemento sortNode = user.getChild("sort");//$NON-NLS-1$
-		if (sortNode!=null) {
-			ColumnedSortCriteriaList list = new ColumnedSortCriteriaList(arcCols);
-			IMemento[] sortCols = sortNode.getChildren("column");//$NON-NLS-1$
-			for (int i=0;i<sortCols.length;i++) {
-				int id = sortCols[i].getInteger("id");//$NON-NLS-1$
-				String columnName = sortCols[i].getString("name");//$NON-NLS-1$
-				String sortOrder = sortCols[i].getString("order");//$NON-NLS-1$
-				int index = sortCols[i].getInteger("index");//$NON-NLS-1$				
-				ColumnedSortCriteria c = 
-					new ColumnedSortCriteria(id,columnName);
-				c.setId(id);
-				c.setColumnIndex(index);
-				c.setSortOrder(sortOrder);
-				list.add(c);
-			}		
-			settings.setSortCriteriaList(list);
-		}		
-		return settings;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#saveKeys
-	 * (org.eclipse.ui.IMemento,
-	 * com.arcadsoftware.aev.core.ui.mementos.ArcadSettings)
-	 */
-	@Override
-	public void saveKeys(IMemento user, ArcadSettings s) {
-		if (s instanceof ColumnedViewerSettings) {
-			ColumnedViewerSettings colViewerSettings = (ColumnedViewerSettings) s;
-			IMemento colViewer = user.createChild("columnedViewer");//$NON-NLS-1$
-			colViewer.putString("id", colViewerSettings.getViewerId());//$NON-NLS-1$
-			for (int i = 0; i < colViewerSettings.getColumns().count(); i++) {
-				IMemento aCol = colViewer.createChild("column");//$NON-NLS-1$
-				aCol.putString("id", colViewerSettings.getColumn(i).getIdentifier());//$NON-NLS-1$
-				aCol.putString("label", colViewerSettings.getColumn(i).getName());//$NON-NLS-1$
-				aCol.putString("userLabel", colViewerSettings.getColumn(i).getUserName());//$NON-NLS-1$
-				aCol.putInteger("visible", colViewerSettings.getColumn(i).getVisible());//$NON-NLS-1$
-				aCol.putInteger("position", colViewerSettings.getColumn(i).getPosition());//$NON-NLS-1$
-				aCol.putInteger("width", colViewerSettings.getColumn(i).getWidth());//$NON-NLS-1$
-			}
-			//<FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
-			IMemento sortNode = user.createChild("sort");//$NON-NLS-1$
-			if (colViewerSettings.getSortCriteriaList()!=null) {
-				ColumnedSortCriteriaList list = 
-					colViewerSettings.getSortCriteriaList();
-				for (int i=0;i<list.getSize();i++) {
-					IMemento aCol = sortNode.createChild("column");//$NON-NLS-1$
-					ColumnedSortCriteria c = (ColumnedSortCriteria)list.getItems(i);
-					aCol.putInteger("id",c.getId());//$NON-NLS-1$
-					aCol.putString("name",c.getColumnName());//$NON-NLS-1$
-					aCol.putInteger("index",c.getColumnIndex());//$NON-NLS-1$
-					aCol.putString("order",c.getSortOrder());//$NON-NLS-1$
-				}
-			}
-			//</FM>			
-			
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#keyEquals
-	 * (com.arcadsoftware.aev.core.ui.mementos.ArcadSettings,
-	 * com.arcadsoftware.aev.core.ui.mementos.ArcadSettings)
-	 */
-	@Override
-	public boolean keyEquals(ArcadSettings ref, ArcadSettings toCompare) {
-		if ((ref instanceof ColumnedViewerSettings) && (toCompare instanceof ColumnedViewerSettings)) {
-			ColumnedViewerSettings r = (ColumnedViewerSettings) ref;
-			ColumnedViewerSettings c = (ColumnedViewerSettings) toCompare;
-			return r.getServerName().equalsIgnoreCase(c.getServerName())
-					&& r.getUserName().equalsIgnoreCase(c.getUserName())
-					&& r.getViewerId().equalsIgnoreCase(c.getViewerId());
-		}
-		return false;
-	}
-
-	public ColumnedViewerSettings getViewerSetting(String identifier) {
-		ColumnedViewerSettings filter = new ColumnedViewerSettings("*ALL", "*ALL", identifier); //$NON-NLS-1$//$NON-NLS-2$
-		return (ColumnedViewerSettings) getCurrentSettings(filter);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#keep(com
-	 * .arcadsoftware.aev.core.ui.mementos.ArcadSettings)
-	 */
-	@Override
-	protected boolean keep(ArcadSettings s) {
-		// return
-		// ((ColumnedViewerSettings)s).getViewerId().equals(filterViewerId);
-		return true;
+		return filename;
 	}
 
 	/**
@@ -198,11 +75,122 @@ public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 		return filterViewerId;
 	}
 
+	public ColumnedViewerSettings getViewerSetting(final String identifier) {
+		final ColumnedViewerSettings filter = new ColumnedViewerSettings("*ALL", "*ALL", identifier); //$NON-NLS-1$//$NON-NLS-2$
+		return (ColumnedViewerSettings) getCurrentSettings(filter);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#keep(com
+	 * .arcadsoftware.aev.core.ui.mementos.ArcadSettings)
+	 */
+	@Override
+	protected boolean keep(final ArcadSettings s) {
+		// return
+		// ((ColumnedViewerSettings)s).getViewerId().equals(filterViewerId);
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#keyEquals
+	 * (com.arcadsoftware.aev.core.ui.mementos.ArcadSettings, com.arcadsoftware.aev.core.ui.mementos.ArcadSettings)
+	 */
+	@Override
+	public boolean keyEquals(final ArcadSettings ref, final ArcadSettings toCompare) {
+		if (ref instanceof ColumnedViewerSettings && toCompare instanceof ColumnedViewerSettings) {
+			final ColumnedViewerSettings r = (ColumnedViewerSettings) ref;
+			final ColumnedViewerSettings c = (ColumnedViewerSettings) toCompare;
+			return r.getServerName().equalsIgnoreCase(c.getServerName())
+					&& r.getUserName().equalsIgnoreCase(c.getUserName())
+					&& r.getViewerId().equalsIgnoreCase(c.getViewerId());
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#readKeys (java.lang.String, java.lang.String,
+	 * org.eclipse.ui.IMemento)
+	 */
+	@Override
+	public ArcadSettings readKeys(final String serverName, final String userName, final IMemento user) {
+		final IMemento colViewer = user.getChild("columnedViewer");//$NON-NLS-1$
+		final String colViewerId = colViewer.getString("id");//$NON-NLS-1$
+		final IMemento[] cols = colViewer.getChildren("column");//$NON-NLS-1$
+		final ArcadColumns arcCols = new ArcadColumns();
+		for (final IMemento col : cols) {
+			arcCols.add(new ArcadColumn(col.getString("id"), col.getString("label"), //$NON-NLS-1$ //$NON-NLS-2$
+					col.getString("userLabel"), col.getInteger("visible"), //$NON-NLS-1$ //$NON-NLS-2$
+					col.getInteger("position"), col.getInteger("width")));//$NON-NLS-1$ //$NON-NLS-2$
+		}
+
+		final ColumnedViewerSettings settings = new ColumnedViewerSettings(serverName, userName, colViewerId, arcCols);
+
+		final IMemento sortNode = user.getChild("sort");//$NON-NLS-1$
+		if (sortNode != null) {
+			final ColumnedSortCriteriaList list = new ColumnedSortCriteriaList(arcCols);
+			final IMemento[] sortCols = sortNode.getChildren("column");//$NON-NLS-1$
+			for (final IMemento sortCol : sortCols) {
+				final int id = sortCol.getInteger("id");//$NON-NLS-1$
+				final String columnName = sortCol.getString("name");//$NON-NLS-1$
+				final String sortOrder = sortCol.getString("order");//$NON-NLS-1$
+				final int index = sortCol.getInteger("index");//$NON-NLS-1$
+				final ColumnedSortCriteria c = new ColumnedSortCriteria(id, columnName);
+				c.setId(id);
+				c.setColumnIndex(index);
+				c.setSortOrder(sortOrder);
+				list.add(c);
+			}
+			settings.setSortCriteriaList(list);
+		}
+		return settings;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.mementos.RootAndUserMementoTools#saveKeys (org.eclipse.ui.IMemento,
+	 * com.arcadsoftware.aev.core.ui.mementos.ArcadSettings)
+	 */
+	@Override
+	public void saveKeys(final IMemento user, final ArcadSettings s) {
+		if (s instanceof ColumnedViewerSettings) {
+			final ColumnedViewerSettings colViewerSettings = (ColumnedViewerSettings) s;
+			final IMemento colViewer = user.createChild("columnedViewer");//$NON-NLS-1$
+			colViewer.putString("id", colViewerSettings.getViewerId());//$NON-NLS-1$
+			for (int i = 0; i < colViewerSettings.getColumns().count(); i++) {
+				final IMemento aCol = colViewer.createChild("column");//$NON-NLS-1$
+				aCol.putString("id", colViewerSettings.getColumn(i).getIdentifier());//$NON-NLS-1$
+				aCol.putString("label", colViewerSettings.getColumn(i).getName());//$NON-NLS-1$
+				aCol.putString("userLabel", colViewerSettings.getColumn(i).getUserName());//$NON-NLS-1$
+				aCol.putInteger("visible", colViewerSettings.getColumn(i).getVisible());//$NON-NLS-1$
+				aCol.putInteger("position", colViewerSettings.getColumn(i).getPosition());//$NON-NLS-1$
+				aCol.putInteger("width", colViewerSettings.getColumn(i).getWidth());//$NON-NLS-1$
+			}
+			// <FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+			final IMemento sortNode = user.createChild("sort");//$NON-NLS-1$
+			if (colViewerSettings.getSortCriteriaList() != null) {
+				final ColumnedSortCriteriaList list = colViewerSettings.getSortCriteriaList();
+				for (int i = 0; i < list.getSize(); i++) {
+					final IMemento aCol = sortNode.createChild("column");//$NON-NLS-1$
+					final ColumnedSortCriteria c = (ColumnedSortCriteria) list.getItems(i);
+					aCol.putInteger("id", c.getId());//$NON-NLS-1$
+					aCol.putString("name", c.getColumnName());//$NON-NLS-1$
+					aCol.putInteger("index", c.getColumnIndex());//$NON-NLS-1$
+					aCol.putString("order", c.getSortOrder());//$NON-NLS-1$
+				}
+			}
+			// </FM>
+
+		}
+	}
+
 	/**
 	 * @param filterViewerId
 	 *            filterViewerId à définir.
 	 */
-	public void setFilterViewerId(String filterViewerId) {
+	public void setFilterViewerId(final String filterViewerId) {
 		this.filterViewerId = filterViewerId;
 	}
 }

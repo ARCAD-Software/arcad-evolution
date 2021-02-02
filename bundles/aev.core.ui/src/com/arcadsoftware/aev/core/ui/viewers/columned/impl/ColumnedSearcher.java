@@ -11,104 +11,114 @@ import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSearchCriteriaList;
  */
 public class ColumnedSearcher implements IColumnedSearcher {
 
-	private ColumnedSearchCriteriaList criteriaList;
-	private Collator collator;
 	private boolean casse;
+	private final Collator collator;
+	private ColumnedSearchCriteriaList criteriaList;
 
-	public ColumnedSearcher(ColumnedSearchCriteriaList criteriaList) {
-		this.collator = Collator.getInstance();
+	public ColumnedSearcher(final ColumnedSearchCriteriaList criteriaList) {
+		collator = Collator.getInstance();
 		this.criteriaList = criteriaList;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnedSearcher
-	 * #match(java.lang.Object)
-	 */
-	public boolean match(Object element, IColumnResolver resolver) {
-		int criteriaNumber = criteriaList.getSize();
-		ColumnedSearchCriteria[] criteria = new ColumnedSearchCriteria[criteriaNumber];
-		for (int i = 0; i < criteriaList.getSize(); i++) {
-			criteria[i] = (ColumnedSearchCriteria) criteriaList.getCriteria().get(i);
-			String operator = criteria[i].getOperator();
-			String value = resolver.getValue(element, criteria[i].getColumnIndex());
-			int compare = collator.compare(value, criteria[i].getKeyword());
-			if (operator.equals(ColumnedSearchCriteriaList.EQUAL_ID)) {
-				if (!value.equalsIgnoreCase(criteria[i].getKeyword()))
-					return false;
-			} else if (operator.equals(ColumnedSearchCriteriaList.DIFFERENT_ID)) {
-				if (value.equalsIgnoreCase(criteria[i].getKeyword()))
-					return false;
-			} else if (operator.equals(ColumnedSearchCriteriaList.STRICTLY_HIGHER_ID)) {
-				if (compare <= 0)
-					return false;
-			} else if (operator.equals(ColumnedSearchCriteriaList.STRICTLY_LOWER_ID)) {
-				if (compare >= 0)
-					return false;
-			} else if (operator.equals(ColumnedSearchCriteriaList.HIGHER_OR_EQUAL_ID)) {
-				if (compare < 0)
-					return false;
-			} else if (operator.equals(ColumnedSearchCriteriaList.LOWER_OR_EQUAL_ID)) {
-				if (compare > 0)
-					return false;
-			} else if (operator.equals(ColumnedSearchCriteriaList.LIKE_ID)) {
-				String s = criteria[i].getKeyword();
-				s = regexEtoile(s);
-				if (casse) {
-					if (!value.matches(s))
-						return false;
-				} else {
-					if (!value.toLowerCase().matches(s.toLowerCase()))
-						return false;
-				}
-			} else if (operator.equals(ColumnedSearchCriteriaList.NOT_LIKE_ID)) {
-				String s = criteria[i].getKeyword();
-				s = regexEtoile(s);
-				if (casse) {
-					if (value.matches(s))
-						return false;
-				} else {
-					if (value.toLowerCase().matches(s.toLowerCase()))
-						return false;
-				}
-			}
-		}
-		return true;
 	}
 
 	public ColumnedSearchCriteriaList getCriteriaList() {
 		return criteriaList;
 	}
 
-	public void setCriteriaList(ColumnedSearchCriteriaList criteriaList) {
-		this.criteriaList = criteriaList;
-	}
-
 	public boolean isCasse() {
 		return casse;
 	}
 
-	public void setCasse(boolean casse) {
-		this.casse = casse;
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnedSearcher #match(java.lang.Object)
+	 */
+	@Override
+	public boolean match(final Object element, final IColumnResolver resolver) {
+		final int criteriaNumber = criteriaList.getSize();
+		final ColumnedSearchCriteria[] criteria = new ColumnedSearchCriteria[criteriaNumber];
+		for (int i = 0; i < criteriaList.getSize(); i++) {
+			criteria[i] = (ColumnedSearchCriteria) criteriaList.getCriteria().get(i);
+			final String operator = criteria[i].getOperator();
+			final String value = resolver.getValue(element, criteria[i].getColumnIndex());
+			final int compare = collator.compare(value, criteria[i].getKeyword());
+			if (operator.equals(ColumnedSearchCriteriaList.EQUAL_ID)) {
+				if (!value.equalsIgnoreCase(criteria[i].getKeyword())) {
+					return false;
+				}
+			} else if (operator.equals(ColumnedSearchCriteriaList.DIFFERENT_ID)) {
+				if (value.equalsIgnoreCase(criteria[i].getKeyword())) {
+					return false;
+				}
+			} else if (operator.equals(ColumnedSearchCriteriaList.STRICTLY_HIGHER_ID)) {
+				if (compare <= 0) {
+					return false;
+				}
+			} else if (operator.equals(ColumnedSearchCriteriaList.STRICTLY_LOWER_ID)) {
+				if (compare >= 0) {
+					return false;
+				}
+			} else if (operator.equals(ColumnedSearchCriteriaList.HIGHER_OR_EQUAL_ID)) {
+				if (compare < 0) {
+					return false;
+				}
+			} else if (operator.equals(ColumnedSearchCriteriaList.LOWER_OR_EQUAL_ID)) {
+				if (compare > 0) {
+					return false;
+				}
+			} else if (operator.equals(ColumnedSearchCriteriaList.LIKE_ID)) {
+				String s = criteria[i].getKeyword();
+				s = regexEtoile(s);
+				if (casse) {
+					if (!value.matches(s)) {
+						return false;
+					}
+				} else {
+					if (!value.toLowerCase().matches(s.toLowerCase())) {
+						return false;
+					}
+				}
+			} else if (operator.equals(ColumnedSearchCriteriaList.NOT_LIKE_ID)) {
+				String s = criteria[i].getKeyword();
+				s = regexEtoile(s);
+				if (casse) {
+					if (value.matches(s)) {
+						return false;
+					}
+				} else {
+					if (value.toLowerCase().matches(s.toLowerCase())) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
-	private String regexEtoile(String s) {
+	private String regexEtoile(final String s) {
 		String result = s;
 		if (s.lastIndexOf("*") >= 0) { //$NON-NLS-1$
 			String f = new String();
-			ArrayList<String> list = new ArrayList<String>();
-			char[] c = s.toCharArray();
-			for (int j = 0; j < c.length; j++) {
-				if (c[j] == '*')
+			final ArrayList<String> list = new ArrayList<>();
+			final char[] c = s.toCharArray();
+			for (final char element : c) {
+				if (element == '*') {
 					list.add(String.valueOf('.'));
-				list.add(String.valueOf(c[j]));
+				}
+				list.add(String.valueOf(element));
 			}
-			for (int j = 0; j < list.size(); j++)
-				f += list.get(j);
+			for (final String element : list) {
+				f += element;
+			}
 			result = f;
 		}
 		return result;
+	}
+
+	public void setCasse(final boolean casse) {
+		this.casse = casse;
+	}
+
+	public void setCriteriaList(final ColumnedSearchCriteriaList criteriaList) {
+		this.criteriaList = criteriaList;
 	}
 }

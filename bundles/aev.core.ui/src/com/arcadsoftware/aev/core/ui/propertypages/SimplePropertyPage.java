@@ -20,18 +20,15 @@ public abstract class SimplePropertyPage extends ArcadPropertyPage {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse
-	 * .swt.widgets.Composite)
+	 * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse .swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createContents(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NONE);
-		GridLayout grid = new GridLayout();
+	protected Control createContents(final Composite parent) {
+		final Composite composite = new Composite(parent, SWT.NONE);
+		final GridLayout grid = new GridLayout();
 		grid.numColumns = 3;
 		composite.setLayout(grid);
-		GridData gridData = new GridData(GridData.BEGINNING);
+		final GridData gridData = new GridData(GridData.BEGINNING);
 		gridData.horizontalAlignment = GridData.FILL;
 		composite.setLayoutData(gridData);
 		fillContents(composite);
@@ -40,10 +37,7 @@ public abstract class SimplePropertyPage extends ArcadPropertyPage {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.propertypages.ArcadPropertyPage#doAfterCreating
-	 * ()
+	 * @see com.arcadsoftware.aev.core.ui.propertypages.ArcadPropertyPage#doAfterCreating ()
 	 */
 	@Override
 	public void doAfterCreating() {

@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author MD
- * 
  */
 public abstract class HorizontalExpandBarComposite extends AbstractExpandBarComposite {
 
@@ -21,20 +20,21 @@ public abstract class HorizontalExpandBarComposite extends AbstractExpandBarComp
 	 * @param parent
 	 * @param style
 	 */
-	public HorizontalExpandBarComposite(Composite parent, int style, String title, int headerAreaHeight,
-			int bodyAreaHeight) {
+	public HorizontalExpandBarComposite(final Composite parent, final int style, final String title,
+			final int headerAreaHeight,
+			final int bodyAreaHeight) {
 		super(parent, style, title, headerAreaHeight, bodyAreaHeight, ORIENTATION_HORIZONTAL);
 	}
 
 	@Override
 	public void createBodyAreaComposite() {
 		userArea = new Composite(this, SWT.NONE);
-		GridLayout gridLayout = new GridLayout(1, false);
+		final GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.marginHeight = 0;
 		gridLayout.marginWidth = 0;
 		userArea.setLayout(gridLayout);
 
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		final GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.heightHint = bodyHeight;
 		gridData.horizontalSpan = 2;
 		gridData.grabExcessHorizontalSpace = true;
@@ -43,30 +43,30 @@ public abstract class HorizontalExpandBarComposite extends AbstractExpandBarComp
 
 	@Override
 	public void formatComposite() {
-		GridLayout gridLayout = new GridLayout(2, false);
+		final GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.marginHeight = 0;
 		gridLayout.marginWidth = 0;
-		this.setLayout(gridLayout);
-		GridData gridData = new GridData();
+		setLayout(gridLayout);
+		final GridData gridData = new GridData();
 		gridData.heightHint = headerHeihght + bodyHeight + OFFSET;
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.grabExcessHorizontalSpace = true;
-		this.setLayoutData(gridData);
+		setLayoutData(gridData);
 	}
 
 	@Override
 	public void formatExpander() {
-		GridData gridData = new GridData();
+		final GridData gridData = new GridData();
 		gridData.heightHint = headerHeihght;
 		moreParameter.setLayoutData(gridData);
 	}
 
 	@Override
-	public void formatTitle(String text) {
+	public void formatTitle(final String text) {
 		// Label d'affichage du titre
 		titleLabel = new Label(this, SWT.NONE);
 		titleLabel.setText(text);
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		final GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.heightHint = headerHeihght;
 		titleLabel.setLayoutData(gridData);

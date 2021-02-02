@@ -7,19 +7,22 @@ import org.eclipse.jface.viewers.Viewer;
 
 public class ListItemContentProvider implements IStructuredContentProvider {
 
-	public Object[] getElements(Object inputElement) {
+	@Override
+	public void dispose() {
+		// Do nothing
+	}
+
+	@Override
+	public Object[] getElements(final Object inputElement) {
 		if (inputElement instanceof List) {
-			List<?> list = (List<?>) inputElement;
+			final List<?> list = (List<?>) inputElement;
 			return list.toArray();
 		}
 		return new Object[0];
 	}
 
-	public void dispose() {
-		// Do nothing
-	}
-
-	public void inputChanged(Viewer arg0, Object arg1, Object arg2) {
+	@Override
+	public void inputChanged(final Viewer arg0, final Object arg1, final Object arg2) {
 		// Do nothing
 	}
 

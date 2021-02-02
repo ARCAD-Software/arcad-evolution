@@ -7,39 +7,40 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 
 /**
- * 
  * @author dlelong
- * 
  */
 public class MenuAction extends Action implements IMenuCreator {
 
-	private MenuManager menuManager;
+	private final MenuManager menuManager;
 
-	public MenuManager getMenuManager() {
-		return menuManager;
-	}
-
-	public MenuAction(MenuManager menuManager) {
+	public MenuAction(final MenuManager menuManager) {
 		this.menuManager = menuManager;
 		setMenuCreator(this);
 	}
 
-	public MenuAction(String text, int style, MenuManager menuManager) {
+	public MenuAction(final String text, final int style, final MenuManager menuManager) {
 		super(text, style);
 		this.menuManager = menuManager;
 		setMenuCreator(this);
 	}
 
-	public Menu getMenu(Control parent) {
+	@Override
+	public void dispose() {
+		menuManager.dispose();
+	}
+
+	@Override
+	public Menu getMenu(final Control parent) {
 		return menuManager.createContextMenu(parent);
 	}
 
-	public Menu getMenu(Menu parent) {
+	@Override
+	public Menu getMenu(final Menu parent) {
 		return null;
 	}
 
-	public void dispose() {
-		menuManager.dispose();
+	public MenuManager getMenuManager() {
+		return menuManager;
 	}
 
 }

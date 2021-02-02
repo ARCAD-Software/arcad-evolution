@@ -4,20 +4,27 @@ import java.util.ArrayList;
 
 public abstract class AbstractColumnedCriteriaList {
 
+	public String[] columnNames;
 	protected final int COUNT = 10;
-	protected ArrayList<AbstractColumnedCriteria> criteria = new ArrayList<AbstractColumnedCriteria>(COUNT);
+	protected ArrayList<AbstractColumnedCriteria> criteria = new ArrayList<>(COUNT);
+
 	protected ArcadColumns referenceColumns;
 
-	public String[] columnNames;
-
-	public AbstractColumnedCriteriaList(ArcadColumns referenceColumns, boolean withInitData) {
+	public AbstractColumnedCriteriaList(final ArcadColumns referenceColumns, final boolean withInitData) {
 		this.referenceColumns = referenceColumns;
-		this.columnNames = referenceColumns.getUserNameValues();
-		if (withInitData)
-			this.initData();
+		columnNames = referenceColumns.getUserNameValues();
+		if (withInitData) {
+			initData();
+		}
 	}
 
-	protected abstract void initData();
+	public void add(final AbstractColumnedCriteria criterion) {
+		criteria.add(criterion);
+	}
+
+	public String[] getColumnNames() {
+		return columnNames;
+	}
 
 	/**
 	 * Return the collection of criteria
@@ -26,30 +33,24 @@ public abstract class AbstractColumnedCriteriaList {
 		return criteria;
 	}
 
-	public int getSize() {
-		return (criteria.size());
-	}
-
-	public void add(AbstractColumnedCriteria criterion) {
-		criteria.add(criterion);
-	}
-
-	public void removeCriterion(AbstractColumnedCriteria criterion) {
-		criteria.remove(criterion);
-	}
-
-	public String[] getColumnNames() {
-		return columnNames;
-	}
-
-	public void setColumnNames(String[] columnNames) {
-		this.columnNames = columnNames;
-	}
-
 	/**
 	 * Return the collection of criteria
 	 */
-	public AbstractColumnedCriteria getItems(int index) {
-		return (AbstractColumnedCriteria) criteria.get(index);
+	public AbstractColumnedCriteria getItems(final int index) {
+		return criteria.get(index);
+	}
+
+	public int getSize() {
+		return criteria.size();
+	}
+
+	protected abstract void initData();
+
+	public void removeCriterion(final AbstractColumnedCriteria criterion) {
+		criteria.remove(criterion);
+	}
+
+	public void setColumnNames(final String[] columnNames) {
+		this.columnNames = columnNames;
 	}
 }

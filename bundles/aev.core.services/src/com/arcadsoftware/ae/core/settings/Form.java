@@ -2,24 +2,21 @@ package com.arcadsoftware.ae.core.settings;
 
 import java.util.List;
 
-
-
-
 public class Form {
+	List<ConsoleField> fields;
 	SectionId section;
-	List<ConsoleField> fields; 
 
-	public Form(SectionId section,List<ConsoleField> fields){
+	public Form(final SectionId section, final List<ConsoleField> fields) {
 		this.fields = fields;
 		this.section = section;
 	}
-	
-	public List<ConsoleField> getFields(){
+
+	public List<ConsoleField> getFields() {
 		return fields;
 	}
-	
-	public SectionId getSection(){
+
+	public SectionId getSection() {
 		return section;
 	}
-	
+
 }

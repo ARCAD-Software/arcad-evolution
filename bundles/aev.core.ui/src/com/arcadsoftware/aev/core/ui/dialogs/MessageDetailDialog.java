@@ -35,113 +35,157 @@ import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 
 /**
  * Affiche le détail d'un message Arcad.
- * 
+ *
  * @author mlafon
  */
 public class MessageDetailDialog extends ArcadDialog implements IMessagesListener, ISelectionChangedListener {
 
-	private Message message = null;
-	private Label messageText;
-	private TableViewer detailsList;
-	private Text detail;
-
-	/**
-	 * Créé et ouvre la dialog en une ligne.
-	 * 
-	 * @param parentShell
-	 *            Le shell parent (la dialog est modale).
-	 * @param message
-	 *            Le message à afficher
-	 */
-	static public void showMessageDetails(Shell parentShell, Message message) {
-		(new MessageDetailDialog(parentShell)).open(message);
-	}
-
-	static protected class MessageContentProvider implements IStructuredContentProvider {
+	private static class MessageContentProvider implements IStructuredContentProvider {
 
 		/*
 		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(
-		 * java.lang.Object)
-		 */
-		public Object[] getElements(Object inputElement) {
-			if ((inputElement != null) && (inputElement instanceof Message)) {
-				return ((Message) inputElement).toArray();
-			}
-			return null;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
 		 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 		 */
+		@Override
 		public void dispose() {
 			// Do nothing
 		}
 
 		/*
 		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse
-		 * .jface.viewers.Viewer, java.lang.Object, java.lang.Object)
+		 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements( java.lang.Object)
 		 */
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+		@Override
+		public Object[] getElements(final Object inputElement) {
+			if (inputElement instanceof Message) {
+				return ((Message) inputElement).toArray();
+			}
+			return new Object[0];
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse .jface.viewers.Viewer,
+		 * java.lang.Object, java.lang.Object)
+		 */
+		@Override
+		public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
 			// Do nothing
 		}
 	}
 
-	/**
-	 * Contructeur de la classe MessageDetailDialog.
-	 * 
-	 * @param parentShell
-	 */
-	public MessageDetailDialog(Shell parentShell) {
-		super(parentShell);
-	}
-	
-	@Override
-	protected boolean isResizable() {
-		return true;
+	private class MessageLabelProvider extends LabelProvider {
+
+		public MessageLabelProvider() {
+			super();
+		}
+
+		@Override
+		public Image getImage(final Object element) {
+			if (element instanceof Message) {
+				return MessageIconHelper.getMessageIcon((Message) element).image();
+			} else if (element instanceof MessageDetail) {
+				return MessageIconHelper.getMessageDetailIcon((MessageDetail) element).image();
+			}
+			return null;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.jface.viewers.ILabelProvider#getText(java.lang.Object)
+		 */
+		@Override
+		public String getText(final Object element) {
+			if (element instanceof Message && ((Message) element).getCommand() != null) {
+				return ((Message) element).getCommand();
+			}
+			if (element instanceof MessageDetail && ((MessageDetail) element).getDescription() != null) {
+				return ((MessageDetail) element).getDescription();
+			}
+			return StringTools.EMPTY;
+		}
 	}
 
-	protected void updateDialog() {
-		if ((detailsList != null) && !detailsList.getTable().isDisposed()) {
-			detail.setText(StringTools.EMPTY);
-			detailsList.setInput(message);
-			if (message == null) {
-				messageText.setText(StringTools.EMPTY);
-			} else {
-				messageText.setText(message.getCommand());
+	/**
+	 * Créé et ouvre la dialog en une ligne.
+	 *
+	 * @param parentShell
+	 *            Le shell parent (la dialog est modale).
+	 * @param message
+	 *            Le message à afficher
+	 */
+	public static void showMessageDetails(final Shell parentShell, final Message message) {
+		new MessageDetailDialog(parentShell).open(message);
+	}
+
+	private Text detail;
+
+	private TableViewer detailsList;
+
+	private Message message = null;
+
+	private Label messageText;
+
+	/**
+	 * Contructeur de la classe MessageDetailDialog.
+	 *
+	 * @param parentShell
+	 */
+	public MessageDetailDialog(final Shell parentShell) {
+		super(parentShell);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.window.Window#close()
+	 */
+	@Override
+	public boolean close() {
+		MessageManager.removeListener(this);
+		return super.close();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets .Shell)
+	 */
+	@Override
+	protected void configureShell(final Shell newShell) {
+		super.configureShell(newShell);
+		if (message != null) {
+			int i = message.getCommand().indexOf("/n"); //$NON-NLS-1$
+			if (i <= 0) {
+				i = message.getCommand().length();
 			}
+			if (i > 80) {
+				i = 80;
+			}
+			if (i != message.getCommand().length()) {
+				newShell.setText(message.getCommand().substring(i) + "..."); //$NON-NLS-1$
+			} else {
+				newShell.setText(message.getCommand());
+			}
+
+			newShell.setImage(MessageIconHelper.getMessageIcon(message).image());
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse
-	 * .swt.widgets.Composite)
+	 * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse .swt.widgets.Composite)
 	 */
 	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID,DialogConstantProvider.getInstance().OK_LABEL, true);
+	protected void createButtonsForButtonBar(final Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID, DialogConstantProvider.getInstance().OK_LABEL, true);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets
-	 * .Composite)
+	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets .Composite)
 	 */
 	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite comp = (Composite) super.createDialogArea(parent);
+	protected Control createDialogArea(final Composite parent) {
+		final Composite comp = (Composite) super.createDialogArea(parent);
 
 		messageText = new Label(comp, SWT.LEFT | SWT.WRAP);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
@@ -170,150 +214,92 @@ public class MessageDetailDialog extends ArcadDialog implements IMessagesListene
 		return comp;
 	}
 
-	private class MessageLabelProvider extends LabelProvider {
-
-		public MessageLabelProvider() {
-			super();
-		}
-
-		@Override
-		public Image getImage(Object element) {
-			if (element instanceof Message) {
-				return MessageIconHelper.getMessageIcon((Message) element).image();
-			} else if (element instanceof MessageDetail) {
-				return MessageIconHelper.getMessageDetailIcon((MessageDetail) element).image();
-			}
-			return null;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.ILabelProvider#getText(java.lang.Object)
-		 */
-		@Override
-		public String getText(Object element) {
-			if ((element instanceof Message) && (((Message) element).getCommand() != null)) {
-				return ((Message) element).getCommand();
-			}
-			if ((element instanceof MessageDetail) && (((MessageDetail) element).getDescription() != null)) {
-				return ((MessageDetail) element).getDescription();
-			}
-			return StringTools.EMPTY;
-		}
+	@Override
+	protected boolean isResizable() {
+		return true;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets
-	 * .Shell)
+	 * @see com.arcadsoftware.aev.core.messages.IMessagesListener#messageChanged(
+	 * com.arcadsoftware.aev.core.messages.Message)
 	 */
 	@Override
-	protected void configureShell(Shell newShell) {
-		super.configureShell(newShell);
-		if (message != null) {
-			int i = message.getCommand().indexOf("/n"); //$NON-NLS-1$
-			if (i <= 0) {
-				i = message.getCommand().length();
-			}
-			if (i > 80) {
-				i = 80;
-			}
-			if (i != message.getCommand().length()) {
-				newShell.setText(message.getCommand().substring(i) + "..."); //$NON-NLS-1$
-			} else {
-				newShell.setText(message.getCommand());
-			}
-			
-			newShell.setImage(MessageIconHelper.getMessageIcon(message).image());
+	public void messageChanged(final Message changedMessage) {
+		if (message != null && message.equals(changedMessage)) {
+			updateDialog();
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#newMessageAdded
-	 * (com.arcadsoftware.aev.core.messages.Message)
+	 * @see com.arcadsoftware.aev.core.messages.IMessagesListener#messageDeleted(
+	 * com.arcadsoftware.aev.core.messages.Message)
 	 */
-	public void newMessageAdded(Message newMessage, Throwable e) {
-		// Do nothing
+	@Override
+	public void messageDeleted(final Message deletedMessage) {
+		if (message != null && message.equals(deletedMessage)) {
+			message = null;
+			updateDialog();
+		}
 	}
-	public void newMessageAdded(Message newMessage) {
+
+	@Override
+	public void newMessageAdded(final Message newMessage) {
 		newMessageAdded(newMessage, null);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#messageDeleted(
-	 * com.arcadsoftware.aev.core.messages.Message)
+	 * @see com.arcadsoftware.aev.core.messages.IMessagesListener#newMessageAdded
+	 * (com.arcadsoftware.aev.core.messages.Message)
 	 */
-	public void messageDeleted(Message deletedMessage) {
-		if ((this.message != null) && (this.message.equals(deletedMessage))) {
-			this.message = null;
-			updateDialog();
-		}
+	@Override
+	public void newMessageAdded(final Message newMessage, final Throwable e) {
+		// Do nothing
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.messages.IMessagesListener#messageChanged(
-	 * com.arcadsoftware.aev.core.messages.Message)
-	 */
-	public void messageChanged(Message changedMessage) {
-		if ((this.message != null) && (this.message.equals(changedMessage))) {
-			updateDialog();
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.jface.window.Window#open()
 	 */
-	public int open(Message openMessage) {
-		this.message = openMessage;
+	public int open(final Message openMessage) {
+		message = openMessage;
 		MessageManager.addListener(this);
 		return super.open();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.window.Window#close()
-	 */
-	@Override
-	public boolean close() {
-		MessageManager.removeListener(this);
-		return super.close();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(
+	 * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(
 	 * org.eclipse.jface.viewers.SelectionChangedEvent)
 	 */
-	public void selectionChanged(SelectionChangedEvent event) {
-		IStructuredSelection selection = (IStructuredSelection) detailsList.getSelection();
+	@Override
+	public void selectionChanged(final SelectionChangedEvent event) {
+		final IStructuredSelection selection = (IStructuredSelection) detailsList.getSelection();
 
-		if (selection.isEmpty())
+		if (selection.isEmpty()) {
 			return;
+		}
 
-		Iterator<?> iterator = selection.iterator();
+		final Iterator<?> iterator = selection.iterator();
 
-		if ((iterator.hasNext()) && (detail != null) && !detail.isDisposed()) {
+		if (iterator.hasNext() && detail != null && !detail.isDisposed()) {
 			detail.setText(((MessageDetail) iterator.next()).getDescription());
-		} else {
+		} else if(detail != null) {
 			detail.setText(StringTools.EMPTY);
+		}
+	}
+
+	protected void updateDialog() {
+		if (detailsList != null && !detailsList.getTable().isDisposed()) {
+			detail.setText(StringTools.EMPTY);
+			detailsList.setInput(message);
+			if (message == null) {
+				messageText.setText(StringTools.EMPTY);
+			} else {
+				messageText.setText(message.getCommand());
+			}
 		}
 	}
 }

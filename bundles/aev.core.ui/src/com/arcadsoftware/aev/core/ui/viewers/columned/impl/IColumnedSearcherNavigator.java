@@ -7,12 +7,18 @@ import com.arcadsoftware.aev.core.collections.IArcadCollectionItem;
  * @author dlelong
  */
 public interface IColumnedSearcherNavigator {
-	
-	ArcadCollection getSearchedElements();
-	IArcadCollectionItem getFirstItem();
+
 	ArcadCollection getAllItems();
-	IArcadCollectionItem getLastItem();
+
 	IArcadCollectionItem getCurrentItem();
-	IArcadCollectionItem getPreviousItem();
+
+	IArcadCollectionItem getFirstItem();
+
+	IArcadCollectionItem getLastItem();
+
 	IArcadCollectionItem getNextItem();
+
+	IArcadCollectionItem getPreviousItem();
+
+	ArcadCollection getSearchedElements();
 }

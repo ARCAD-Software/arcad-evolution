@@ -5,8 +5,7 @@ package com.arcadsoftware.aev.core.ui.viewers.columned.impl;
 
 /**
  * @author MD
- *
  */
 public interface IColumnResolver {
-    public String getValue(Object element , int columnIndex);
+	String getValue(Object element, int columnIndex);
 }

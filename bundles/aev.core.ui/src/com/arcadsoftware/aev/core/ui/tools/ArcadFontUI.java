@@ -6,10 +6,14 @@ import org.eclipse.swt.graphics.RGB;
 
 public class ArcadFontUI {
 
-	private FontData fontData;
 	private RGB color;
+	private FontData fontData;
 
-	public ArcadFontUI(ArcadFont font) {
+	public ArcadFontUI() {
+		super();
+	}
+
+	public ArcadFontUI(final ArcadFont font) {
 		super();
 		if (font != null) {
 			if (font.getFontColor() != null) {
@@ -22,18 +26,14 @@ public class ArcadFontUI {
 		}
 	}
 
-	public ArcadFontUI() {
-		super();
-	}
-
 	public ArcadFont getArcadFont() {
 		if (fontData != null) {
-			ArcadFont arcadFont = new ArcadFont();
-			arcadFont.setBold((fontData.getStyle() == SWT.BOLD) || (fontData.getStyle() == SWT.BOLD + SWT.ITALIC));
+			final ArcadFont arcadFont = new ArcadFont();
+			arcadFont.setBold(fontData.getStyle() == SWT.BOLD || fontData.getStyle() == SWT.BOLD + SWT.ITALIC);
 			arcadFont.setFontColor(new ArcadColorUI(color).getArcadColor());
 			arcadFont.setFontName(fontData.getName());
 			arcadFont.setFontSize(fontData.getHeight());
-			arcadFont.setItalic((fontData.getStyle() == SWT.ITALIC) || (fontData.getStyle() == SWT.BOLD + SWT.ITALIC));
+			arcadFont.setItalic(fontData.getStyle() == SWT.ITALIC || fontData.getStyle() == SWT.BOLD + SWT.ITALIC);
 			// arcadFont.setScript("" + fontData.data.lfCharSet);
 			// arcadFont.setStrike(fontData.data.lfStrikeOut == 1);
 			// arcadFont.setUnderline(fontData.data.lfUnderline == 1);
@@ -42,20 +42,20 @@ public class ArcadFontUI {
 		return null;
 	}
 
-	public FontData getFontData() {
-		return fontData;
-	}
-
-	public void setFontData(FontData fontData) {
-		this.fontData = fontData;
-	}
-
 	public RGB getColor() {
 		return color;
 	}
 
-	public void setColor(RGB color) {
+	public FontData getFontData() {
+		return fontData;
+	}
+
+	public void setColor(final RGB color) {
 		this.color = color;
+	}
+
+	public void setFontData(final FontData fontData) {
+		this.fontData = fontData;
 	}
 
 }

@@ -13,16 +13,17 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedSearchTableVi
  */
 public class ColumnedSearchCellModifier implements ICellModifier {
 
-	private ColumnedSearchTableViewer tableViewer;
-	private ArcadColumns referenceColumns;
+	private final ArcadColumns referenceColumns;
+	private final ColumnedSearchTableViewer tableViewer;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param ColumnedDialogTableViewer
 	 *            an instance of a ColumnedDialogTableViewer
 	 */
-	public ColumnedSearchCellModifier(ColumnedSearchTableViewer tableViewer, ArcadColumns referenceColumns) {
+	public ColumnedSearchCellModifier(final ColumnedSearchTableViewer tableViewer,
+			final ArcadColumns referenceColumns) {
 		super();
 		this.tableViewer = tableViewer;
 		this.referenceColumns = referenceColumns;
@@ -30,44 +31,45 @@ public class ColumnedSearchCellModifier implements ICellModifier {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.ICellModifier#canModify(java.lang.Object,
-	 * java.lang.String)
+	 * @see org.eclipse.jface.viewers.ICellModifier#canModify(java.lang.Object, java.lang.String)
 	 */
-	public boolean canModify(Object element, String property) {
-		if (property.equals(ColumnedSearchTableViewer.COL_ID))
+	@Override
+	public boolean canModify(final Object element, final String property) {
+		if (property.equals(ColumnedSearchTableViewer.COL_ID)) {
 			return false;
+		}
 		return true;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.ICellModifier#getValue(java.lang.Object,
-	 * java.lang.String)
+	 * @see org.eclipse.jface.viewers.ICellModifier#getValue(java.lang.Object, java.lang.String)
 	 */
-	public Object getValue(Object element, String property) {
+	@Override
+	public Object getValue(final Object element, final String property) {
 		// Find the index of the column
-		int columnIndex = tableViewer.getColumnNames().indexOf(property);
+		final int columnIndex = tableViewer.getColumnNames().indexOf(property);
 
 		Object result = null;
-		ColumnedSearchCriteria criterion = (ColumnedSearchCriteria) element;
+		final ColumnedSearchCriteria criterion = (ColumnedSearchCriteria) element;
 
 		switch (columnIndex) {
 		case 1: // COLUMN_NAME_COLUMN
 			String stringValue = criterion.getColumnName();
 			String[] choices = tableViewer.getChoices(property);
 			int i = choices.length - 1;
-			while (!stringValue.equals(choices[i]) && i > 0)
+			while (!stringValue.equals(choices[i]) && i > 0) {
 				--i;
+			}
 			result = new Integer(i);
 			break;
 		case 2: // OPERATOR_COLUMN
 			stringValue = criterion.getOperator();
 			choices = tableViewer.getChoices(property);
 			i = choices.length - 1;
-			while (!stringValue.equals(choices[i]) && i > 0)
+			while (!stringValue.equals(choices[i]) && i > 0) {
 				--i;
+			}
 			result = new Integer(i);
 			break;
 		case 3: // KEYWORD_COLUMN
@@ -81,22 +83,21 @@ public class ColumnedSearchCellModifier implements ICellModifier {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.ICellModifier#modify(java.lang.Object,
-	 * java.lang.String, java.lang.Object)
+	 * @see org.eclipse.jface.viewers.ICellModifier#modify(java.lang.Object, java.lang.String, java.lang.Object)
 	 */
-	public void modify(Object element, String property, Object value) {
+	@Override
+	public void modify(final Object element, final String property, final Object value) {
 
 		// Find the index of the column
-		int columnIndex = tableViewer.getColumnNames().indexOf(property);
+		final int columnIndex = tableViewer.getColumnNames().indexOf(property);
 
-		TableItem item = (TableItem) element;
-		ColumnedSearchCriteria criterion = (ColumnedSearchCriteria) item.getData();
+		final TableItem item = (TableItem) element;
+		final ColumnedSearchCriteria criterion = (ColumnedSearchCriteria) item.getData();
 		String valueString;
 
 		switch (columnIndex) {
 		case 1: // COLUMN_NAME_COLUMN
-			valueString = tableViewer.getChoices(property)[((Integer) value).intValue()].trim();
+			valueString = tableViewer.getChoices(property)[((Integer) value)].trim();
 			if (!criterion.getColumnName().equals(valueString)) {
 				criterion.setColumnName(valueString);
 				int actualIndex = -1;
@@ -110,7 +111,7 @@ public class ColumnedSearchCellModifier implements ICellModifier {
 			}
 			break;
 		case 2: // OPERATOR_COLUMN
-			valueString = tableViewer.getChoices(property)[((Integer) value).intValue()].trim();
+			valueString = tableViewer.getChoices(property)[((Integer) value)].trim();
 			if (!criterion.getOperator().equals(valueString)) {
 				criterion.setOperator(valueString);
 			}

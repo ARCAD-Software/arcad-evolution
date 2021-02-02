@@ -11,24 +11,24 @@ import com.arcadsoftware.aev.core.ui.columned.model.AbstractColumnedCriteria;
 public class ColumnedCriteriaSorter extends ViewerSorter {
 	/**
 	 * Creates a resource sorter that will use the given sort criteria.
-	 * 
+	 *
 	 * @param criteria
-	 *            the sort criterion to use: one of <code>NAME</code> or
-	 *            <code>TYPE</code>
+	 *            the sort criterion to use: one of <code>NAME</code> or <code>TYPE</code>
 	 */
 	public ColumnedCriteriaSorter() {
 		super();
 	}
 
 	@Override
-	public int compare(Viewer viewer, Object o1, Object o2) {
-		int id1 = ((AbstractColumnedCriteria) o1).getId();
-		int id2 = ((AbstractColumnedCriteria) o2).getId();
-		if (id1 < id2)
+	public int compare(final Viewer viewer, final Object o1, final Object o2) {
+		final int id1 = ((AbstractColumnedCriteria) o1).getId();
+		final int id2 = ((AbstractColumnedCriteria) o2).getId();
+		if (id1 < id2) {
 			return -1;
-		else if (id1 == id2)
+		} else if (id1 == id2) {
 			return 0;
-		else
+		} else {
 			return 1;
+		}
 	}
 }

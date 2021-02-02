@@ -1,15 +1,17 @@
 /*
- * Créé le 24 oct. 07
+ * Crï¿½ï¿½ le 24 oct. 07
  *
- * TODO Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre - Préférences - Java - Style de code - Modèles de code
+ * TODO Pour changer le modï¿½le de ce fichier gï¿½nï¿½rï¿½, allez ï¿½ :
+ * Fenï¿½tre - Prï¿½fï¿½rences - Java - Style de code - Modï¿½les de code
  */
 package com.arcadsoftware.aev.core.model;
 
 public interface ITagable {
-	public boolean isUseTagEquality() ;
-	public void setUseTagEquality(boolean useTagEquality) ;
-	public void setTag(int flag);
-	public int getTag();	
-}
+	int getTag();
 
+	boolean isUseTagEquality();
+
+	void setTag(int flag);
+
+	void setUseTagEquality(boolean useTagEquality);
+}

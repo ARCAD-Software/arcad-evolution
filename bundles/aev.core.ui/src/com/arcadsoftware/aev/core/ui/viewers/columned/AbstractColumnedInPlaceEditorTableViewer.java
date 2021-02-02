@@ -19,80 +19,23 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedTableViewer;
  */
 public abstract class AbstractColumnedInPlaceEditorTableViewer extends AbstractColumnedTableViewer {
 
-	public AbstractColumnedInPlaceEditorTableViewer(Composite parent, int style) {
+	public AbstractColumnedInPlaceEditorTableViewer(final Composite parent, final int style) {
 		super(parent, style);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #getControl()
-	 */
-	@Override
-	public Widget getControl() {
-		return getViewer().getControl();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
 	 * #createColumn(org.eclipse.swt.widgets.Widget, int, int)
 	 */
 	@Override
-	public Item createColumn(Widget widget, int columnStyle, int index) {
+	public Item createColumn(final Widget widget, final int columnStyle, final int index) {
 		return new TableColumn((Table) widget, columnStyle, index);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #setColumnValues(org.eclipse.swt.widgets.Item,
-	 * com.arcadsoftware.aev.core.ui.tableviewers.ArcadColumn)
-	 */
-	@Override
-	public void setColumnValues(Item item, ArcadColumn c) {
-		((TableColumn) item).setWidth(c.getWidth());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #removeAllColumns()
-	 */
-	@Override
-	public void removeAllColumns() {
-		Table table = (Table) getViewer().getControl();
-		for (int i = table.getColumnCount() - 1; i >= 0; i--) {
-			table.getColumn(i).dispose();
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createViewer(org.eclipse.swt.widgets.Composite, int)
-	 */
-	@Override
-	public AbstractInternalColumnedViewer createViewer(Composite viewerParent, int viewerStyle) {
-		return new ColumnedInternalTableViewer(new ColumnedTableViewer(viewerParent, viewerStyle));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createContentProvider()
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #createContentProvider()
 	 */
 	@Override
 	public IContentProvider createContentProvider() {
@@ -101,18 +44,56 @@ public abstract class AbstractColumnedInPlaceEditorTableViewer extends AbstractC
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createLabelProvider
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #createLabelProvider
 	 * (com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer)
 	 */
 	@Override
-	public AbstractColumnedLabelProviderAdapter createLabelProvider(AbstractColumnedViewer viewer) {
+	public AbstractColumnedLabelProviderAdapter createLabelProvider(final AbstractColumnedViewer viewer) {
 		return createTableLabelProvider(viewer);
 	}
 
 	@Override
 	public abstract AbstractColumnedTableLabelProvider createTableLabelProvider(AbstractColumnedViewer viewer);
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * #createViewer(org.eclipse.swt.widgets.Composite, int)
+	 */
+	@Override
+	public AbstractInternalColumnedViewer createViewer(final Composite viewerParent, final int viewerStyle) {
+		return new ColumnedInternalTableViewer(new ColumnedTableViewer(viewerParent, viewerStyle));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #getControl()
+	 */
+	@Override
+	public Widget getControl() {
+		return getViewer().getControl();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #removeAllColumns()
+	 */
+	@Override
+	public void removeAllColumns() {
+		final Table table = (Table) getViewer().getControl();
+		for (int i = table.getColumnCount() - 1; i >= 0; i--) {
+			table.getColumn(i).dispose();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * #setColumnValues(org.eclipse.swt.widgets.Item, com.arcadsoftware.aev.core.ui.tableviewers.ArcadColumn)
+	 */
+	@Override
+	public void setColumnValues(final Item item, final ArcadColumn c) {
+		((TableColumn) item).setWidth(c.getWidth());
+	}
 
 }

@@ -17,7 +17,6 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 
 /**
  * @author MD
- * 
  */
 public class TestTableViewer extends AbstractColumnedTableViewer {
 
@@ -26,13 +25,14 @@ public class TestTableViewer extends AbstractColumnedTableViewer {
 		private String val2 = StringTools.EMPTY;
 		private String val3 = StringTools.EMPTY;
 
-		public TestItem(String v1, String v2, String v3) {
+		public TestItem(final String v1, final String v2, final String v3) {
 			super();
-			this.val1 = v1;
-			this.val2 = v2;
-			this.val3 = v3;
+			val1 = v1;
+			val2 = v2;
+			val3 = v3;
 		}
 
+		@Override
 		public String getLabel() {
 			return StringTools.EMPTY;
 		}
@@ -65,7 +65,7 @@ public class TestTableViewer extends AbstractColumnedTableViewer {
 	 * @param parent
 	 * @param style
 	 */
-	public TestTableViewer(Composite parent, int style) {
+	public TestTableViewer(final Composite parent, final int style) {
 		super(parent, style);
 
 		elements.add(new TestItem("L1C1", "L1C2", "L1C3")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -80,27 +80,11 @@ public class TestTableViewer extends AbstractColumnedTableViewer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #doOnDoubleClick(org.eclipse.jface.viewers.IStructuredSelection)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedTableViewer
+	 * #createTableLabelProvider(com.arcadsoftware.aev.core.ui.viewers.columned. AbstractColumnedViewer)
 	 */
 	@Override
-	protected void doOnDoubleClick(IStructuredSelection selection) {
-		getDisplayedColumns().delete(1);
-		refreshColumns();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedTableViewer
-	 * #createTableLabelProvider(com.arcadsoftware.aev.core.ui.viewers.columned.
-	 * AbstractColumnedViewer)
-	 */
-	@Override
-	public AbstractColumnedTableLabelProvider createTableLabelProvider(AbstractColumnedViewer viewer) {
+	public AbstractColumnedTableLabelProvider createTableLabelProvider(final AbstractColumnedViewer viewer) {
 		return new AbstractColumnedTableLabelProvider(viewer) {
 			// Do nothing
 		};
@@ -108,10 +92,18 @@ public class TestTableViewer extends AbstractColumnedTableViewer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #getIdentifier()
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * #doOnDoubleClick(org.eclipse.jface.viewers.IStructuredSelection)
+	 */
+	@Override
+	protected void doOnDoubleClick(final IStructuredSelection selection) {
+		getDisplayedColumns().delete(1);
+		refreshColumns();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #getIdentifier()
 	 */
 	@Override
 	public String getIdentifier() {
@@ -120,14 +112,11 @@ public class TestTableViewer extends AbstractColumnedTableViewer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #getReferenceColumns()
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #getReferenceColumns()
 	 */
 	@Override
 	public ArcadColumns getReferenceColumns() {
-		ArcadColumns cols = new ArcadColumns();
+		final ArcadColumns cols = new ArcadColumns();
 		cols.add(new ArcadColumn("col1", "InternalHeader1", "InternalHeader1", ArcadColumn.VISIBLE, 0, 100));//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		cols.add(new ArcadColumn("col2", "InternalHeader2", "InternalHeader2", ArcadColumn.VISIBLE, 1, 100));//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		cols.add(new ArcadColumn("col3", "InternalHeader3", "InternalHeader3", ArcadColumn.VISIBLE, 2, 100));//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -137,15 +126,12 @@ public class TestTableViewer extends AbstractColumnedTableViewer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #getValue(java.lang.Object, int)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #getValue(java.lang.Object, int)
 	 */
 	@Override
-	public String getValue(Object element, int columnIndex) {
+	public String getValue(final Object element, final int columnIndex) {
 		if (element instanceof TestItem) {
-			TestItem i = (TestItem) element;
+			final TestItem i = (TestItem) element;
 			switch (columnIndex) {
 			case 0:
 				return i.getVal1();

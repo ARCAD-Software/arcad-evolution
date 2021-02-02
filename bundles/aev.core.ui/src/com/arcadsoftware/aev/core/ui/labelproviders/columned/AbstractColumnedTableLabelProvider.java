@@ -17,129 +17,127 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnedSearcher;
 
 /**
  * @author MD
- * 
  */
 public abstract class AbstractColumnedTableLabelProvider extends AbstractColumnedLabelProviderAdapter implements
 		IColumnResolver {
 
 	protected AbstractColumnedViewer viewer;
 
-	public AbstractColumnedTableLabelProvider(AbstractColumnedViewer viewer) {
+	public AbstractColumnedTableLabelProvider(final AbstractColumnedViewer viewer) {
 		super();
 		this.viewer = viewer;
 	}
 
+	/**
+	 * @param element
+	 * @param actualColumnIndex
+	 */
+	protected Image getActualImage(final Object element, final int actualColumnIndex) {
+		return null;
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang
-	 * .Object, int)
+	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang .Object, int)
 	 */
 	@Override
-	public Image getColumnImage(Object element, int columnIndex) {
-		int actualIndex = viewer.getActualIndexFromDisplayedIndex(columnIndex);
-		if (actualIndex == -1)
+	public Image getColumnImage(final Object element, final int columnIndex) {
+		final int actualIndex = viewer.getActualIndexFromDisplayedIndex(columnIndex);
+		if (actualIndex == -1) {
 			return null;
-		Image result = getActualImage(element, actualIndex);
+		}
+		final Image result = getActualImage(element, actualIndex);
 		if (result == null) {
 			if (columnIndex == 0) {
 				if (element instanceof IArcadDisplayable) {
-					IArcadDisplayable e = (IArcadDisplayable) element;
-					String overlay = e.getOverlayID();
+					final IArcadDisplayable e = (IArcadDisplayable) element;
+					final String overlay = e.getOverlayID();
 					// ATTENTION : il est nécessaire de surcharger les méthodes
 					// getImage et getCompositeImage si vos icônes
 					// ne sont pas dans Core UI
-					if (overlay != null)
+					if (overlay != null) {
 						return getCompositeImage(e.getIconID(), overlay);
+					}
 					return getImage(((IArcadCollectionItem) element).getIconID());
 				}
 			}
-		} else
+		} else {
 			return result;
+		}
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang .Object, int)
+	 */
+	@Override
+	public String getColumnText(final Object element, final int columnIndex) {
+		final IColumnedSearcher searcher = viewer.getSearcher();
+		if (searcher != null) {
+			final TableItem ti = getTableItem(element);
+			if (ti != null) {
+				if (searcher.match(element, this) && ((ColumnedSearcher) searcher).getCriteriaList().getSize() > 0) {
+					ti.setBackground(getMatchColor());
+				} else {
+					ti.setBackground(((ColumnedTableViewer) viewer.getViewer()).getTable().getBackground());
+				}
+			}
+		}
+		// Transcryption de l'index de la colonne affichée en index réel
+		// parmi les colonnes de références.
+		final int actualIndex = viewer.getActualIndexFromDisplayedIndex(columnIndex);
+		if (actualIndex == -1) {
+			return StringTools.EMPTY;
+		}
+		return getValue(element, actualIndex);
+	}
+
+	@Override
+	public Object getColumnValue(final Object element, final int columnIndex) {
+		return geTypedValue(element, columnIndex);
+	}
+
+	/**
+	 * Il est nécessaire de surcharger cette méthode si votre icône n'est pas dans Core UI
+	 *
+	 * @param key
+	 * @return
+	 */
+	protected Image getCompositeImage(final String key, final String decoKey) {
+		return CoreUILabels.getCompositeImage(key, decoKey);
+	}
+
+	/**
+	 * Il est nécessaire de surcharger cette méthode si votre icône n'est pas dans Core UI
+	 *
+	 * @param key
+	 * @return
+	 */
+	protected Image getImage(final String key) {
+		return CoreUILabels.getImage(key);
 	}
 
 	public Color getMatchColor() {
 		return new Color(Display.getCurrent(), 255, 230, 230);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang
-	 * .Object, int)
-	 */
-	@Override
-	public String getColumnText(Object element, int columnIndex) {
-		IColumnedSearcher searcher = viewer.getSearcher();
-		if (searcher != null) {
-			TableItem ti = getTableItem(element);
-			if (ti != null) {
-				if (searcher.match(element, this) && ((ColumnedSearcher) searcher).getCriteriaList().getSize() > 0) {
-					ti.setBackground(getMatchColor());
-				} else
-					ti.setBackground(((ColumnedTableViewer) viewer.getViewer()).getTable().getBackground());
+	public TableItem getTableItem(final Object element) {
+		if (viewer != null) {
+			if (viewer.getViewer() instanceof ColumnedTableViewer) {
+				return ((ColumnedTableViewer) viewer.getViewer()).findTableItem(element);
 			}
 		}
-		// Transcryption de l'index de la colonne affichée en index réel
-		// parmi les colonnes de références.
-		int actualIndex = viewer.getActualIndexFromDisplayedIndex(columnIndex);
-		if (actualIndex == -1)
-			return StringTools.EMPTY;
-		return getValue(element, actualIndex);
+		return null;
 	}
 
 	@Override
-	public Object getColumnValue(Object element, int columnIndex) {
-		return geTypedValue(element, columnIndex);
-	}
-	
-	/**
-	 * @param element
-	 * @param actualColumnIndex
-	 */
-	protected Image getActualImage(Object element, int actualColumnIndex) {
-		return null;
-	}
-
-	public TableItem getTableItem(Object element) {
-		if (viewer != null) {
-			if (viewer.getViewer() instanceof ColumnedTableViewer)
-				return ((ColumnedTableViewer) viewer.getViewer()).findTableItem(element);
-		}
-		return null;
-	}
-
-	public String getValue(Object element, int columnIndex) {
+	public String getValue(final Object element, final int columnIndex) {
 		return viewer.getValue(element, columnIndex);
 	}
-	
-	public Object geTypedValue(Object element, int columnIndex) {
+
+	public Object geTypedValue(final Object element, final int columnIndex) {
 		return viewer.getTypedValue(element, columnIndex);
-	}
-
-	/**
-	 * Il est nécessaire de surcharger cette méthode si votre icône n'est pas
-	 * dans Core UI
-	 * 
-	 * @param key
-	 * @return
-	 */
-	protected Image getImage(String key) {
-		return CoreUILabels.getImage(key);
-	}
-
-	/**
-	 * Il est nécessaire de surcharger cette méthode si votre icône n'est pas
-	 * dans Core UI
-	 * 
-	 * @param key
-	 * @return
-	 */
-	protected Image getCompositeImage(String key, String decoKey) {
-		return CoreUILabels.getCompositeImage(key, decoKey);
 	}
 
 }

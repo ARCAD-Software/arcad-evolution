@@ -34,95 +34,114 @@ import net.sf.jmimemagic.MagicParseException;
 @Component(service = IFileManagerProvider.class)
 public class FileManagerProvider implements IFileManagerProvider {
 
-	public static final String BIN_EXTENSION = "bin"; //$NON-NLS-1$	
-	
-	public String selectDirectory(Shell shell, int actionStyle, String title) {
-		DirectoryDialog chooser = new DirectoryDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
-		chooser.setText(title);
-		return chooser.open();
-	}
+	public static final String BIN_EXTENSION = "bin"; //$NON-NLS-1$
 
-	public String selectFile(Shell shell, int actionStyle, String title,final String[] fileExtensions) {
-		FileDialog chooser = new FileDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
-		chooser.setFilterExtensions(fileExtensions);
-		chooser.setText(title);
-		return chooser.open();
-	}
-	
-	public List<String> selectFiles(Shell shell, int actionStyle, String title,final String[] fileExtensions) {
-		FileDialog chooser = new FileDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
-		chooser.setFilterExtensions(fileExtensions);
-		chooser.setText(title);
-		String selected = chooser.open();
-		if (selected != null){ 
-			String[] filenames = chooser.getFileNames();
-			String path = chooser.getFilterPath();
-			List<String> result = new ArrayList<String>(filenames.length);
-			for (String filename : filenames) {
-				result.add(path+File.separator+filename);
+	private static String discoverFileExtension(final String actualFilename) {
+		MagicMatch match;
+		try {
+			match = Magic.getMagicMatch(new File(actualFilename), true);
+			final String mimeType = match.getMimeType();
+			if (mimeType != null) {
+				final int pos = mimeType.indexOf('/');
+				if (pos > -1) {
+					return mimeType.substring(pos + 1);
+				}
 			}
-			return result;
+		} catch (final MagicParseException e) {
+			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
+		} catch (final MagicMatchNotFoundException e) {
+			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
+		} catch (final MagicException e) {
+			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
 		}
-		return null;
-	}	
-	
-	public String selectFile(Shell shell, int actionStyle, String title,final String[] fileExtensions,String filename) {
-		FileDialog chooser = new FileDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
-		chooser.setFilterExtensions(fileExtensions);
-		chooser.setText(title);
-		if ((filename!=null) && (filename.length()>0)) {
-			chooser.setFileName(filename);
-		}
-		return chooser.open();
+		return BIN_EXTENSION;
 	}
 
-	public void openFileFromStream(InputStream stream, String tempFileName) {
+	private static void openFile(final File file, final boolean isTempFile) {
+		final IFileStore fileStore = EFS.getLocalFileSystem().getStore(file.toURI());
+		final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		if (isTempFile) {
+			try {
+				final EditorTempFilePartListener listener = new EditorTempFilePartListener(file);
+				final IEditorPart editor = IDE.openEditorOnFileStore(page, fileStore);
+				listener.setEditor(editor);
+				page.addPartListener(listener);
+			} catch (final PartInitException e) {
+				MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
+			}
+		} else {
+			try {
+				IDE.openEditorOnFileStore(page, fileStore);
+			} catch (final PartInitException e) {
+				MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
+			}
+		}
+	}
+
+	private static void openTempFile(final File file) {
+		openFile(file, true);
+	}
+
+	@Override
+	public boolean isSelectorAvailable() {
+		return true;
+	}
+
+	@Override
+	public void openFile(final File file) {
+		openFile(file, false);
+	}
+
+	@Override
+	public void openFileFromStream(final InputStream stream, final String tempFileName) {
 		if (tempFileName != null && tempFileName.length() > 0) {
 			if (stream != null) {
 				FileOutputStream out = null;
 				File tempFile = null;
-				try {					
+				try {
 					tempFile = File.createTempFile("customer_", '_' + tempFileName); //$NON-NLS-1$
 					tempFile.deleteOnExit();
 					out = new FileOutputStream(tempFile);
-					byte buf[] = new byte[1024];
+					final byte buf[] = new byte[1024];
 					int len;
-					while ((len = stream.read(buf)) > 0)
+					while ((len = stream.read(buf)) > 0) {
 						out.write(buf, 0, len);
-				} catch (IOException e1) {
+					}
+				} catch (final IOException e1) {
 					MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);
 				} finally {
-					if (out != null)
+					if (out != null) {
 						try {
 							out.close();
-						} catch (IOException e1) {
+						} catch (final IOException e1) {
 							MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);
 						}
+					}
 					try {
 						stream.close();
-					} catch (IOException e1) {
+					} catch (final IOException e1) {
 						MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);
 					}
 				}
-				if (tempFile != null){
-					String actualFilename = tempFile.getAbsolutePath();
-					String extension =   FilenameUtils.getExtension(actualFilename);
-					String basename =   FilenameUtils.getBaseName(actualFilename);
-					String path =   FilenameUtils.getPath(actualFilename);
-					if (extension.equalsIgnoreCase(BIN_EXTENSION)) { 			
-						String realExtension = discoverFileExtension(actualFilename);						
-						if (!realExtension.equalsIgnoreCase(BIN_EXTENSION)){
-							File realFile = new File(path, basename+"."+realExtension); //$NON-NLS-1$
+				if (tempFile != null) {
+					final String actualFilename = tempFile.getAbsolutePath();
+					final String extension = FilenameUtils.getExtension(actualFilename);
+					final String basename = FilenameUtils.getBaseName(actualFilename);
+					final String path = FilenameUtils.getPath(actualFilename);
+					if (extension.equalsIgnoreCase(BIN_EXTENSION)) {
+						final String realExtension = discoverFileExtension(actualFilename);
+						if (!realExtension.equalsIgnoreCase(BIN_EXTENSION)) {
+							final File realFile = new File(path, basename + "." + realExtension); //$NON-NLS-1$
 							try {
 								FileUtils.copyFile(tempFile, realFile);
 								openTempFile(realFile);
-							} catch (IOException e) {
+							} catch (final IOException e) {
 								MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
 							}
 						} else {
 							openTempFile(tempFile);
 						}
-					} else{
+					} else {
 						openTempFile(tempFile);
 					}
 				}
@@ -130,58 +149,50 @@ public class FileManagerProvider implements IFileManagerProvider {
 		}
 	}
 
-	private static String discoverFileExtension(String actualFilename){
-		MagicMatch match;
-		try {
-			match = Magic.getMagicMatch(new File(actualFilename),true);
-			String mimeType = match.getMimeType();
-			if (mimeType!=null) {
-				int pos = mimeType.indexOf('/');
-				if (pos>-1) {
-					return mimeType.substring(pos+1);
-				}
-			}
-		} catch (MagicParseException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
-		} catch (MagicMatchNotFoundException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
-		} catch (MagicException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
-		}
-		return BIN_EXTENSION;  
-	}
-	
-	public void openFile(File file) {
-		openFile(file, false);
-	}
-
-	private static void openTempFile(File file) {
-		openFile(file, true);
-	}
-
-	private static void openFile(File file, boolean isTempFile) {
-		IFileStore fileStore = EFS.getLocalFileSystem().getStore(file.toURI());
-		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		if (isTempFile) {
-			try {
-				EditorTempFilePartListener listener = new EditorTempFilePartListener(file);
-				IEditorPart editor = IDE.openEditorOnFileStore(page, fileStore);
-				listener.setEditor(editor);
-				page.addPartListener(listener);
-			} catch (PartInitException e) {
-				MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
-			}
-		} else {
-			try {
-				IDE.openEditorOnFileStore(page, fileStore);
-			} catch (PartInitException e) {
-				MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
-			}
-		}
+	@Override
+	public String selectDirectory(final Shell shell, final int actionStyle, final String title) {
+		final DirectoryDialog chooser = new DirectoryDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
+		chooser.setText(title);
+		return chooser.open();
 	}
 
 	@Override
-	public boolean isSelectorAvailable() {
-		return true;
+	public String selectFile(final Shell shell, final int actionStyle, final String title,
+			final String[] fileExtensions) {
+		final FileDialog chooser = new FileDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
+		chooser.setFilterExtensions(fileExtensions);
+		chooser.setText(title);
+		return chooser.open();
+	}
+
+	@Override
+	public String selectFile(final Shell shell, final int actionStyle, final String title,
+			final String[] fileExtensions, final String filename) {
+		final FileDialog chooser = new FileDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
+		chooser.setFilterExtensions(fileExtensions);
+		chooser.setText(title);
+		if (filename != null && filename.length() > 0) {
+			chooser.setFileName(filename);
+		}
+		return chooser.open();
+	}
+
+	@Override
+	public List<String> selectFiles(final Shell shell, final int actionStyle, final String title,
+			final String[] fileExtensions) {
+		final FileDialog chooser = new FileDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
+		chooser.setFilterExtensions(fileExtensions);
+		chooser.setText(title);
+		final String selected = chooser.open();
+		if (selected != null) {
+			final String[] filenames = chooser.getFileNames();
+			final String path = chooser.getFilterPath();
+			final List<String> result = new ArrayList<>(filenames.length);
+			for (final String filename : filenames) {
+				result.add(path + File.separator + filename);
+			}
+			return result;
+		}
+		return null;
 	}
 }

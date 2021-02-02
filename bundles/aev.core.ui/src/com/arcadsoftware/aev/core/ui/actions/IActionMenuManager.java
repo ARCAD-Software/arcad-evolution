@@ -7,6 +7,6 @@ public interface IActionMenuManager {
 	/**
 	 * @return the menuManager
 	 */
-	public MenuManager getMenuManager();
-	
+	MenuManager getMenuManager();
+
 }

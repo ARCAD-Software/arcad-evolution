@@ -14,68 +14,34 @@ import org.eclipse.swt.dnd.TransferData;
 import com.arcadsoftware.aev.core.ui.actions.ArcadActions;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public abstract class ContainerProvider implements IContainer {
 
-	protected ArcadActions actions = null;
 	protected static final Object[] EMPTYARRAY = new Object[0];
+	protected ArcadActions actions = null;
 	private Container parent;
 
-	public ContainerProvider(Container parent) {
+	public ContainerProvider(final Container parent) {
 		super();
 		this.parent = parent;
 	}
 
-	public IContainer getParent() {
-		return parent;
+	@Override
+	public <T> T getAdapter(final Class<T> clazz) {
+		return null;
 	}
 
-	//TODO [MDA] A reporter
-	public void setParent(Container parent) {
-		this.parent = parent;
-	}
-
-	
-	
-	public abstract Object[] getContainers();
-
+	@Override
 	public Object[] getChildren() {
 		return getContainers();
 	}
 
-	public boolean hasChildren() {
-		return (getContainers().length > 0);
-	}
+	public abstract Object[] getContainers();
 
-	public boolean isDragable() {
-		return true;
-	}
-
-	public boolean valideDrop(Object source) {
-		return false;
-	}
-
-	public boolean valideDrop(TransferData source) {
-		return false;
-	}
-
-	public boolean performDrop(IContainer source) {
-		return false;
-	}
-
-	public void manageMenuAction(IMenuManager manager) {
-		if (actions != null)
-			actions.fillMenuAction(manager);
-	}
-
-	public void manageToolbarAction(IToolBarManager manager) {
-		if (actions != null)
-			actions.fillToolbarAction(manager);
+	public Object[] getFilteredChildren() {
+		return getContainers();
 	}
 
 	public String getOverlayId() {
@@ -83,29 +49,72 @@ public abstract class ContainerProvider implements IContainer {
 	}
 
 	@Override
-	public <T> T getAdapter(Class<T> clazz) {
+	public IContainer getParent() {
+		return parent;
+	}
+
+	public RootContainerInput getRootContainerInput() {
+		if (getViewer() != null && getViewer().getInput() instanceof RootContainerInput) {
+			return (RootContainerInput) getViewer().getInput();
+		}
 		return null;
 	}
 
-	public boolean isPropertyMenuVisible() {
-		return false;
-	}
-
+	@Override
 	public StructuredViewer getViewer() {
 		return getParent().getViewer();
 	}
 
-	public Object[] getFilteredChildren() {
-		return getContainers();
+	@Override
+	public boolean hasChildren() {
+		return getContainers().length > 0;
 	}
 
 	public boolean hasFilteredChildren() {
 		return hasChildren();
 	}
 
-	public RootContainerInput getRootContainerInput() {
-		if (getViewer() != null && getViewer().getInput() instanceof RootContainerInput)
-			return (RootContainerInput) getViewer().getInput();
-		return null;
+	@Override
+	public boolean isDragable() {
+		return true;
+	}
+
+	@Override
+	public boolean isPropertyMenuVisible() {
+		return false;
+	}
+
+	@Override
+	public void manageMenuAction(final IMenuManager manager) {
+		if (actions != null) {
+			actions.fillMenuAction(manager);
+		}
+	}
+
+	@Override
+	public void manageToolbarAction(final IToolBarManager manager) {
+		if (actions != null) {
+			actions.fillToolbarAction(manager);
+		}
+	}
+
+	@Override
+	public boolean performDrop(final IContainer source) {
+		return false;
+	}
+
+	// TODO [MDA] A reporter
+	public void setParent(final Container parent) {
+		this.parent = parent;
+	}
+
+	@Override
+	public boolean valideDrop(final Object source) {
+		return false;
+	}
+
+	@Override
+	public boolean valideDrop(final TransferData source) {
+		return false;
 	}
 }

@@ -19,51 +19,53 @@
  */
 package com.arcadsoftware.aev.core.ui.calendar;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.SWT;
-
 import java.util.Calendar;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+
 public class SWTYearChooser extends Spinner implements Listener {
-    private SWTDayChooser dayChooser;
-    private int year;
+	private SWTDayChooser dayChooser;
+	private int year;
 
-    public SWTYearChooser(Composite parent) {
-        super(parent, SWT.NONE);
-        Calendar calendar = Calendar.getInstance();
-        dayChooser = null;
-        setMinimum(calendar.getMinimum(Calendar.YEAR));
-        setMaximum(calendar.getMaximum(Calendar.YEAR));
-        setSelection(calendar.get(Calendar.YEAR));
-        addListener(SWT.Selection, this);
-    }
+	public SWTYearChooser(final Composite parent) {
+		super(parent, SWT.NONE);
+		final Calendar calendar = Calendar.getInstance();
+		dayChooser = null;
+		setMinimum(calendar.getMinimum(Calendar.YEAR));
+		setMaximum(calendar.getMaximum(Calendar.YEAR));
+		setSelection(calendar.get(Calendar.YEAR));
+		addListener(SWT.Selection, this);
+	}
 
-    protected void setValue(int newValue) {
-        year = newValue;
-        super.setSelection(year);
-        if (dayChooser != null)
-            dayChooser.setYear(newValue);
-    }
+	public int getYear() {
+		return year;
+	}
 
-    public void setYear(int y) {
-        super.setSelection(y);
-        if (dayChooser != null) {
+	@Override
+	public void handleEvent(final Event event) {
+		setValue(getSelection());
+	}
+
+	public void setDayChooser(final SWTDayChooser dayChooser) {
+		this.dayChooser = dayChooser;
+	}
+
+	protected void setValue(final int newValue) {
+		year = newValue;
+		super.setSelection(year);
+		if (dayChooser != null) {
+			dayChooser.setYear(newValue);
+		}
+	}
+
+	public void setYear(final int y) {
+		super.setSelection(y);
+		if (dayChooser != null) {
 			dayChooser.setYear(y);
 		}
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setDayChooser(SWTDayChooser dayChooser) {
-        this.dayChooser = dayChooser;
-    }
-
-    public void handleEvent(Event event) {
-        setValue(getSelection());
-    }
+	}
 
 }

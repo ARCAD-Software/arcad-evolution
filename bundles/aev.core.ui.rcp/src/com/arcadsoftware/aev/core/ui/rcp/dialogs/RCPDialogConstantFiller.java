@@ -6,9 +6,10 @@ import org.osgi.service.component.annotations.Component;
 import com.arcadsoftware.aev.core.ui.dialogs.DialogConstantProvider;
 import com.arcadsoftware.aev.core.ui.dialogs.IDialogConstantFiller;
 
-@Component( service = IDialogConstantFiller.class, immediate = true )
+@Component(service = IDialogConstantFiller.class, immediate = true)
 public class RCPDialogConstantFiller implements IDialogConstantFiller {
-	public void fill(DialogConstantProvider provider) {
+	@Override
+	public void fill(final DialogConstantProvider provider) {
 		provider.OK_LABEL = IDialogConstants.OK_LABEL;
 		provider.CANCEL_LABEL = IDialogConstants.CANCEL_LABEL;
 		provider.YES_LABEL = IDialogConstants.YES_LABEL;
@@ -19,14 +20,14 @@ public class RCPDialogConstantFiller implements IDialogConstantFiller {
 		provider.STOP_LABEL = IDialogConstants.STOP_LABEL;
 		provider.ABORT_LABEL = IDialogConstants.ABORT_LABEL;
 		provider.RETRY_LABEL = IDialogConstants.RETRY_LABEL;
-		
+
 		provider.IGNORE_LABEL = IDialogConstants.IGNORE_LABEL;
 		provider.PROCEED_LABEL = IDialogConstants.PROCEED_LABEL;
 		provider.OPEN_LABEL = IDialogConstants.OPEN_LABEL;
 		provider.CLOSE_LABEL = IDialogConstants.CLOSE_LABEL;
 		provider.SHOW_DETAILS_LABEL = IDialogConstants.SHOW_DETAILS_LABEL;
 		provider.HIDE_DETAILS_LABEL = IDialogConstants.HIDE_DETAILS_LABEL;
-		
+
 		provider.BACK_LABEL = IDialogConstants.BACK_LABEL;
 		provider.NEXT_LABEL = IDialogConstants.NEXT_LABEL;
 		provider.FINISH_LABEL = IDialogConstants.FINISH_LABEL;

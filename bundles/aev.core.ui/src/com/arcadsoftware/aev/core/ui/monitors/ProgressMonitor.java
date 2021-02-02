@@ -14,65 +14,11 @@ import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 
 public class ProgressMonitor implements IMonitor {
 
-	protected boolean progress = false;
-	protected boolean initialize = false;
-	protected boolean beforeExecute = false;
-	protected boolean afterExecute = false;
-	protected boolean end = false;
-	protected String message = StringTools.EMPTY;
-	protected int stepNumber = 1;
-	protected Thread t;
-
-	public ProgressMonitor() {
-		super();
-	}
-
-	public void begin(String beginMessage, int totalNumberOfStep) {
-		this.message = beginMessage;
-		this.stepNumber = totalNumberOfStep;
-		// EvolutionCoreUIPlugin.getShell().getDisplay().asyncExec(new
-		// MyRunnable());
-		// t = new Thread(new MyRunnable());
-		// t.start();
-		Thread thread = new Thread(new Runnable() {
-			public void run() {
-				try {
-					new ProgressMonitorDialog(EvolutionCoreUIPlugin.getDefault().getPluginShell()).run(true, false,
-							new RunnableCommand());
-				} catch (InvocationTargetException e) {
-					MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
-							this.getClass().toString());
-				} catch (InterruptedException e) {
-					MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
-							this.getClass().toString());
-				}
-			}
-		});
-		thread.start();
-		try {
-			thread.join(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void end(String endMessage) {
-		end = true;
-		this.message = endMessage;
-	}
-
-	public void progress(String progressMessage, int numberOfStep) {
-		progress = true;
-		this.message = progressMessage;
-		this.stepNumber = numberOfStep;
-	}
-
 	protected class RunnableCommand implements IRunnableWithProgress {
-		public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+		@Override
+		public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 			final IProgressMonitor myMonitor = monitor;
 			monitor.beginTask(message, stepNumber);
-			// Thread t = new Thread(new Runnable(){
-			// public void run() {
 			while (!end) {
 				if (initialize) {
 					myMonitor.setTaskName(message);
@@ -96,48 +42,87 @@ public class ProgressMonitor implements IMonitor {
 				}
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				} catch (final InterruptedException e) {
+					Thread.currentThread().interrupt();
 				}
 			}
 			myMonitor.done();
 		}
-		// });
-		// t.start();
-		// }
 	}
 
-	// private class MyRunnable implements Runnable{
-	// public void run() {
-	// try {
-	// new
-	// ProgressMonitorDialog(EvolutionCoreUIPlugin.getDefault().getPluginShell())
-	// .run(true, false, new RunnableCommand());
-	// } catch (InvocationTargetException e) {
-	// MessageManager.addException(e,MessageManager.LEVEL_PRODUCTION)
-	// .addDetail(MessageDetail.ERROR,this.getClass().toString());
-	// } catch (InterruptedException e) {
-	// MessageManager.addException(e,MessageManager.LEVEL_PRODUCTION)
-	// .addDetail(MessageDetail.ERROR,this.getClass().toString());
-	// }
-	// }
-	// }
+	protected boolean afterExecute = false;
+	protected boolean beforeExecute = false;
+	protected boolean end = false;
+	protected boolean initialize = false;
+	protected String message = StringTools.EMPTY;
+	protected boolean progress = false;
+	protected int stepNumber = 1;
 
-	public void afterExecute(String afterMessage, int numberOfStep) {
+	protected Thread t;
+
+	public ProgressMonitor() {
+		super();
+	}
+
+	@Override
+	public void afterExecute(final String afterMessage, final int numberOfStep) {
 		afterExecute = true;
-		this.message = afterMessage;
-		this.stepNumber = numberOfStep;
+		message = afterMessage;
+		stepNumber = numberOfStep;
 	}
 
-	public void beforeExecute(String beforeMessage, int numberOfStep) {
+	@Override
+	public void beforeExecute(final String beforeMessage, final int numberOfStep) {
 		beforeExecute = true;
-		this.message = beforeMessage;
-		this.stepNumber = numberOfStep;
+		message = beforeMessage;
+		stepNumber = numberOfStep;
 	}
 
-	public void initialize(String initMessage, int numberOfStep) {
+	@Override
+	public void begin(final String beginMessage, final int totalNumberOfStep) {
+		message = beginMessage;
+		stepNumber = totalNumberOfStep;
+		final Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					new ProgressMonitorDialog(EvolutionCoreUIPlugin.getDefault().getPluginShell()).run(true, false,
+							new RunnableCommand());
+				} catch (final InvocationTargetException e) {
+					MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
+							this.getClass().toString());
+				} catch (final InterruptedException e) {
+					MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
+							this.getClass().toString());
+					Thread.currentThread().interrupt();
+				}
+			}
+		});
+		thread.start();
+		try {
+			thread.join(1000);
+		} catch (final InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+	}
+
+	@Override
+	public void end(final String endMessage) {
+		end = true;
+		message = endMessage;
+	}
+
+	@Override
+	public void initialize(final String initMessage, final int numberOfStep) {
 		initialize = true;
-		this.message = initMessage;
-		this.stepNumber = numberOfStep;
+		message = initMessage;
+		stepNumber = numberOfStep;
+	}
+
+	@Override
+	public void progress(final String progressMessage, final int numberOfStep) {
+		progress = true;
+		message = progressMessage;
+		stepNumber = numberOfStep;
 	}
 }

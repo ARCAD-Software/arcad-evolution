@@ -34,39 +34,32 @@ import com.arcadsoftware.documentation.brands.Brand;
 public class ColumnedExportAction extends ArcadAction {
 
 	private ColumnedParametersWizardPage parametersPage;
-	private AbstractColumnedViewer viewer;
+	private final AbstractColumnedViewer viewer;
 
-	public ColumnedExportAction(AbstractColumnedViewer viewer) {
+	public ColumnedExportAction(final AbstractColumnedViewer viewer) {
 		super();
 		this.viewer = viewer;
 	}
 
-	public WizardPage[] getPages() {
-		parametersPage = new ColumnedParametersWizardPage(CoreUILabels.resString("action.columned.wizardPage.title"), //$NON-NLS-1$
-				CoreUILabels.resString("action.columned.wizardPage.title"), //$NON-NLS-1$
-				getWizardImage());
-		return new WizardPage[] { parametersPage };
-	}
-
-	private ImageDescriptor getWizardImage() {
-		return ServiceRegistry.lookup(IWizardBranding.class) //
-				.map(IWizardBranding::getBrandingImage) //
-				.orElseGet(Brand.ARCAD_LOGO_64::imageDescriptor);
+	private ArrayList<Object> completeElementListOfRoot(final TreeItem treeItem, final ArrayList<Object> list) {
+		final Object o = treeItem.getData();
+		list.add(o);
+		final TreeItem[] items = treeItem.getItems();
+		for (final TreeItem item : items) {
+			completeElementListOfRoot(item, list);
+		}
+		return list;
 	}
 
 	public ColumnedCSVExportWizard createWizard() {
 		return new ColumnedCSVExportWizard(this, CoreUILabels.resString("action.columned.wizardPage.title")); //$NON-NLS-1$
 	}
 
-	public String getWizardTitle() {
-		return CoreUILabels.resString("action.columned.wizardPage.title"); //$NON-NLS-1$
-	}
-
 	@Override
 	public boolean execute() {
-		ColumnedCSVExportWizard wizard = createWizard();
+		final ColumnedCSVExportWizard wizard = createWizard();
 		if (wizard != null) {
-			ArcadWizardDialog dialog = new ArcadWizardDialog(EvolutionCoreUIPlugin.getShell(), wizard);
+			final ArcadWizardDialog dialog = new ArcadWizardDialog(EvolutionCoreUIPlugin.getShell(), wizard);
 			dialog.setPageSize(150, 140);
 			dialog.setBlockOnOpen(true);
 			dialog.create();
@@ -76,23 +69,49 @@ public class ColumnedExportAction extends ArcadAction {
 		return false;
 	}
 
+	public WizardPage[] getPages() {
+		parametersPage = new ColumnedParametersWizardPage(CoreUILabels.resString("action.columned.wizardPage.title"), //$NON-NLS-1$
+				CoreUILabels.resString("action.columned.wizardPage.title"), //$NON-NLS-1$
+				getWizardImage());
+		return new WizardPage[] { parametersPage };
+	}
+
+	private TreeItem getTreeItem(final Object element) {
+		if (viewer != null) {
+			if (viewer.getViewer() instanceof ColumnedTreeViewer) {
+				return ((ColumnedTreeViewer) viewer.getViewer()).findTreeItem(element);
+			}
+		}
+		return null;
+	}
+
+	private ImageDescriptor getWizardImage() {
+		return ServiceRegistry.lookup(IWizardBranding.class) //
+				.map(IWizardBranding::getBrandingImage) //
+				.orElseGet(Brand.ARCAD_LOGO_64::imageDescriptor);
+	}
+
+	public String getWizardTitle() {
+		return CoreUILabels.resString("action.columned.wizardPage.title"); //$NON-NLS-1$
+	}
+
 	public boolean process() {
 		try {
-			StringBuilder data = new StringBuilder();
-			ArrayList<Object> elements = new ArrayList<Object>();
+			final StringBuilder data = new StringBuilder();
+			ArrayList<Object> elements = new ArrayList<>();
 
-			Item[] items = viewer instanceof AbstractColumnedTableViewer ? ((AbstractColumnedTableViewer) viewer)
+			final Item[] items = viewer instanceof AbstractColumnedTableViewer ? ((AbstractColumnedTableViewer) viewer)
 					.getTable().getItems() : ((AbstractColumnedTreeViewer) viewer).getTree().getItems();
-			for (int i = 0; i < items.length; i++) {
-				elements.add(items[i].getData());
+			for (final Item item : items) {
+				elements.add(item.getData());
 			}
 
-			ArcadColumns columns = viewer.getDisplayedColumns().duplicate();
-			ArrayList<String> list = new ArrayList<String>();
+			final ArcadColumns columns = viewer.getDisplayedColumns().duplicate();
+			final ArrayList<String> list = new ArrayList<>();
 			String separator = parametersPage.getSeparator();
-			if (separator.equals("\\t")) //$NON-NLS-1$
+			if (separator.equals("\\t")) {
 				separator = "	"; //$NON-NLS-1$
-			else if (separator.equals(StringTools.EMPTY)) {
+			} else if (separator.equals(StringTools.EMPTY)) {
 				MessageDialog.openError(EvolutionCoreUIPlugin.getDefault().getPluginShell(), CoreUILabels
 						.resString("messageBox.clm.exportSeparatorVideText"), //$NON-NLS-1$
 						CoreUILabels.resString("messageBox.clm.exportSeparatorVideMessage")); //$NON-NLS-1$
@@ -101,21 +120,22 @@ public class ColumnedExportAction extends ArcadAction {
 
 			if (parametersPage.isOnlyDisplayedColumns()) {
 				for (int i = 0; i < columns.count(); i++) {
-					ArcadColumn column = columns.items(i);
-					if (column.getVisible() == ArcadColumn.HIDDEN)
+					final ArcadColumn column = columns.items(i);
+					if (column.getVisible() == ArcadColumn.HIDDEN) {
 						list.add(column.getIdentifier());
+					}
 				}
-				for (int i = 0; i < list.size(); i++) {
-					columns.getList().remove(columns.items((String) list.get(i)));
+				for (final String element : list) {
+					columns.getList().remove(columns.items(element));
 				}
 			}
 
 			if (parametersPage.isIncludeHeader()) {
 				// String[] userNameValues = columns.getUserNameValues();
-				Iterator<?> iterator = columns.getList().iterator();
+				final Iterator<?> iterator = columns.getList().iterator();
 				data.append(((ArcadColumn) iterator.next()).getUserName());
 				while (iterator.hasNext()) {
-					ArcadColumn column = (ArcadColumn) iterator.next();
+					final ArcadColumn column = (ArcadColumn) iterator.next();
 					data.append(separator);
 					data.append(column.getUserName());
 				}
@@ -123,11 +143,13 @@ public class ColumnedExportAction extends ArcadAction {
 			}
 
 			if (viewer.isFiltered() && parametersPage.isOnlyDisplayedFilteredData()) {
-				ArrayList<Object> filteredElements = new ArrayList<Object>();
+				final ArrayList<Object> filteredElements = new ArrayList<>();
 				for (int i = 0; i < elements.size(); i++) {
-					boolean inFilteredData = viewer.getFilter().select(viewer.getViewer(), elements, elements.get(i));
-					if (inFilteredData)
+					final boolean inFilteredData = viewer.getFilter().select(viewer.getViewer(), elements,
+							elements.get(i));
+					if (inFilteredData) {
 						filteredElements.add(elements.get(i));
+					}
 				}
 				elements = filteredElements;
 			}
@@ -135,22 +157,23 @@ public class ColumnedExportAction extends ArcadAction {
 			// Attention le viewer.getInput() ne donne que les éléments de
 			// premier niveau pour les arbres...
 			if (viewer instanceof AbstractColumnedTreeViewer) {
-				ArrayList<Object> treeElements = new ArrayList<Object>();
-				for (int i = 0; i < elements.size(); i++) {
-					completeElementListOfRoot(getTreeItem(elements.get(i)), treeElements);
+				final ArrayList<Object> treeElements = new ArrayList<>();
+				for (final Object element : elements) {
+					completeElementListOfRoot(getTreeItem(element), treeElements);
 				}
 				elements = treeElements;
 			}
 			// Pour chaque élément, on va récupérer sa valeur textuelle pour la
 			// concaténer au buffer final
-			for (int i = 0; i < elements.size(); i++) {
+			for (final Object element : elements) {
 				boolean isFirstData = true;
 				for (int j = 0; j < columns.count(); j++) {
-					if (!isFirstData)
+					if (!isFirstData) {
 						data.append(separator);
-					else
+					} else {
 						isFirstData = false;
-					String value = viewer.getValue(elements.get(i), columns.items(j).getPosition());
+					}
+					String value = viewer.getValue(element, columns.items(j).getPosition());
 					// replace any line return with space since line return is special items separator
 					if (value != null) {
 						value = value.replaceAll("\r\n", " ");
@@ -164,14 +187,15 @@ public class ColumnedExportAction extends ArcadAction {
 			String filePath = parametersPage.getFilePath();
 			if (filePath != null) {
 				for (int i = 0; i < parametersPage.getExtensions().length; i++) {
-					if (!filePath.endsWith((parametersPage.getExtensions()[i]).substring(1)))
-						filePath += (parametersPage.getExtensions()[i]).substring(1);
+					if (!filePath.endsWith(parametersPage.getExtensions()[i].substring(1))) {
+						filePath += parametersPage.getExtensions()[i].substring(1);
+					}
 				}
-				File file = new File(filePath);
+				final File file = new File(filePath);
 				if (!file.exists()) {
 					try {
 						file.createNewFile();
-					} catch (IOException e) {
+					} catch (final IOException e) {
 						// Do nothing
 					}
 				}
@@ -180,27 +204,9 @@ public class ColumnedExportAction extends ArcadAction {
 				return true;
 			}
 			return false;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	private TreeItem getTreeItem(Object element) {
-		if (viewer != null) {
-			if (viewer.getViewer() instanceof ColumnedTreeViewer)
-				return ((ColumnedTreeViewer) viewer.getViewer()).findTreeItem(element);
-		}
-		return null;
-	}
-
-	private ArrayList<Object> completeElementListOfRoot(TreeItem treeItem, ArrayList<Object> list) {
-		Object o = treeItem.getData();
-		list.add(o);
-		TreeItem[] items = treeItem.getItems();
-		for (int i = 0; i < items.length; i++) {
-			completeElementListOfRoot(items[i], list);
-		}
-		return list;
 	}
 }

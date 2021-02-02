@@ -1,8 +1,8 @@
 /*
- * Créé le 26 avr. 04
+ * Crï¿½ï¿½ le 26 avr. 04
  *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * Pour changer le modï¿½le de ce fichier gï¿½nï¿½rï¿½, allez ï¿½ :
+ * Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 package com.arcadsoftware.aev.core.model;
 
@@ -11,79 +11,19 @@ import com.arcadsoftware.aev.core.collections.IArcadCollectionItem;
 import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modï¿½le de ce commentaire de type gï¿½nï¿½rï¿½, allez ï¿½ :
+ *         Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 public abstract class ArcadEntity implements IArcadCollectionItem, ITagable {
 
+	protected String iconID = StringTools.EMPTY;
 	protected ArcadCollection lastParent;
 	protected int level = 1;
 	protected int tag = -1;
-	protected String iconID = StringTools.EMPTY;
 	protected boolean useTagEquality = false;
 
 	public ArcadEntity() {
 		super();
-	}
-
-	@Override
-	public String getIconID() {
-		return iconID;
-	}
-
-	@Override
-	public String getOverlayID() {
-		return null;
-	}
-
-	@Override
-	public void setIconID(String string) {
-		iconID = string;
-	}
-
-	@Override
-	public int getLevel() {
-		return level;
-	}
-
-	@Override
-	public void setLevel(int i) {
-		level = i;
-	}
-
-	@Override
-	public int getTag() {
-		return tag;
-	}
-
-	@Override
-	public void setTag(int data) {
-		tag = data;
-	}
-
-	@Override
-	public void setParent(ArcadCollection parent) {
-		this.lastParent = parent;
-	}
-
-	@Override
-	public ArcadCollection getParent() {
-		return lastParent;
-	}
-	
-	@Override
-	public void unsetParent(ArcadCollection parent) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public boolean hasChildren() {
-		if (lastParent == null)
-			return false;
-		return lastParent.hasChildren(this);
 	}
 
 	@Override
@@ -93,17 +33,46 @@ public abstract class ArcadEntity implements IArcadCollectionItem, ITagable {
 	}
 
 	@Override
-	public boolean equalsItem(IArcadCollectionItem item) {
+	public boolean equalsItem(final IArcadCollectionItem item) {
 		return false;
 	}
 
 	@Override
-	public boolean equalsWithLevel(IArcadCollectionItem item) {
+	public boolean equalsWithLevel(final IArcadCollectionItem item) {
 		return false;
 	}
 
-	protected boolean read() {
-		return false;
+	@Override
+	public String getIconID() {
+		return iconID;
+	}
+
+	@Override
+	public int getLevel() {
+		return level;
+	}
+
+	@Override
+	public String getOverlayID() {
+		return null;
+	}
+
+	@Override
+	public ArcadCollection getParent() {
+		return lastParent;
+	}
+
+	@Override
+	public int getTag() {
+		return tag;
+	}
+
+	@Override
+	public boolean hasChildren() {
+		if (lastParent == null) {
+			return false;
+		}
+		return lastParent.hasChildren(this);
 	}
 
 	@Override
@@ -111,8 +80,37 @@ public abstract class ArcadEntity implements IArcadCollectionItem, ITagable {
 		return useTagEquality;
 	}
 
+	protected boolean read() {
+		return false;
+	}
+
 	@Override
-	public void setUseTagEquality(boolean useTagEquality) {
+	public void setIconID(final String string) {
+		iconID = string;
+	}
+
+	@Override
+	public void setLevel(final int i) {
+		level = i;
+	}
+
+	@Override
+	public void setParent(final ArcadCollection parent) {
+		lastParent = parent;
+	}
+
+	@Override
+	public void setTag(final int data) {
+		tag = data;
+	}
+
+	@Override
+	public void setUseTagEquality(final boolean useTagEquality) {
 		this.useTagEquality = useTagEquality;
+	}
+
+	@Override
+	public void unsetParent(final ArcadCollection parent) {
+		// TODO Auto-generated method stub
 	}
 }

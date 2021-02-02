@@ -9,7 +9,11 @@ public class ColumnedSortCriteria extends AbstractColumnedCriteria {
 
 	private String sortOrder = StringTools.EMPTY;
 
-	public ColumnedSortCriteria(int id, String firstColumnName) {
+	public ColumnedSortCriteria() {
+		super();
+	}
+
+	public ColumnedSortCriteria(final int id, final String firstColumnName) {
 		super();
 		setId(id);
 		setColumnName(firstColumnName);
@@ -17,14 +21,17 @@ public class ColumnedSortCriteria extends AbstractColumnedCriteria {
 		setSortOrder(ColumnedSortCriteriaList.ASCENDING);
 	}
 
-	public ColumnedSortCriteria() {
-		super();
+	public void assignTo(final ColumnedSortCriteria target) {
+		target.setId(id);
+		target.setColumnName(columnName);
+		target.setColumnIndex(columnIndex);
+		target.setSortOrder(sortOrder);
 	}
 
 	public ColumnedSortCriteria duplicate() {
-		ColumnedSortCriteria result = new ColumnedSortCriteria(id, columnName);
-		result.setColumnIndex(this.columnIndex);
-		result.setSortOrder(this.sortOrder);
+		final ColumnedSortCriteria result = new ColumnedSortCriteria(id, columnName);
+		result.setColumnIndex(columnIndex);
+		result.setSortOrder(sortOrder);
 		return result;
 	}
 
@@ -39,14 +46,7 @@ public class ColumnedSortCriteria extends AbstractColumnedCriteria {
 	 * @param sortOrder
 	 *            sortOrder à définir.
 	 */
-	public void setSortOrder(String sortOrder) {
+	public void setSortOrder(final String sortOrder) {
 		this.sortOrder = sortOrder;
-	}
-
-	public void assignTo(ColumnedSortCriteria target) {
-		target.setId(id);
-		target.setColumnName(columnName);
-		target.setColumnIndex(columnIndex);
-		target.setSortOrder(sortOrder);
 	}
 }

@@ -8,37 +8,43 @@ import org.eclipse.ui.IWorkbenchPart;
 
 public class EditorTempFilePartListener implements IPartListener {
 
-	private File tempFile;
 	private IEditorPart editor;
+	private final File tempFile;
 
 	public EditorTempFilePartListener(final File tempFile) {
 		super();
 		this.tempFile = tempFile;
 	}
 
-	public void setEditor(IEditorPart editor) {
-		this.editor = editor;
-	}
-
-	public void partActivated(IWorkbenchPart part) {
+	@Override
+	public void partActivated(final IWorkbenchPart part) {
 		// Do nothing
 	}
 
-	public void partBroughtToTop(IWorkbenchPart part) {
+	@Override
+	public void partBroughtToTop(final IWorkbenchPart part) {
 		// Do nothing
 	}
 
-	public void partClosed(IWorkbenchPart part) {
-		if (part.equals(editor))
+	@Override
+	public void partClosed(final IWorkbenchPart part) {
+		if (part.equals(editor)) {
 			tempFile.delete();
+		}
 	}
 
-	public void partDeactivated(IWorkbenchPart part) {
+	@Override
+	public void partDeactivated(final IWorkbenchPart part) {
 		// Do nothing
 	}
 
-	public void partOpened(IWorkbenchPart part) {
+	@Override
+	public void partOpened(final IWorkbenchPart part) {
 		// Do nothing
+	}
+
+	public void setEditor(final IEditorPart editor) {
+		this.editor = editor;
 	}
 
 }

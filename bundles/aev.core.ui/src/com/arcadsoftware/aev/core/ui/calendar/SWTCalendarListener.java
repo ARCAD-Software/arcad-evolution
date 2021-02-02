@@ -19,6 +19,6 @@
  */
 package com.arcadsoftware.aev.core.ui.calendar;
 
-public interface SWTCalendarListener  {
-    public void dateChanged(SWTCalendarEvent calendarEvent);
+public interface SWTCalendarListener {
+	void dateChanged(SWTCalendarEvent calendarEvent);
 }

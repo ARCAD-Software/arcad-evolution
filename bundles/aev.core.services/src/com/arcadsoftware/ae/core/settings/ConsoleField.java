@@ -2,31 +2,15 @@ package com.arcadsoftware.ae.core.settings;
 
 public abstract class ConsoleField {
 
-	
-	private String label;
-	private int icon;
 	private String help;
+	private int icon;
+	private String label;
 
 	/**
-	 * @param label the label to set
+	 * @return the help
 	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	/**
-	 * @return the label
-	 */
-	public String getLabel() {
-		return label;
-	}
-
-
-	/**
-	 * @param icon the icon to set
-	 */
-	public void setIcon(int icon) {
-		this.icon = icon;
+	public String getHelp() {
+		return help;
 	}
 
 	/**
@@ -37,17 +21,34 @@ public abstract class ConsoleField {
 	}
 
 	/**
-	 * @param help the help to set
+	 * @return the label
 	 */
-	public void setHelp(String help) {
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param help
+	 *            the help to set
+	 */
+	public void setHelp(final String help) {
 		this.help = help;
 	}
 
 	/**
-	 * @return the help
+	 * @param icon
+	 *            the icon to set
 	 */
-	public String getHelp() {
-		return help;
+	public void setIcon(final int icon) {
+		this.icon = icon;
+	}
+
+	/**
+	 * @param label
+	 *            the label to set
+	 */
+	public void setLabel(final String label) {
+		this.label = label;
 	}
 
 }

@@ -7,34 +7,39 @@ import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
  */
 public class ColumnedSortCriteriaList extends AbstractColumnedCriteriaList {
 
-	// Combo box "sort order"
-	public static final String[] SORT_ORDER_ARRAY = { CoreUILabels.resString("combo.clm.AscendingSort"), //$NON-NLS-1$ 
+	public static final String[] SORT_ORDER_ARRAY = { CoreUILabels.resString("combo.clm.AscendingSort"), //$NON-NLS-1$
 			CoreUILabels.resString("combo.clm.DescendingSort") }; //$NON-NLS-1$
-	// Combo box "column name"
+	
+	public static final String ASCENDING = SORT_ORDER_ARRAY[0];
+	public static final String DESCENDING = SORT_ORDER_ARRAY[1];
+	
 
-	public static String ASCENDING = SORT_ORDER_ARRAY[0];
-	public static String DESCENDING = SORT_ORDER_ARRAY[1];
+	public ColumnedSortCriteriaList(final ArcadColumns referenceColumns) {
+		this(referenceColumns, false);
+	}
 
 	/**
 	 * Constructor
 	 */
-	public ColumnedSortCriteriaList(ArcadColumns referenceColumns, boolean withInitData) {
+	public ColumnedSortCriteriaList(final ArcadColumns referenceColumns, final boolean withInitData) {
 		super(referenceColumns, withInitData);
 	}
 
-	public ColumnedSortCriteriaList(ArcadColumns referenceColumns) {
-		this(referenceColumns, false);
+	/**
+	 * Add a new criterion to the collection of criteria
+	 */
+	public void addCriterion() {
+		final ColumnedSortCriteria criterion = new ColumnedSortCriteria(criteria.size() + 1, columnNames[0]);
+		criteria.add(criteria.size(), criterion);
 	}
 
-	/*
-	 * Initialize the table data. Create COUNT criteria and add them them to the
-	 * collection of criteria
-	 */
-	@Override
-	protected void initData() {
-		ColumnedSortCriteria criterion;
-		criterion = new ColumnedSortCriteria(1, columnNames[0]);
-		criteria.add(criterion);
+	public ColumnedSortCriteriaList duplicate() {
+		final ColumnedSortCriteriaList result = new ColumnedSortCriteriaList(referenceColumns);
+		for (int i = 0; i < criteria.size(); i++) {
+			final ColumnedSortCriteria c = (ColumnedSortCriteria) getItems(i);
+			result.add(c.duplicate());
+		}
+		return result;
 	}
 
 	/**
@@ -44,34 +49,20 @@ public class ColumnedSortCriteriaList extends AbstractColumnedCriteriaList {
 		return SORT_ORDER_ARRAY;
 	}
 
-	public ColumnedSortCriteriaList duplicate() {
-		ColumnedSortCriteriaList result = new ColumnedSortCriteriaList(referenceColumns);
-		for (int i = 0; i < criteria.size(); i++) {
-			ColumnedSortCriteria c = (ColumnedSortCriteria) getItems(i);
-			result.add(c.duplicate());
-		}
-		return result;
-	}
-
-	/**
-	 * Add a new criterion to the collection of criteria
+	/*
+	 * Initialize the table data. Create COUNT criteria and add them them to the collection of criteria
 	 */
-	public void addCriterion() {
-		ColumnedSortCriteria criterion = new ColumnedSortCriteria(criteria.size() + 1, columnNames[0]);
-		criteria.add(criteria.size(), criterion);
-	}
-
-	public void swap(ColumnedSortCriteria criteria1, ColumnedSortCriteria criteria2) {
-		ColumnedSortCriteria temp = new ColumnedSortCriteria();
-		criteria2.assignTo(temp);
-		criteria1.assignTo(criteria2);
-		temp.assignTo(criteria1);
+	@Override
+	protected void initData() {
+		ColumnedSortCriteria criterion;
+		criterion = new ColumnedSortCriteria(1, columnNames[0]);
+		criteria.add(criterion);
 	}
 
 	public void orderCriterion() {
-		ColumnedSortCriteriaList temp = new ColumnedSortCriteriaList(this.referenceColumns);
+		final ColumnedSortCriteriaList temp = new ColumnedSortCriteriaList(referenceColumns);
 		ColumnedSortCriteria tempCriteria;
-		int size = this.getSize();
+		final int size = getSize();
 		for (int i = 1; i <= size; i++) {
 			for (int j = 1; j <= size; j++) {
 				tempCriteria = (ColumnedSortCriteria) criteria.get(j - 1);
@@ -81,6 +72,13 @@ public class ColumnedSortCriteriaList extends AbstractColumnedCriteriaList {
 				}
 			}
 		}
-		this.criteria = temp.getCriteria();
+		criteria = temp.getCriteria();
+	}
+
+	public void swap(final ColumnedSortCriteria criteria1, final ColumnedSortCriteria criteria2) {
+		final ColumnedSortCriteria temp = new ColumnedSortCriteria();
+		criteria2.assignTo(temp);
+		criteria1.assignTo(criteria2);
+		temp.assignTo(criteria1);
 	}
 }

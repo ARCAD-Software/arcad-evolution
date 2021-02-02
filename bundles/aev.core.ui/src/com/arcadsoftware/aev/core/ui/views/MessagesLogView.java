@@ -2,7 +2,7 @@
  * Créé le 10 juin 2004
  * Projet : ARCAD Plugin Core UI
  * <i> Copyright 2004, Arcad-Software.</i>
- *  
+ *
  */
 package com.arcadsoftware.aev.core.ui.views;
 
@@ -32,24 +32,18 @@ import com.arcadsoftware.aev.core.ui.treeviewers.MessagesTreeViewer;
 import com.arcadsoftware.documentation.icons.Icon;
 
 /**
- * 
  * @author mlafon
  * @version 1.0.0
  */
 // TODO [DL] A revoir pour le rendre plus complet
 public class MessagesLogView extends ViewPart implements IMessagesListener {
 
-	private Action clearAllAction;
-	private Action clearSelectionAction;
-	private Action exportAction;
-	public MessagesTreeViewer tree;
-
 	private static class FilterAction extends Action {
 
-		private int level;
-		private MessagesTreeViewer tree;
+		private final int level;
+		private final MessagesTreeViewer tree;
 
-		public FilterAction(String text, MessagesTreeViewer tree, int level) {
+		public FilterAction(final String text, final MessagesTreeViewer tree, final int level) {
 			super(text, IAction.AS_CHECK_BOX);
 			this.level = level;
 			this.tree = tree;
@@ -58,18 +52,24 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 
 		/*
 		 * (non-Javadoc)
-		 * 
 		 * @see org.eclipse.jface.action.IAction#run()
 		 */
 		@Override
 		public void run() {
-			if (!isChecked())
-				tree.setFilterLevel(tree.getFilterLevel() & (~level));
-			else
+			if (!isChecked()) {
+				tree.setFilterLevel(tree.getFilterLevel() & ~level);
+			} else {
 				tree.setFilterLevel(tree.getFilterLevel() | level);
+			}
 		}
 
 	}
+
+	private Action clearAllAction;
+	private Action clearSelectionAction;
+	private Action exportAction;
+
+	public MessagesTreeViewer tree;
 
 	public MessagesLogView() {
 		super();
@@ -77,13 +77,10 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets
-	 * .Composite)
+	 * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
 	 */
 	@Override
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 		tree = new MessagesTreeViewer(parent, SWT.NONE | SWT.FULL_SELECTION, MessageDetail.COMPLETION
 				| MessageDetail.ERROR | MessageDetail.DIAGNOSTIC | MessageDetail.EXCEPTION | MessageDetail.WARNING);
 		tree.getTree().setHeaderVisible(false);
@@ -120,16 +117,16 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 		exportAction.setToolTipText(CoreUILabels.resString("MessagesLogView.ExportHint")); //$NON-NLS-1$
 		exportAction.setImageDescriptor(Icon.SAVE.imageDescriptor());
 
-		IActionBars bars = getViewSite().getActionBars();
+		final IActionBars bars = getViewSite().getActionBars();
 
-		IToolBarManager toolBar = bars.getToolBarManager();
+		final IToolBarManager toolBar = bars.getToolBarManager();
 		toolBar.removeAll();
 		toolBar.add(clearSelectionAction);
 		toolBar.add(clearAllAction);
 		toolBar.add(exportAction);
 		toolBar.add(new Separator());
 
-		IMenuManager menu = bars.getMenuManager();
+		final IMenuManager menu = bars.getMenuManager();
 		menu.removeAll();
 		menu.add(new FilterAction(
 				CoreUILabels.resString("MessagesLogView.Completion"), tree, MessageManager.SHOW_COMPLETION)); //$NON-NLS-1$
@@ -153,60 +150,6 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.IWorkbenchPart#setFocus()
-	 */
-	@Override
-	public void setFocus() {
-		if (tree != null)
-			tree.getTree().setFocus();
-	}
-
-	@Override
-	public void newMessageAdded(Message message, Throwable e) {
-		if ((tree != null)) {
-
-			// Evite un appel à la méthode refresh depuis un Thread qui n'y
-			// aurais pas accès.
-			try {
-				tree.getViewer().getControl().isVisible();
-			} catch (SWTException e1) {
-				return;
-			}
-
-			tree.refresh();
-			// tree.collapseAll();
-		}
-	}
-	@Override
-	public void newMessageAdded(Message newMessage) {
-		newMessageAdded(newMessage, null);
-	}
-
-	@Override
-	public void messageDeleted(Message message) {
-		newMessageAdded(message);
-	}
-
-	@Override
-	public void messageChanged(Message message) {
-		newMessageAdded(message);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.IViewPart#init(org.eclipse.ui.IViewSite)
-	 */
-	@Override
-	public void init(IViewSite site) throws PartInitException {
-		super.init(site);
-		MessageManager.addListener(this);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.ui.IWorkbenchPart#dispose()
 	 */
 	@Override
@@ -214,6 +157,59 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 		EvolutionCoreUIPlugin.getDefault().setMessageLevelFilter(tree.getFilterLevel());
 		MessageManager.removeListener(this);
 		super.dispose();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ui.IViewPart#init(org.eclipse.ui.IViewSite)
+	 */
+	@Override
+	public void init(final IViewSite site) throws PartInitException {
+		super.init(site);
+		MessageManager.addListener(this);
+	}
+
+	@Override
+	public void messageChanged(final Message message) {
+		newMessageAdded(message);
+	}
+
+	@Override
+	public void messageDeleted(final Message message) {
+		newMessageAdded(message);
+	}
+
+	@Override
+	public void newMessageAdded(final Message newMessage) {
+		newMessageAdded(newMessage, null);
+	}
+
+	@Override
+	public void newMessageAdded(final Message message, final Throwable e) {
+		if (tree != null) {
+
+			// Evite un appel à la méthode refresh depuis un Thread qui n'y
+			// aurais pas accès.
+			try {
+				tree.getViewer().getControl().isVisible();
+			} catch (final SWTException e1) {
+				return;
+			}
+
+			tree.refresh();
+			// tree.collapseAll();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ui.IWorkbenchPart#setFocus()
+	 */
+	@Override
+	public void setFocus() {
+		if (tree != null) {
+			tree.getTree().setFocus();
+		}
 	}
 
 }

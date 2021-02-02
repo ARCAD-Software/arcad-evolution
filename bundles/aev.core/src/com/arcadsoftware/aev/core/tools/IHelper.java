@@ -7,9 +7,12 @@ package com.arcadsoftware.aev.core.tools;
  * @author MD
  */
 public interface IHelper {
-	public void beginAction();
-	public void endAction();    
-	public String getCompliantFileName();
-	public String getBasedLocation();
-	
+	void beginAction();
+
+	void endAction();
+
+	String getBasedLocation();
+
+	String getCompliantFileName();
+
 }

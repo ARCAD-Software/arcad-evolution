@@ -13,12 +13,12 @@ public class ColumnedCSVExportWizard extends AbstractWizard {
 	private ColumnedExportAction action;
 	private WizardPage[] pages;
 
-	public ColumnedCSVExportWizard(ColumnedExportAction action, String title) {
+	public ColumnedCSVExportWizard(final ColumnedExportAction action, final String title) {
 		this(title);
 		this.action = action;
 	}
 
-	public ColumnedCSVExportWizard(String title) {
+	public ColumnedCSVExportWizard(final String title) {
 		super();
 		setNeedsProgressMonitor(true);
 		setWindowTitle(title);
@@ -27,8 +27,8 @@ public class ColumnedCSVExportWizard extends AbstractWizard {
 	@Override
 	public void addPages() {
 		pages = action.getPages();
-		for (int i = 0; i < pages.length; i++) {
-			addPage(pages[i]);
+		for (final WizardPage page : pages) {
+			addPage(page);
 		}
 	}
 
@@ -36,7 +36,7 @@ public class ColumnedCSVExportWizard extends AbstractWizard {
 	public boolean performFinish() {
 		try {
 			return action.process();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return false;
 		}
 	}

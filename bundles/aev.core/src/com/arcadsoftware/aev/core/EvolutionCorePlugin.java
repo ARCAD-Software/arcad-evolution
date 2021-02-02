@@ -24,6 +24,41 @@ public class EvolutionCorePlugin extends ArcadPlugin implements IHelperLabel {
 
 	// The shared instance.
 	private static EvolutionCorePlugin plugin;
+
+	public static String getCompliantFileName() {
+		try {
+			return getDefault().getPluginPath() + File.separatorChar + COMPLIANT_FILENAME;
+		} catch (final IOException e) {
+			return COMPLIANT_FILENAME;
+		}
+	}
+
+	/**
+	 * Returns the shared instance.
+	 */
+	public static EvolutionCorePlugin getDefault() {
+		return plugin;
+	}
+
+	/**
+	 * Returns the string from the plugin's resource bundle, or 'key' if not found.
+	 */
+	public static String getResourceString(final String key) {
+		final ResourceBundle bundle = EvolutionCorePlugin.getDefault().getResourceBundle();
+		try {
+			return bundle.getString(key);
+		} catch (final MissingResourceException e) {
+			return key;
+		}
+	}
+
+	/**
+	 * Returns the workspace instance.
+	 */
+	public static IWorkspace getWorkspace() {
+		return ResourcesPlugin.getWorkspace();
+	}
+
 	// Resource bundle.
 	private ResourceBundle resourceBundle;
 
@@ -37,35 +72,8 @@ public class EvolutionCorePlugin extends ArcadPlugin implements IHelperLabel {
 		CoreLabels.getInstance().setLabelHelper(this);
 		try {
 			resourceBundle = ResourceBundle.getBundle("com.arcadsoftware.aev.core.EvolutionCorePluginResources");//$NON-NLS-1$
-		} catch (MissingResourceException x) {
+		} catch (final MissingResourceException x) {
 			resourceBundle = null;
-		}
-	}
-
-	/**
-	 * Returns the shared instance.
-	 */
-	public static EvolutionCorePlugin getDefault() {
-		return plugin;
-	}
-
-	/**
-	 * Returns the workspace instance.
-	 */
-	public static IWorkspace getWorkspace() {
-		return ResourcesPlugin.getWorkspace();
-	}
-
-	/**
-	 * Returns the string from the plugin's resource bundle, or 'key' if not
-	 * found.
-	 */
-	public static String getResourceString(String key) {
-		ResourceBundle bundle = EvolutionCorePlugin.getDefault().getResourceBundle();
-		try {
-			return bundle.getString(key);
-		} catch (MissingResourceException e) {
-			return key;
 		}
 	}
 
@@ -76,26 +84,17 @@ public class EvolutionCorePlugin extends ArcadPlugin implements IHelperLabel {
 		return resourceBundle;
 	}
 
-	public static String getCompliantFileName() {
-		try {
-			return getDefault().getPluginPath() + File.separatorChar + COMPLIANT_FILENAME;
-		} catch (IOException e) {
-			return COMPLIANT_FILENAME;
-		}
-	}
-
 	@Override
-	public String resString(String key, Object...params) {
+	public String resString(final String key, final Object... params) {
 		try {
 			return String.format(getResourceString(key), params);
-		}
-		catch(Exception e) {
+		} catch (final Exception e) {
 			return getResourceString(key);
 		}
 	}
 
 	@Override
-	public void start(BundleContext context) throws Exception {
+	public void start(final BundleContext context) throws Exception {
 		super.start(context);
 	}
 }

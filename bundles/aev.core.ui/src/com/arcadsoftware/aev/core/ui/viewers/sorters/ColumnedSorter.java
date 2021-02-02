@@ -13,35 +13,37 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnResolver;
  */
 public class ColumnedSorter extends ViewerSorter {
 	private ColumnedSortCriteriaList criteriaList;
-	private IColumnResolver resolver;
-	private ViewerComparator viewerComparator = new ViewerComparator();
+	private final IColumnResolver resolver;
+	private final ViewerComparator viewerComparator = new ViewerComparator();
 
-	public ColumnedSorter(ColumnedSortCriteriaList criteriaList, IColumnResolver resolver) {
+	public ColumnedSorter(final ColumnedSortCriteriaList criteriaList, final IColumnResolver resolver) {
 		super();
 		this.criteriaList = criteriaList;
 		this.resolver = resolver;
 	}
 
 	@Override
-	public int category(Object element) {
-		if (element instanceof String)
+	public int category(final Object element) {
+		if (element instanceof String) {
 			return 0;
+		}
 		return 1;
 	}
 
 	@Override
-	public int compare(Viewer viewer, Object o1, Object o2) {
-		int cat1 = category(o1);
-		int cat2 = category(o2);
+	public int compare(final Viewer viewer, final Object o1, final Object o2) {
+		final int cat1 = category(o1);
+		final int cat2 = category(o2);
 
-		if (cat1 != cat2)
+		if (cat1 != cat2) {
 			return cat1 - cat2;
+		}
 
-		int result = 0;
+		final int result = 0;
 
-		int criteriaNumber = criteriaList.getSize();
-		ColumnedSortCriteria[] criteria = new ColumnedSortCriteria[criteriaNumber];
-		Integer[] columnIndex = new Integer[criteriaList.getSize()];
+		final int criteriaNumber = criteriaList.getSize();
+		final ColumnedSortCriteria[] criteria = new ColumnedSortCriteria[criteriaNumber];
+		final Integer[] columnIndex = new Integer[criteriaList.getSize()];
 		for (int i = 0; i < criteriaList.getSize(); i++) {
 			criteria[i] = (ColumnedSortCriteria) criteriaList.getCriteria().get(i);
 			columnIndex[i] = new Integer(criteria[i].getColumnIndex());
@@ -49,12 +51,13 @@ public class ColumnedSorter extends ViewerSorter {
 
 		for (int i = 0; i < columnIndex.length; i++) {
 			String text1 = null, text2 = null;
-			text1 = resolver.getValue(o1, columnIndex[i].intValue());
-			text2 = resolver.getValue(o2, columnIndex[i].intValue());
+			text1 = resolver.getValue(o1, columnIndex[i]);
+			text2 = resolver.getValue(o2, columnIndex[i]);
 			if (!text1.equalsIgnoreCase(text2)) {
 				// ordre croissant
-				if (criteria[i].getSortOrder().equals(ColumnedSortCriteriaList.ASCENDING))
+				if (criteria[i].getSortOrder().equals(ColumnedSortCriteriaList.ASCENDING)) {
 					return viewerComparator.compare(viewer, text1, text2);
+				}
 				return viewerComparator.compare(viewer, text2, text1);
 			}
 		}
@@ -65,7 +68,7 @@ public class ColumnedSorter extends ViewerSorter {
 		return criteriaList;
 	}
 
-	public void setCriteriaList(ColumnedSortCriteriaList criteriaList) {
+	public void setCriteriaList(final ColumnedSortCriteriaList criteriaList) {
 		this.criteriaList = criteriaList;
 	}
 }

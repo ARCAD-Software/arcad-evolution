@@ -4,16 +4,15 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 
 /**
  * @author MD
- *
  */
 public class ColumnedDefaultTableLabelProvider extends
-        AbstractColumnedTableLabelProvider {
+		AbstractColumnedTableLabelProvider {
 
-    /**
-     * @param viewer
-     */
-    public ColumnedDefaultTableLabelProvider(AbstractColumnedViewer viewer) {
-        super(viewer);
-    }
+	/**
+	 * @param viewer
+	 */
+	public ColumnedDefaultTableLabelProvider(final AbstractColumnedViewer viewer) {
+		super(viewer);
+	}
 
 }

@@ -7,11 +7,8 @@
 package com.arcadsoftware.aev.core.ui.mementos;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class ArcadSettings {
 
@@ -19,9 +16,9 @@ public class ArcadSettings {
 	private String userName;
 
 	/**
-	 * 
+	 *
 	 */
-	public ArcadSettings(String serverName, String userName) {
+	public ArcadSettings(final String serverName, final String userName) {
 		super();
 		this.serverName = serverName;
 		this.userName = userName;
@@ -44,14 +41,14 @@ public class ArcadSettings {
 	/**
 	 * @param string
 	 */
-	public void setServerName(String string) {
+	public void setServerName(final String string) {
 		serverName = string;
 	}
 
 	/**
 	 * @param string
 	 */
-	public void setUserName(String string) {
+	public void setUserName(final String string) {
 		userName = string;
 	}
 

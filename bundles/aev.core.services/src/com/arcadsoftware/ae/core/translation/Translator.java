@@ -1,39 +1,37 @@
 package com.arcadsoftware.ae.core.translation;
 
-
 public class Translator {
 	private static Translator instance = new Translator();
-		
-	private static ITranslator translator = null;
-	
-	private Translator(){
-		super();
-	}
+
+	private static ITranslator translatorInstance = null;
 
 	public static Translator getInstance() {
 		return instance;
 	}
 
-	public void setTranslator(ITranslator t){
-		translator = t; 
-	}
-	
-	public static String resString(String key) {
-		if (translator!=null) {
-			return translator.resString(key);
+	public static String resString(final String key) {
+		if (translatorInstance != null) {
+			return translatorInstance.resString(key);
 		}
 		return "";
-	}	
-	
-	public static String resString(String key,String[] substitionMessages) {
+	}
+
+	public static String resString(final String key, final String[] substitionMessages) {
 		String message = resString(key);
-		if (!message.equals("")){
-			for (int i=0;i<substitionMessages.length;i++){			
-				message.replace("$"+i,substitionMessages[i]);
+		if (!message.equals("")) {
+			for (int i = 0; i < substitionMessages.length; i++) {
+				message = message.replace("$" + i, substitionMessages[i]);
 			}
 		}
 		return message;
-	}	
-	
-	
+	}
+
+	private Translator() {
+		super();
+	}
+
+	public static void setTranslator(final ITranslator t) {
+		translatorInstance = t;
+	}
+
 }

@@ -33,10 +33,34 @@ import com.arcadsoftware.documentation.icons.Icon;
 
 /**
  * @author MD
- * 
  */
 public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer {
 
+	public class RunMultiSorter implements IRunnableWithProgress {
+
+		public RunMultiSorter() {
+			super();
+		}
+
+		/**
+		 * Méthode d'exécution du tri multicritère avec message de progression Les éléments sont alors triés et affichés
+		 * dans le viewer spécifique
+		 *
+		 * @param monitor
+		 */
+		@Override
+		public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+			monitor.beginTask(CoreUILabels.resString("Action.SortAction.Execute"), 3); //$NON-NLS-1$
+			monitor.worked(1);
+			final Object temp = getInput();
+			setInput(null);
+			monitor.worked(1);
+			refreshColumns();
+			monitor.worked(1);
+			setInput(temp);
+			monitor.done();
+		}
+	}
 
 	private class ShowSortEditorAction extends Action {
 		public ShowSortEditorAction() {
@@ -51,11 +75,11 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 			ColumnedSorter currentSorter = getSorter();
 			boolean newSorter = false;
 			if (currentSorter == null) {
-				ColumnedSortCriteriaList list = new ColumnedSortCriteriaList(displayedColumns, true);
+				final ColumnedSortCriteriaList list = new ColumnedSortCriteriaList(displayedColumns, true);
 				currentSorter = new ColumnedSorter(list, AbstractColumnedTableViewer.this);
 				newSorter = true;
 			}
-			ColumnedSortDialog dialog = new ColumnedSortDialog(EvolutionCoreUIPlugin.getShell(), currentSorter
+			final ColumnedSortDialog dialog = new ColumnedSortDialog(EvolutionCoreUIPlugin.getShell(), currentSorter
 					.getCriteriaList().duplicate(), displayedColumns);
 			dialog.create();
 			if (dialog.open() == Window.OK) {
@@ -65,15 +89,15 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 				}
 				getViewer().setSorter(sorter);
 
-				IRunnableWithProgress runContainer = new RunMultiSorter();
+				final IRunnableWithProgress runContainer = new RunMultiSorter();
 				try {
 					new ProgressMonitorDialog(EvolutionCoreUIPlugin.getDefault().getPluginShell()).run(false, false,
 							runContainer);
 
-				} catch (InvocationTargetException e) {
+				} catch (final InvocationTargetException e) {
 					MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
 							this.getClass().toString());
-				} catch (InterruptedException e) {
+				} catch (final InterruptedException e) {
 					MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
 							this.getClass().toString());
 					Thread.currentThread().interrupt();
@@ -82,35 +106,10 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 		}
 	}
 
-	public class RunMultiSorter implements IRunnableWithProgress {
-
-		public RunMultiSorter() {
-			super();
-		}
-
-		/**
-		 * Méthode d'exécution du tri multicritère avec message de progression
-		 * Les éléments sont alors triés et affichés dans le viewer spécifique
-		 * 
-		 * @param monitor
-		 */
-		public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-			monitor.beginTask(CoreUILabels.resString("Action.SortAction.Execute"), 3); //$NON-NLS-1$
-			monitor.worked(1);
-			Object temp = getInput();
-			setInput(null);
-			monitor.worked(1);
-			refreshColumns();
-			monitor.worked(1);
-			setInput(temp);
-			monitor.done();
-		}
-	}
-
 	/**
-     * 
-     */
-	public AbstractColumnedTableViewer(Composite parent, int style) {
+	 * 
+	 */
+	public AbstractColumnedTableViewer(final Composite parent, final int style) {
 		this(parent, style, true);
 	}
 
@@ -119,15 +118,83 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 	 * @param style
 	 * @param withInit
 	 */
-	public AbstractColumnedTableViewer(Composite parent, int style, boolean withInit) {
+	public AbstractColumnedTableViewer(final Composite parent, final int style, final boolean withInit) {
 		super(parent, style, withInit);
+	}
+
+	public void addViewerContextMenu(final IMenuManager cmManager) {
+		fillContextMenu(cmManager);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * #createColumn(org.eclipse.swt.widgets.Widget, int, int)
+	 */
+	@Override
+	public Item createColumn(final Widget widget, final int columnStyle, final int index) {
+		return new TableColumn((Table) widget, columnStyle, index);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #createContentProvider()
+	 */
+	@Override
+	public IContentProvider createContentProvider() {
+		return new ArcadCollectionItemContentProvider();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #createLabelProvider
+	 * (com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer)
+	 */
+	@Override
+	public AbstractColumnedLabelProviderAdapter createLabelProvider(final AbstractColumnedViewer viewer) {
+		return createTableLabelProvider(viewer);
+	}
+
+	public abstract AbstractColumnedTableLabelProvider createTableLabelProvider(AbstractColumnedViewer viewer);
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #createViewer()
+	 */
+	@Override
+	public AbstractInternalColumnedViewer createViewer(final Composite viewerParent, final int viewerStyle) {
+		return new ColumnedInternalTableViewer(new ColumnedTableViewer(viewerParent, viewerStyle));
+	}
+
+	// <FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+	@Override
+	protected void extendSettings(final ColumnedViewerSettings settings) {
+		if (sorter != null) {
+			settings.setSortCriteriaList(sorter.getCriteriaList());
+		}
+	}
+	// </FM>
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #getControl()
+	 */
+	@Override
+	public Widget getControl() {
+		return getViewer().getControl();
+	}
+
+	public ColumnedSorter getSorter() {
+		return sorter;
+	}
+
+	public Table getTable() {
+		return (Table) getViewer().getControl();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
 	 * #init(org.eclipse.swt.widgets.Composite, int)
 	 */
 	@Override
@@ -137,145 +204,59 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 	}
 
 	@Override
-	protected void setSorterOnColumn() {
-		Table table = (Table) this.getControl();
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			TableColumn c = table.getColumn(i);
-			c.addSelectionListener(hdl);
-		}
-	}
-
-	@Override
-	protected void removeSorterOnColumn() {
-		Table table = (Table) this.getControl();
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			TableColumn c = table.getColumn(i);
-			c.removeSelectionListener(hdl);
-		}
-	}
-
-	@Override
 	protected Action[] makeActions() {
-		Object[] previous = getPreviousActions().toArray();
-		Action[] makeActions = super.makeActions();
-		Object[] next = getNextActions().toArray();
-		Action[] result = new Action[previous.length + makeActions.length + next.length + 3];
+		final Object[] previous = getPreviousActions().toArray();
+		final Action[] makeActions = super.makeActions();
+		final Object[] next = getNextActions().toArray();
+		final Action[] result = new Action[previous.length + makeActions.length + next.length + 3];
 		System.arraycopy(previous, 0, result, 0, previous.length);
 		result[previous.length] = new ColumnedActionSeparator();
 		System.arraycopy(makeActions, 0, result, previous.length + 1, makeActions.length);
 		// Ajout de l'action d'affichage de l'éditeur de tris
-		int size = previous.length + makeActions.length + 1;
+		final int size = previous.length + makeActions.length + 1;
 		result[size] = new ShowSortEditorAction();
 		result[size + 1] = new ColumnedActionSeparator();
 		System.arraycopy(next, 0, result, previous.length + makeActions.length + 3, next.length);
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createViewer()
-	 */
-	@Override
-	public AbstractInternalColumnedViewer createViewer(Composite viewerParent, int viewerStyle) {
-		return new ColumnedInternalTableViewer(new ColumnedTableViewer(viewerParent, viewerStyle));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createContentProvider()
-	 */
-	@Override
-	public IContentProvider createContentProvider() {
-		return new ArcadCollectionItemContentProvider();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createLabelProvider
-	 * (com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer)
-	 */
-	@Override
-	public AbstractColumnedLabelProviderAdapter createLabelProvider(AbstractColumnedViewer viewer) {
-		return createTableLabelProvider(viewer);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createColumn(org.eclipse.swt.widgets.Widget, int, int)
-	 */
-	@Override
-	public Item createColumn(Widget widget, int columnStyle, int index) {
-		return new TableColumn((Table) widget, columnStyle, index);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #getControl()
-	 */
-	@Override
-	public Widget getControl() {
-		return getViewer().getControl();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #setColumnValues(org.eclipse.swt.widgets.Item,
-	 * com.arcadsoftware.aev.core.ui.tableviewers.ArcadColumn)
-	 */
-	@Override
-	public void setColumnValues(Item item, ArcadColumn c) {
-		((TableColumn) item).setWidth(c.getWidth());
-	}
-
 	@Override
 	public void removeAllColumns() {
-		Table table = getTable();
+		final Table table = getTable();
 		for (int i = table.getColumnCount() - 1; i >= 0; i--) {
 			table.getColumn(i).dispose();
 		}
 	}
 
-	public Table getTable() {
-		return (Table) getViewer().getControl();
+	@Override
+	protected void removeSorterOnColumn() {
+		final Table table = (Table) getControl();
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			final TableColumn c = table.getColumn(i);
+			c.removeSelectionListener(hdl);
+		}
 	}
 
-	public abstract AbstractColumnedTableLabelProvider createTableLabelProvider(AbstractColumnedViewer viewer);
-
-	public ColumnedSorter getSorter() {
-		return sorter;
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * #setColumnValues(org.eclipse.swt.widgets.Item, com.arcadsoftware.aev.core.ui.tableviewers.ArcadColumn)
+	 */
+	@Override
+	public void setColumnValues(final Item item, final ArcadColumn c) {
+		((TableColumn) item).setWidth(c.getWidth());
 	}
 
-	public void setSorter(ColumnedSorter sorter) {
+	public void setSorter(final ColumnedSorter sorter) {
 		this.sorter = sorter;
 	}
 
-	public void addViewerContextMenu(IMenuManager cmManager) {
-		fillContextMenu(cmManager);
-	}
-	//<FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
 	@Override
-	protected void extendSettings(ColumnedViewerSettings settings) {
-		if (sorter!=null) {
-			settings.setSortCriteriaList(sorter.getCriteriaList());
+	protected void setSorterOnColumn() {
+		final Table table = (Table) getControl();
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			final TableColumn c = table.getColumn(i);
+			c.addSelectionListener(hdl);
 		}
 	}
-	//</FM>	
 }

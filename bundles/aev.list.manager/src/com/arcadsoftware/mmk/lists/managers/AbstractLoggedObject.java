@@ -6,43 +6,39 @@ import com.arcadsoftware.ae.core.utils.Utils;
 public abstract class AbstractLoggedObject {
 	protected IMessageLogger logger = null;
 
-	public void setLogger(IMessageLogger logger) {
-		this.logger =logger;
+	public IMessageLogger getLogger() {
+		return logger;
 	}
 
-	
-	public void logError(String moduleName,String message) {
-		if (logger!=null) {
+	public void logError(final String moduleName, final String message) {
+		if (logger != null) {
 			logger.logMessage(message, IMessageLogger.LOGLVL_FATAL);
 		}
 	}
 
-	
-	public void logInfo(String moduleName,String message) {
-		if (logger!=null) {
+	public void logError(final String moduleName, final Throwable e) {
+		logError(moduleName, e.getLocalizedMessage() + "\n" + Utils.stackTrace(e));
+	}
+
+	public void logInfo(final String moduleName, final String message) {
+		if (logger != null) {
 			logger.logMessage(message, IMessageLogger.LOGLVL_INFO);
 		}
 	}
 
-	
-	public void logWarning(String moduleName,String message) {
-		if (logger!=null) {
-			logger.logMessage(message, IMessageLogger.LOGLVL_WARNING);
-		}
-	}
-
-	
-	public void logVerbose(String moduleName,String message) {
-		if (logger!=null) {
+	public void logVerbose(final String moduleName, final String message) {
+		if (logger != null) {
 			logger.logMessage(message, IMessageLogger.LOGLVL_VERBOSE);
 		}
 	}
 
-	public void logError(String moduleName,Throwable e) {
-		logError(moduleName,e.getLocalizedMessage()+"\n"+Utils.stackTrace(e));		
-	}	
-	
-	public IMessageLogger getLogger() {
-		return logger;
+	public void logWarning(final String moduleName, final String message) {
+		if (logger != null) {
+			logger.logMessage(message, IMessageLogger.LOGLVL_WARNING);
+		}
+	}
+
+	public void setLogger(final IMessageLogger logger) {
+		this.logger = logger;
 	}
 }

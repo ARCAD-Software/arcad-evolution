@@ -6,10 +6,11 @@ import org.osgi.service.component.annotations.Component;
 import com.arcadsoftware.aev.core.ui.dialogs.DialogConstantProvider;
 import com.arcadsoftware.aev.core.ui.dialogs.IDialogConstantFiller;
 
-@Component( service = IDialogConstantFiller.class, immediate = true )
+@Component(service = IDialogConstantFiller.class, immediate = true)
 public class RAPDialogConstantFiller implements IDialogConstantFiller {
-		
-	public void fill(DialogConstantProvider provider) {
+
+	@Override
+	public void fill(final DialogConstantProvider provider) {
 		provider.OK_LABEL = IDialogConstants.get().OK_LABEL;
 		provider.CANCEL_LABEL = IDialogConstants.get().CANCEL_LABEL;
 		provider.YES_LABEL = IDialogConstants.get().YES_LABEL;
@@ -20,14 +21,14 @@ public class RAPDialogConstantFiller implements IDialogConstantFiller {
 		provider.STOP_LABEL = IDialogConstants.get().STOP_LABEL;
 		provider.ABORT_LABEL = IDialogConstants.get().ABORT_LABEL;
 		provider.RETRY_LABEL = IDialogConstants.get().RETRY_LABEL;
-		
+
 		provider.IGNORE_LABEL = IDialogConstants.get().IGNORE_LABEL;
 		provider.PROCEED_LABEL = IDialogConstants.get().PROCEED_LABEL;
 		provider.OPEN_LABEL = IDialogConstants.get().OPEN_LABEL;
 		provider.CLOSE_LABEL = IDialogConstants.get().CLOSE_LABEL;
 		provider.SHOW_DETAILS_LABEL = IDialogConstants.get().SHOW_DETAILS_LABEL;
 		provider.HIDE_DETAILS_LABEL = IDialogConstants.get().HIDE_DETAILS_LABEL;
-		
+
 		provider.BACK_LABEL = IDialogConstants.get().BACK_LABEL;
 		provider.NEXT_LABEL = IDialogConstants.get().NEXT_LABEL;
 		provider.FINISH_LABEL = IDialogConstants.get().FINISH_LABEL;

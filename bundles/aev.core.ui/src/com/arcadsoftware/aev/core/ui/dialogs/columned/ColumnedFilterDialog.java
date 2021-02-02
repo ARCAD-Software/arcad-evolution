@@ -15,24 +15,26 @@ import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
  */
 public class ColumnedFilterDialog extends ColumnedSearchDialog {
 
-	public ColumnedFilterDialog(Shell parentShell, ColumnedSearchCriteriaList filters, ArcadColumns displayedColumns) {
+	public ColumnedFilterDialog(final Shell parentShell, final ColumnedSearchCriteriaList filters,
+			final ArcadColumns displayedColumns) {
 		super(parentShell, filters, displayedColumns);
 		removeCriterionMessage = "messageBox.clm.removeFilterCriterionMessage"; //$NON-NLS-1$
 	}
 
 	@Override
-	protected void configureShell(Shell newShell) {
+	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText(CoreUILabels.resString("filterDialog.title")); //$NON-NLS-1$        
+		newShell.setText(CoreUILabels.resString("filterDialog.title")); //$NON-NLS-1$
 	}
 
 	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		okButton = createButton(parent, IDialogConstants.OK_ID, CoreUILabels.resString("button.clm.FilterButton"), true); //$NON-NLS-1$
+	protected void createButtonsForButtonBar(final Composite parent) {
+		okButton = createButton(parent, IDialogConstants.OK_ID, CoreUILabels.resString("button.clm.FilterButton"), //$NON-NLS-1$
+				true);
 		okButton.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("synthetic-access")
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(final SelectionEvent e) {
 				okPressed();
 			}
 		});
@@ -41,7 +43,7 @@ public class ColumnedFilterDialog extends ColumnedSearchDialog {
 		cancelButton.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("synthetic-access")
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(final SelectionEvent e) {
 				cancelPressed();
 			}
 		});

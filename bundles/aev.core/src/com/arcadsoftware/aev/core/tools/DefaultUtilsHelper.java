@@ -10,41 +10,40 @@ import java.io.File;
  */
 public class DefaultUtilsHelper implements IHelper, IHelperLabel {
 	private static String COMPLIANT_FILENAME = "compliant.xml"; //$NON-NLS-1$
-	private DefaultLabelsHelper labelsHelper;
-	
+	private final DefaultLabelsHelper labelsHelper;
+
 	public DefaultUtilsHelper() {
 		super();
-		this.labelsHelper = new DefaultLabelsHelper();
+		labelsHelper = new DefaultLabelsHelper();
 	}
 
-    @Override
-	public String resString(String res, Object...params) {
-		return this.labelsHelper.resString(res, params);
-	}
-
-    @Override
+	@Override
 	public void beginAction() {
 		// Do nothing
 	}
 
-    @Override
+	@Override
 	public void endAction() {
 		// Do nothing
 	}
 
-
-    @Override
-	public String getCompliantFileName() {
-		return getBasedLocation() + File.separator + COMPLIANT_FILENAME;
-	}
-
-    @Override
+	@Override
 	public String getBasedLocation() {
 		return System.getProperty("user.dir"); //$NON-NLS-1$
+	}
+
+	@Override
+	public String getCompliantFileName() {
+		return getBasedLocation() + File.separator + COMPLIANT_FILENAME;
 	}
 
 	public boolean isLib250() {
 		return true;
 	}
-    
+
+	@Override
+	public String resString(final String res, final Object... params) {
+		return labelsHelper.resString(res, params);
+	}
+
 }

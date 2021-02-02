@@ -19,19 +19,19 @@
  */
 package com.arcadsoftware.aev.core.ui.calendar;
 
+import java.util.Calendar;
+
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Event;
 
-import java.util.Calendar;
-
 @SuppressWarnings("serial")
 public class SWTCalendarEvent extends TypedEvent {
-    public SWTCalendarEvent(Event event) {
-        super(event);
-    }
+	public SWTCalendarEvent(final Event event) {
+		super(event);
+	}
 
-    public Calendar getCalendar() {
-        return (Calendar) this.data;
-    }
+	public Calendar getCalendar() {
+		return (Calendar) data;
+	}
 
 }

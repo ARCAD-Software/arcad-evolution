@@ -10,59 +10,68 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
  */
 public class ColumnedTableSearcherNavigator implements IColumnedSearcherNavigator {
 
-	private AbstractColumnedViewer viewer;
-	private IColumnedSearcher searcher;
-	private AbstractColumnedTableLabelProvider labelProvider;
-	private ArcadCollection searchedElements;
 	private IArcadCollectionItem currentElement = null;
+	private final AbstractColumnedTableLabelProvider labelProvider;
+	private final ArcadCollection searchedElements;
+	private final IColumnedSearcher searcher;
+	private final AbstractColumnedViewer viewer;
 
-	public ColumnedTableSearcherNavigator(AbstractColumnedViewer viewer) {
+	public ColumnedTableSearcherNavigator(final AbstractColumnedViewer viewer) {
 		super();
 		this.viewer = viewer;
-		this.searcher = viewer.getSearcher();
-		this.labelProvider = (AbstractColumnedTableLabelProvider) viewer.createLabelProvider(viewer);
-		this.searchedElements = getSearchedElements();
+		searcher = viewer.getSearcher();
+		labelProvider = (AbstractColumnedTableLabelProvider) viewer.createLabelProvider(viewer);
+		searchedElements = getSearchedElements();
 	}
 
-	public ArcadCollection getSearchedElements() {
-		ArcadCollection result = new ArcadCollection();
-		ArcadCollection elements = (ArcadCollection) viewer.getInput();
-		for (int i = 0; i < elements.count(); i++)
-			if (searcher.match(elements.items(i), labelProvider))
-				result.add(elements.items(i));
-		return result;
-	}
-
-	public IArcadCollectionItem getFirstItem() {
-		currentElement = searchedElements.items(0);
-		return currentElement;
-	}
-
+	@Override
 	public ArcadCollection getAllItems() {
 		currentElement = searchedElements.items(searchedElements.count() - 1);
 		return searchedElements;
 	}
 
+	private int getCurrentElementIndex() {
+		return searchedElements.findFirst(currentElement);
+	}
+
+	@Override
+	public IArcadCollectionItem getCurrentItem() {
+		return currentElement;
+	}
+
+	@Override
+	public IArcadCollectionItem getFirstItem() {
+		currentElement = searchedElements.items(0);
+		return currentElement;
+	}
+
+	@Override
 	public IArcadCollectionItem getLastItem() {
 		currentElement = searchedElements.items(searchedElements.count() - 1);
 		return currentElement;
 	}
 
-	public IArcadCollectionItem getCurrentItem() {
-		return currentElement;
-	}
-
-	public IArcadCollectionItem getPreviousItem() {
-		currentElement = searchedElements.items(getCurrentElementIndex() - 1);
-		return currentElement;
-	}
-
+	@Override
 	public IArcadCollectionItem getNextItem() {
 		currentElement = searchedElements.items(getCurrentElementIndex() + 1);
 		return currentElement;
 	}
 
-	private int getCurrentElementIndex() {
-		return searchedElements.findFirst(currentElement);
+	@Override
+	public IArcadCollectionItem getPreviousItem() {
+		currentElement = searchedElements.items(getCurrentElementIndex() - 1);
+		return currentElement;
+	}
+
+	@Override
+	public ArcadCollection getSearchedElements() {
+		final ArcadCollection result = new ArcadCollection();
+		final ArcadCollection elements = (ArcadCollection) viewer.getInput();
+		for (int i = 0; i < elements.count(); i++) {
+			if (searcher.match(elements.items(i), labelProvider)) {
+				result.add(elements.items(i));
+			}
+		}
+		return result;
 	}
 }

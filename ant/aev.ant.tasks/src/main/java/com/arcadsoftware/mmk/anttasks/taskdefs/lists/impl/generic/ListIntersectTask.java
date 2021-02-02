@@ -7,16 +7,16 @@ public class ListIntersectTask extends AbstractXmlFileListSetOperationTask {
 
 	@Override
 	public int processExecutionWithCount() {
-		GenericList operandList = (GenericList)list.cloneList();
+		final GenericList operandList = (GenericList) list.cloneList();
 		operandList.setXmlFileName(operandFileName);
-		if (resultFileName.equals(operandFileName))	
-			return list.intersect(operandList,operandList,checkIfExists,replaceIfExists);
-		else if (resultFileName.equals(getFilename()))
-			return list.intersect(operandList,list,checkIfExists,replaceIfExists);
-		else {
-			GenericList resultList = (GenericList)list.cloneList();
-			resultList.setXmlFileName(resultFileName);			
-			return list.intersect(operandList,resultList,checkIfExists,replaceIfExists);
+		if (resultFileName.equals(operandFileName)) {
+			return list.intersect(operandList, operandList, checkIfExists, replaceIfExists);
+		} else if (resultFileName.equals(getFilename())) {
+			return list.intersect(operandList, list, checkIfExists, replaceIfExists);
+		} else {
+			final GenericList resultList = (GenericList) list.cloneList();
+			resultList.setXmlFileName(resultFileName);
+			return list.intersect(operandList, resultList, checkIfExists, replaceIfExists);
 		}
 	}
 }

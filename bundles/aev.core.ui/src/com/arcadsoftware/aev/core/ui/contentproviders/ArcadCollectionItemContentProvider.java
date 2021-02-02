@@ -15,11 +15,8 @@ import com.arcadsoftware.aev.core.collections.ArcadCollection;
 import com.arcadsoftware.aev.core.contentproviders.IObjectArrayProvider;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class ArcadCollectionItemContentProvider implements IStructuredContentProvider {
 
@@ -27,12 +24,19 @@ public class ArcadCollectionItemContentProvider implements IStructuredContentPro
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
-	 * .lang.Object)
+	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
-	public Object[] getElements(Object inputElement) {
+	@Override
+	public void dispose() {
+		// Do nothing
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java .lang.Object)
+	 */
+	@Override
+	public Object[] getElements(final Object inputElement) {
 		if (inputElement instanceof ArcadCollection) {
 			return ((ArcadCollection) inputElement).toArray();
 		} else if (inputElement instanceof Object[]) {
@@ -40,28 +44,18 @@ public class ArcadCollectionItemContentProvider implements IStructuredContentPro
 		} else if (inputElement instanceof IObjectArrayProvider) {
 			return ((IObjectArrayProvider) inputElement).getObjectArray();
 		} else if (inputElement instanceof ArrayList) {
-			return ((ArrayList<?>) inputElement).toArray();		
+			return ((ArrayList<?>) inputElement).toArray();
 		}
 		return EMPTYARRAY;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
+	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface .viewers.Viewer, java.lang.Object,
+	 * java.lang.Object)
 	 */
-	public void dispose() {
-		// Do nothing
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
-	 * .viewers.Viewer, java.lang.Object, java.lang.Object)
-	 */
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+	@Override
+	public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
 		// Do nothing
 	}
 

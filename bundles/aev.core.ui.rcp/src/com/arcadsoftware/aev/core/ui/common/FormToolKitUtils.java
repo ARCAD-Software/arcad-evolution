@@ -6,11 +6,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 
 public class FormToolKitUtils {
 
-	public static void paintBordersFor(FormToolkit toolkit, Composite composite) {
+	public static void paintBordersFor(final FormToolkit toolkit, final Composite composite) {
 		toolkit.paintBordersFor(composite);
 	}
-	
-	public static void setOrientationRightToLeft(FormToolkit toolkit) {
+
+	public static void setOrientationRightToLeft(final FormToolkit toolkit) {
 		toolkit.setOrientation(SWT.RIGHT_TO_LEFT);
 	}
 

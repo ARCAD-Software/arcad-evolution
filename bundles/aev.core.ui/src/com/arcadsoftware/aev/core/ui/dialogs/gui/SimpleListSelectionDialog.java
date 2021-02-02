@@ -29,20 +29,63 @@ import com.arcadsoftware.aev.core.ui.dialogs.ArcadCenteredDialog;
  */
 public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 
-	private ArrayList<?> list;
-
-	protected static int DIALOG_WIDTH = 350;
 	protected static int DIALOG_HEIGHT = 400;
 
-	private String columnTitle;
-	private String description;
+	protected static int DIALOG_WIDTH = 350;
 
-	Table table;
-	private Object selectedObject = null;
+	/**
+	 * @param parentShell
+	 * @param title
+	 * @param question
+	 * @param answers
+	 * @param defaultAnswer
+	 * @param freeInput
+	 * @return int
+	 */
+	public static int selectIndex(final Shell parentShell, final String title, final String description,
+			final String columnTitle,
+			final ArrayList<?> list) {
+
+		final SimpleListSelectionDialog dialog = new SimpleListSelectionDialog(parentShell, title, description,
+				columnTitle,
+				list);
+		dialog.open();
+		return dialog.getSelectedIndex();
+	}
+
+	/**
+	 * @param parentShell
+	 * @param title
+	 * @param question
+	 * @param answers
+	 * @param defaultAnswer
+	 * @param freeInput
+	 * @return Object
+	 */
+	public static Object selectObject(final Shell parentShell, final String title, final String description,
+			final String columnTitle,
+			final ArrayList<?> list) {
+
+		final SimpleListSelectionDialog dialog = new SimpleListSelectionDialog(parentShell, title, description,
+				columnTitle,
+				list);
+		dialog.open();
+		return dialog.getSelectedObject();
+	}
+
+	private final String columnTitle;
+
+	private final String description;
+	private final ArrayList<?> list;
 	private int selectedIndex = -1;
 
-	public SimpleListSelectionDialog(Shell parentShell, String title, String description, String columnTitle,
-			ArrayList<?> list) {
+	private Object selectedObject = null;
+
+	Table table;
+
+	public SimpleListSelectionDialog(final Shell parentShell, final String title, final String description,
+			final String columnTitle,
+			final ArrayList<?> list) {
 		super(parentShell, DIALOG_WIDTH, DIALOG_HEIGHT, title);
 		this.list = list;
 		this.columnTitle = columnTitle;
@@ -51,21 +94,21 @@ public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 	}
 
 	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite composite = (Composite) super.createDialogArea(parent);
+	protected Control createDialogArea(final Composite parent) {
+		final Composite composite = (Composite) super.createDialogArea(parent);
 		GridData gridData;
-		GridLayout gridLayout = new GridLayout();
+		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;
 		composite.setLayout(gridLayout);
 
-		Label label = new Label(composite, SWT.WRAP);
+		final Label label = new Label(composite, SWT.WRAP);
 		label.setText(description);
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.heightHint = 40;
 		label.setLayoutData(gridData);
 
 		table = new Table(composite, SWT.BORDER);
-		TableColumn c1 = new TableColumn(table, SWT.LEFT, 0);
+		final TableColumn c1 = new TableColumn(table, SWT.LEFT, 0);
 		c1.setText(columnTitle);
 		c1.setWidth(300);
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
@@ -74,21 +117,22 @@ public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 		table.setLayoutData(gridData);
 		table.setHeaderVisible(true);
 		for (int i = 0; i < list.size(); i++) {
-			TableItem ti = new TableItem(table, SWT.NONE);
-			Object o = list.get(i);
-			if (o instanceof IArcadDisplayable)
+			final TableItem ti = new TableItem(table, SWT.NONE);
+			final Object o = list.get(i);
+			if (o instanceof IArcadDisplayable) {
 				ti.setText(((IArcadDisplayable) o).getLabel());
-			else if (o instanceof String)
+			} else if (o instanceof String) {
 				ti.setText((String) o);
-			else
+			} else {
 				ti.setText(o.toString());
+			}
 			ti.setData(o);
 
 		}
 		table.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				TableItem ti = table.getItem(new Point(e.x, e.y));
+			public void mouseDoubleClick(final MouseEvent e) {
+				final TableItem ti = table.getItem(new Point(e.x, e.y));
 				if (ti != null) {
 					doOnDoubleclick(ti);
 				}
@@ -97,32 +141,9 @@ public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 		return composite;
 	}
 
-	public void doOnDoubleclick(TableItem ti) {
+	public void doOnDoubleclick(final TableItem ti) {
 		table.setSelection(new TableItem[] { ti });
 		okPressed();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.dialogs.Dialog#okPressed()
-	 */
-	@Override
-	protected void okPressed() {
-		int index = table.getSelectionIndex();
-		if (index != -1)
-			selectedObject = table.getItem(index).getData();
-		else
-			selectedObject = null;
-		selectedIndex = index;
-		super.okPressed();
-	}
-
-	/**
-	 * @return Returns the selectedObject.
-	 */
-	public Object getSelectedObject() {
-		return selectedObject;
 	}
 
 	/**
@@ -133,41 +154,26 @@ public class SimpleListSelectionDialog extends ArcadCenteredDialog {
 	}
 
 	/**
-	 * 
-	 * @param parentShell
-	 * @param title
-	 * @param question
-	 * @param answers
-	 * @param defaultAnswer
-	 * @param freeInput
-	 * @return Object
+	 * @return Returns the selectedObject.
 	 */
-	public static Object selectObject(Shell parentShell, String title, String description, String columnTitle,
-			ArrayList<?> list) {
-
-		SimpleListSelectionDialog dialog = new SimpleListSelectionDialog(parentShell, title, description, columnTitle,
-				list);
-		dialog.open();
-		return dialog.getSelectedObject();
+	public Object getSelectedObject() {
+		return selectedObject;
 	}
 
-	/**
-	 * 
-	 * @param parentShell
-	 * @param title
-	 * @param question
-	 * @param answers
-	 * @param defaultAnswer
-	 * @param freeInput
-	 * @return int
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#okPressed()
 	 */
-	public static int selectIndex(Shell parentShell, String title, String description, String columnTitle,
-			ArrayList<?> list) {
-
-		SimpleListSelectionDialog dialog = new SimpleListSelectionDialog(parentShell, title, description, columnTitle,
-				list);
-		dialog.open();
-		return dialog.getSelectedIndex();
+	@Override
+	protected void okPressed() {
+		final int index = table.getSelectionIndex();
+		if (index != -1) {
+			selectedObject = table.getItem(index).getData();
+		} else {
+			selectedObject = null;
+		}
+		selectedIndex = index;
+		super.okPressed();
 	}
 
 }

@@ -4,7 +4,7 @@ import org.eclipse.jface.action.Separator;
 
 /**
  * Dummy class to mimic a {@link Separator}
- * 
+ *
  * @author ARCAD Software
  */
 public class ArcadSeparator extends ArcadAction {

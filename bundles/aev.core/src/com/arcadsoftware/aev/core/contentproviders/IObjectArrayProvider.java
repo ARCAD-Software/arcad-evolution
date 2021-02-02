@@ -4,5 +4,5 @@
 package com.arcadsoftware.aev.core.contentproviders;
 
 public interface IObjectArrayProvider {
-	public Object[] getObjectArray();	
+	Object[] getObjectArray();
 }

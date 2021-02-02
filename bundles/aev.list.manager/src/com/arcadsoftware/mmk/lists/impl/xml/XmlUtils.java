@@ -6,41 +6,41 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.arcadsoftware.mmk.lists.AbstractList;
+import com.arcadsoftware.mmk.lists.AbstractArcadList;
 import com.arcadsoftware.mmk.lists.IXmlLists;
 
 public class XmlUtils {
 	private static SimpleDateFormat sd = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
-	
-	public static Date getDate(String stringDate) {
-		try {
-			Date d = sd.parse(stringDate);
-			return d;
-		} catch (ParseException e) {
-			return new Date();
+
+	public static boolean changeXmlFile(final IXmlLists list, final String filename) {
+		final File f = new File(list.getXmlFileName());
+		if (f.delete()) {
+			final File nf = new File(filename);
+			return nf.renameTo(f);
 		}
-	}		
-	
-	public static IXmlLists createTempList(AbstractList listToClone) {
-		IXmlLists clone = (IXmlLists)listToClone.cloneList();
+		return false;
+	}
+
+	public static IXmlLists createTempList(final AbstractArcadList listToClone) {
+		final IXmlLists clone = (IXmlLists) listToClone.cloneList();
 		try {
-			File f = File.createTempFile("tmp",null);
-			String name = f.getAbsolutePath();
+			final File f = File.createTempFile("tmp", null);
+			final String name = f.getAbsolutePath();
 			f.delete();
 			clone.setXmlFileName(name);
 			return clone;
-		} catch (IOException e) {
-			listToClone.logError(AbstractList.MODULE_NAME, e);
+		} catch (final IOException e) {
+			listToClone.logError(AbstractArcadList.MODULE_NAME, e);
 			return null;
 		}
 	}
-	
-	public static boolean changeXmlFile(IXmlLists list, String filename) {
-		File f = new File(list.getXmlFileName());
-		if (f.delete()){
-			File nf = new File(filename);
-			return nf.renameTo(f);			
-		}		
-		return false;
+
+	public static Date getDate(final String stringDate) {
+		try {
+			final Date d = sd.parse(stringDate);
+			return d;
+		} catch (final ParseException e) {
+			return new Date();
+		}
 	}
 }

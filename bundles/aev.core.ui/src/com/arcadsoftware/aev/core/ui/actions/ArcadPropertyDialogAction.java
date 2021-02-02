@@ -25,61 +25,60 @@ import com.arcadsoftware.aev.core.ui.dialogs.ArcadPropertyDialog;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class ArcadPropertyDialogAction extends PropertyDialogAction {
-	IAdaptable targetElement;
 	protected Shell shell;
+	IAdaptable targetElement;
 
 	/**
 	 * @param shell
 	 * @param provider
 	 */
-	public ArcadPropertyDialogAction(IShellProvider shellProvider, ISelectionProvider provider) {
+	public ArcadPropertyDialogAction(final IShellProvider shellProvider, final ISelectionProvider provider) {
 		super(shellProvider, provider);
-		this.shell = shellProvider.getShell();
+		shell = shellProvider.getShell();
 	}
 
 	/**
 	 * Returns the name of the given element.
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @return the name of the element
 	 */
-	private String getName(IAdaptable element) {
-		if (element instanceof IContainer)
+	private String getName(final IAdaptable element) {
+		if (element instanceof IContainer) {
 			return ((IContainer) element).getLabel();
-		else if (element instanceof ArcadEntity)
+		} else if (element instanceof ArcadEntity) {
 			return ((ArcadEntity) element).getLabel();
-		else
+		} else {
 			return StringTools.EMPTY;
+		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.jface.action.IAction#run()
 	 */
 	@Override
 	public void run() {
 		// TODO [DL] tester propertyPage
-		PropertyPageManager pageManager = new PropertyPageManager();
+		final PropertyPageManager pageManager = new PropertyPageManager();
 		// PreferenceManager pageManager = new PreferenceManager();
 		String title = StringTools.EMPTY;
 
 		IAdaptable element = null;
 		// get selection
-		if (targetElement == null)
+		if (targetElement == null) {
 			element = (IAdaptable) getStructuredSelection().getFirstElement();
-		else
+		} else {
 			element = targetElement;
-		if (element == null)
+		}
+		if (element == null) {
 			return;
+		}
 
 		// load pages for the selection
 		// fill the manager with contributions from the matching contributors
@@ -104,18 +103,19 @@ public class ArcadPropertyDialogAction extends PropertyDialogAction {
 		// return;
 		PropertyPageContributorManager.getManager().contribute(pageManager, element);
 		// testing if there are pages in the manager
-		Iterator<?> pages = pageManager.getElements(PreferenceManager.PRE_ORDER).iterator();
+		final Iterator<?> pages = pageManager.getElements(PreferenceManager.PRE_ORDER).iterator();
 
-		String name = getName(element);
+		final String name = getName(element);
 		if (!pages.hasNext()) {
 			MessageDialog.openInformation(shell, CoreUILabels.resString("msg.commonTitle"), //$NON-NLS-1$
 					CoreUILabels.resString("msg.noPropertyPage")); //$NON-NLS-1$
 			return;
 		}
-		StringBuilder sb = new StringBuilder(CoreUILabels.resString("msg.propertyPageTitle"));//$NON-NLS-1$ 
+		final StringBuilder sb = new StringBuilder(CoreUILabels.resString("msg.propertyPageTitle"));//$NON-NLS-1$
 		sb.append(name);
 		title = sb.toString();
-		ArcadPropertyDialog propertyDialog = new ArcadPropertyDialog(shell, pageManager, getStructuredSelection());
+		final ArcadPropertyDialog propertyDialog = new ArcadPropertyDialog(shell, pageManager,
+				getStructuredSelection());
 		propertyDialog.create();
 		propertyDialog.doAfterCreation();
 		propertyDialog.getShell().setText(title);
@@ -125,7 +125,7 @@ public class ArcadPropertyDialogAction extends PropertyDialogAction {
 	/**
 	 * @param adaptable
 	 */
-	public void setTargetElement(IAdaptable adaptable) {
+	public void setTargetElement(final IAdaptable adaptable) {
 		targetElement = adaptable;
 	}
 

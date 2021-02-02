@@ -5,8 +5,8 @@ import com.arcadsoftware.ae.core.logger.messages.AbstractMessage;
 
 public class SimpleMessage extends AbstractMessage {
 
-    public SimpleMessage(String serviceName,String typeInfo,String message) {
-        super(serviceName,typeInfo,message);
-    }
+	public SimpleMessage(final String serviceName, final String typeInfo, final String message) {
+		super(serviceName, typeInfo, message);
+	}
 
 }

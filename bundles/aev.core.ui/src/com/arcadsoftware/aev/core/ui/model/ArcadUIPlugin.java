@@ -26,23 +26,21 @@ import com.arcadsoftware.aev.core.messages.MessageManager;
 import com.arcadsoftware.aev.core.model.IArcadPlugin;
 
 public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPlugin, IHelperImage {
-	protected static final String ICON_PATH = "icons/";
-	
 	private class DecoratorImageDescriptor extends CompositeImageDescriptor {
-		private ImageData baseImage;
-		private ImageData overlay;
+		private final ImageData baseImage;
+		private final ImageData overlay;
 
 		/**
 		 * Constructor for ArcadCompositeImageDescriptor.
 		 */
-		public DecoratorImageDescriptor(ImageData baseImage, ImageData overlay) {
+		public DecoratorImageDescriptor(final ImageData baseImage, final ImageData overlay) {
 			super();
 			this.baseImage = baseImage;
 			this.overlay = overlay;
 		}
 
 		@Override
-		protected void drawCompositeImage(int width, int height) {
+		protected void drawCompositeImage(final int width, final int height) {
 			drawImage(baseImage, 0, 0);
 			drawImage(overlay, 0, 8);
 		}
@@ -52,113 +50,77 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 			return new Point(16, 16);
 		}
 	}
-	
-	protected Hashtable<String,ImageDescriptor> imageDescriptorRegistry;
-	protected ImageRegistry imageRegistry;
-	protected FontRegistry fontRegistry;
-	protected ColorRegistry colorRegistry;
-	protected IShellProvider shellProvider;
-	
-	public ArcadUIPlugin() {
-		imageDescriptorRegistry = new Hashtable<String,ImageDescriptor>();
-		imageRegistry = null;
-		shellProvider = new IShellProvider() {			
-			@Override
-			public Shell getShell() {
-				return ArcadUIPlugin.this.getPluginShell();
-			}
-		};
-	}
-	
-	protected abstract void initializeImageRegistry();
-	
-	public IShellProvider getShellProvider() {
-		return shellProvider;
-	}
-	
-	public Shell getPluginShell() {
-		if (this.getWorkbench() != null) {
-			if (this.getWorkbench().getActiveWorkbenchWindow() != null) {
-				return this.getWorkbench().getActiveWorkbenchWindow().getShell();
-			}
-		}
-		return null;
-	}
-	
+
+	protected static final String ICON_PATH = "icons/";
+
 	public static String getIconPath() {
 		return ICON_PATH;
 	}
-	
-	public ImageDescriptor getPluginImage(String fileName) {
-		URL path = getBundle().getEntry("/");//$NON-NLS-1$
-		URL fullPathString = null;
-		try {
-			fullPathString = new URL(path, fileName);
-			return ImageDescriptor.createFromURL(fullPathString);
-		} catch (MalformedURLException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * Add an image to the plugin image registry.
-	 * 
-	 * @param id The image ID
-	 * @param fileName the plugin local path to the image file. 
-	 * @return
-	 */
-	protected ImageDescriptor putImageInRegistry(String id, String fileName) {
-		ImageDescriptor fid = getPluginImage(fileName);
-		imageRegistry.put(id, fid);
-		imageDescriptorRegistry.put(id, fid);
-		return fid;
-	}
-	
-	@Override
-	public ImageDescriptor getImageDescriptor(String key) {
-		if (imageRegistry == null) {
-			imageRegistry = new ImageRegistry();
-			initializeImageRegistry();
-		}
-		ImageDescriptor image = (ImageDescriptor) imageDescriptorRegistry.get(key);
-		return image;
+
+	protected ColorRegistry colorRegistry;
+	protected FontRegistry fontRegistry;
+	protected Hashtable<String, ImageDescriptor> imageDescriptorRegistry;
+	protected ImageRegistry imageRegistry;
+
+	protected IShellProvider shellProvider;
+
+	public ArcadUIPlugin() {
+		imageDescriptorRegistry = new Hashtable<>();
+		imageRegistry = null;
+		shellProvider = () -> ArcadUIPlugin.this.getPluginShell();
 	}
 
-	private ImageDescriptor registerImage(String key) {
-		// getImageDescriptor initialize the imageRegistry.
-		ImageDescriptor result = getImageDescriptor(key);
-		if (result != null) {
-			return result;
+	public Color getColor(final String key) {
+		if (key == null || key.length() == 0) {
+			return null;
 		}
-		int pos = key.indexOf(":");  //$NON-NLS-1$
-		if (pos > 0) {
-			String bundleId = key.substring(0,pos);
-			String imageKey = key.substring(pos+1);
-			result = AbstractUIPlugin.imageDescriptorFromPlugin(bundleId, imageKey);
-			if (result != null) {
-				// ImageRegistry is initialized into getImageDescriptor
-				imageDescriptorRegistry.put(key, result);
-				imageRegistry.put(key, result);
-			}
-		} else {
-			try {
-				URL url = FileLocator.find(getBundle(), new Path(key), null);
-				if (url != null) {
-					result = ImageDescriptor.createFromURL(url);
-					imageDescriptorRegistry.put(key, result);
-					imageRegistry.put(key, result);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				// Bug potentiel ici: l'URL contient des espace au lieu de %20. correction:
-				// url = new URL(null,url.toString().replaceAll(" ", "%20")).toURI();
-			}
+		if (colorRegistry == null) {
+			colorRegistry = new ColorRegistry();
+			initializeColorRegistry();
 		}
-		return result;
+		return colorRegistry.get(key);
 	}
-	
-	public Font getFont(String key) {
-		if ((key == null) || (key.length() == 0)) {
+
+	public Image getCompositeImage(final Image image, final String decoKey) {
+		final ImageDescriptor imgd = getCompositeImageDescriptor(image, decoKey);
+		if (imgd != null) {
+			return imgd.createImage();
+		}
+		return null;
+	}
+
+	@Override
+	public Image getCompositeImage(final String key, final String decoKey) {
+		final String id = key.concat("_").concat(decoKey); //$NON-NLS-1$
+		getCompositeImageDescriptor(key, decoKey);
+		return getImage(id);
+	}
+
+	public ImageDescriptor getCompositeImageDescriptor(final Image base, final String decoKey) {
+		final ImageDescriptor overlay = getImageDescriptor(decoKey);
+		final DecoratorImageDescriptor deco = new DecoratorImageDescriptor(base.getImageData(), overlay.getImageData());
+		return deco;
+	}
+
+	@Override
+	public ImageDescriptor getCompositeImageDescriptor(final String key, final String decoKey) {
+		final String id = key.concat("_").concat(decoKey); //$NON-NLS-1$
+		DecoratorImageDescriptor deco = (DecoratorImageDescriptor) imageDescriptorRegistry.get(id);
+		if (deco == null) {
+			final ImageDescriptor main = getImageDescriptor(key);
+			final ImageDescriptor overlay = getImageDescriptor(decoKey);
+			if (main != null && overlay != null) {
+				deco = new DecoratorImageDescriptor(main.getImageData(), overlay.getImageData());
+				imageDescriptorRegistry.put(id, deco);
+				final Image imgd = deco.createImage();
+				imageRegistry.put(id, imgd);
+			}
+		}
+		return deco;
+	}
+
+	public Font getFont(final String key) {
+		if (key == null || key.length() == 0) {
 			return null;
 		}
 		if (fontRegistry == null) {
@@ -168,20 +130,9 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 		return fontRegistry.get(key);
 	}
 
-	public Color getColor(String key) {
-		if ((key == null) || (key.length() == 0)) {
-			return null;
-		}
-		if (colorRegistry == null) {
-			colorRegistry = new ColorRegistry();
-			initializeColorRegistry();
-		}
-		return colorRegistry.get(key);
-	}
-	
 	@Override
-	public Image getImage(String key) {
-		if ((key == null) || (key.length() == 0)) {
+	public Image getImage(final String key) {
+		if (key == null || key.length() == 0) {
 			return null;
 		}
 		if (imageRegistry == null) {
@@ -191,74 +142,124 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 		Image image = null;
 		try {
 			image = imageRegistry.get(key);
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			MessageManager.addException(t, MessageManager.LEVEL_PRODUCTION);
 		}
 		return image;
 	}
 
 	@Override
-	public Image getCompositeImage(String key, String decoKey) {
-		String id = key.concat("_").concat(decoKey); //$NON-NLS-1$
-		getCompositeImageDescriptor(key, decoKey);
-		return getImage(id);
+	public ImageDescriptor getImageDescriptor(final String key) {
+		if (imageRegistry == null) {
+			imageRegistry = new ImageRegistry();
+			initializeImageRegistry();
+		}
+		final ImageDescriptor image = imageDescriptorRegistry.get(key);
+		return image;
 	}
-	
-	public Image getCompositeImage(Image image, String decoKey) {
-		ImageDescriptor imgd = getCompositeImageDescriptor(image, decoKey);
-		if (imgd != null)
-			return imgd.createImage();
-		return null;
+
+	public ImageDescriptor getPluginImage(final String fileName) {
+		final URL path = getBundle().getEntry("/");//$NON-NLS-1$
+		URL fullPathString = null;
+		try {
+			fullPathString = new URL(path, fileName);
+			return ImageDescriptor.createFromURL(fullPathString);
+		} catch (final MalformedURLException e) {
+			return null;
+		}
 	}
-	
+
 	@Override
-	public ImageDescriptor getCompositeImageDescriptor(String key, String decoKey) {
-		String id = key.concat("_").concat(decoKey); //$NON-NLS-1$
-		DecoratorImageDescriptor deco = (DecoratorImageDescriptor) imageDescriptorRegistry.get(id);
-		if (deco == null) {
-			ImageDescriptor main = getImageDescriptor(key);
-			ImageDescriptor overlay = getImageDescriptor(decoKey);
-			if ((main != null) && (overlay != null)) {
-				deco = new DecoratorImageDescriptor(main.getImageData(), overlay.getImageData());
-				imageDescriptorRegistry.put(id, deco);
-				Image imgd = deco.createImage();
-				imageRegistry.put(id, imgd);
+	public String getPluginPath() throws IOException {
+		final IPath p = new Path(FileLocator.resolve(getBundle().getEntry("/")).getPath()); //$NON-NLS-1$
+		return p.toOSString();
+	}
+
+	public Shell getPluginShell() {
+		if (getWorkbench() != null) {
+			if (getWorkbench().getActiveWorkbenchWindow() != null) {
+				return getWorkbench().getActiveWorkbenchWindow().getShell();
 			}
 		}
-		return deco;
+		return null;
 	}
-	
-	public ImageDescriptor getCompositeImageDescriptor(Image base, String decoKey) {
-		ImageDescriptor overlay = getImageDescriptor(decoKey);
-		DecoratorImageDescriptor deco = new DecoratorImageDescriptor(base.getImageData(), overlay.getImageData());
-		return deco;
-	}
-	
-	public ImageDescriptor getRegisteredImageDescriptor(String key) {
-		if (key != null) {			
+
+	public ImageDescriptor getRegisteredImageDescriptor(final String key) {
+		if (key != null) {
 			ImageDescriptor result = imageDescriptorRegistry.get(key);
-			if (result == null) {			
+			if (result == null) {
 				result = registerImage(key);
 			}
 			return result;
 		}
 		return null;
 	}
-	
-	protected void initializeFontRegistry() {
-		// Do nothing
+
+	public IShellProvider getShellProvider() {
+		return shellProvider;
+	}
+
+	@Override
+	public String getVersion() {
+		return getBundle().getHeaders().get(org.osgi.framework.Constants.BUNDLE_VERSION);
 	}
 
 	protected void initializeColorRegistry() {
 		// Do nothing
 	}
-	
-	public String getPluginPath() throws IOException {
-		IPath p = new Path(FileLocator.resolve(getBundle().getEntry("/")).getPath()); //$NON-NLS-1$
-		return p.toOSString();
+
+	protected void initializeFontRegistry() {
+		// Do nothing
 	}
 
-	public String getVersion() {
-		return (String) getBundle().getHeaders().get(org.osgi.framework.Constants.BUNDLE_VERSION);
+	protected abstract void initializeImageRegistry();
+
+	/**
+	 * Add an image to the plugin image registry.
+	 *
+	 * @param id
+	 *            The image ID
+	 * @param fileName
+	 *            the plugin local path to the image file.
+	 * @return
+	 */
+	protected ImageDescriptor putImageInRegistry(final String id, final String fileName) {
+		final ImageDescriptor fid = getPluginImage(fileName);
+		imageRegistry.put(id, fid);
+		imageDescriptorRegistry.put(id, fid);
+		return fid;
+	}
+
+	private ImageDescriptor registerImage(final String key) {
+		// getImageDescriptor initialize the imageRegistry.
+		ImageDescriptor result = getImageDescriptor(key);
+		if (result != null) {
+			return result;
+		}
+		final int pos = key.indexOf(":"); //$NON-NLS-1$
+		if (pos > 0) {
+			final String bundleId = key.substring(0, pos);
+			final String imageKey = key.substring(pos + 1);
+			result = AbstractUIPlugin.imageDescriptorFromPlugin(bundleId, imageKey);
+			if (result != null) {
+				// ImageRegistry is initialized into getImageDescriptor
+				imageDescriptorRegistry.put(key, result);
+				imageRegistry.put(key, result);
+			}
+		} else {
+			try {
+				final URL url = FileLocator.find(getBundle(), new Path(key), null);
+				if (url != null) {
+					result = ImageDescriptor.createFromURL(url);
+					imageDescriptorRegistry.put(key, result);
+					imageRegistry.put(key, result);
+				}
+			} catch (final Exception e) {
+				e.printStackTrace();
+				// Bug potentiel ici: l'URL contient des espace au lieu de %20. correction:
+				// url = new URL(null,url.toString().replaceAll(" ", "%20")).toURI();
+			}
+		}
+		return result;
 	}
 }

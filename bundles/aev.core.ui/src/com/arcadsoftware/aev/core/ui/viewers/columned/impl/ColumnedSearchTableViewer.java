@@ -34,40 +34,89 @@ import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedCriteriaSorter;
  */
 public class ColumnedSearchTableViewer extends TableViewer {
 
-	public static final String COL_ID = "ID"; //$NON-NLS-1$
+	class ColumnedSearchDialogContentProvider implements IStructuredContentProvider {
+		@Override
+		public void dispose() {
+			// Do nothing
+		}
+
+		@Override
+		public Object[] getElements(final Object parent) {
+			if (parent instanceof ColumnedSearchCriteriaList) {
+				final ColumnedSearchCriteriaList l = (ColumnedSearchCriteriaList) parent;
+				return l.getCriteria().toArray();
+			}
+			return new Object[0];
+		}
+
+		@Override
+		public void inputChanged(final Viewer v, final Object oldInput, final Object newInput) {
+			// Do nothing
+		}
+
+	}
+
+	public class ColumnedSearchDialogLabelProvider extends LabelProvider implements ITableLabelProvider {
+
+		@Override
+		public Image getColumnImage(final Object element, final int columnIndex) {
+			return null;
+		}
+
+		@Override
+		public String getColumnText(final Object element, final int columnIndex) {
+			final ColumnedSearchCriteria criteria = (ColumnedSearchCriteria) element;
+			switch (columnIndex) {
+			case 0:
+				return String.valueOf(criteria.getId());
+			case 1:
+				return criteria.getColumnName();
+			case 2:
+				return criteria.getOperator();
+			case 3:
+				return criteria.getKeyword();
+			default:
+				return StringTools.EMPTY;
+			}
+		}
+	}
+
 	private static final String COL_COLUMN_NAME = "Columns"; //$NON-NLS-1$
-	private static final String COL_OPERATOR = "Operator"; //$NON-NLS-1$
+	public static final String COL_ID = "ID"; //$NON-NLS-1$
+
 	public static final String COL_KEYWORD = "Keyword"; //$NON-NLS-1$
 
-	private ArcadColumns referenceColumns;
+	private static final String COL_OPERATOR = "Operator"; //$NON-NLS-1$
 
-	private String[] columnNames = new String[] { COL_ID, COL_COLUMN_NAME, COL_OPERATOR, COL_KEYWORD };
+	private final String[] columnNames = new String[] { COL_ID, COL_COLUMN_NAME, COL_OPERATOR, COL_KEYWORD };
 
-	public ColumnedSearchTableViewer(Composite parent, int style, ArcadColumns referenceColumns) {
+	private final ArcadColumns referenceColumns;
+
+	public ColumnedSearchTableViewer(final Composite parent, final int style, final ArcadColumns referenceColumns) {
 		super(parent, style);
 		this.referenceColumns = referenceColumns;
-		this.addChildControls(parent);
+		addChildControls(parent);
 	}
 
 	/**
 	 * Create a new shell, add the widgets, open the shell
 	 */
-	private void addChildControls(Composite composite) {
+	private void addChildControls(final Composite composite) {
 		createTable(composite);
 		createTableViewer();
-		this.setContentProvider(new ColumnedSearchDialogContentProvider());
-		this.setLabelProvider(new ColumnedSearchDialogLabelProvider());
+		setContentProvider(new ColumnedSearchDialogContentProvider());
+		setLabelProvider(new ColumnedSearchDialogLabelProvider());
 	}
 
 	/**
 	 * Create the Table
-	 * 
+	 *
 	 * @param parent
 	 */
-	private void createTable(Composite parent) {
-		Table table = this.getTable();
+	private void createTable(final Composite parent) {
+		final Table table = getTable();
 		if (parent.getLayout() instanceof GridLayout) {
-			GridData gridData = new GridData(GridData.FILL_BOTH);
+			final GridData gridData = new GridData(GridData.FILL_BOTH);
 			gridData.grabExcessVerticalSpace = true;
 			gridData.horizontalSpan = 3;
 			table.setLayoutData(gridData);
@@ -83,7 +132,7 @@ public class ColumnedSearchTableViewer extends TableViewer {
 		column.setResizable(false);
 		column.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(final SelectionEvent e) {
 				setSorter(new ColumnedCriteriaSorter());
 			}
 		});
@@ -111,66 +160,25 @@ public class ColumnedSearchTableViewer extends TableViewer {
 	 * Create the TableViewer
 	 */
 	private void createTableViewer() {
-		this.setColumnProperties(columnNames);
-		CellEditor[] editors = new CellEditor[columnNames.length];
+		setColumnProperties(columnNames);
+		final CellEditor[] editors = new CellEditor[columnNames.length];
 		editors[0] = null;
 		editors[1] = new ComboBoxCellEditor(getTable(), referenceColumns.getUserNameValues(), SWT.READ_ONLY);
 		editors[2] = new ComboBoxCellEditor(getTable(), ColumnedSearchCriteriaList.OPERATOR_ARRAY, SWT.READ_ONLY);
 		editors[3] = new TextCellEditor(getTable(), SWT.MULTI);
-		this.setCellEditors(editors);
-		this.setCellModifier(new ColumnedSearchCellModifier(this, referenceColumns));
-		this.setSorter(new ColumnedCriteriaSorter());
+		setCellEditors(editors);
+		setCellModifier(new ColumnedSearchCellModifier(this, referenceColumns));
+		setSorter(new ColumnedCriteriaSorter());
 	}
 
-	class ColumnedSearchDialogContentProvider implements IStructuredContentProvider {
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-			// Do nothing
-		}
-
-		public Object[] getElements(Object parent) {
-			if (parent instanceof ColumnedSearchCriteriaList) {
-				ColumnedSearchCriteriaList l = (ColumnedSearchCriteriaList) parent;
-				return l.getCriteria().toArray();
-			}
-			return new Object[0];
-		}
-
-		public void dispose() {
-			// Do nothing
-		}
-
-	}
-
-	public class ColumnedSearchDialogLabelProvider extends LabelProvider implements ITableLabelProvider {
-
-		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
-		}
-
-		public String getColumnText(Object element, int columnIndex) {
-			ColumnedSearchCriteria criteria = (ColumnedSearchCriteria) element;
-			switch (columnIndex) {
-			case 0:
-				return String.valueOf(criteria.getId());
-			case 1:
-				return criteria.getColumnName();
-			case 2:
-				return criteria.getOperator();
-			case 3:
-				return criteria.getKeyword();
-			default:
-				return StringTools.EMPTY;
-			}
-		}
-	}
-
-	public String[] getChoices(String property) {
-		if (COL_COLUMN_NAME.equals(property))
+	public String[] getChoices(final String property) {
+		if (COL_COLUMN_NAME.equals(property)) {
 			return referenceColumns.getUserNameValues();
-		else if (COL_OPERATOR.equals(property))
+		} else if (COL_OPERATOR.equals(property)) {
 			return ColumnedSearchCriteriaList.OPERATOR_ARRAY;
-		else
+		} else {
 			return new String[] {};
+		}
 	}
 
 	public List<String> getColumnNames() {

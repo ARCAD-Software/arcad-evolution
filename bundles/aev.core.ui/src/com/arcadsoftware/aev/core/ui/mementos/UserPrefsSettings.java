@@ -7,56 +7,55 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserPrefsSettings extends ArcadSettings {
-	
+
 	private String elementId;
-	private Map<String, String> preferences = new HashMap<String, String>();
-	
+	private Map<String, String> preferences = new HashMap<>();
+
+	public UserPrefsSettings(final String elementId, final Map<String, String> preferences) {
+		this("*ALL", "*ALL", elementId, preferences); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
 	/**
 	 * @param serverName
 	 * @param userName
 	 */
-	public UserPrefsSettings(String serverName, String userName) {
+	public UserPrefsSettings(final String serverName, final String userName) {
 		super(serverName, userName);
 	}
-	
-	public UserPrefsSettings(String serverName, String userName,String elementId) {
+
+	public UserPrefsSettings(final String serverName, final String userName, final String elementId) {
 		super(serverName, userName);
 		this.elementId = elementId;
 	}
-	
-	public UserPrefsSettings(String elementId, Map<String, String> preferences) {
-		this("*ALL", "*ALL", elementId, preferences); //$NON-NLS-1$ //$NON-NLS-2$
-	}		
-	
+
 	/**
 	 * @param serverName
 	 * @param userName
 	 * @param viewerId
 	 * @param cols
 	 */
-	public UserPrefsSettings(String serverName, String userName,
-			String viewerId, Map<String, String> preferences) {
-		this(serverName, userName,viewerId);
+	public UserPrefsSettings(final String serverName, final String userName,
+			final String viewerId, final Map<String, String> preferences) {
+		this(serverName, userName, viewerId);
 		this.preferences = preferences;
 	}
-		
-	public String getPrefValue(String key){
-		return this.preferences.get(key);
-	}
 
-	
-	public void setPrefValue(String key, String value){
-		this.preferences.put(key, value);
-	}
-	
 	/**
 	 * @return elementId (any UI element that uses User preferences).
 	 */
 	public String getElementId() {
 		return elementId;
 	}
-	
-	public Map<String, String> getPreferences(){
+
+	public Map<String, String> getPreferences() {
 		return preferences;
+	}
+
+	public String getPrefValue(final String key) {
+		return preferences.get(key);
+	}
+
+	public void setPrefValue(final String key, final String value) {
+		preferences.put(key, value);
 	}
 }

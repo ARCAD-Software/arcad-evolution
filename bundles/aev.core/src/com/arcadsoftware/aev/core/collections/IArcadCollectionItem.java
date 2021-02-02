@@ -1,41 +1,40 @@
 /*
- * Créé le 26 avr. 04
+ * Crï¿½ï¿½ le 26 avr. 04
  *
  */
 package com.arcadsoftware.aev.core.collections;
 
 /**
  * @author MD
- * 
  */
 public interface IArcadCollectionItem extends IArcadDisplayable {
-	public int getTag();
-
-	public void setTag(int tag);
-
-	public int getLevel();
-
-	public void setLevel(int level);
-
-	public void setIconID(String iconId);
+	IArcadCollectionItem duplicate();
 
 	/**
-	 * Egalité simple de l'élément sous égalité de la version de la classe
-	 * Object.
-	 * 
+	 * Egalitï¿½ simple de l'ï¿½lï¿½ment sous ï¿½galitï¿½ de la version de la classe Object.
+	 *
 	 * @param item
 	 * @return boolean
 	 */
-	public boolean equalsItem(IArcadCollectionItem item);
+	boolean equalsItem(IArcadCollectionItem item);
 
-	public boolean equalsWithLevel(IArcadCollectionItem item);
+	boolean equalsWithLevel(IArcadCollectionItem item);
 
-	public ArcadCollection getParent();
+	int getLevel();
 
-	public void setParent(ArcadCollection parent);
-	public void unsetParent(ArcadCollection parent);
+	ArcadCollection getParent();
 
-	public IArcadCollectionItem duplicate();
+	int getTag();
 
-	public boolean hasChildren();
+	boolean hasChildren();
+
+	void setIconID(String iconId);
+
+	void setLevel(int level);
+
+	void setParent(ArcadCollection parent);
+
+	void setTag(int tag);
+
+	void unsetParent(ArcadCollection parent);
 }

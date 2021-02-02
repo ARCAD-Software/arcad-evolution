@@ -16,33 +16,77 @@ import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 
 /**
  * Dialogue permettant la saisie d'une valeur texte.
- * 
+ *
  * @author MD
- * 
  */
 public class TextValueDialog extends ArcadCenteredDialog {
-	protected static int DIALOG_WIDTH = 350;
 	protected static int DIALOG_HEIGHT = 200;
-	Text valueText = null;
-	private int limit = 0;
-	private String label = StringTools.EMPTY;
+	protected static int DIALOG_WIDTH = 350;
+
+	/**
+	 * @param parentShell
+	 * @return String
+	 */
+	public static String open(final Shell parentShell, final String title, final String label) {
+		return open(parentShell, title, label, -1, StringTools.EMPTY);
+	}
+
+	/**
+	 * @param parentShell
+	 * @return String
+	 */
+	public static String open(final Shell parentShell, final String title, final String label, final int limit,
+			final String defaultText) {
+		final TextValueDialog dialog = new TextValueDialog(parentShell, title, label, limit, defaultText);
+		if (dialog.open() == 0) {
+			return dialog.getValue();
+		}
+		return StringTools.EMPTY;
+	}
+
+	/**
+	 * @param parentShell
+	 * @return String
+	 */
+	public static String open(final Shell parentShell, final String title, final String label,
+			final String defaultText) {
+		return open(parentShell, title, label, -1, defaultText);
+	}
+
 	private String defaultValue = StringTools.EMPTY;
+	private String label = StringTools.EMPTY;
+
+	private int limit = 0;
+
 	private String value = StringTools.EMPTY;
+
+	Text valueText = null;
 
 	/**
 	 * @param parentShell
 	 */
-	public TextValueDialog(Shell parentShell, String title, String label, int limit, String defaultText) {
+	public TextValueDialog(final Shell parentShell, final String title, final String label, final int limit,
+			final String defaultText) {
 		super(parentShell, DIALOG_WIDTH, DIALOG_HEIGHT, CoreUILabels.resString(title));
 		this.label = label;
 		this.limit = limit;
-		this.defaultValue = defaultText;
+		defaultValue = defaultText;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
+	 */
+	@Override
+	protected void buttonPressed(final int buttonId) {
+		value = valueText.getText();
+		super.buttonPressed(buttonId);
 	}
 
 	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite composite = (Composite) super.createDialogArea(parent);
-		GridLayout gridLayout = new GridLayout();
+	protected Control createDialogArea(final Composite parent) {
+		final Composite composite = (Composite) super.createDialogArea(parent);
+		final GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
 		composite.setLayout(gridLayout);
 		valueText = GuiFormatTools.createLabelledText(composite, label, defaultValue, limit);
@@ -51,47 +95,6 @@ public class TextValueDialog extends ArcadCenteredDialog {
 
 	public String getValue() {
 		return value;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
-	 */
-	@Override
-	protected void buttonPressed(int buttonId) {
-		value = valueText.getText();
-		super.buttonPressed(buttonId);
-	}
-
-	/**
-	 * 
-	 * @param parentShell
-	 * @return String
-	 */
-	public static String open(Shell parentShell, String title, String label, int limit, String defaultText) {
-		TextValueDialog dialog = new TextValueDialog(parentShell, title, label, limit, defaultText);
-		if (dialog.open() == 0)
-			return dialog.getValue();
-		return StringTools.EMPTY;
-	}
-
-	/**
-	 * 
-	 * @param parentShell
-	 * @return String
-	 */
-	public static String open(Shell parentShell, String title, String label, String defaultText) {
-		return open(parentShell, title, label, -1, defaultText);
-	}
-
-	/**
-	 * 
-	 * @param parentShell
-	 * @return String
-	 */
-	public static String open(Shell parentShell, String title, String label) {
-		return open(parentShell, title, label, -1, StringTools.EMPTY);
 	}
 
 }

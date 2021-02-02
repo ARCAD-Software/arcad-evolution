@@ -8,13 +8,10 @@ package com.arcadsoftware.aev.core.ui.actions;
 
 import com.arcadsoftware.aev.core.collections.ArcadCollection;
 
-
 /**
- * @author MD
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author MD TODO To change the template for this generated type comment go to Window - Preferences - Java - Code Style
+ *         - Code Templates
  */
 public interface IArcadCollectionProvider {
-	public ArcadCollection getCollection();
+	ArcadCollection getCollection();
 }

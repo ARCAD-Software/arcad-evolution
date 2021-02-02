@@ -13,21 +13,20 @@ import com.arcadsoftware.aev.core.ui.labelproviders.columned.AbstractColumnedTre
 import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 
 /**
- * @author MD
- *
- * Pour changer le modèle de ce commentaire de type généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class ContainerLabelProvider extends AbstractColumnedTreeLabelProvider {
 
-	public ContainerLabelProvider(AbstractColumnedViewer viewer) {
+	public ContainerLabelProvider(final AbstractColumnedViewer viewer) {
 		super(viewer);
 	}
 
 	@Override
-	protected Image getActualImage(Object element, int actualColumnIndex) {
-		if(actualColumnIndex == 0 && element instanceof IContainer)
-			return ((IContainer)element).getImage();
+	protected Image getActualImage(final Object element, final int actualColumnIndex) {
+		if (actualColumnIndex == 0 && element instanceof IContainer) {
+			return ((IContainer) element).getImage();
+		}
 		return super.getActualImage(element, actualColumnIndex);
 	}
 }

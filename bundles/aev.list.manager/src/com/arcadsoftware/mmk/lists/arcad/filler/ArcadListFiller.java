@@ -4,11 +4,10 @@ import com.arcadsoftware.mmk.lists.managers.AbstractFiller;
 
 public class ArcadListFiller extends AbstractFiller {
 
-	
-	public ArcadListFiller(String libraryName,String listName) {
-		
+	public ArcadListFiller(final String libraryName, final String listName) {
+
 	}
-	
+
 	@Override
 	public int fill() {
 		return 0;

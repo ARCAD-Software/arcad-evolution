@@ -5,13 +5,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public interface IXMLContentProvider {
-	public String getRootName();
-	public void provide(Document document, Element rootNode);
-	public String getEncoding();
-	
-	default Element addElement(Document document, Node node, String elementName) {
+	default Element addElement(final Document document, final Node node, final String elementName) {
 		final Element element = document.createElement(elementName);
 		node.appendChild(element);
 		return element;
 	}
+
+	String getEncoding();
+
+	String getRootName();
+
+	void provide(Document document, Element rootNode);
 }

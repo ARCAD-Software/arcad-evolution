@@ -9,11 +9,8 @@ package com.arcadsoftware.aev.core.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public abstract class ArcadWizard extends Wizard {
 
@@ -41,7 +38,7 @@ public abstract class ArcadWizard extends Wizard {
 	 * @param browseMode
 	 *            The browseMode to set.
 	 */
-	public void setBrowseMode(boolean browseMode) {
+	public void setBrowseMode(final boolean browseMode) {
 		this.browseMode = browseMode;
 	}
 }

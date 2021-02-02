@@ -4,11 +4,8 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 
 public interface IArcadTableLabelProvider extends ITableLabelProvider {
 	/*
-	 * (non-Javadoc)
-	 * To override to sort column by the values instead of the string values
-	 * @see
-	 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang
-	 * .Object, int)
+	 * (non-Javadoc) To override to sort column by the values instead of the string values
+	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang .Object, int)
 	 */
-	public Object getColumnValue(Object element, int columnIndex);
+	Object getColumnValue(Object element, int columnIndex);
 }

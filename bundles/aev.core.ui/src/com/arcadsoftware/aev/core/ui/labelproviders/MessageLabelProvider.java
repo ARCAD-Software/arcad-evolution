@@ -15,12 +15,12 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 
 public class MessageLabelProvider extends ColumnedDefaultTreeLabelProvider {
 
-	public MessageLabelProvider(AbstractColumnedViewer viewer) {
+	public MessageLabelProvider(final AbstractColumnedViewer viewer) {
 		super(viewer);
 	}
 
 	@Override
-	protected Image getActualImage(Object element, int actualColumnIndex) {
+	protected Image getActualImage(final Object element, final int actualColumnIndex) {
 		if (actualColumnIndex == 0) {
 			if (element instanceof Message) {
 				return MessageIconHelper.getMessageIcon((Message) element).image();

@@ -8,10 +8,10 @@ import com.arcadsoftware.ae.core.logger.messages.Messages;
 import com.arcadsoftware.ae.core.logger.router.AbstractMessageRouter;
 
 public class AntMessageRouter extends AbstractMessageRouter {
+	Task currentTask;
 	Project project;
-	Task currentTask;	
-	
-	public AntMessageRouter (Project project){
+
+	public AntMessageRouter(final Project project) {
 		this.project = project;
 		formatter = new AntMessageFormatter();
 	}
@@ -26,39 +26,43 @@ public class AntMessageRouter extends AbstractMessageRouter {
 
 	@Override
 	protected void doIntercept() {
-		AbstractMessage m = messages.messageAt(messages.messageCount()-1);
-		if (project!=null) {
-			if (getFormatter()!=null) {
-				Messages currentMessages = new Messages();
+		final AbstractMessage m = messages.messageAt(messages.messageCount() - 1);
+		if (project != null) {
+			if (getFormatter() != null) {
+				final Messages currentMessages = new Messages();
 				currentMessages.add(m);
-				String s = getFormatter().format(currentMessages);
+				final String s = getFormatter().format(currentMessages);
 				int level = Project.MSG_ERR;
-				if (m.isErrorMessage())
+				if (m.isErrorMessage()) {
 					level = Project.MSG_ERR;
-				else if (m.isWarningMessage())
+				} else if (m.isWarningMessage()) {
 					level = Project.MSG_WARN;
-				else 
+				} else {
 					level = Project.MSG_INFO;
-				if (currentTask!=null)
-					project.log(currentTask,s,level);
-				else
-					project.log(s,level);
+				}
+				if (currentTask != null) {
+					project.log(currentTask, s, level);
+				} else {
+					project.log(s, level);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Renvoit 
-	 * @return the currentTask Task : 
+	 * Renvoit
+	 * 
+	 * @return the currentTask Task :
 	 */
 	public Task getCurrentTask() {
 		return currentTask;
 	}
 
 	/**
-	 * @param currentTask the currentTask to set
+	 * @param currentTask
+	 *            the currentTask to set
 	 */
-	public void setCurrentTask(Task currentTask) {
+	public void setCurrentTask(final Task currentTask) {
 		this.currentTask = currentTask;
 	}
 

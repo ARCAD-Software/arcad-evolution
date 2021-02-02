@@ -9,19 +9,20 @@ import org.eclipse.core.runtime.Plugin;
 
 /**
  * @author MD
- * 
  */
 public abstract class ArcadPlugin extends Plugin implements IArcadPlugin {
 	public ArcadPlugin() {
 		super();
 	}
 
+	@Override
 	public String getPluginPath() throws IOException {
-		IPath p = new Path(FileLocator.resolve(getBundle().getEntry("/")).getPath()); //$NON-NLS-1$
+		final IPath p = new Path(FileLocator.resolve(getBundle().getEntry("/")).getPath()); //$NON-NLS-1$
 		return p.toOSString();
 	}
 
+	@Override
 	public String getVersion() {
-		return (String) getBundle().getHeaders().get(org.osgi.framework.Constants.BUNDLE_VERSION);
-	}	
+		return getBundle().getHeaders().get(org.osgi.framework.Constants.BUNDLE_VERSION);
+	}
 }

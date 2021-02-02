@@ -6,8 +6,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
@@ -27,54 +25,52 @@ import com.arcadsoftware.aev.core.ui.wizards.ArcadWizardPage;
  */
 public class ColumnedParametersWizardPage extends ArcadWizardPage {
 
-	IWorkbench workbench;
-	IStructuredSelection selection;
-	Text separatorText;
-	Button includeHeaderButton;
-	Button onlyDisplayedColumnsButton;
-	Button onlyDisplayedFilteredDataButton;
-	Text text;
-
 	private final static String DIALOG_NAME = "ColumnedParametersWizardPage"; //$NON-NLS-1$
-	boolean includeHeader = false;
-	boolean onlyDisplayedColumns = false;
-	boolean onlyDisplayedFilteredData = false;
-	String separator = ","; //$NON-NLS-1$
-	String filePath = " "; //$NON-NLS-1$
-	private String[] extensions = new String[] { "*.csv" }; //$NON-NLS-1$
-	private static final String STORE_HEADER = IDocProvider.ID + ".CLMCVSEXPORT_HEADER";//$NON-NLS-1$
 	private static final String STORE_DISPLAYED = IDocProvider.ID + ".CLMCVSEXPORT_DISPLAYED";//$NON-NLS-1$
-	private static final String STORE_FILTERED = IDocProvider.ID + ".CLMCVSEXPORT_FILTERED";//$NON-NLS-1$
-	private static final String STORE_SEPARATOR = IDocProvider.ID + ".CLMCVSEXPORT_SEPARATOR";//$NON-NLS-1$
 	private static final String STORE_FILEPATH = IDocProvider.ID + ".CLMCVSEXPORT_FILEPATH";//$NON-NLS-1$
-	private IDialogSettings settings;
+	private static final String STORE_FILTERED = IDocProvider.ID + ".CLMCVSEXPORT_FILTERED";//$NON-NLS-1$
+	private static final String STORE_HEADER = IDocProvider.ID + ".CLMCVSEXPORT_HEADER";//$NON-NLS-1$
+	private static final String STORE_SEPARATOR = IDocProvider.ID + ".CLMCVSEXPORT_SEPARATOR";//$NON-NLS-1$
+	private final String[] extensions = new String[] { "*.csv" }; //$NON-NLS-1$
 
-	public ColumnedParametersWizardPage(String pageName) {
+	String filePath = " "; //$NON-NLS-1$
+	boolean includeHeader = false;
+	Button includeHeaderButton;
+	boolean onlyDisplayedColumns = false;
+	Button onlyDisplayedColumnsButton;
+	boolean onlyDisplayedFilteredData = false;
+	Button onlyDisplayedFilteredDataButton;
+	IStructuredSelection selection;
+	String separator = ","; //$NON-NLS-1$
+	Text separatorText;
+	private IDialogSettings settings;
+	Text text;
+	IWorkbench workbench;
+
+	public ColumnedParametersWizardPage(final String pageName) {
 		super(pageName);
 		setPageComplete(true);
 	}
 
-	public ColumnedParametersWizardPage(String pageName, String title, ImageDescriptor titleImage) {
+	public ColumnedParametersWizardPage(final String pageName, final String title, final ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 		settings = EvolutionCoreUIPlugin.getSettings(getDialogName());
-		if (settings.get(STORE_SEPARATOR) == null)
+		if (settings.get(STORE_SEPARATOR) == null) {
 			initWidgetValues();
+		}
 	}
 
-	protected String getDialogName() {
-		return DIALOG_NAME;
-	}
-
-	public void createControl(Composite parent) {
-		Composite container = GuiFormatTools.createComposite(parent);
+	@Override
+	public void createControl(final Composite parent) {
+		final Composite container = GuiFormatTools.createComposite(parent);
 
 		includeHeaderButton = GuiFormatTools.createCheckButton(container, CoreUILabels
 				.resString("wizardPage.text.includeHeader"), //$NON-NLS-1$
 				SWT.CENTER);
 		includeHeaderButton.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				ColumnedParametersWizardPage.this.includeHeader = includeHeaderButton.getSelection();
+			public void widgetSelected(final SelectionEvent e) {
+				includeHeader = includeHeaderButton.getSelection();
 			}
 		});
 
@@ -83,8 +79,8 @@ public class ColumnedParametersWizardPage extends ArcadWizardPage {
 				SWT.CENTER);
 		onlyDisplayedColumnsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				ColumnedParametersWizardPage.this.onlyDisplayedColumns = onlyDisplayedColumnsButton.getSelection();
+			public void widgetSelected(final SelectionEvent e) {
+				onlyDisplayedColumns = onlyDisplayedColumnsButton.getSelection();
 			}
 		});
 
@@ -93,8 +89,8 @@ public class ColumnedParametersWizardPage extends ArcadWizardPage {
 				SWT.CENTER);
 		onlyDisplayedFilteredDataButton.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				ColumnedParametersWizardPage.this.onlyDisplayedFilteredData = onlyDisplayedFilteredDataButton
+			public void widgetSelected(final SelectionEvent e) {
+				onlyDisplayedFilteredData = onlyDisplayedFilteredDataButton
 						.getSelection();
 			}
 		});
@@ -104,8 +100,8 @@ public class ColumnedParametersWizardPage extends ArcadWizardPage {
 		separatorText.setText(separator);
 		separatorText.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e) {
-				ColumnedParametersWizardPage.this.separator = separatorText.getText();
+			public void focusLost(final FocusEvent e) {
+				separator = separatorText.getText();
 			}
 		});
 
@@ -113,36 +109,27 @@ public class ColumnedParametersWizardPage extends ArcadWizardPage {
 				.resString("wizardPage.text.labelFileSelector"), //$NON-NLS-1$
 				false, CoreUILabels.resString("wizardPage.text.titleFileSelector"), //$NON-NLS-1$
 				extensions);
-		text.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				ColumnedParametersWizardPage.this.filePath = text.getText();
-				setPageComplete(isPageComplete());
-			}
+		text.addModifyListener(e -> {
+			filePath = text.getText();
+			setPageComplete(isPageComplete());
 		});
 		setControl(parent);
-		if (settings != null)
+		if (settings != null) {
 			loadWidgetValues(settings);
+		}
 		setPageComplete(isPageComplete());
+	}
+
+	protected String getDialogName() {
+		return DIALOG_NAME;
+	}
+
+	public String[] getExtensions() {
+		return extensions;
 	}
 
 	public String getFilePath() {
 		return filePath;
-	}
-
-	public boolean isIncludeHeader() {
-		return includeHeader;
-	}
-
-	public String getSeparator() {
-		return separator;
-	}
-
-	public boolean isOnlyDisplayedColumns() {
-		return onlyDisplayedColumns;
-	}
-
-	public void setOnlyDisplayedColumns(boolean includeOnlyDisplayedColumns) {
-		this.onlyDisplayedColumns = includeOnlyDisplayedColumns;
 	}
 
 	@Override
@@ -150,16 +137,12 @@ public class ColumnedParametersWizardPage extends ArcadWizardPage {
 		return null;
 	}
 
-	public String[] getExtensions() {
-		return extensions;
+	public String getSeparator() {
+		return separator;
 	}
 
-	public boolean isOnlyDisplayedFilteredData() {
-		return onlyDisplayedFilteredData;
-	}
-
-	public void setOnlyDisplayedFilteredData(boolean onlyDisplayedFilteredData) {
-		this.onlyDisplayedFilteredData = onlyDisplayedFilteredData;
+	public IDialogSettings getSettings() {
+		return settings;
 	}
 
 	protected void initWidgetValues() {
@@ -170,7 +153,24 @@ public class ColumnedParametersWizardPage extends ArcadWizardPage {
 		settings.put(STORE_FILEPATH, filePath);
 	}
 
-	protected void loadWidgetValues(IDialogSettings dialogSettings) {
+	public boolean isIncludeHeader() {
+		return includeHeader;
+	}
+
+	public boolean isOnlyDisplayedColumns() {
+		return onlyDisplayedColumns;
+	}
+
+	public boolean isOnlyDisplayedFilteredData() {
+		return onlyDisplayedFilteredData;
+	}
+
+	@Override
+	public boolean isPageComplete() {
+		return text != null && !text.getText().equalsIgnoreCase(StringTools.EMPTY);
+	}
+
+	protected void loadWidgetValues(final IDialogSettings dialogSettings) {
 		includeHeader = dialogSettings.getBoolean(STORE_HEADER);
 		onlyDisplayedColumns = dialogSettings.getBoolean(STORE_DISPLAYED);
 		onlyDisplayedFilteredData = dialogSettings.getBoolean(STORE_FILTERED);
@@ -184,12 +184,7 @@ public class ColumnedParametersWizardPage extends ArcadWizardPage {
 		text.setText(dialogSettings.get(STORE_FILEPATH));
 	}
 
-	@Override
-	public boolean isPageComplete() {
-		return text != null && !text.getText().equalsIgnoreCase(StringTools.EMPTY);
-	}
-
-	public void saveWidgetValues(IDialogSettings dialogSettings) {
+	public void saveWidgetValues(final IDialogSettings dialogSettings) {
 		dialogSettings.put(STORE_HEADER, includeHeaderButton.getSelection());
 		dialogSettings.put(STORE_DISPLAYED, onlyDisplayedColumnsButton.getSelection());
 		dialogSettings.put(STORE_FILTERED, onlyDisplayedFilteredDataButton.getSelection());
@@ -197,7 +192,11 @@ public class ColumnedParametersWizardPage extends ArcadWizardPage {
 		dialogSettings.put(STORE_FILEPATH, text.getText());
 	}
 
-	public IDialogSettings getSettings() {
-		return settings;
+	public void setOnlyDisplayedColumns(final boolean includeOnlyDisplayedColumns) {
+		onlyDisplayedColumns = includeOnlyDisplayedColumns;
+	}
+
+	public void setOnlyDisplayedFilteredData(final boolean onlyDisplayedFilteredData) {
+		this.onlyDisplayedFilteredData = onlyDisplayedFilteredData;
 	}
 }

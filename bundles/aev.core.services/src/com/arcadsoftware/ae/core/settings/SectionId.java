@@ -1,50 +1,50 @@
 package com.arcadsoftware.ae.core.settings;
 
 public class SectionId {
-	
-	String id;
-	String label;
+
 	String help;
 	int icon;
+	String id;
+	String label;
 	transient int order;
-	
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getLabel() {
-		return label;
-	}
-	
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	
-	public int getIcon() {
-		return icon;
-	}
-	
-	public void setIcon(int icon) {
-		this.icon = icon;
-	}
 
 	public String getHelp() {
 		return help;
 	}
-	
-	public void setHelp(String help) {
-		this.help = help;
+
+	public int getIcon() {
+		return icon;
 	}
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
 	public int getOrder() {
 		return order;
 	}
-	
-	public void setOrder(int order) {
+
+	public void setHelp(final String help) {
+		this.help = help;
+	}
+
+	public void setIcon(final int icon) {
+		this.icon = icon;
+	}
+
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public void setOrder(final int order) {
 		this.order = order;
 	}
 }

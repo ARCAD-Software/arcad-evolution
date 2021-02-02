@@ -9,11 +9,8 @@ package com.arcadsoftware.aev.core.ui.selectionproviders;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 
 /**
- * @author MD
- * 
- *         Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et
- *         commentaires
+ * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
+ *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
  */
 public class ArcadItemSelectionChangedProvider {
 	// définir la liste des providers...

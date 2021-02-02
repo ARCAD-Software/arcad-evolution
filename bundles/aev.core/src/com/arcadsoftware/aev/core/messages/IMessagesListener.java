@@ -1,36 +1,38 @@
 /*
- * Créé le 10 juin 2004
+ * Crï¿½ï¿½ le 10 juin 2004
  * Projet : ARCAD Plugin Core
  * <i> Copyright 2004, Arcad-Software.</i>
- *  
+ *
  */
 package com.arcadsoftware.aev.core.messages;
 
 /**
- * 
  * @author mlafon
  * @version 1.1.0
  */
 public interface IMessagesListener {
 
 	/**
-	 * A new messages has been added to ARCAD Messages list.
+	 * Le message a ï¿½tï¿½ modifiï¿½.
+	 * 
 	 * @param message
-	 * @param e and exception, can be null.
+	 *            le message modifiï¿½.
 	 */
-	public void newMessageAdded(Message message, Throwable e);
-	public void newMessageAdded(Message message);
-
+	void messageChanged(Message message);
 
 	/**
-	 * Un ou plusieurs messages ont été supprimés
-	 * (message = null dans le cas d'un clear). 
+	 * Un ou plusieurs messages ont ï¿½tï¿½ supprimï¿½s (message = null dans le cas d'un clear).
 	 */
-	public void messageDeleted(Message message);
-	
+	void messageDeleted(Message message);
+
+	void newMessageAdded(Message message);
+
 	/**
-	 * Le message a été modifié.
-	 * @param message le message modifié.
+	 * A new messages has been added to ARCAD Messages list.
+	 * 
+	 * @param message
+	 * @param e
+	 *            and exception, can be null.
 	 */
-	public void messageChanged(Message message);
+	void newMessageAdded(Message message, Throwable e);
 }

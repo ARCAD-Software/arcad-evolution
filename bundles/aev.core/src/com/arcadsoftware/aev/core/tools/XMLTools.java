@@ -33,16 +33,15 @@ import com.arcadsoftware.aev.core.messages.MessageManager;
 
 /**
  * @author MD, SJU
- *
  */
 public class XMLTools {
 
-	public static Element addElement(final Node node, final String tagName){
+	public static Element addElement(final Node node, final String tagName) {
 		final Element element = node.getOwnerDocument().createElement(tagName);
 		node.appendChild(element);
 		return element;
 	}
-	
+
 	public static Document createNewXMLDocument() throws ParserConfigurationException {
 		return getDocumentBuilderFactory().newDocumentBuilder().newDocument();
 	}
@@ -64,6 +63,14 @@ public class XMLTools {
 		factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 
 		return factory;
+	}
+
+	public static Element getElement(final Node node, final String elementName) {
+		return getElements(node, elementName).stream().findFirst().orElse(null);
+	}
+
+	public static List<Element> getElements(final Node node, final String elementName) {
+		return getNodes(node, elementName, Element.class);
 	}
 
 	public static Integer getIntegerAttribute(final NamedNodeMap attributes, final String name) {
@@ -91,14 +98,6 @@ public class XMLTools {
 				.collect(Collectors.toList()); //
 	}
 
-	public static Element getElement(final Node node, final String elementName) {
-		return getElements(node, elementName).stream().findFirst().orElse(null);
-	}
-	
-	public static List<Element> getElements(final Node node, final String elementName) {
-		return getNodes(node, elementName, Element.class);
-	}
-	
 	public static Element getRoot(final Document document) {
 		return getChildNodes(document) //
 				.stream() //

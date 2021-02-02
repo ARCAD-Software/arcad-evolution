@@ -33,34 +33,80 @@ import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedCriteriaSorter;
  */
 public class ColumnedSortTableViewer extends TableViewer {
 
-	public static final String COL_ID = "ID"; //$NON-NLS-1$
-	private static final String COL_COLUMN_NAME = "Columns"; //$NON-NLS-1$
-	private static final String COL_ORDER = "SortOrder"; //$NON-NLS-1$
+	class ColumnedSortDialogContentProvider implements IStructuredContentProvider {
+		@Override
+		public void dispose() {
+			// Do nothing
+		}
 
-	private ArcadColumns referenceColumns;
+		@Override
+		public Object[] getElements(final Object parent) {
+			if (parent instanceof ColumnedSortCriteriaList) {
+				final ColumnedSortCriteriaList l = (ColumnedSortCriteriaList) parent;
+				return l.getCriteria().toArray();
+			}
+			return new Object[0];
+		}
 
-	private String[] columnNames = new String[] { COL_ID, COL_COLUMN_NAME, COL_ORDER };
-
-	public ColumnedSortTableViewer(Composite parent, int style, ArcadColumns referenceColumns) {
-		super(parent, style);
-		this.referenceColumns = referenceColumns;
-		this.addChildControls(parent);
+		@Override
+		public void inputChanged(final Viewer v, final Object oldInput, final Object newInput) {
+			// Do nothing
+		}
 	}
 
-	private void addChildControls(Composite composite) {
+	public class ColumnedSortDialogLabelProvider extends LabelProvider implements ITableLabelProvider {
+
+		@Override
+		public Image getColumnImage(final Object element, final int columnIndex) {
+			return null;
+		}
+
+		@Override
+		public String getColumnText(final Object element, final int columnIndex) {
+			final ColumnedSortCriteria criteria = (ColumnedSortCriteria) element;
+			switch (columnIndex) {
+			case 0:
+				return String.valueOf(criteria.getId());
+			case 1:
+				return criteria.getColumnName();
+			case 2:
+				return criteria.getSortOrder();
+			default:
+				return StringTools.EMPTY;
+			}
+		}
+	}
+
+	private static final String COL_COLUMN_NAME = "Columns"; //$NON-NLS-1$
+
+	public static final String COL_ID = "ID"; //$NON-NLS-1$
+
+	private static final String COL_ORDER = "SortOrder"; //$NON-NLS-1$
+
+	private final String[] columnNames = new String[] { COL_ID, COL_COLUMN_NAME, COL_ORDER };
+
+	private final ArcadColumns referenceColumns;
+
+	public ColumnedSortTableViewer(final Composite parent, final int style, final ArcadColumns referenceColumns) {
+		super(parent, style);
+		this.referenceColumns = referenceColumns;
+		addChildControls(parent);
+	}
+
+	private void addChildControls(final Composite composite) {
 		createTable(composite);
 		createTableViewer();
-		this.setContentProvider(new ColumnedSortDialogContentProvider());
-		this.setLabelProvider(new ColumnedSortDialogLabelProvider());
+		setContentProvider(new ColumnedSortDialogContentProvider());
+		setLabelProvider(new ColumnedSortDialogLabelProvider());
 	}
 
 	/**
 	 * @param parent
 	 */
-	private void createTable(Composite parent) {
-		Table table = this.getTable();
+	private void createTable(final Composite parent) {
+		final Table table = getTable();
 		if (parent.getLayout() instanceof GridLayout) {
-			GridData gridData = new GridData(GridData.FILL_BOTH);
+			final GridData gridData = new GridData(GridData.FILL_BOTH);
 			gridData.grabExcessVerticalSpace = true;
 			gridData.horizontalSpan = 3;
 			table.setLayoutData(gridData);
@@ -76,7 +122,7 @@ public class ColumnedSortTableViewer extends TableViewer {
 		column.setResizable(false);
 		column.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(final SelectionEvent e) {
 				setSorter(new ColumnedCriteriaSorter());
 			}
 		});
@@ -96,61 +142,24 @@ public class ColumnedSortTableViewer extends TableViewer {
 
 	private void createTableViewer() {
 
-		this.setColumnProperties(columnNames);
-		CellEditor[] editors = new CellEditor[columnNames.length];
+		setColumnProperties(columnNames);
+		final CellEditor[] editors = new CellEditor[columnNames.length];
 		editors[0] = null;
 		editors[1] = new ComboBoxCellEditor(getTable(), referenceColumns.getUserNameValues(), SWT.READ_ONLY);
 		editors[2] = new ComboBoxCellEditor(getTable(), ColumnedSortCriteriaList.SORT_ORDER_ARRAY, SWT.READ_ONLY);
 
-		this.setCellEditors(editors);
-		this.setCellModifier(new ColumnedSortCellModifier(this, referenceColumns));
-		this.setSorter(new ColumnedCriteriaSorter());
+		setCellEditors(editors);
+		setCellModifier(new ColumnedSortCellModifier(this, referenceColumns));
+		setSorter(new ColumnedCriteriaSorter());
 	}
 
-	class ColumnedSortDialogContentProvider implements IStructuredContentProvider {
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-			// Do nothing
-		}
-
-		public void dispose() {
-			// Do nothing
-		}
-
-		public Object[] getElements(Object parent) {
-			if (parent instanceof ColumnedSortCriteriaList) {
-				ColumnedSortCriteriaList l = (ColumnedSortCriteriaList) parent;
-				return l.getCriteria().toArray();
-			}
-			return new Object[0];
-		}
-	}
-
-	public class ColumnedSortDialogLabelProvider extends LabelProvider implements ITableLabelProvider {
-
-		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
-		}
-
-		public String getColumnText(Object element, int columnIndex) {
-			ColumnedSortCriteria criteria = (ColumnedSortCriteria) element;
-			switch (columnIndex) {
-			case 0:
-				return String.valueOf(criteria.getId());
-			case 1:
-				return criteria.getColumnName();
-			case 2:
-				return criteria.getSortOrder();
-			default:
-				return StringTools.EMPTY;
-			}
-		}
-	}
-
-	public String[] getChoices(String property) {
-		if (COL_COLUMN_NAME.equals(property))
+	public String[] getChoices(final String property) {
+		if (COL_COLUMN_NAME.equals(property)) {
 			return referenceColumns.getUserNameValues();
-		if (COL_ORDER.equals(property))
+		}
+		if (COL_ORDER.equals(property)) {
 			return ColumnedSortCriteriaList.SORT_ORDER_ARRAY;
+		}
 		return new String[] {};
 	}
 

@@ -1,41 +1,40 @@
 package com.arcadsoftware.ae.core.settings;
 
-
 public abstract class ParameterizedObject {
 	protected Setting setting = null;
-	
-	public boolean initialize(){
-		String settingFilename = getSettingFilename();
-		if (settingFilename!=null) {
-			setting = SettingManager.loadSettings(settingFilename);
-			if (setting!=null) {
-				applySetting();
-				return true;
-			} else {
-				return false;	
-			}		
-		} else {
-			return true;
-		}
-	}
-	
-	private void applySetting(){
-		for(Category category : setting.getCategories()){
-			for (Form form : category.getList()){
-				for (ConsoleField field : form.getFields()) {
+
+	private void applySetting() {
+		for (final Category category : setting.getCategories()) {
+			for (final Form form : category.getList()) {
+				for (final ConsoleField field : form.getFields()) {
 					if (field instanceof ConsoleProperty) {
-						ConsoleProperty property = (ConsoleProperty)field;
-						String id = property.getId();
-						String value = property.getValue();
+						final ConsoleProperty property = (ConsoleProperty) field;
+						final String id = property.getId();
+						final String value = property.getValue();
 						SettingManager.setBeanStringValue(this, id, value);
 					}
 				}
 			}
 		}
 	}
-	
-	public String getSettingFilename(){
+
+	public String getSettingFilename() {
 		return null;
+	}
+
+	public boolean initialize() {
+		final String settingFilename = getSettingFilename();
+		if (settingFilename != null) {
+			setting = SettingManager.loadSettings(settingFilename);
+			if (setting != null) {
+				applySetting();
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
 	}
 
 }

@@ -18,36 +18,117 @@ import com.arcadsoftware.documentation.icons.Icon;
  */
 public abstract class AbstractExpandBarComposite extends Composite {
 
-	public static final int ORIENTATION_VERTICAL = 0;
-	public static final int ORIENTATION_HORIZONTAL = 1;
 	protected static int OFFSET = 6;
+	public static final int ORIENTATION_HORIZONTAL = 1;
+	public static final int ORIENTATION_VERTICAL = 0;
 
-	int headerHeihght = 50;
 	int bodyHeight = 100;
-	protected Label titleLabel;
+	boolean expanded = true;
+	int headerHeihght = 50;
 
 	String labelTitle;
-
-	Composite userArea = null;
-
-	boolean expanded = true;
 
 	Label moreParameter = null;
 
 	int orientation = ORIENTATION_HORIZONTAL;
 
+	protected Label titleLabel;
+
+	Composite userArea = null;
+
 	/**
 	 * @param parent
 	 * @param style
 	 */
-	public AbstractExpandBarComposite(Composite parent, int style, String title, int headerSize, int bodySize,
-			int orientation) {
+	public AbstractExpandBarComposite(final Composite parent, final int style, final String title, final int headerSize,
+			final int bodySize,
+			final int orientation) {
 		super(parent, style);
-		this.bodyHeight = bodySize;
-		this.headerHeihght = headerSize;
-		this.labelTitle = title;
+		bodyHeight = bodySize;
+		headerHeihght = headerSize;
+		labelTitle = title;
 		this.orientation = orientation;
 
+	}
+
+	void collapse() {
+		userArea.dispose();
+		final GridData gridData = (GridData) getLayoutData();
+		if (orientation == ORIENTATION_HORIZONTAL) {
+			gridData.heightHint = headerHeihght + OFFSET;
+		} else {
+			gridData.widthHint = headerHeihght + OFFSET;
+		}
+		doOnCollapse();
+
+	}
+
+	public abstract void createBodyAreaComposite();
+
+	private void createContent() {
+		formatComposite();
+		moreParameter = new Label(getBarParent(), SWT.NONE);
+		formatExpander();
+		moreParameter.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(final MouseEvent e) {
+				// Si le controle est déployé
+				if (expanded) {
+					collapse();
+				} else {
+					expand();
+				}
+				setImage();
+				expanded = !expanded;
+
+				GuiFormatTools.allLayout(AbstractExpandBarComposite.this);
+			}
+
+		});
+		moreParameter.setImage(Icon.COLLAPSE.image());
+
+		formatTitle(labelTitle);
+	}
+
+	/**
+	 * Methode permettant de déclencher des actions lors de la contraction de la barre.
+	 */
+	public void doOnCollapse() {
+		// Do nothing
+	}
+
+	/**
+	 * Méthode permettant de définir les contrôles à ajouter à la barre.
+	 *
+	 * @param parent
+	 *            Composite : Composite sur lequel vous allez ajouter vos contrôles.
+	 */
+	public abstract void doOnExpand(Composite parent);
+
+	void expand() {
+		createBodyAreaComposite();
+		doOnExpand(userArea);
+		final GridData gridData = (GridData) getLayoutData();
+		if (orientation == ORIENTATION_HORIZONTAL) {
+			gridData.heightHint = headerHeihght + bodyHeight + OFFSET;
+		} else {
+			gridData.widthHint = headerHeihght + bodyHeight + OFFSET;
+		}
+	}
+
+	public abstract void formatComposite();
+
+	public abstract void formatExpander();
+
+	/**
+	 * @param text
+	 */
+	public void formatTitle(final String text) {
+		// Do nothing
+	}
+
+	public Composite getBarParent() {
+		return this;
 	}
 
 	public void initialize() {
@@ -57,108 +138,26 @@ public abstract class AbstractExpandBarComposite extends Composite {
 		GuiFormatTools.allLayout(AbstractExpandBarComposite.this);
 	}
 
-	public abstract void createBodyAreaComposite();
-
-	void collapse() {
-		userArea.dispose();
-		GridData gridData = (GridData) this.getLayoutData();
-		if (orientation == ORIENTATION_HORIZONTAL)
-			gridData.heightHint = headerHeihght + OFFSET;
-		else
-			gridData.widthHint = headerHeihght + OFFSET;
-		doOnCollapse();
-
-	}
-
-	void expand() {
-		createBodyAreaComposite();
-		doOnExpand(userArea);
-		GridData gridData = (GridData) this.getLayoutData();
-		if (orientation == ORIENTATION_HORIZONTAL)
-			gridData.heightHint = headerHeihght + bodyHeight + OFFSET;
-		else
-			gridData.widthHint = headerHeihght + bodyHeight + OFFSET;
-	}
-
-	public abstract void formatComposite();
-
-	public abstract void formatExpander();
-
-	public Composite getBarParent() {
-		return this;
-	}
-
-	/**
-	 * @param text
-	 */
-	public void formatTitle(String text) {
-		// Do nothing
-	}
-
-	private void createContent() {
-		formatComposite();
-		moreParameter = new Label(getBarParent(), SWT.NONE);
-		formatExpander();
-		moreParameter.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// Si le controle est déployé
-				if (expanded) {
-					collapse();
-				}
-				else {
-					expand();
-				}
-				setImage();
-				expanded = !expanded;
-				
-				GuiFormatTools.allLayout(AbstractExpandBarComposite.this);
-			}
-
-			
-		});
-		moreParameter.setImage(Icon.COLLAPSE.image());
-
-		formatTitle(labelTitle);
-	}
-	
-	private void setImage() {
-		moreParameter.setImage(expanded ? Icon.COLLAPSE.image() : Icon.EXPAND.image());		
-	}
-	/**
-	 * Méthode permettant de définir les contrôles à ajouter à la barre.
-	 * 
-	 * @param parent
-	 *            Composite : Composite sur lequel vous allez ajouter vos
-	 *            contrôles.
-	 */
-	public abstract void doOnExpand(Composite parent);
-
-	/**
-	 * Methode permettant de déclencher des actions lors de la contraction de la
-	 * barre.
-	 * 
-	 */
-	public void doOnCollapse() {
-		// Do nothing
-	}
-
 	public boolean isExpanded() {
 		return expanded;
 	}
 
-	public void setExpanded(boolean flag) {
-		if (flag == expanded)
+	public void setExpanded(final boolean flag) {
+		if (flag == expanded) {
 			return;
+		}
 		// Si le controle est déployé
 		if (flag) {
 			expand();
-		}
-		else {
+		} else {
 			collapse();
 		}
-		this.expanded = flag;
+		expanded = flag;
 		setImage();
 		GuiFormatTools.allLayout(AbstractExpandBarComposite.this);
+	}
+
+	private void setImage() {
+		moreParameter.setImage(expanded ? Icon.COLLAPSE.image() : Icon.EXPAND.image());
 	}
 }

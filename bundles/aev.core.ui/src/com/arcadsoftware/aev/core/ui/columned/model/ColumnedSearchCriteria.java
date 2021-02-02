@@ -7,10 +7,10 @@ import com.arcadsoftware.aev.core.tools.StringTools;
  */
 public class ColumnedSearchCriteria extends AbstractColumnedCriteria {
 
-	private String operator = StringTools.EMPTY;
 	private String keyword = StringTools.EMPTY;
+	private String operator = StringTools.EMPTY;
 
-	public ColumnedSearchCriteria(int id, String firstColumnName) {
+	public ColumnedSearchCriteria(final int id, final String firstColumnName) {
 		super();
 		setId(id);
 		setColumnName(firstColumnName);
@@ -20,10 +20,10 @@ public class ColumnedSearchCriteria extends AbstractColumnedCriteria {
 	}
 
 	public ColumnedSearchCriteria duplicate() {
-		ColumnedSearchCriteria result = new ColumnedSearchCriteria(id, columnName);
-		result.setColumnIndex(this.columnIndex);
-		result.setOperator(this.operator);
-		result.setKeyword(this.keyword);
+		final ColumnedSearchCriteria result = new ColumnedSearchCriteria(id, columnName);
+		result.setColumnIndex(columnIndex);
+		result.setOperator(operator);
+		result.setKeyword(keyword);
 		return result;
 	}
 
@@ -35,14 +35,6 @@ public class ColumnedSearchCriteria extends AbstractColumnedCriteria {
 	}
 
 	/**
-	 * @param keyword
-	 *            keyword à définir.
-	 */
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-
-	/**
 	 * @return Renvoie operator.
 	 */
 	public String getOperator() {
@@ -50,10 +42,18 @@ public class ColumnedSearchCriteria extends AbstractColumnedCriteria {
 	}
 
 	/**
+	 * @param keyword
+	 *            keyword à définir.
+	 */
+	public void setKeyword(final String keyword) {
+		this.keyword = keyword;
+	}
+
+	/**
 	 * @param operator
 	 *            operator à définir.
 	 */
-	public void setOperator(String operator) {
+	public void setOperator(final String operator) {
 		this.operator = operator;
 	}
 }

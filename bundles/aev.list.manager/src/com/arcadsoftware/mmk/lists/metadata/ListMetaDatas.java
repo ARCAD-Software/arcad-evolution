@@ -5,169 +5,169 @@ import java.util.HashMap;
 
 import com.arcadsoftware.ae.core.exceptions.ArcadException;
 
-public class ListMetaDatas  {
+public class ListMetaDatas {
 
+	private final ArrayList<ListColumnDef> cols = new ArrayList<>();
 	private int fixedMetadataCount = 0;
-	private ArrayList<ListColumnDef> cols = new  ArrayList<ListColumnDef>();
-	private HashMap<String,ListColumnDef> hashmap = new HashMap<String,ListColumnDef>(); 
+	private final HashMap<String, ListColumnDef> hashmap = new HashMap<>();
 	private String id = null;
-	private String version = null;	
-	
-	public ListMetaDatas(){
+	private String version = null;
+
+	public ListMetaDatas() {
 		super();
 		createFixedMetaDatas();
 	}
-	
-	protected void createFixedMetaDatas(){		
-		this.addColumnDef("status","arcad.list.status",ListColumnDataType.STRING, false);
-		fixedMetadataCount = 1;
-	}
-	
-	public boolean addColumnDef(ListColumnDef columnDef) {
+
+	public boolean addColumnDef(final ListColumnDef columnDef) {
 		return addColumnDef(columnDef.getId(),
-				            columnDef.getPropertyName(),
-				            columnDef.getDatatype(),
-				            columnDef.isKey());		
+				columnDef.getPropertyName(),
+				columnDef.getDatatype(),
+				columnDef.isKey());
 	}
-	
-//	public boolean addColumnDef(String id){
-//		return addColumnDef(name, name,name,false);
-//	}	
-	
-//	public boolean addColumnDef(String name,
-//			                    String label,
-//			                    String propertyName,
-//			                    boolean key){
-//		int position = cols.size();
-//		ListColumnDef cd = new ListColumnDef(position,name, label,propertyName,key);
-//		hashmap.put(cd.getId(),cd);
-//		return cols.add(cd);
-//	}	
-	
-	public boolean addColumnDef(String id,
-			                    String propertyName,
-			                    ListColumnDataType dataType,			                    
-			                    boolean key){
-		//int position = cols.size();
-		ListColumnDef cd = new ListColumnDef(id,propertyName, dataType,key);
-		hashmap.put(cd.getId(),cd);
+
+	public boolean addColumnDef(final String id,
+			final String propertyName,
+			final ListColumnDataType dataType,
+			final boolean key) {
+		// int position = cols.size();
+		final ListColumnDef cd = new ListColumnDef(id, propertyName, dataType, key);
+		hashmap.put(cd.getId(), cd);
 		return cols.add(cd);
-	}			
-	
-	
-	
-	public ListColumnDef getColumnDefAt(int index) {
-		if ((index>-1) && (index<cols.size())) {
-			return cols.get(index);
-		}
-		return null;		
 	}
-	
-	public ListColumnDef getColumnFromId(String id) {
-		return hashmap.get(id);
-	}	
-	
-	public int indexOf(ListColumnDef cd) {
-		return cols.indexOf(cd);
-	}	
-	
-	public int indexOf(String id) {
-		ListColumnDef cd = getColumnFromId(id);
-		return indexOf(cd);
-	}	
-	
-	
-	
-	public boolean exists(String id) {
-		return (hashmap.get(id)!=null);
-	}		
-	
+
+	// public boolean addColumnDef(String id){
+	// return addColumnDef(name, name,name,false);
+	// }
+
+	// public boolean addColumnDef(String name,
+	// String label,
+	// String propertyName,
+	// boolean key){
+	// int position = cols.size();
+	// ListColumnDef cd = new ListColumnDef(position,name, label,propertyName,key);
+	// hashmap.put(cd.getId(),cd);
+	// return cols.add(cd);
+	// }
+
+	public void clear() {
+		cols.clear();
+		hashmap.clear();
+	}
+
 	public int count() {
 		return cols.size();
 	}
-	
-	public void clear() {
-		cols.clear();
-		hashmap.clear();		
-	}	
+
+	protected void createFixedMetaDatas() {
+		this.addColumnDef("status", "arcad.list.status", ListColumnDataType.STRING, false);
+		fixedMetadataCount = 1;
+	}
 
 	public ListMetaDatas duplicate() {
-		ListMetaDatas result = new ListMetaDatas();
-		for (int i=fixedMetadataCount;i<cols.size();i++) {
-			ListColumnDef newcd = cols.get(i).duplicate();
+		final ListMetaDatas result = new ListMetaDatas();
+		for (int i = fixedMetadataCount; i < cols.size(); i++) {
+			final ListColumnDef newcd = cols.get(i).duplicate();
 			result.addColumnDef(newcd);
-		}		
+		}
 		return result;
-	}		
-	
-	public void print() {
-		for (int i=0;i<cols.size();i++) {
-			ListColumnDef newcd = cols.get(i);
-			System.out.println(newcd.toString());			
-		}		
-	}	
-	
+	}
+
+	public boolean exists(final String id) {
+		return hashmap.get(id) != null;
+	}
+
+	public ListColumnDef getColumnDefAt(final int index) {
+		if (index > -1 && index < cols.size()) {
+			return cols.get(index);
+		}
+		return null;
+	}
+
+	public ListColumnDef getColumnFromId(final String id) {
+		return hashmap.get(id);
+	}
+
 	/**
-	 * Renvoit 
-	 * @return the fixedMetadataCount int : 
+	 * Renvoit
+	 * 
+	 * @return the fixedMetadataCount int :
 	 */
 	public int getFixedMetadataCount() {
 		return fixedMetadataCount;
 	}
-	
-	public ListColumnDef[] getKeys(){
-		ArrayList<ListColumnDef> lkeys = 
-			new  ArrayList<ListColumnDef>();
-		for (int i=0;i<cols.size();i++) {
-			ListColumnDef cd = cols.get(i);
+
+	/**
+	 * Renvoit
+	 * 
+	 * @return the id String :
+	 */
+	public String getId() {
+		if (id == null) {
+			return "";
+		}
+		return id;
+	}
+
+	public ListColumnDef[] getKeys() {
+		final ArrayList<ListColumnDef> lkeys = new ArrayList<>();
+		for (int i = 0; i < cols.size(); i++) {
+			final ListColumnDef cd = cols.get(i);
 			if (cd.isKey()) {
 				lkeys.add(cd);
 			}
 		}
-		ListColumnDef[] result = new ListColumnDef[lkeys.size()]; 
-		for (int i=0;i<lkeys.size();i++) {
-			result[i]=lkeys.get(i);
+		final ListColumnDef[] result = new ListColumnDef[lkeys.size()];
+		for (int i = 0; i < lkeys.size(); i++) {
+			result[i] = lkeys.get(i);
 		}
 		return result;
 	}
 
 	/**
-	 * Renvoit 
-	 * @return the id String : 
+	 * Renvoit
+	 * 
+	 * @return the version String :
 	 */
-	public String getId() {
-		if (id==null)
+	public String getVersion() {
+		if (version == null) {
 			return "";
-		return id;
+		}
+		return version;
+	}
+
+	public int indexOf(final ListColumnDef cd) {
+		return cols.indexOf(cd);
+	}
+
+	public int indexOf(final String id) {
+		final ListColumnDef cd = getColumnFromId(id);
+		return indexOf(cd);
+	}
+
+	public void print() {
+		for (final ListColumnDef newcd : cols) {
+			System.out.println(newcd.toString());
+		}
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
 	/**
-	 * Renvoit 
-	 * @return the version String : 
+	 * @param version
+	 *            the version to set
 	 */
-	public String getVersion() {
-		if (version==null)
-			return "";		
-		return version;
-	}
-
-	/**
-	 * @param version the version to set
-	 */
-	public void setVersion(String version) {
+	public void setVersion(final String version) {
 		this.version = version;
 	}
 
-	public void valid () throws ArcadException {
-		//TODO [LM] Validation des métadatas  		
+	public void valid() throws ArcadException {
+		// TODO [LM] Validation des métadatas
 	}
-	
-	
+
 }

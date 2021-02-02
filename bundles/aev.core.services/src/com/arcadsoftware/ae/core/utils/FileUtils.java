@@ -1,134 +1,114 @@
 package com.arcadsoftware.ae.core.utils;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtils {
-	private static void keepModificationDate(File sourceFile, File destFile) throws IOException {
-		long lm = (long) (Math.floor( (double) sourceFile.lastModified() / 1000.0) * 1000.0);
-		sourceFile.setLastModified(lm);
-		destFile.setLastModified(lm);	
-	}	
-	
-	public static void getStructure(File root,ArrayList<String> structure,FileFilter filter) throws IOException{
-		if (root.isDirectory()){
-			File[] kids;
-			if (filter!=null)
-				 kids = root.listFiles(filter);
-			else
-				 kids = root.listFiles();
-			for (int i=0;i<kids.length;i++){
-				structure.add(kids[i].getPath());
-			}
-			for (int i=0;i<kids.length;i++){
-				getStructure(kids[i],structure,filter);
-			}
-		}
+	private FileUtils() {	
+		
 	}
 	
-	public static boolean copyFile(String source, String destination,boolean keepModificationDate){
-		File destFile = new File(destination);	
-		File sourceFile = new File(source);
-		return copyFile(sourceFile,destFile,keepModificationDate);
-	}
-	
-	public static boolean copyFile(File sourceFile, File destFile,boolean keepModificationDate){
+	public static boolean copyFile(final File sourceFile, final File destFile, final boolean keepModificationDate) {
 		boolean result;
-		InputStream in = null;
-		OutputStream out = null;
-		try {			
-			if (destFile.exists() && destFile.isFile()) {
-				destFile.delete();
-			}
-			File parent = destFile.getParentFile();			
-			if (!parent.exists()) {
-				parent.mkdirs();
-			}
-			
-			in = new FileInputStream(sourceFile);
-			out = new FileOutputStream(destFile);
-	
-			byte[] buffer = new byte[64 * 1024];
+		
+		if (destFile.exists() && destFile.isFile()) {
+			destFile.delete();
+		}
+		final File parent = destFile.getParentFile();
+		if (!parent.exists()) {
+			parent.mkdirs();
+		}
+
+		try (
+			FileInputStream	in = new FileInputStream(sourceFile);
+			FileOutputStream out = new FileOutputStream(destFile);
+		){
+			final byte[] buffer = new byte[64 * 1024];
 			int count = 0;
 			do {
 				out.write(buffer, 0, count);
 				count = in.read(buffer, 0, buffer.length);
 			} while (count != -1);
-
-			closeCloseable(in);
-			closeCloseable(out);
-						
-			if (keepModificationDate){
+			
+			if (keepModificationDate) {
 				keepModificationDate(sourceFile, destFile);
-			}			
-			result = true;			
-		} catch (IOException ioe){
-			result = false;								
-		}finally{
-			closeCloseable(in);
-			closeCloseable(out);
+			}
+			result = true;
+		} catch (final IOException ioe) {
+			result = false;
 		}
 
-		return result;		
+		return result;
 	}
-	
-	private static void closeCloseable(Closeable closeable ){
-		if (closeable != null)
-			try {
-				closeable.close();
-			} catch (IOException e) {
-		}		
+
+	public static boolean copyFile(final String source, final String destination, final boolean keepModificationDate) {
+		final File destFile = new File(destination);
+		final File sourceFile = new File(source);
+		return copyFile(sourceFile, destFile, keepModificationDate);
 	}
-	
-	
-	public static boolean duplicate(String sourceFolder, String targetFolder,boolean structureOnly) {
-		File targetDirectory = new File(targetFolder);
-		File sourceDirectory = new File(sourceFolder);
-		if (!targetDirectory.exists()) {
-			if (!targetDirectory.mkdirs())
-				return false;
+
+	public static boolean duplicate(final String sourceFolder, final String targetFolder, final boolean structureOnly) {
+		final File targetDirectory = new File(targetFolder);
+		final File sourceDirectory = new File(sourceFolder);
+		if (!targetDirectory.exists() && !targetDirectory.mkdirs()) {
+			return false;
 		}
-		
 
 		FileFilter filter = null;
 		if (structureOnly) {
-			filter = new FileFilter() {
-				public boolean accept(File pathname) {
-					return pathname.isDirectory();
-				}		
-			};
+			filter = File::isDirectory;
 		}
-		
+
 		try {
-			ArrayList<String> list = new ArrayList<String>();
+			final ArrayList<String> list = new ArrayList<>();
 			getStructure(sourceDirectory, list, filter);
-			for(int i =0;i<list.size();i++){
-				String sourceFileName = list.get(i);
-				String relativePart = FilePathTools.substractFilePath(sourceFileName,sourceFolder,File.separatorChar);
-				String newFilename = targetFolder+File.separator+relativePart;
-				File destFile = new File(newFilename);
-				File sourceFile = new File(sourceFileName);
+			for (final String sourceFileName : list) {
+				final String relativePart = FilePathTools.substractFilePath(sourceFileName, sourceFolder,
+						File.separatorChar);
+				final String newFilename = targetFolder + File.separator + relativePart;
+				final File destFile = new File(newFilename);
+				final File sourceFile = new File(sourceFileName);
 				if (structureOnly) {
 					destFile.mkdirs();
 				} else {
 					if (sourceFile.isFile()) {
-						copyFile(sourceFileName,newFilename, false);
+						copyFile(sourceFileName, newFilename, false);
 					}
 				}
 			}
 			return true;
-		} catch (IOException e) {			
+		} catch (final IOException e) {
 			return false;
 		}
-	
+
 	}
-	
-	
+
+	public static void getStructure(final File root, final List<String> structure, final FileFilter filter)
+			throws IOException {
+		if (root.isDirectory()) {
+			File[] kids;
+			if (filter != null) {
+				kids = root.listFiles(filter);
+			} else {
+				kids = root.listFiles();
+			}
+			for (final File kid : kids) {
+				structure.add(kid.getPath());
+			}
+			for (final File kid : kids) {
+				getStructure(kid, structure, filter);
+			}
+		}
+	}
+
+	private static boolean keepModificationDate(final File sourceFile, final File destFile) {
+		final long lm = (long) (Math.floor(sourceFile.lastModified() / 1000.0) * 1000.0);
+		return sourceFile.setLastModified(lm) && destFile.setLastModified(lm);
+	}
+
 }

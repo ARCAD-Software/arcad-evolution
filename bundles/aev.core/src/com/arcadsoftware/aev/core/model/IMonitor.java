@@ -1,18 +1,23 @@
 package com.arcadsoftware.aev.core.model;
 
 /**
- * Interface à implémenter pour toute classe voulant être gérée par le MonitorManager
- * Elle reprend les différentes étapes d'une ArcadAction et permet d'ajouter un message
- * à chaque étape et d'informer de l'avancement avec le nombre d'étape franchie
+ * Interface ï¿½ implï¿½menter pour toute classe voulant ï¿½tre gï¿½rï¿½e par le MonitorManager Elle reprend les diffï¿½rentes
+ * ï¿½tapes d'une ArcadAction et permet d'ajouter un message ï¿½ chaque ï¿½tape et d'informer de l'avancement avec le nombre
+ * d'ï¿½tape franchie
+ * 
  * @author dlelong
- *
  */
 public interface IMonitor {
 
-	public void begin(String message, int totalNumberOfStep);
-	public void initialize(String message, int numberOfStep);
-	public void beforeExecute(String message, int numberOfStep);
-	public void progress(String message, int numberOfStep);
-	public void afterExecute(String message, int numberOfStep);
-	public void end(String message);
+	void afterExecute(String message, int numberOfStep);
+
+	void beforeExecute(String message, int numberOfStep);
+
+	void begin(String message, int totalNumberOfStep);
+
+	void end(String message);
+
+	void initialize(String message, int numberOfStep);
+
+	void progress(String message, int numberOfStep);
 }

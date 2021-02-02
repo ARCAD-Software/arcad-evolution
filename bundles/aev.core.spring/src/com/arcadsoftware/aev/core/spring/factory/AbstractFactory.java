@@ -1,51 +1,56 @@
 package com.arcadsoftware.aev.core.spring.factory;
 
-
 import java.io.File;
+import java.io.IOException;
 
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.arcadsoftware.ae.core.utils.Utils;
 
-
 public abstract class AbstractFactory {
-	protected static File arcadHomeFolder = null;
+	protected File arcadHomeFolder = null;
 	private FileSystemXmlApplicationContext ctx;
-	
-	protected AbstractFactory() {		
+
+	protected AbstractFactory() {
 		super();
 		initialize();
-	}	
-	
-	protected void doBeforeInitializing() {
-		String arcadHome  = Utils.getHomeDirectory();
-		arcadHomeFolder = new File(arcadHome);	
-	}		
-	
-	protected void initialize(){
-		doBeforeInitializing();
-		
-		String extensionFolder = getExtensionFolder(); 
-		if (extensionFolder != null) {
-			Utils.setUrls(extensionFolder);
-		}
-		
-		ctx = new FileSystemXmlApplicationContext(getConfigurationFiles());
-		
-		doAfterInitializing();
 	}
-	
-	protected void doAfterInitializing() {}
-	
-	protected String[] getConfigurationFiles() {
-		return new String[]{getConfigurationFile()};
-	}
-	protected abstract String getExtensionFolder();
-	protected abstract String getConfigurationFile();
 
-	public Object getBean(String beanId) {		
+	protected void doAfterInitializing() {
+	}
+
+	protected void doBeforeInitializing() {
+		final String arcadHome = Utils.getHomeDirectory();
+		arcadHomeFolder = new File(arcadHome);
+	}
+
+	public Object getBean(final String beanId) {
 		return ctx.getBean(beanId);
 	}
 
+	protected abstract String getConfigurationFile();
+
+	protected String[] getConfigurationFiles() {
+		return new String[] { getConfigurationFile() };
+	}
+
+	protected abstract String getExtensionFolder();
+
+	protected void initialize() {
+		doBeforeInitializing();
+
+		final String extensionFolder = getExtensionFolder();
+		if (extensionFolder != null) {
+			try {
+				Utils.setUrls(extensionFolder);
+			} catch (final IOException e) {
+				throw new FactoryInitializationException(getClass(), e);
+			}
+		}
+
+		ctx = new FileSystemXmlApplicationContext(getConfigurationFiles());
+
+		doAfterInitializing();
+	}
 
 }

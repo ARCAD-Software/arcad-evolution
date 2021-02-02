@@ -10,29 +10,46 @@ import org.eclipse.swt.SWT;
  */
 public class ArcadColumn {
 
-	public static final int VISIBLE = 0;
 	public static final int HIDDEN = 1;
+	public static final int VISIBLE = 0;
 
+	protected int actualIndex = 0;
 	protected String identifier = null;
 	protected String name = null;
+	protected int position = 0;
+	private int style = SWT.LEFT;
 	protected String userName = null;
 	protected int visible;
-	protected int position = 0;
+
 	protected int width = 100;
-	protected int actualIndex = 0;
-
-	private int style = SWT.LEFT;
-
 
 	public ArcadColumn() {
 		super();
 	}
 
+	public ArcadColumn(final String property, final String name, final int visible, final int position,
+			final int width) {
+		this(property, name, name, visible, position, width, position); // pass name/userName, position/actualIndex
+																		// properties
+	}
+
+	public ArcadColumn(final String property, final String name, final int visible, final int position, final int width,
+			final int actualIndex) {
+		this(property, name, name, visible, position, width, actualIndex); // pass name for both name and userName
+																			// property
+	}
+
+	public ArcadColumn(final String identifier, final String name, final String userName, final int visible,
+			final int position, final int width) {
+		this(identifier, name, userName, visible, position, width, position); // pass position for both position and
+																				// actualIndex property
+	}
+
 	/**
 	 * Constructeur d'un colonne
-	 * 
-	 * @param identifier (aka property)
-	 *            : Identificateur de la colonne
+	 *
+	 * @param identifier
+	 *            (aka property) : Identificateur de la colonne
 	 * @param name
 	 *            : Libellé de la colonne
 	 * @param visible
@@ -40,8 +57,9 @@ public class ArcadColumn {
 	 * @param position
 	 *            Position de la colonne dans la liste
 	 */
-	public ArcadColumn(String identifier, String name, String userName, int visible, int position, int width,
-			int actualIndex) {
+	public ArcadColumn(final String identifier, final String name, final String userName, final int visible,
+			final int position, final int width,
+			final int actualIndex) {
 		super();
 		this.identifier = identifier;
 		this.name = name;
@@ -51,22 +69,8 @@ public class ArcadColumn {
 		this.width = width;
 		this.actualIndex = actualIndex;
 	}
-	public ArcadColumn(String identifier, String name, String userName, int visible, int position, int width) {
-		this(identifier, name, userName, visible, position, width, position); // pass position for both position and actualIndex property
-	}
-	
-	public ArcadColumn(String property, String name, int visible, int position, int width, int actualIndex) {
-		this(property, name, name, visible, position, width, actualIndex); // pass name for both name and userName property
-	}
-	
-	public ArcadColumn(String property, String name, int visible, int position, int width) {
-		this(property, name, name, visible, position, width, position); // pass name/userName, position/actualIndex properties
-	}
-	public ArcadColumn duplicate() {
-		return new ArcadColumn(identifier, name, userName, visible, position, width, actualIndex);
-	}
 
-	public void assignTo(ArcadColumn target) {
+	public void assignTo(final ArcadColumn target) {
 		target.setIdentifier(identifier);
 		target.setName(name);
 		target.setUserName(userName);
@@ -75,79 +79,8 @@ public class ArcadColumn {
 		target.setWidth(width);
 	}
 
-	/**
-	 * @return Returns the name.
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name
-	 *            The name to set.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * @return Returns the position.
-	 */
-	public int getPosition() {
-		return position;
-	}
-
-	/**
-	 * @param position
-	 *            The position to set.
-	 */
-	public void setPosition(int position) {
-		this.position = position;
-	}
-
-	/**
-	 * @return Returns the property.
-	 */
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	/**
-	 * @param property
-	 *            The property to set.
-	 */
-	public void setIdentifier(String property) {
-		this.identifier = property;
-	}
-
-	/**
-	 * @return Returns the visible.
-	 */
-	public int getVisible() {
-		return visible;
-	}
-
-	/**
-	 * @param visible
-	 *            The visible to set.
-	 */
-	public void setVisible(int visible) {
-		this.visible = visible;
-	}
-
-	/**
-	 * @return Returns the width.
-	 */
-	public int getWidth() {
-		return width;
-	}
-
-	/**
-	 * @param width
-	 *            The width to set.
-	 */
-	public void setWidth(int width) {
-		this.width = width;
+	public ArcadColumn duplicate() {
+		return new ArcadColumn(identifier, name, userName, visible, position, width, actualIndex);
 	}
 
 	/**
@@ -158,11 +91,40 @@ public class ArcadColumn {
 	}
 
 	/**
-	 * @param actualIndex
-	 *            The actualIndex to set.
+	 * @return Returns the property.
 	 */
-	public void setActualIndex(int actualIndex) {
-		this.actualIndex = actualIndex;
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public String getLabel() {
+		final StringBuilder buf = new StringBuilder(getUserName());
+		return buf.append(" [").append(getName()).append(']').toString(); //$NON-NLS-1$
+	}
+
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @return Returns the position.
+	 */
+	public int getPosition() {
+		return position;
+	}
+
+	/**
+	 * @return the style
+	 */
+	public int getStyle() {
+		return style;
+	}
+
+	public String getTooltipText() {
+		return null;
 	}
 
 	/**
@@ -173,34 +135,80 @@ public class ArcadColumn {
 	}
 
 	/**
-	 * @param userName
-	 *            The userName to set.
+	 * @return Returns the visible.
 	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getLabel() {
-		StringBuilder buf = new StringBuilder(getUserName());
-		return buf.append(" [").append(getName()).append(']').toString(); //$NON-NLS-1$ //$NON-NLS-2$
+	public int getVisible() {
+		return visible;
 	}
 
 	/**
-	 * @return the style
+	 * @return Returns the width.
 	 */
-	public int getStyle() {
-		return style;
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param actualIndex
+	 *            The actualIndex to set.
+	 */
+	public void setActualIndex(final int actualIndex) {
+		this.actualIndex = actualIndex;
+	}
+
+	/**
+	 * @param property
+	 *            The property to set.
+	 */
+	public void setIdentifier(final String property) {
+		identifier = property;
+	}
+
+	/**
+	 * @param name
+	 *            The name to set.
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param position
+	 *            The position to set.
+	 */
+	public void setPosition(final int position) {
+		this.position = position;
 	}
 
 	/**
 	 * @param style
 	 *            the style to set
 	 */
-	public void setStyle(int style) {
+	public void setStyle(final int style) {
 		this.style = style;
 	}
 
-	public String getTooltipText() {
-		return null;
+	/**
+	 * @param userName
+	 *            The userName to set.
+	 */
+	public void setUserName(final String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * @param visible
+	 *            The visible to set.
+	 */
+	public void setVisible(final int visible) {
+		this.visible = visible;
+	}
+
+	/**
+	 * @param width
+	 *            The width to set.
+	 */
+	public void setWidth(final int width) {
+		this.width = width;
 	}
 }

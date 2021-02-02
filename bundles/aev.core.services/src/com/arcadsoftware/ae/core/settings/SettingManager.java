@@ -6,39 +6,39 @@ import com.arcadsoftware.ae.core.utils.XMLUtils;
 
 public class SettingManager {
 
-	public static Setting loadSettings(String xmlFilename) {
-		SettingParser parser = new SettingParser();
+	public static Setting loadSettings(final String xmlFilename) {
+		final SettingParser parser = new SettingParser();
 		try {
-			XMLUtils.loadXmlDocument(xmlFilename,  parser);
+			XMLUtils.loadXmlDocument(xmlFilename, parser);
 			return parser.getSetting();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	public static boolean setBeanStringValue(Object bean,String setterName, String value) {
-		Class<? extends Object> beanClass = bean.getClass();
+
+	public static boolean setBeanBooleanValue(final Object bean, String setterName, final boolean value) {
+		final Class<? extends Object> beanClass = bean.getClass();
 		try {
-			setterName = setterName.substring(0,1).toUpperCase()+setterName.substring(1);
-			Method method = beanClass.getMethod("set"+setterName, String.class); //$NON-NLS-1$
+			setterName = setterName.substring(0, 1).toUpperCase() + setterName.substring(1);
+			final Method method = beanClass.getMethod("set" + setterName, Boolean.class); //$NON-NLS-1$
 			method.invoke(bean, value);
 			return true;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return false;
 		}
-	}	
-	
-	public static boolean setBeanBooleanValue(Object bean,String setterName, boolean value) {
-		Class<? extends Object> beanClass = bean.getClass();
+	}
+
+	public static boolean setBeanStringValue(final Object bean, String setterName, final String value) {
+		final Class<? extends Object> beanClass = bean.getClass();
 		try {
-			setterName = setterName.substring(0,1).toUpperCase()+setterName.substring(1);
-			Method method = beanClass.getMethod("set"+setterName, Boolean.class); //$NON-NLS-1$
+			setterName = setterName.substring(0, 1).toUpperCase() + setterName.substring(1);
+			final Method method = beanClass.getMethod("set" + setterName, String.class); //$NON-NLS-1$
 			method.invoke(bean, value);
 			return true;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return false;
 		}
-	}		
-	
+	}
+
 }

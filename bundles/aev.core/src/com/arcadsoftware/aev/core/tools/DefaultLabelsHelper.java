@@ -8,18 +8,17 @@ package com.arcadsoftware.aev.core.tools;
  */
 public class DefaultLabelsHelper implements IHelperLabel {
 
-    public DefaultLabelsHelper() {
-        super();
-    }
+	public DefaultLabelsHelper() {
+		super();
+	}
 
-    @Override
-	public String resString(String res, Object...params) {
-        try {
-        	return String.format(res, params);
-        }
-        catch(Exception e) {
-        	e.printStackTrace();
-        	return res;
-        }
-    }
+	@Override
+	public String resString(final String res, final Object... params) {
+		try {
+			return String.format(res, params);
+		} catch (final Exception e) {
+			e.printStackTrace();
+			return res;
+		}
+	}
 }

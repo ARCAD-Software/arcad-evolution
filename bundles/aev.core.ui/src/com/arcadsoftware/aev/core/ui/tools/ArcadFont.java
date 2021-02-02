@@ -1,76 +1,70 @@
 package com.arcadsoftware.aev.core.ui.tools;
 
+import java.util.Objects;
+
 public class ArcadFont {
 
-	private String fontName;
-	private boolean italic=false;
-	private boolean bold=false;
-//	private boolean strike;
-//	private boolean underline;
-	private int fontSize;
+	private boolean bold = false;
 	private ArcadColor fontColor;
-//	private String script;
-	
+	private String fontName;
+	private int fontSize;
+	private boolean italic = false;
+
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (o instanceof ArcadFont) {
-			ArcadFont font = (ArcadFont)o;
-			return (font.getFontColor().equals(fontColor) &&
+			final ArcadFont font = (ArcadFont) o;
+			return font.getFontColor().equals(fontColor) &&
 					font.getFontName().equals(fontName) &&
-					font.getFontSize()==fontSize &&
-					font.isBold()==bold &&
-					font.isItalic()==italic);
+					font.getFontSize() == fontSize &&
+					font.isBold() == bold &&
+					font.isItalic() == italic;
 		}
 		return super.equals(o);
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fontColor, fontName, fontSize, bold, italic);
+	}
 	
-	public boolean isBold() {
-		return bold;
-	}
-	public void setBold(boolean bold) {
-		this.bold = bold;
-	}
 	public ArcadColor getFontColor() {
 		return fontColor;
 	}
-	public void setFontColor(ArcadColor fontColor) {
-		this.fontColor = fontColor;
-	}
+
 	public String getFontName() {
 		return fontName;
 	}
-	public void setFontName(String fontName) {
-		this.fontName = fontName;
-	}
+
 	public int getFontSize() {
 		return fontSize;
 	}
-	public void setFontSize(int fontSize) {
-		this.fontSize = fontSize;
+
+	public boolean isBold() {
+		return bold;
 	}
+
 	public boolean isItalic() {
 		return italic;
 	}
-	public void setItalic(boolean italic) {
+
+	public void setBold(final boolean bold) {
+		this.bold = bold;
+	}
+
+	public void setFontColor(final ArcadColor fontColor) {
+		this.fontColor = fontColor;
+	}
+
+	public void setFontName(final String fontName) {
+		this.fontName = fontName;
+	}
+
+	public void setFontSize(final int fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	public void setItalic(final boolean italic) {
 		this.italic = italic;
 	}
-//	public String getScript() {
-//		return script;
-//	}
-//	public void setScript(String script) {
-//		this.script = script;
-//	}
-//	public boolean isStrike() {
-//		return strike;
-//	}
-//	public void setStrike(boolean strike) {
-//		this.strike = strike;
-//	}
-//	public boolean isUnderline() {
-//		return underline;
-//	}
-//	public void setUnderline(boolean underline) {
-//		this.underline = underline;
-//	}
-		
 }

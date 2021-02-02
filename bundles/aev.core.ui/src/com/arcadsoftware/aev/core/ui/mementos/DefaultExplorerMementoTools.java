@@ -6,7 +6,7 @@ import com.arcadsoftware.aev.core.tools.StringTools;
 
 public class DefaultExplorerMementoTools extends ExplorerMementoTools {
 
-	public DefaultExplorerMementoTools(String viewId) {
+	public DefaultExplorerMementoTools(final String viewId) {
 		super(viewId);
 	}
 
@@ -21,22 +21,22 @@ public class DefaultExplorerMementoTools extends ExplorerMementoTools {
 	}
 
 	@Override
-	protected boolean isGoodExplorerSettings(ExplorerSettings explorerSettings) {
+	protected String getFilename() {
+		return StringTools.EMPTY;
+	}
+
+	@Override
+	protected boolean isGoodExplorerSettings(final ExplorerSettings explorerSettings) {
 		return false;
 	}
 
 	@Override
-	protected void readAll(XMLMemento root) {
+	protected void readAll(final XMLMemento root) {
 		// Do nothing
 	}
 
 	@Override
-	protected void saveExplorerSettings(XMLMemento root, ExplorerSettings es) {
+	protected void saveExplorerSettings(final XMLMemento root, final ExplorerSettings es) {
 		// Do nothing
-	}
-
-	@Override
-	protected String getFilename() {
-		return StringTools.EMPTY;
 	}
 }

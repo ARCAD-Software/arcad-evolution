@@ -18,7 +18,6 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedTreeViewer;
 
 /**
  * @author MD
- * 
  */
 public abstract class AbstractColumnedTreeViewer extends AbstractColumnedViewer {
 
@@ -26,32 +25,27 @@ public abstract class AbstractColumnedTreeViewer extends AbstractColumnedViewer 
 	 * @param parent
 	 * @param style
 	 */
-	public AbstractColumnedTreeViewer(Composite parent, int style) {
+	public AbstractColumnedTreeViewer(final Composite parent, final int style) {
 		super(parent, style);
 	}
 
-	public AbstractColumnedTreeViewer(Composite parent, int style, boolean withInit) {
+	public AbstractColumnedTreeViewer(final Composite parent, final int style, final boolean withInit) {
 		super(parent, style, withInit);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createViewer(org.eclipse.swt.widgets.Composite, int)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * #createColumn(org.eclipse.swt.widgets.Widget, int, int)
 	 */
 	@Override
-	public AbstractInternalColumnedViewer createViewer(Composite viewerParent, int viewerStyle) {
-		return new ColumnedInternalTreeViewer(new ColumnedTreeViewer(viewerParent, viewerStyle));
+	public Item createColumn(final Widget widget, final int columnStyle, final int index) {
+		return new TreeColumn((Tree) widget, columnStyle, index);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createContentProvider()
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #createContentProvider()
 	 */
 	@Override
 	public IContentProvider createContentProvider() {
@@ -60,35 +54,33 @@ public abstract class AbstractColumnedTreeViewer extends AbstractColumnedViewer 
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createLabelProvider
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #createLabelProvider
 	 * (com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer)
 	 */
 	@Override
-	public AbstractColumnedLabelProviderAdapter createLabelProvider(AbstractColumnedViewer viewer) {
+	public AbstractColumnedLabelProviderAdapter createLabelProvider(final AbstractColumnedViewer viewer) {
 		return createTreeLabelProvider(viewer);
+	}
+
+	public abstract AbstractColumnedTreeLabelProvider createTreeLabelProvider(AbstractColumnedViewer viewer);
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * #createViewer(org.eclipse.swt.widgets.Composite, int)
+	 */
+	@Override
+	public AbstractInternalColumnedViewer createViewer(final Composite viewerParent, final int viewerStyle) {
+		return new ColumnedInternalTreeViewer(new ColumnedTreeViewer(viewerParent, viewerStyle));
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #createColumn(org.eclipse.swt.widgets.Widget, int, int)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer #getControl()
 	 */
 	@Override
-	public Item createColumn(Widget widget, int columnStyle, int index) {
-		return new TreeColumn((Tree) widget, columnStyle, index);
-	}
-
-	@Override
-	public void removeAllColumns() {
-		Tree tree = getTree();
-		for (int i = tree.getColumnCount() - 1; i >= 0; i--) {
-			tree.getColumn(i).dispose();
-		}
+	public Widget getControl() {
+		return getViewer().getControl();
 	}
 
 	public Tree getTree() {
@@ -99,45 +91,36 @@ public abstract class AbstractColumnedTreeViewer extends AbstractColumnedViewer 
 		return (TreeViewer) getViewer();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #getControl()
-	 */
-	@Override
-	public Widget getControl() {
-		return getViewer().getControl();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
-	 * #setColumnValues(org.eclipse.swt.widgets.Item,
-	 * com.arcadsoftware.aev.core.ui.tableviewers.ArcadColumn)
-	 */
-	@Override
-	public void setColumnValues(Item item, ArcadColumn c) {
-		((TreeColumn) item).setWidth(c.getWidth());
-	}
-
-	public abstract AbstractColumnedTreeLabelProvider createTreeLabelProvider(AbstractColumnedViewer viewer);
-
 	@Override
 	protected Action[] makeActions() {
-		Object[] previous = getPreviousActions().toArray();
-		Action[] makeActions = super.makeActions();
-		Object[] next = getNextActions().toArray();
-		Action[] result = new Action[previous.length + makeActions.length + next.length + 2];
+		final Object[] previous = getPreviousActions().toArray();
+		final Action[] makeActions = super.makeActions();
+		final Object[] next = getNextActions().toArray();
+		final Action[] result = new Action[previous.length + makeActions.length + next.length + 2];
 		System.arraycopy(previous, 0, result, 0, previous.length);
 		result[previous.length] = new ColumnedActionSeparator();
 		System.arraycopy(makeActions, 0, result, previous.length + 1, makeActions.length);
-		int size = previous.length + makeActions.length + 1;
+		final int size = previous.length + makeActions.length + 1;
 		result[size] = new ColumnedActionSeparator();
 		System.arraycopy(next, 0, result, size + 1, next.length);
 		return result;
+	}
+
+	@Override
+	public void removeAllColumns() {
+		final Tree tree = getTree();
+		for (int i = tree.getColumnCount() - 1; i >= 0; i--) {
+			tree.getColumn(i).dispose();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer
+	 * #setColumnValues(org.eclipse.swt.widgets.Item, com.arcadsoftware.aev.core.ui.tableviewers.ArcadColumn)
+	 */
+	@Override
+	public void setColumnValues(final Item item, final ArcadColumn c) {
+		((TreeColumn) item).setWidth(c.getWidth());
 	}
 }

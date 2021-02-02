@@ -10,63 +10,68 @@ import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
  * @author MD
- * 
  */
 public abstract class AbstractArcadPreferenceStore {
 	IPreferenceStore store;
+
+	public boolean getBoolean(final String preferenceId) {
+		if (getStore() != null) {
+			return store.getBoolean(preferenceId);
+		}
+		return false;
+	}
+
+	public int getInt(final String preferenceId) {
+		if (store != null) {
+			return store.getInt(preferenceId);
+		}
+		return -1;
+	}
 
 	public IPreferenceStore getStore() {
 		return store;
 	}
 
-	public void setStore(IPreferenceStore store) {
+	public String getString(final String preferenceId) {
+		if (store != null) {
+			return store.getString(preferenceId);
+		}
+		return StringTools.EMPTY;
+	}
+
+	public abstract void setDefault();
+
+	public void setStore(final IPreferenceStore store) {
 		this.store = store;
 		if (store != null) {
 			setDefault();
 		}
 	}
 
-	public void setValue(String preferenceId, String value) {
-		if (!preferenceId.equals(StringTools.EMPTY)) {
-			if (store != null)
-				store.setValue(preferenceId, value);
-		}
-	}
-
-	public void setValue(String preferenceId, int value) {
-		if (!preferenceId.equals(StringTools.EMPTY)) {
-			if (store != null)
-				store.setValue(preferenceId, value);
-		}
-	}
-
-	public void setValue(String preferenceId, boolean value) {
+	public void setValue(final String preferenceId, final boolean value) {
 		// IPreferenceStore store =
 		// ArcadCorePlugin.getDefault().getPreferenceStore();
 		if (!preferenceId.equals(StringTools.EMPTY)) {
-			if (store != null)
+			if (store != null) {
 				store.setValue(preferenceId, value);
+			}
 		}
 	}
 
-	public boolean getBoolean(String preferenceId) {
-		if (getStore() != null)
-			return store.getBoolean(preferenceId);
-		return false;
+	public void setValue(final String preferenceId, final int value) {
+		if (!preferenceId.equals(StringTools.EMPTY)) {
+			if (store != null) {
+				store.setValue(preferenceId, value);
+			}
+		}
 	}
 
-	public String getString(String preferenceId) {
-		if (store != null)
-			return store.getString(preferenceId);
-		return StringTools.EMPTY;
+	public void setValue(final String preferenceId, final String value) {
+		if (!preferenceId.equals(StringTools.EMPTY)) {
+			if (store != null) {
+				store.setValue(preferenceId, value);
+			}
+		}
 	}
-
-	public int getInt(String preferenceId) {
-		if (store != null)
-			return store.getInt(preferenceId);
-		return -1;
-	}
-
-	public abstract void setDefault();
 
 }

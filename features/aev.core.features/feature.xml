@@ -2,7 +2,7 @@
 <feature
       id="com.arcadsoftware.aev.core.features"
       label="ARCAD-Evolution Core"
-      version="10.2.0.qualifier"
+      version="11.0.0.qualifier"
       provider-name="ARCAD-Software">
 
    <description>

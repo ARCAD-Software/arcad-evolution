@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Classe permettant de gérer une liste de IMonitor (ProgressMonitor, Log4j,
- * Socket, message, etc.)
- * 
+ * Classe permettant de gï¿½rer une liste de IMonitor (ProgressMonitor, Log4j, Socket, message, etc.)
+ *
  * @author dlelong
- * 
  */
 public class MonitorManager {
 
@@ -17,56 +15,57 @@ public class MonitorManager {
 
 	public MonitorManager() {
 		super();
-		monitors = new ArrayList<IMonitor>();
+		monitors = new ArrayList<>();
 	}
 
-	public MonitorManager(boolean verbose) {
+	public MonitorManager(final boolean verbose) {
 		this();
 		this.verbose = verbose;
 	}
 
-	public void addMonitor(IMonitor monitor) {
-		if (monitors.indexOf(monitor) == -1)
+	public void addMonitor(final IMonitor monitor) {
+		if (monitors.indexOf(monitor) == -1) {
 			monitors.add(monitor);
-	}
-
-	public boolean removeMonitor(IMonitor monitor) {
-		return monitors.remove(monitor);
-	}
-
-	public boolean isVerbose() {
-		return verbose;
-	}
-
-	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;
-	}
-
-	public int getMonitorNumber() {
-		return monitors.size();
+		}
 	}
 
 	public void clear() {
 		monitors.clear();
 	}
 
-	public boolean contains(IMonitor monitor) {
+	public boolean contains(final IMonitor monitor) {
 		return monitors.contains(monitor);
+	}
+
+	public int getMonitorNumber() {
+		return monitors.size();
+	}
+
+	public IMonitor[] getMonitors() {
+		final IMonitor[] mons = new IMonitor[monitors.size()];
+		for (int i = 0; i < monitors.size(); i++) {
+			mons[i] = monitors.get(i);
+		}
+		return mons;
 	}
 
 	public boolean isEmpty() {
 		return monitors.isEmpty();
 	}
 
-	public IMonitor[] getMonitors() {
-		IMonitor[] mons = new IMonitor[monitors.size()];
-		for (int i = 0; i < monitors.size(); i++) {
-			mons[i] = (IMonitor) monitors.get(i);
-		}
-		return mons;
+	public boolean isVerbose() {
+		return verbose;
 	}
 
 	public Iterator<IMonitor> iterator() {
 		return monitors.iterator();
+	}
+
+	public boolean removeMonitor(final IMonitor monitor) {
+		return monitors.remove(monitor);
+	}
+
+	public void setVerbose(final boolean verbose) {
+		this.verbose = verbose;
 	}
 }

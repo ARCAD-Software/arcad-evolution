@@ -19,98 +19,103 @@
  */
 package com.arcadsoftware.aev.core.ui.calendar;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-
-import java.util.*;
 
 public class SWTCalendar extends Composite {
 
-	private List<SWTCalendarListener> listeners;
+	private final SWTDayChooser dayChooser;
 
-    private SWTYearChooser yearChooser;
-    private SWTMonthChooser monthChooser;
-    private SWTDayChooser dayChooser;
+	private final List<SWTCalendarListener> listeners;
+	private final SWTMonthChooser monthChooser;
+	private final SWTYearChooser yearChooser;
 
-    public SWTCalendar(Composite parent, int style) {
-        super(parent, style);
+	public SWTCalendar(final Composite parent) {
+		this(parent, SWT.NONE);
+	}
 
-        listeners = new ArrayList<SWTCalendarListener>();
+	public SWTCalendar(final Composite parent, final int style) {
+		super(parent, style);
 
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 2;
-        gridLayout.marginHeight = 2;
-        gridLayout.marginWidth = 2;
-        gridLayout.horizontalSpacing = 2;
-        gridLayout.verticalSpacing = 2;
-        setLayout(gridLayout);
+		listeners = new ArrayList<>();
 
-        monthChooser = new SWTMonthChooser(this);
-        GridData data = new GridData();
-        data.horizontalAlignment = GridData.BEGINNING;
-        monthChooser.setLayoutData(data);
+		final GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		gridLayout.marginHeight = 2;
+		gridLayout.marginWidth = 2;
+		gridLayout.horizontalSpacing = 2;
+		gridLayout.verticalSpacing = 2;
+		setLayout(gridLayout);
 
-        yearChooser = new SWTYearChooser(this);
-        data = new GridData();
-        data.horizontalAlignment = GridData.END;
-        yearChooser.setLayoutData(data);
+		monthChooser = new SWTMonthChooser(this);
+		GridData data = new GridData();
+		data.horizontalAlignment = GridData.BEGINNING;
+		monthChooser.setLayoutData(data);
 
-        dayChooser = new SWTDayChooser(this, this);
-        data = new GridData();
-        data.horizontalAlignment = GridData.FILL;
-        data.horizontalSpan = 2;
-        data.grabExcessHorizontalSpace = true;
-        dayChooser.setLayoutData(data);
-        monthChooser.setDayChooser(dayChooser);
-        yearChooser.setDayChooser(dayChooser);
-    }
+		yearChooser = new SWTYearChooser(this);
+		data = new GridData();
+		data.horizontalAlignment = GridData.END;
+		yearChooser.setLayoutData(data);
 
-    public SWTCalendar(Composite parent) {
-        this(parent, SWT.NONE);
-    }
+		dayChooser = new SWTDayChooser(this, this);
+		data = new GridData();
+		data.horizontalAlignment = GridData.FILL;
+		data.horizontalSpan = 2;
+		data.grabExcessHorizontalSpace = true;
+		dayChooser.setLayoutData(data);
+		monthChooser.setDayChooser(dayChooser);
+		yearChooser.setDayChooser(dayChooser);
+	}
 
-    private void setCalendar(Calendar c, boolean update) {
-        if (update) {
-            yearChooser.setYear(c.get(Calendar.YEAR));
-            monthChooser.setMonth(c.get(Calendar.MONTH));
-            dayChooser.setDay(c.get(Calendar.DATE));
-        }
-    }
+	public void addSWTCalendarListener(final SWTCalendarListener listener) {
+		listeners.add(listener);
+	}
 
-    public void setCalendar(Calendar c) {
-        setCalendar(c, true);
-    }
+	public Calendar getCalendar() {
+		return dayChooser.getCalendar();
+	}
 
-    public void notifyListeners(Calendar calendar) {
-        Iterator<SWTCalendarListener> i = listeners.iterator();
-        while (i.hasNext()) {
-            SWTCalendarListener l = (SWTCalendarListener) i.next();
-            Event event = new Event();
-            event.widget = SWTCalendar.this;
-            event.display = SWTCalendar.this.getDisplay();
-            event.time = (int)new Date().getTime();
-            event.data = calendar;//dayChooser.getCalendar();
-            l.dateChanged(new SWTCalendarEvent(event));
-        }
-    }
+	public void notifyListeners(final Calendar calendar) {
+		final Iterator<SWTCalendarListener> i = listeners.iterator();
+		while (i.hasNext()) {
+			final SWTCalendarListener l = i.next();
+			final Event event = new Event();
+			event.widget = SWTCalendar.this;
+			event.display = SWTCalendar.this.getDisplay();
+			event.time = (int) new Date().getTime();
+			event.data = calendar;// dayChooser.getCalendar();
+			l.dateChanged(new SWTCalendarEvent(event));
+		}
+	}
 
-    public Calendar getCalendar() {
-        return dayChooser.getCalendar();
-    }
+	public void removeSWTCalendarListener(final SWTCalendarListener listener) {
+		listeners.remove(listener);
+	}
 
-	public void addSWTCalendarListener(SWTCalendarListener listener) {
-        this.listeners.add(listener);
-    }
+	public void setCalendar(final Calendar c) {
+		setCalendar(c, true);
+	}
 
-    public void removeSWTCalendarListener(SWTCalendarListener listener) {
-        this.listeners.remove(listener);
-    }
+	private void setCalendar(final Calendar c, final boolean update) {
+		if (update) {
+			yearChooser.setYear(c.get(Calendar.YEAR));
+			monthChooser.setMonth(c.get(Calendar.MONTH));
+			dayChooser.setDay(c.get(Calendar.DATE));
+		}
+	}
 
-    public void setLocale(Locale locale) {
-        monthChooser.setLocale(locale);
-        dayChooser.setLocale(locale);
-    }
+	public void setLocale(final Locale locale) {
+		monthChooser.setLocale(locale);
+		dayChooser.setLocale(locale);
+	}
 }

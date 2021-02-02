@@ -4,8 +4,6 @@
 package com.arcadsoftware.aev.core.ui.wizards;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -21,55 +19,50 @@ import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
  */
 public abstract class AbstractSelectionPage extends AbstractSimpleItemWizardPage {
 
-	protected StructuredViewer viewer;
-	protected SelectionChangedListener selectionChangedListener;
-	Action doubleClickAction = null;
-
 	protected class SelectionChangedListener implements ISelectionChangedListener {
-		public void selectionChanged(SelectionChangedEvent event) {
+		@Override
+		public void selectionChanged(final SelectionChangedEvent event) {
 			setPageComplete(false);
 			if (event.getSelection().isEmpty()) {
 				return;
 			}
 			if (event.getSelection() instanceof IStructuredSelection) {
 				doOnSelect((IStructuredSelection) event.getSelection());
-				setPageComplete(checkSelection(((IStructuredSelection) event.getSelection())));
+				setPageComplete(checkSelection((IStructuredSelection) event.getSelection()));
 			}
 		}
 
 	}
+
+	Action doubleClickAction = null;
+	protected SelectionChangedListener selectionChangedListener;
+
+	protected StructuredViewer viewer;
 
 	/**
 	 * @param pageName
 	 * @param title
 	 * @param description
 	 */
-	public AbstractSelectionPage(String pageName, String title, String description) {
+	public AbstractSelectionPage(final String pageName, final String title, final String description) {
 		super(pageName, title, description);
 	}
 
-	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
-	}
+	public abstract boolean checkSelection(IStructuredSelection sel);
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @seecom.arcadsoftware.aev.core.ui.wizards.AbstractSimpleItemWizardPage#
 	 * createControlPage(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected void createControlPage(Composite parent) {
-		Composite composite = GuiFormatTools.createComposite(parent);
+	protected void createControlPage(final Composite parent) {
+		final Composite composite = GuiFormatTools.createComposite(parent);
 		createExtendedControlBefore(composite);
 		makeViewer(composite);
 		if (viewer != null) {
 			if (viewer.getControl().getParent().getLayout() instanceof GridLayout) {
-				GridData gridData = new GridData();
+				final GridData gridData = new GridData();
 				gridData.verticalAlignment = GridData.FILL;
 				gridData.horizontalAlignment = GridData.FILL;
 				gridData.grabExcessVerticalSpace = true;
@@ -95,9 +88,16 @@ public abstract class AbstractSelectionPage extends AbstractSimpleItemWizardPage
 	}
 
 	/**
-	 * @param sel
+	 * @param parent
 	 */
-	protected void doOnSelect(IStructuredSelection sel) {
+	protected void createExtendedControlAfter(final Composite parent) {
+		// Do nothing
+	}
+
+	/**
+	 * @param parent
+	 */
+	protected void createExtendedControlBefore(final Composite parent) {
 		// Do nothing
 	}
 
@@ -106,23 +106,18 @@ public abstract class AbstractSelectionPage extends AbstractSimpleItemWizardPage
 	}
 
 	/**
-	 * @param parent
+	 * @param sel
 	 */
-	protected void createExtendedControlBefore(Composite parent) {
+	protected void doOnSelect(final IStructuredSelection sel) {
 		// Do nothing
 	}
 
-	/**
-	 * @param parent
-	 */
-	protected void createExtendedControlAfter(Composite parent) {
-		// Do nothing
+	private void hookDoubleClickAction() {
+		viewer.addDoubleClickListener(event -> doubleClickAction.run());
 	}
-
-	public abstract boolean checkSelection(IStructuredSelection sel);
-
-	public abstract void makeViewer(Composite composite);
 
 	public abstract void makeInput();
+
+	public abstract void makeViewer(Composite composite);
 
 }

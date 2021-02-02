@@ -10,35 +10,30 @@ import org.eclipse.ui.part.ViewPart;
 
 /**
  * @author MD
- * 
  */
 public class TestTableView extends ViewPart {
-	TestTableViewer viewer;
 	Table table;
+	TestTableViewer viewer;
 
 	/**
-     * 
-     */
+	 * 
+	 */
 	public TestTableView() {
 		super();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets
-	 * .Composite)
+	 * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
 	 */
 	@Override
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 		viewer = new TestTableViewer(parent, SWT.NONE | SWT.FULL_SELECTION);
 
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.ui.IWorkbenchPart#setFocus()
 	 */
 	@Override

@@ -15,90 +15,108 @@ import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 
 public class CustomExpandBar {
-	ExpandBar infoBar;
-
 	public static final String MAIN = "main"; //$NON-NLS-1$
 
-	public CustomExpandBar(Composite parent) {
+	ExpandBar infoBar;
+
+	public CustomExpandBar(final Composite parent) {
 		this(parent, SWT.NONE);
 	}
 
-	public CustomExpandBar(Composite parent, int style) {
+	public CustomExpandBar(final Composite parent, final int style) {
 		// Création de l'expandBar
 		infoBar = new ExpandBar(parent, style);
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		final GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalSpan = 3;
 		infoBar.setLayoutData(gridData);
 		infoBar.addExpandListener(new ExpandListener() {
-			public void itemExpanded(final ExpandEvent arg0) {
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						ExpandItem item = (ExpandItem) arg0.item;
-						updateExpandItemHeight(item);
-					}
+			@Override
+			public void itemCollapsed(final ExpandEvent arg0) {
+				Display.getDefault().asyncExec(() -> {
+					final ExpandItem item = (ExpandItem) arg0.item;
+					updateExpandItemHeight(item);
 				});
 			}
 
-			public void itemCollapsed(final ExpandEvent arg0) {
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						ExpandItem item = (ExpandItem) arg0.item;
-						updateExpandItemHeight(item);
-					}
+			@Override
+			public void itemExpanded(final ExpandEvent arg0) {
+				Display.getDefault().asyncExec(() -> {
+					final ExpandItem item = (ExpandItem) arg0.item;
+					updateExpandItemHeight(item);
 				});
 			}
 		});
 		parent.addControlListener(new ControlAdapter() {
 			@Override
-			public void controlResized(ControlEvent e) {
+			public void controlResized(final ControlEvent e) {
 				CustomExpandBar.this.redraw();
 			}
 		});
 	}
 
-	private int getGrabHeight(ExpandItem item) {
-		ExpandBar bar = item.getParent();
+	public ExpandBar getExpandBar() {
+		return infoBar;
+	}
+
+	private int getGrabHeight(final ExpandItem item) {
+		final ExpandBar bar = item.getParent();
 		int grabHeight = bar.getClientArea().height;
-		int count = bar.getItemCount();
+		final int count = bar.getItemCount();
 		for (int i = 0; i < count; i++) {
-			ExpandItem ei = bar.getItems()[i];
+			final ExpandItem ei = bar.getItems()[i];
 			grabHeight -= ei.getHeaderHeight();
-			if (ei.getExpanded() && (!isMain(ei)))
+			if (ei.getExpanded() && !isMain(ei)) {
 				grabHeight -= ei.getHeight();
+			}
 		}
-		grabHeight -= (bar.getSpacing() * (count + 1));
+		grabHeight -= bar.getSpacing() * (count + 1);
 		return grabHeight;
 	}
 
-	private boolean isMain(ExpandItem item) {
-		if (item.getData() != null) {
-			if (item.getData() instanceof String) {
-				return (((String) item.getData()).equals(MAIN));
-			}
-		}
-		return false;
-	}
-
-	private ExpandItem getTheOnlyOneExpanded(ExpandBar bar) {
+	private ExpandItem getTheOnlyOneExpanded(final ExpandBar bar) {
 		ExpandItem onlyOne = null;
-		int count = bar.getItemCount();
+		final int count = bar.getItemCount();
 		for (int i = 0; i < count; i++) {
-			ExpandItem ei = bar.getItems()[i];
+			final ExpandItem ei = bar.getItems()[i];
 			if (ei.getExpanded()) {
-				if (onlyOne == null)
+				if (onlyOne == null) {
 					onlyOne = ei;
-				else
+				} else {
 					return null;
+				}
 			}
 		}
 		return onlyOne;
 	}
 
-	void updateExpandItemHeight(ExpandItem item) {
-		ExpandBar bar = item.getParent();
-		int count = bar.getItemCount();
-		ExpandItem onlyOneExpanded = getTheOnlyOneExpanded(bar);
+	public void initialize() {
+		Display.getDefault().asyncExec(() -> {
+			final ExpandItem item = infoBar.getItem(0);
+			updateExpandItemHeight(item);
+		});
+	}
+
+	private boolean isMain(final ExpandItem item) {
+		if (item.getData() != null) {
+			if (item.getData() instanceof String) {
+				return ((String) item.getData()).equals(MAIN);
+			}
+		}
+		return false;
+	}
+
+	public void redraw() {
+		Display.getDefault().asyncExec(() -> {
+			final ExpandItem item = infoBar.getItem(0);
+			updateExpandItemHeight(item);
+		});
+	}
+
+	void updateExpandItemHeight(final ExpandItem item) {
+		final ExpandBar bar = item.getParent();
+		final int count = bar.getItemCount();
+		final ExpandItem onlyOneExpanded = getTheOnlyOneExpanded(bar);
 		if (onlyOneExpanded != null) {
 			int grabHeight = bar.getClientArea().height;
 			grabHeight -= count * onlyOneExpanded.getHeaderHeight();
@@ -107,15 +125,17 @@ public class CustomExpandBar {
 		} else {
 			// Affectation des tailles
 			for (int i = 0; i < count; i++) {
-				ExpandItem ei = bar.getItems()[i];
-				if (!isMain(ei))
+				final ExpandItem ei = bar.getItems()[i];
+				if (!isMain(ei)) {
 					ei.setHeight(ei.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+				}
 			}
-			int grabHeight = getGrabHeight(item);
+			final int grabHeight = getGrabHeight(item);
 			for (int i = 0; i < count; i++) {
-				ExpandItem ei = bar.getItems()[i];
-				if (isMain(ei))
+				final ExpandItem ei = bar.getItems()[i];
+				if (isMain(ei)) {
 					ei.setHeight(grabHeight);
+				}
 			}
 
 		}
@@ -134,28 +154,6 @@ public class CustomExpandBar {
 		// }
 		// }
 		// }
-	}
-
-	public ExpandBar getExpandBar() {
-		return infoBar;
-	}
-
-	public void initialize() {
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				ExpandItem item = infoBar.getItem(0);
-				updateExpandItemHeight(item);
-			}
-		});
-	}
-
-	public void redraw() {
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				ExpandItem item = infoBar.getItem(0);
-				updateExpandItemHeight(item);
-			}
-		});
 	}
 
 }

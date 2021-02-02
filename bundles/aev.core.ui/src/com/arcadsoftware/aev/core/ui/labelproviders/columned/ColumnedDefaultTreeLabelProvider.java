@@ -5,7 +5,7 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 public class ColumnedDefaultTreeLabelProvider extends
 		AbstractColumnedTreeLabelProvider {
 
-	public ColumnedDefaultTreeLabelProvider(AbstractColumnedViewer viewer) {
-        super(viewer);
-    }
+	public ColumnedDefaultTreeLabelProvider(final AbstractColumnedViewer viewer) {
+		super(viewer);
+	}
 }
