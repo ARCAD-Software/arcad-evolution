@@ -8,7 +8,7 @@ import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
  */
 public class ColumnedSearchCriteriaList extends AbstractColumnedCriteriaList {
 	// Combo box "sort order"
-	public static final String[] OPERATOR_ARRAY = { CoreUILabels.resString("combo.clm.Equal"), //$NON-NLS-1$
+	private static final String[] OPERATOR_ARRAY = { CoreUILabels.resString("combo.clm.Equal"), //$NON-NLS-1$
 			CoreUILabels.resString("combo.clm.Different"), //$NON-NLS-1$
 			CoreUILabels.resString("combo.clm.StrictlyHigher"), //$NON-NLS-1$
 			CoreUILabels.resString("combo.clm.HigherOrEqual"), //$NON-NLS-1$
@@ -28,6 +28,10 @@ public class ColumnedSearchCriteriaList extends AbstractColumnedCriteriaList {
 	public static final String STRICTLY_HIGHER_ID = OPERATOR_ARRAY[2];
 	public static final String STRICTLY_LOWER_ID = OPERATOR_ARRAY[4];
 
+	public static String[] getOperatorArray() {
+		return OPERATOR_ARRAY;
+	}
+	
 	/**
 	 * Constructor
 	 */

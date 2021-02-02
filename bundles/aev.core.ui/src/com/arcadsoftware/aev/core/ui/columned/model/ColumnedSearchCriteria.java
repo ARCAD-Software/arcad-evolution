@@ -15,7 +15,7 @@ public class ColumnedSearchCriteria extends AbstractColumnedCriteria {
 		setId(id);
 		setColumnName(firstColumnName);
 		setColumnIndex(0);
-		setOperator(ColumnedSearchCriteriaList.OPERATOR_ARRAY[0]);
+		setOperator(ColumnedSearchCriteriaList.EQUAL_ID);
 		setKeyword(StringTools.EMPTY);
 	}
 

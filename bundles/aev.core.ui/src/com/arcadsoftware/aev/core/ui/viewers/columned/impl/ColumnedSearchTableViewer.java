@@ -164,7 +164,7 @@ public class ColumnedSearchTableViewer extends TableViewer {
 		final CellEditor[] editors = new CellEditor[columnNames.length];
 		editors[0] = null;
 		editors[1] = new ComboBoxCellEditor(getTable(), referenceColumns.getUserNameValues(), SWT.READ_ONLY);
-		editors[2] = new ComboBoxCellEditor(getTable(), ColumnedSearchCriteriaList.OPERATOR_ARRAY, SWT.READ_ONLY);
+		editors[2] = new ComboBoxCellEditor(getTable(), ColumnedSearchCriteriaList.getOperatorArray(), SWT.READ_ONLY);
 		editors[3] = new TextCellEditor(getTable(), SWT.MULTI);
 		setCellEditors(editors);
 		setCellModifier(new ColumnedSearchCellModifier(this, referenceColumns));
@@ -175,7 +175,7 @@ public class ColumnedSearchTableViewer extends TableViewer {
 		if (COL_COLUMN_NAME.equals(property)) {
 			return referenceColumns.getUserNameValues();
 		} else if (COL_OPERATOR.equals(property)) {
-			return ColumnedSearchCriteriaList.OPERATOR_ARRAY;
+			return ColumnedSearchCriteriaList.getOperatorArray();
 		} else {
 			return new String[] {};
 		}

@@ -3,6 +3,7 @@ package com.arcadsoftware.ae.core.logger.router.impl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -51,7 +52,8 @@ public class FileInstantMessageRouter extends MessageRouterAdapter {
 		return rollingFile;
 	}
 
-	public void renameLogFile() {
+	public boolean renameLogFile() {
+		boolean result = true;
 		final File f = new File(filename);
 		final File dir = f.getParentFile();
 		final String osfilename = f.getName();
@@ -64,18 +66,23 @@ public class FileInstantMessageRouter extends MessageRouterAdapter {
 			int extInt = Integer.parseInt(ext.substring(1));
 			extInt++;
 			final File fsrc = new File(dir.getAbsolutePath() + File.separator + fn);
-			if (rollingFileMaxIndex > 0 && extInt > rollingFileMaxIndex) {
-				fsrc.delete();
+			if (rollingFileMaxIndex > 0 && extInt > rollingFileMaxIndex) {				
+				try {
+					Files.delete(fsrc.toPath());
+				}
+				catch (IOException e) {
+					throw new ArcadRuntimeException("Cannot delete file " + filename, e);
+				}				
 			} else {
 				final String suffix = Utils.lpad(String.valueOf(extInt), 5, '0');
 				final File ftrg = new File(filename + "." + suffix);
-				fsrc.renameTo(ftrg);
+				result &= fsrc.renameTo(ftrg);
 			}
 		}
 		final File fsrc = new File(filename);
 		final String suffix = Utils.lpad("1", 5, '0');
 		final File ftrg = new File(filename + "." + suffix);
-		fsrc.renameTo(ftrg);
+		return result && fsrc.renameTo(ftrg);
 	}
 
 	public void setFilename(String filename) {
