@@ -1,9 +1,3 @@
-/*
- * Cr�� le 17 mars 05
- *
- * Pour changer le mod�le de ce fichier g�n�r�, allez � :
- * Fen�tre&gt;Pr�f�rences&gt;Java&gt;G�n�ration de code&gt;Code et commentaires
- */
 package com.arcadsoftware.aev.core.ui.tools;
 
 import java.net.MalformedURLException;
@@ -88,6 +82,8 @@ import com.arcadsoftware.documentation.icons.Icon;
  * @author MD
  */
 public class GuiFormatTools {
+	private static final String SIMPLE_DATE_FOMAT = "simpleDateFomat.Text";
+	
 	private static class AutoSearchComboListener implements ModifyListener, FocusListener {
 		private final Combo combo;
 		private String lastValue = StringTools.EMPTY;
@@ -99,8 +95,7 @@ public class GuiFormatTools {
 
 		@Override
 		public void focusGained(final FocusEvent arg0) {
-			// TODO Raccord de m�thode auto-g�n�r�
-
+			//Nothing to focus on
 		}
 
 		@Override
@@ -154,7 +149,7 @@ public class GuiFormatTools {
 			switch (style) {
 			case 0:
 				dialog = new CalendarDialog(text.getShell(), true, false);
-				format = CoreUILabels.resString("simpleDateFomat.Text");//$NON-NLS-1$
+				format = CoreUILabels.resString(SIMPLE_DATE_FOMAT);//$NON-NLS-1$
 				break;
 			case 1:
 				dialog = new CalendarDialog(text.getShell(), false, true);
@@ -210,7 +205,6 @@ public class GuiFormatTools {
 		public void setDate(final Date date) {
 			if (date != null) {
 				dialog.getCalendar().setTime(date);
-				// text.setText(formatter.format(date));
 			}
 		}
 
@@ -218,18 +212,15 @@ public class GuiFormatTools {
 			if (date != null) {
 				final Date dt = GuiFormatTools.getDateFromString(format, date);
 				dialog.getCalendar().setTime(dt);
-				// text.setText(formatter.format(dt));
 			}
 		}
 
 	}
 
 	public class DropdownMenuSelectionListener extends SelectionAdapter {
-		private final ToolItem dropdown;
 		private final Menu menu;
 
 		public DropdownMenuSelectionListener(final ToolItem dropdown) {
-			this.dropdown = dropdown;
 			menu = new Menu(dropdown.getParent().getShell());
 		}
 
@@ -254,8 +245,6 @@ public class GuiFormatTools {
 				final Point pt = item.getParent().toDisplay(new Point(rect.x, rect.y));
 				menu.setLocation(pt.x, pt.y + rect.height);
 				menu.setVisible(true);
-			} else {
-				System.out.println(dropdown.getText() + " Pressed");
 			}
 		}
 	}
@@ -314,31 +303,28 @@ public class GuiFormatTools {
 		}
 	}
 
-	private static String ASTERISK_MARK = EvolutionCoreUIPlugin.getResourceString("asterisk.mark.label");
-	public static int BOTH = 2;
+	private static final String ASTERISK_MARK = EvolutionCoreUIPlugin.getResourceString("asterisk.mark.label");
+	public static final int BOTH = 2;
 
-	private static String COLON_MARK = EvolutionCoreUIPlugin.getResourceString("colon.mark.label");
-	private static Color COLOR_RED = new Color(Display.getCurrent(), 255, 0, 0);
-	public static int DATE_ONLY = 0;
+	private static final String COLON_MARK = EvolutionCoreUIPlugin.getResourceString("colon.mark.label");
+	private static final Color COLOR_RED = new Color(Display.getCurrent(), 255, 0, 0);
+	public static final int DATE_ONLY = 0;
 
 	private static GuiFormatTools instance = new GuiFormatTools();
 
-	static String NUMCHAR = "0123456789-"; //$NON-NLS-1$
+	private static final String NUMCHAR = "0123456789-"; //$NON-NLS-1$
 
-	static String NUMCHARPOSITIVE = "0123456789"; //$NON-NLS-1$
+	private static final String NUMCHARPOSITIVE = "0123456789"; //$NON-NLS-1$
 
-	/**
-	 * Caract�re utilis� pour les champs de saisie prot�g� (saisie des mots de passes).
-	 */
-	public static final char PWDChar = '*';
+	public static final char CHAR_MASK = '*';
 
-	public static int TIME_ONLY = 1;
+	public static final int TIME_ONLY = 1;
 
-	public static String TIME_PART_HOUR = "hour";
+	public static final String TIME_PART_HOUR = "hour";
 
-	public static String TIME_PART_MINUTE = "minute";
+	public static final String TIME_PART_MINUTE = "minute";
 
-	public static String TIME_PART_SECOND = "second";
+	public static final String TIME_PART_SECOND = "second";
 
 	public static void addNumericLimiter(final Text text, final Integer min, final Integer max) {
 		text.addListener(SWT.Modify, e -> {
@@ -349,7 +335,7 @@ public class GuiFormatTools {
 			}
 
 			try {
-				final int v = Integer.valueOf(value);
+				final int v = Integer.parseInt(value);
 				if (min == null && max != null) {
 					valid = v <= max;
 				} else if (min != null && max == null) {
@@ -383,11 +369,9 @@ public class GuiFormatTools {
 			final char[] chars = new char[string.length()];
 			string.getChars(0, chars.length, chars, 0);
 			for (int i = 0; i < chars.length; i++) {
-				if (!('0' <= chars[i] && chars[i] <= '9')) {
-					if (chars[i] != '-') {
-						e.doit = false;
-						return;
-					}
+				if (!('0' <= chars[i] && chars[i] <= '9') && chars[i] != '-') {
+					e.doit = false;
+					return;
 				}
 			}
 		});
@@ -402,12 +386,7 @@ public class GuiFormatTools {
 
 	public static String choosefile(final String title, final String[] fileExtensions) {
 		final String s = getFileManagerProvider().selectFile(
-				EvolutionCoreUIPlugin.getShell(), 0, title, fileExtensions);
-		//
-		// FileDialog chooser = new FileDialog(EvolutionCoreUIPlugin.getShell());
-		// chooser.setFilterExtensions(fileExtensions);
-		// chooser.setText(title);
-		// String s = chooser.open();
+				EvolutionCoreUIPlugin.getShell(), 0, title, fileExtensions);		
 		if (s != null && !s.equals(StringTools.EMPTY)) {
 			return s;
 		}
@@ -732,9 +711,6 @@ public class GuiFormatTools {
 		}
 		if (value != null) {
 			textValue.setText(value);
-			/*
-			 * textValue.setData(prop); textValue.addVerifyListener(this); editors.add(textValue);
-			 */
 		}
 
 		/* NEW LINE */
@@ -771,7 +747,6 @@ public class GuiFormatTools {
 			final Text help = new Text(cmp, /* SWT.H_SCROLL | SWT.V_SCROLL | */ SWT.WRAP);
 			help.setBackground(cmp.getBackground());
 			final GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-			// gridData.heightHint = 40;
 			help.setLayoutData(gridData);
 			help.setText(helper);
 			help.setEditable(false);
@@ -995,7 +970,7 @@ public class GuiFormatTools {
 		text.setText(defaultText);
 		text.setData(textLabel);
 
-		final String format = CoreUILabels.resString("simpleDateFomat.Text"); //$NON-NLS-1$
+		final String format = CoreUILabels.resString(SIMPLE_DATE_FOMAT); //$NON-NLS-1$
 		text.setText(format);
 		text.addListener(SWT.Verify, new SimpleDateVerifierListener(text, format));
 
@@ -1130,21 +1105,15 @@ public class GuiFormatTools {
 		return valueText;
 	}
 
-	public static DoubleSpinner createLabelledDoubleSpinner(final Composite parent, final String label) {
-		return createLabelledDoubleSpinner(parent, label, StringTools.EMPTY);
+	public static DoubleSpinner createLabelledDoubleSpinner(final Composite parent) {
+		return createLabelledDoubleSpinner(parent, StringTools.EMPTY);
 	}
 
-	public static DoubleSpinner createLabelledDoubleSpinner(final Composite parent, final String label,
-			final String units) {
-		return createLabelledDoubleSpinner(parent, label, units, 9999);
+	public static DoubleSpinner createLabelledDoubleSpinner(final Composite parent, final String units) {
+		return createLabelledDoubleSpinner(parent, units, 9999);
 	}
 
-	public static DoubleSpinner createLabelledDoubleSpinner(final Composite parent, final String label,
-			final String units, final int maximum) {
-		/*
-		 * Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP); textLabel.setText(label); Label twopoints = new
-		 * Label(parent, SWT.NONE); twopoints.setText(":"); //$NON-NLS-1$
-		 */
+	public static DoubleSpinner createLabelledDoubleSpinner(final Composite parent, final String units, final int maximum) {
 		final Label textLabel = new Label(parent, SWT.NONE | SWT.WRAP);
 
 		final DoubleSpinner spinner = new DoubleSpinner(parent, SWT.NONE);
@@ -1170,11 +1139,7 @@ public class GuiFormatTools {
 			textLabel.setLayoutData(gridData);
 			textLabel.setText(label);
 		}
-		/*
-		 * Label twopoints = new Label(parent, SWT.NONE); twopoints.setText(":"); //$NON-NLS-1$ if (parent.getLayout()
-		 * instanceof GridLayout) { GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-		 * twopoints.setLayoutData(gridData); }
-		 */
+
 		final Hyperlink link = new Hyperlink(parent, style);
 		if (parent.getLayout() instanceof GridLayout) {
 			final GridData gridData = new GridData(GridData.BEGINNING);
@@ -1202,7 +1167,7 @@ public class GuiFormatTools {
 			final int maxValue, final String help, final boolean isPositive) {
 		int maximumValue = maxValue;
 		if (maximumValue != -1) {
-			final String stMaxValue = new Integer(maximumValue).toString();
+			final String stMaxValue = String.valueOf(maximumValue);
 			maximumValue = stMaxValue.length();
 		}
 		final Text t = createLabelledText(parent, label, String.valueOf(intialValue), maximumValue, help);
@@ -1238,11 +1203,7 @@ public class GuiFormatTools {
 			gridData.horizontalSpan = 2;
 		}
 		textLabel.setText(label + ':');
-		/*
-		 * Label twopoints = new Label(parent, SWT.NONE); twopoints.setText(":"); //$NON-NLS-1$ if (parent.getLayout()
-		 * instanceof GridLayout) { GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-		 * twopoints.setLayoutData(gridData); }
-		 */
+
 		final Label lbl = new Label(parent, style);
 		if (parent.getLayout() instanceof GridLayout) {
 			final GridData gridData = new GridData(GridData.BEGINNING);
@@ -1262,10 +1223,6 @@ public class GuiFormatTools {
 		textLabel.setLayoutData(gridData);
 
 		textLabel.setText(label + ':');
-		/*
-		 * Label twopoints = new Label(parent, SWT.NONE); twopoints.setText(":"); //$NON-NLS-1$ gridData = new
-		 * GridData(GridData.VERTICAL_ALIGN_BEGINNING); twopoints.setLayoutData(gridData);
-		 */
 
 		final Link link = new Link(parent, style);
 		gridData = new GridData(GridData.BEGINNING);
@@ -1280,9 +1237,7 @@ public class GuiFormatTools {
 				try {
 					// Open default external browser
 					PlatformUI.getWorkbench().getBrowserSupport().createBrowser("browserId").openURL(new URL(e.text)); //$NON-NLS-1$
-				} catch (final PartInitException ex) {
-					MessageManager.addException(ex, MessageManager.LEVEL_PRODUCTION);
-				} catch (final MalformedURLException ex) {
+				} catch (final MalformedURLException | PartInitException ex) {
 					MessageManager.addException(ex, MessageManager.LEVEL_PRODUCTION);
 				}
 			}
@@ -1393,11 +1348,7 @@ public class GuiFormatTools {
 			textLabel.setLayoutData(gridData);
 		}
 		textLabel.setText(label + ':');
-		/*
-		 * Label twopoints = new Label(parent, SWT.NONE); twopoints.setText(":"); //$NON-NLS-1$ if (parent.getLayout()
-		 * instanceof GridLayout) { GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-		 * twopoints.setLayoutData(gridData); }
-		 */
+
 		final Period period = new Period(parent, style);
 		if (parent.getLayout() instanceof GridLayout) {
 			final GridData gridData = new GridData(GridData.BEGINNING);
@@ -1611,9 +1562,6 @@ public class GuiFormatTools {
 		browseButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				// DirectoryDialog chooser = new DirectoryDialog(EvolutionCoreUIPlugin.getShell(), actionStyle);
-				// chooser.setText(title);
-				// String s = chooser.open();
 				final String s = getFileManagerProvider().selectDirectory(EvolutionCoreUIPlugin.getShell(), actionStyle,
 						title);
 				if (s != null && !s.equals(StringTools.EMPTY)) {
@@ -1707,7 +1655,7 @@ public class GuiFormatTools {
 			public void widgetSelected(final SelectionEvent e) {
 				final java.util.List<String> selection = getFileManagerProvider().selectFiles(
 						EvolutionCoreUIPlugin.getShell(), actionStyle, title, fileExtensions);
-				if (selection != null && selection.size() > 0) {
+				if (selection != null && !selection.isEmpty()) {
 					final StringBuilder fileList = new StringBuilder();
 					for (final String file : selection) {
 						if (fileList.length() > 0) {
@@ -1894,15 +1842,13 @@ public class GuiFormatTools {
 	}
 
 	public static Text createLongText(final Composite parent, final int heightInt) {
-		final Text text = createLongText(parent, heightInt, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.WRAP);
-		return text;
+		return createLongText(parent, heightInt, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.WRAP);
 	}
 
 	public static Text createLongText(final Composite parent, final int heightInt, final int style) {
 		final Text text = new Text(parent, style);
 		if (parent.getLayout() instanceof GridLayout) {
 			final GridData gridData = new GridData(GridData.BEGINNING | GridData.FILL_BOTH);
-			// gridData.horizontalAlignment = GridData.FILL;
 			gridData.grabExcessHorizontalSpace = true;
 			if (heightInt != -1) {
 				gridData.heightHint = heightInt;
@@ -1914,17 +1860,15 @@ public class GuiFormatTools {
 	}
 
 	public static ContributionItem createMenu(final java.util.List<Action> actions) {
-		final ContributionItem contributionItem = new ContributionItem("") {
+		return new ContributionItem("") {
 			@Override
 			public void fill(final Menu menu, final int index) {
 				final MenuItemSelectionListener l = GuiFormatTools.instance.new MenuItemSelectionListener(menu);
 				for (final Action action : actions) {
 					l.add(action);
 				}
-				// ti.addSelectionListener(l);
 			}
 		};
-		return contributionItem;
 	}
 
 	public static Button createMiddleButton(final Composite parent, final String buttonLabel) {
@@ -2124,11 +2068,8 @@ public class GuiFormatTools {
 			final boolean readonly, final String button1Text, final Image img1, final String button2Text,
 			final Image img2, final String button3Text,
 			final Image img3) {
-		/*
-		 * new Label(parent, SWT.NONE).setText(label); new Label(parent, SWT.NONE).setText(":"); //$NON-NLS-1$
-		 */
 		createTextLabel(parent, label);
-		// Cr�ation du composite de r�ception
+
 		final Composite p = new Composite(parent, SWT.NONE);
 		GridLayout layout = null;
 		if (button3Text == null && img3 == null) {
@@ -2213,7 +2154,7 @@ public class GuiFormatTools {
 	}
 
 	public static ContributionItem createToolbarDropDownMenu(final java.util.List<Action> actions) {
-		final ContributionItem contributionItem = new ContributionItem("") {
+		return new ContributionItem("") {
 			@Override
 			public void fill(final ToolBar parent, final int index) {
 				final ToolItem ti = new ToolItem(parent, SWT.DROP_DOWN);
@@ -2227,7 +2168,6 @@ public class GuiFormatTools {
 
 			}
 		};
-		return contributionItem;
 	}
 
 	public static void disableComposite(final Composite c) {
@@ -2257,7 +2197,7 @@ public class GuiFormatTools {
 	}
 
 	public static Date getDateFromSimpleFormattedString(final String dateToParse) {
-		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(CoreUILabels.resString("simpleDateFomat.Text")); //$NON-NLS-1$
+		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(CoreUILabels.resString(SIMPLE_DATE_FOMAT)); //$NON-NLS-1$
 		try {
 			return simpleDateFormat.parse(dateToParse);
 		} catch (final ParseException e) {
@@ -2275,7 +2215,7 @@ public class GuiFormatTools {
 	}
 
 	public static String getDateToSimpleFormattedString(final Date date) {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat(CoreUILabels.resString("simpleDateFomat.Text"));//$NON-NLS-1$
+		final SimpleDateFormat dateFormat = new SimpleDateFormat(CoreUILabels.resString(SIMPLE_DATE_FOMAT));//$NON-NLS-1$
 		return dateFormat.format(Long.valueOf(date.getTime()));
 	}
 
@@ -2304,7 +2244,7 @@ public class GuiFormatTools {
 
 	public static String getFormattedCurrentDate() {
 		final Calendar c = new GregorianCalendar();
-		final SimpleDateFormat dateFormat = new SimpleDateFormat(CoreUILabels.resString("simpleDateFomat.Text"));//$NON-NLS-1$
+		final SimpleDateFormat dateFormat = new SimpleDateFormat(CoreUILabels.resString(SIMPLE_DATE_FOMAT));//$NON-NLS-1$
 		return dateFormat.format(c.getTime());
 	}
 
@@ -2317,7 +2257,7 @@ public class GuiFormatTools {
 		}
 
 		final SimpleDateFormat dfreader = new SimpleDateFormat(entryFormat);
-		final SimpleDateFormat dfwriter = new SimpleDateFormat(CoreUILabels.resString("simpleDateFomat.Text")); //$NON-NLS-1$
+		final SimpleDateFormat dfwriter = new SimpleDateFormat(CoreUILabels.resString(SIMPLE_DATE_FOMAT)); //$NON-NLS-1$
 		try {
 			final Date d = dfreader.parse(dateToFormat);
 			return dfwriter.format(d);
@@ -2363,7 +2303,7 @@ public class GuiFormatTools {
 		Image image = null;
 		if (widget.getColorUI() != null) {
 			final Color c = widget.getColorUI().getSWTColor(display);
-			final PaletteData pd = new PaletteData(new RGB[] { c.getRGB() });
+			final PaletteData pd = new PaletteData(c.getRGB());
 			final ImageData id = new ImageData(40, 10, 1, pd);
 			image = new Image(display, id);
 		}

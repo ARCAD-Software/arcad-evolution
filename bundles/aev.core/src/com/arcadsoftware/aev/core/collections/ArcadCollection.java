@@ -7,6 +7,7 @@
 package com.arcadsoftware.aev.core.collections;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author MD
@@ -14,8 +15,8 @@ import java.util.ArrayList;
 public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionFinder, IArcadCollectionHierachic,
 		Cloneable {
 
-	public static int SORT_ASCENDING = 0;
-	public static int SORT_DESCENDING = 1;
+	public static final int SORT_ASCENDING = 0;
+	public static final int SORT_DESCENDING = 1;
 
 	protected ArrayList<IArcadCollectionItem> list = new ArrayList<>();
 
@@ -77,6 +78,7 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 	}
 
 	protected void doAfterItemsRemoved(final IArcadCollectionItem... items) {
+		//To be overridden
 	}
 
 	@Override
@@ -155,7 +157,7 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 	}
 
 	@SuppressWarnings("rawtypes")
-	public ArrayList getList() {
+	public List getList() {
 		return list;
 	}
 
@@ -226,11 +228,7 @@ public class ArcadCollection implements IArcadCollectionBasic, IArcadCollectionF
 
 	@Override
 	public Object[] toArray() {
-		/*
-		 * int size = list.size(); Object[] aoc = new Object[size]; for (int i=0;i<size;i++) { aoc[i]=items(i); } return
-		 * aoc;
-		 */
-		return list.toArray();
+		return list.toArray(new Object[list.size()]);
 	}
 
 	public Object[] toArray(final Object[] array) {

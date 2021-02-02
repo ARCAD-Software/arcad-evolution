@@ -48,7 +48,7 @@ public abstract class ButtonEdit extends Composite {
 		}
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
 		if (password) {
-			text.setEchoChar(GuiFormatTools.PWDChar);
+			text.setEchoChar(GuiFormatTools.CHAR_MASK);
 		}
 		button = new Button(this, SWT.PUSH);
 		button.setText(getButtonLabel());

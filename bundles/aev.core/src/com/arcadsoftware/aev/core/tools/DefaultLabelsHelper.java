@@ -17,7 +17,6 @@ public class DefaultLabelsHelper implements IHelperLabel {
 		try {
 			return String.format(res, params);
 		} catch (final Exception e) {
-			e.printStackTrace();
 			return res;
 		}
 	}

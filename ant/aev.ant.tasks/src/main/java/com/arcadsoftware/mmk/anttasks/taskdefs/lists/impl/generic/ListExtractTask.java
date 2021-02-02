@@ -10,9 +10,17 @@ import com.arcadsoftware.mmk.lists.impl.lists.GenericList;
 public class ListExtractTask extends AbstractXmlFileListCountedCheckedTask {
 
 	protected boolean clearListBeforeAdding = false;
-	private final String extractQuery = null;
-	private final String resultFileName = null;
+	private String extractQuery = null;
+	private String resultFileName = null;
 
+	public void setExtractQuery(String extractQuery) {
+		this.extractQuery = extractQuery;
+	}
+	
+	public void setResultFileName(String resultFileName) {
+		this.resultFileName = resultFileName;
+	}
+	
 	@Override
 	public int processExecutionWithCount() {
 		if (resultFileName != null && !resultFileName.equals("")) {
@@ -35,10 +43,7 @@ public class ListExtractTask extends AbstractXmlFileListCountedCheckedTask {
 		this.clearListBeforeAdding = clearListBeforeAdding;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.arcadsoftware.mmk.anttasks.taskdefs.AbstractArcadAntTask#validateAttributes()
-	 */
+
 	@Override
 	public void validateAttributes() {
 		super.validateAttributes();

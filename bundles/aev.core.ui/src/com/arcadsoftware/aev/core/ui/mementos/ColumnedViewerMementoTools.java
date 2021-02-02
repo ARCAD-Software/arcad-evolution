@@ -59,7 +59,9 @@ public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 		final File file = new File(filename);
 		if (!file.exists()) {
 			try {
-				file.createNewFile();
+				if(!file.createNewFile()){
+					return null;
+				}
 			} catch (final IOException e) {
 				MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
 						"File : " + filename);//$NON-NLS-1$
@@ -87,8 +89,6 @@ public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 	 */
 	@Override
 	protected boolean keep(final ArcadSettings s) {
-		// return
-		// ((ColumnedViewerSettings)s).getViewerId().equals(filterViewerId);
 		return true;
 	}
 

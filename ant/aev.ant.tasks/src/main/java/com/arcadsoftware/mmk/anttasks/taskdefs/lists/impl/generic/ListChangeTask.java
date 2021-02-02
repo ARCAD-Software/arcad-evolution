@@ -10,7 +10,7 @@ public class ListChangeTask extends ListExecuteTask {
 
 	@Override
 	public void executeTasks(final StoreItem item) {
-		for (final Object o : nestedTasks) {
+		for (final Task o : nestedTasks) {
 			final UnknownElement element = (UnknownElement) o;
 			element.maybeConfigure();
 			if (element.getTask() instanceof AbstractListItemTransformerTask) {

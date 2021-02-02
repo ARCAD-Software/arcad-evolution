@@ -74,16 +74,13 @@ public abstract class AbstractRollbackableHelper {
 			document.appendChild(root);
 			return root;
 		} catch (final ParserConfigurationException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
 
 	public void doAfterExecuting() {
-		if (rollbackIdProperty != null) {
-			if (task.getTask() != null) {
-				task.getTask().getProject().setNewProperty(rollbackIdProperty, rollbackId);
-			}
+		if (rollbackIdProperty != null && task.getTask() != null) {
+			task.getTask().getProject().setNewProperty(rollbackIdProperty, rollbackId);
 		}
 		if (!task.isInTransaction()) {
 			// <FM number="2010/00474" version="01.00.00" date="Nov 25, 2011 user="FPO">
@@ -113,7 +110,7 @@ public abstract class AbstractRollbackableHelper {
 					rollbackDir = s;
 				} else {
 					final String value = AntFactory.getRollbackSettings().getBackupEnvironment();
-					System.out.println("VALUE : " + value);
+
 					if (value == null || value.equals("")) {
 						throw new BuildException("Rollback Directory is required!");
 					} else {
@@ -122,7 +119,6 @@ public abstract class AbstractRollbackableHelper {
 				}
 			} else {
 				final String value = RollbackSettings.getInstance().getBackupEnvironment();
-				System.out.println("VALUE : " + value);
 				if (value == null || value.equals("")) {
 					throw new BuildException("Rollback Directory is required!");
 				} else {
@@ -142,7 +138,7 @@ public abstract class AbstractRollbackableHelper {
 	}
 
 	public String getTransactionId() {
-		return rollbackId;
+		return getRollbackId();
 	}
 
 	public abstract boolean rollback(ArcadRollbackTask rollbackTask, Element e);

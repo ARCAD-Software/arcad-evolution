@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="com.arcadsoftware.aev.core.osgi.GlobalLogService">
+   <service>
+      <provide interface="com.arcadsoftware.aev.core.osgi.GlobalLogService"/>
+   </service>
+   <reference bind="setLogService" cardinality="1..1" interface="org.osgi.service.log.LogService" name="LogService"/>
+   <implementation class="com.arcadsoftware.aev.core.osgi.GlobalLogService"/>
+</scr:component>

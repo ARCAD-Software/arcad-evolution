@@ -78,9 +78,8 @@ public class XMLTools {
 		try {
 			return Integer.parseInt(stringValue);
 		} catch (final Exception e) {
-		}
-
-		return null;
+			return null;	
+		}	
 	}
 
 	public static <T> List<T> getNodes(final Node node, final String elementName, final Class<T> nodeClass) {
@@ -149,9 +148,8 @@ public class XMLTools {
 			final InputSource is = new InputSource(reader);
 			return builder.parse(is);
 		} catch (final Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+			return null;
+		}		
 	}
 
 	public static Document loadXMLFromString(final String xml) {
@@ -184,9 +182,6 @@ public class XMLTools {
 				current = xml.charAt(i);
 				if (isValidXMLCharacter(current)) {
 					out.append(current);
-				} else {
-					System.out.println("Invalid XML character 0x" + Integer.toHexString(current) + " at position " + i
-							+ " of \"" + xml + '"');
 				}
 			}
 		}

@@ -1,10 +1,15 @@
 package com.arcadsoftware.aev.core.ui.rcp.tools;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
+
+import com.arcadsoftware.aev.core.osgi.GlobalLogService;
+import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 
 public class EditorTempFilePartListener implements IPartListener {
 
@@ -29,7 +34,12 @@ public class EditorTempFilePartListener implements IPartListener {
 	@Override
 	public void partClosed(final IWorkbenchPart part) {
 		if (part.equals(editor)) {
-			tempFile.delete();
+			try {
+				Files.delete(tempFile.toPath());
+			}
+			catch (IOException e) {
+				ServiceRegistry.lookupOrDie(GlobalLogService.class).debug(e);
+			}
 		}
 	}
 

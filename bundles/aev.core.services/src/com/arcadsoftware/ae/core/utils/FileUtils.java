@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,13 @@ public class FileUtils {
 	
 	public static boolean copyFile(final File sourceFile, final File destFile, final boolean keepModificationDate) {
 		boolean result;
-		
-		if (destFile.exists() && destFile.isFile()) {
-			destFile.delete();
+		try {
+			if (destFile.exists() && destFile.isFile()) {
+				Files.delete(destFile.toPath());
+			}
+		}
+		catch (final IOException ioe) {
+			result = false;
 		}
 		final File parent = destFile.getParentFile();
 		if (!parent.exists()) {

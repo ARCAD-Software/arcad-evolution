@@ -5,10 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.arcadsoftware.ae.core.exceptions.ArcadRuntimeException;
 import com.arcadsoftware.ae.core.logger.formatter.AbstractMessageFormatter;
 import com.arcadsoftware.ae.core.logger.formatter.impl.BasicMessageFormatter;
 import com.arcadsoftware.ae.core.logger.messages.AbstractMessage;
@@ -35,36 +37,37 @@ public abstract class AbstractMessageRouter {
 			} catch (final IOException e) {
 				interceptMessage(new ErrorMessage("DualStream",
 						"Could not initialize DualStream output logs:" + e.getLocalizedMessage()));
-				e.printStackTrace();
 			}
 			canLog = standardLogFile != null && errorLogFile != null;
 		}
 
 		protected File getLogFile(final File logFile) {
+			boolean created = false;
 			try {
 				if (logFile.exists()) {
 					if (logFile.length() > 2097152) {
 						renameLocalLogFile(logFile, 1);
-						logFile.createNewFile();
+						created = logFile.createNewFile();
 					}
 				} else {
-					logFile.createNewFile();
+					created = logFile.createNewFile();
 				}
 			} catch (final IOException e) {
+				return null;
 			}
 
-			return logFile;
+			return created ? logFile : null;
 		}
 
 		private String getTimeStamp() {
 			return timeStampFormat.format(new Date());
 		}
 
-		protected void renameLocalLogFile(final File localLogFile, final int number) {
+		protected boolean renameLocalLogFile(final File localLogFile, final int number) {
 			final String path = localLogFile.getParent();
 			String name = localLogFile.getName();
 			String extension = "";
-			final int lastPoint = name.lastIndexOf(".");
+			final int lastPoint = name.lastIndexOf('.');
 			if (lastPoint > 0) {
 				extension = name.substring(lastPoint);
 				name = name.substring(0, lastPoint) + "_";
@@ -74,7 +77,7 @@ public abstract class AbstractMessageRouter {
 			if (backLocalLogFile.exists()) {
 				renameLocalLogFile(localLogFile, number + 1);
 			}
-			localLogFile.renameTo(backLocalLogFile);
+			return localLogFile.renameTo(backLocalLogFile);
 		}
 
 		@Override
@@ -93,9 +96,10 @@ public abstract class AbstractMessageRouter {
 		protected void writeLine(final File logFile, String message) {
 			message = getTimeStamp() + message + "\n";
 			try (FileOutputStream fos = new FileOutputStream(logFile, true)) {
-				fos.write(message.getBytes("UTF-8"));
+				fos.write(message.getBytes(StandardCharsets.UTF_8));
 				fos.flush();
 			} catch (final Exception e) {
+				throw new ArcadRuntimeException("Could not write into " + logFile, e);
 			}
 		}
 	}

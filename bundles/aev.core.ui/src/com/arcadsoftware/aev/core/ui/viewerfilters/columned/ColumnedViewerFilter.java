@@ -6,7 +6,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
 import com.arcadsoftware.aev.core.tools.StringTools;
-import com.arcadsoftware.aev.core.ui.columned.model.ArcadColumns;
 import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSearchCriteria;
 import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSearchCriteriaList;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnResolver;
@@ -26,8 +25,7 @@ public class ColumnedViewerFilter extends ViewerFilter {
 	/**
 	 * @param referenceColumns
 	 */
-	public ColumnedViewerFilter(final ColumnedSearchCriteriaList criteriaList, final ArcadColumns referenceColumns,
-			final IColumnResolver resolver) {
+	public ColumnedViewerFilter(final ColumnedSearchCriteriaList criteriaList, final IColumnResolver resolver) {
 		super();
 		collator = Collator.getInstance();
 		this.criteriaList = criteriaList;
@@ -56,7 +54,7 @@ public class ColumnedViewerFilter extends ViewerFilter {
 				// Interpret any '*' values in string as regex pattern match '.'
 				if (cj == '*') {
 					sb.append('.');
-				} else if (SPECIAL_REGEX.indexOf(cj) > 0) {
+				} else if (SPECIAL_REGEX.indexOf(cj) > -1) {
 					sb.append('\\');
 				}
 				sb.append(cj);

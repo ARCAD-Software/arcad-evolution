@@ -1,7 +1,6 @@
 package com.arcadsoftware.aev.core.ui.actions.columned;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -11,6 +10,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.TreeItem;
 
+import com.arcadsoftware.aev.core.osgi.GlobalLogService;
 import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 import com.arcadsoftware.aev.core.tools.StringTools;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
@@ -33,6 +33,7 @@ import com.arcadsoftware.documentation.brands.Brand;
  */
 public class ColumnedExportAction extends ArcadAction {
 
+	private static final String WIZARD_PAGE_TITLE = "action.columned.wizardPage.title";
 	private ColumnedParametersWizardPage parametersPage;
 	private final AbstractColumnedViewer viewer;
 
@@ -52,7 +53,7 @@ public class ColumnedExportAction extends ArcadAction {
 	}
 
 	public ColumnedCSVExportWizard createWizard() {
-		return new ColumnedCSVExportWizard(this, CoreUILabels.resString("action.columned.wizardPage.title")); //$NON-NLS-1$
+		return new ColumnedCSVExportWizard(this, CoreUILabels.resString(WIZARD_PAGE_TITLE)); //$NON-NLS-1$
 	}
 
 	@Override
@@ -70,17 +71,15 @@ public class ColumnedExportAction extends ArcadAction {
 	}
 
 	public WizardPage[] getPages() {
-		parametersPage = new ColumnedParametersWizardPage(CoreUILabels.resString("action.columned.wizardPage.title"), //$NON-NLS-1$
-				CoreUILabels.resString("action.columned.wizardPage.title"), //$NON-NLS-1$
+		parametersPage = new ColumnedParametersWizardPage(CoreUILabels.resString(WIZARD_PAGE_TITLE), //$NON-NLS-1$
+				CoreUILabels.resString(WIZARD_PAGE_TITLE), //$NON-NLS-1$
 				getWizardImage());
 		return new WizardPage[] { parametersPage };
 	}
 
 	private TreeItem getTreeItem(final Object element) {
-		if (viewer != null) {
-			if (viewer.getViewer() instanceof ColumnedTreeViewer) {
-				return ((ColumnedTreeViewer) viewer.getViewer()).findTreeItem(element);
-			}
+		if (viewer != null && viewer.getViewer() instanceof ColumnedTreeViewer) {
+			return ((ColumnedTreeViewer) viewer.getViewer()).findTreeItem(element);			
 		}
 		return null;
 	}
@@ -92,7 +91,7 @@ public class ColumnedExportAction extends ArcadAction {
 	}
 
 	public String getWizardTitle() {
-		return CoreUILabels.resString("action.columned.wizardPage.title"); //$NON-NLS-1$
+		return CoreUILabels.resString(WIZARD_PAGE_TITLE); //$NON-NLS-1$
 	}
 
 	public boolean process() {
@@ -131,7 +130,6 @@ public class ColumnedExportAction extends ArcadAction {
 			}
 
 			if (parametersPage.isIncludeHeader()) {
-				// String[] userNameValues = columns.getUserNameValues();
 				final Iterator<?> iterator = columns.getList().iterator();
 				data.append(((ArcadColumn) iterator.next()).getUserName());
 				while (iterator.hasNext()) {
@@ -192,12 +190,8 @@ public class ColumnedExportAction extends ArcadAction {
 					}
 				}
 				final File file = new File(filePath);
-				if (!file.exists()) {
-					try {
-						file.createNewFile();
-					} catch (final IOException e) {
-						// Do nothing
-					}
+				if (!file.exists()) {					
+					return file.createNewFile();					
 				}
 				StringTools.string2File(file, new String(data));
 				parametersPage.saveWidgetValues(parametersPage.getSettings());
@@ -205,7 +199,7 @@ public class ColumnedExportAction extends ArcadAction {
 			}
 			return false;
 		} catch (final Exception e) {
-			e.printStackTrace();
+			ServiceRegistry.lookupOrDie(GlobalLogService.class).debug(e);
 			return false;
 		}
 	}

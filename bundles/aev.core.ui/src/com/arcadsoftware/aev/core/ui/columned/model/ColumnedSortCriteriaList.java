@@ -7,13 +7,16 @@ import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
  */
 public class ColumnedSortCriteriaList extends AbstractColumnedCriteriaList {
 
-	public static final String[] SORT_ORDER_ARRAY = { CoreUILabels.resString("combo.clm.AscendingSort"), //$NON-NLS-1$
+	private static final String[] SORT_ORDER_ARRAY = { CoreUILabels.resString("combo.clm.AscendingSort"), //$NON-NLS-1$
 			CoreUILabels.resString("combo.clm.DescendingSort") }; //$NON-NLS-1$
 	
 	public static final String ASCENDING = SORT_ORDER_ARRAY[0];
 	public static final String DESCENDING = SORT_ORDER_ARRAY[1];
 	
-
+	public static String[] getSortOrderArray() {
+		return SORT_ORDER_ARRAY;
+	}
+	
 	public ColumnedSortCriteriaList(final ArcadColumns referenceColumns) {
 		this(referenceColumns, false);
 	}
@@ -40,13 +43,6 @@ public class ColumnedSortCriteriaList extends AbstractColumnedCriteriaList {
 			result.add(c.duplicate());
 		}
 		return result;
-	}
-
-	/**
-	 * Return the array of sort order
-	 */
-	public String[] getSortOrder() {
-		return SORT_ORDER_ARRAY;
 	}
 
 	/*

@@ -51,7 +51,7 @@ public class XmlMessageFormatter extends AbstractMessageFormatter {
 				}
 			}
 		} catch (final Exception e) {
-			e.printStackTrace();
+			return false;			
 		}
 		return false;
 	}
@@ -121,8 +121,7 @@ public class XmlMessageFormatter extends AbstractMessageFormatter {
 			final String data = XMLUtils.outputXMLDocumentToString(document, StandardCharsets.UTF_8.name());
 			document = XMLUtils.createNewXMLDocument();
 			return data;
-		} catch (final Exception e) {
-			e.printStackTrace();
+		} catch (final Exception e) {			
 			return "";
 		}
 	}

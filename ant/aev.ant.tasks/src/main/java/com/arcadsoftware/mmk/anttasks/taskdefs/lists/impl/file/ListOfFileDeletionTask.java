@@ -11,7 +11,6 @@ import com.arcadsoftware.mmk.lists.metadata.StoreItem;
 public class ListOfFileDeletionTask extends AbstractXmlFileListFromResourcesTask {
 
 	private String deleteQuery = null;
-	private final String fromListFileName = null;
 
 	@Override
 	public int process() {

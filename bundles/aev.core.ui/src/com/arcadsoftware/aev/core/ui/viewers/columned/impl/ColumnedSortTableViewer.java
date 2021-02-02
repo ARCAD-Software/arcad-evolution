@@ -114,7 +114,6 @@ public class ColumnedSortTableViewer extends TableViewer {
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 
-		// 1�re colonne
 		TableColumn column = new TableColumn(table, SWT.NONE);
 		column.setText("ID"); //$NON-NLS-1$
 		column.setWidth(23);
@@ -127,13 +126,11 @@ public class ColumnedSortTableViewer extends TableViewer {
 			}
 		});
 
-		// 2�me colonne
 		column = new TableColumn(table, SWT.NONE);
 		column.setText(CoreUILabels.resString("tableColumn.clm.Columns")); //$NON-NLS-1$
 		column.setWidth(277);
 		column.setResizable(false);
 
-		// 3�me colonne
 		column = new TableColumn(table, SWT.NONE);
 		column.setText(CoreUILabels.resString("tableColumn.clm.SortOrder")); //$NON-NLS-1$
 		column.setWidth(140);
@@ -146,7 +143,7 @@ public class ColumnedSortTableViewer extends TableViewer {
 		final CellEditor[] editors = new CellEditor[columnNames.length];
 		editors[0] = null;
 		editors[1] = new ComboBoxCellEditor(getTable(), referenceColumns.getUserNameValues(), SWT.READ_ONLY);
-		editors[2] = new ComboBoxCellEditor(getTable(), ColumnedSortCriteriaList.SORT_ORDER_ARRAY, SWT.READ_ONLY);
+		editors[2] = new ComboBoxCellEditor(getTable(), ColumnedSortCriteriaList.getSortOrderArray(), SWT.READ_ONLY);
 
 		setCellEditors(editors);
 		setCellModifier(new ColumnedSortCellModifier(this, referenceColumns));
@@ -158,7 +155,7 @@ public class ColumnedSortTableViewer extends TableViewer {
 			return referenceColumns.getUserNameValues();
 		}
 		if (COL_ORDER.equals(property)) {
-			return ColumnedSortCriteriaList.SORT_ORDER_ARRAY;
+			return ColumnedSortCriteriaList.getSortOrderArray();
 		}
 		return new String[] {};
 	}

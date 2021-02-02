@@ -70,7 +70,6 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 
 	public static Message addAndPrintException(final Throwable e, final int level) {
-		e.printStackTrace();
 		return addException(e, level);
 	}
 

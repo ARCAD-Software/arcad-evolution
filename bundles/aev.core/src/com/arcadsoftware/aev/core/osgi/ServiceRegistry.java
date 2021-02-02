@@ -54,7 +54,7 @@ public final class ServiceRegistry {
 				return Optional.ofNullable(references.stream().map(context::getService).findFirst().orElse(null));
 			}
 		} catch (final InvalidSyntaxException e) {
-			e.printStackTrace();
+			return Optional.empty();
 		}
 		return Optional.empty();
 	}
@@ -67,7 +67,7 @@ public final class ServiceRegistry {
 						.stream()
 						.map(context::getService).collect(Collectors.toList());
 			} catch (final InvalidSyntaxException e) {
-				e.printStackTrace();
+				return Collections.emptyList();
 			}
 		}
 		return Collections.emptyList();

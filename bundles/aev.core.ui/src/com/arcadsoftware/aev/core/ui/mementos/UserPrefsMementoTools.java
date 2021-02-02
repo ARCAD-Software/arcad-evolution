@@ -28,7 +28,7 @@ public class UserPrefsMementoTools extends RootAndUserMementoTools {
 		return instance;
 	}
 
-	private String filename = null;
+	private String preferenceFilename = null;
 
 	private String filterElementId = StringTools.EMPTY;
 
@@ -42,8 +42,8 @@ public class UserPrefsMementoTools extends RootAndUserMementoTools {
 	 */
 	@Override
 	protected String getFileName() {
-		if (filename == null) {
-			filename = EvolutionCoreUIPlugin.getDefault().getStateLocation().toString()
+		if (preferenceFilename == null) {
+			preferenceFilename = EvolutionCoreUIPlugin.getDefault().getStateLocation().toString()
 					+ FILENAME;
 		}
 		final File directory = new File(EvolutionCoreUIPlugin.getDefault().getStateLocation().toString()
@@ -51,16 +51,18 @@ public class UserPrefsMementoTools extends RootAndUserMementoTools {
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
-		final File file = new File(filename);
+		final File file = new File(preferenceFilename);
 		if (!file.exists()) {
 			try {
-				file.createNewFile();
+				if(!file.createNewFile()) {
+					return null;
+				}
 			} catch (final IOException e) {
 				MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION).addDetail(MessageDetail.ERROR,
-						"File : " + filename);//$NON-NLS-1$
+						"File : " + preferenceFilename);//$NON-NLS-1$
 			}
 		}
-		return filename;
+		return preferenceFilename;
 	}
 
 	/**

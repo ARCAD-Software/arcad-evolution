@@ -3,7 +3,8 @@ package com.arcadsoftware.aev.core.ui.model;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -24,6 +25,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import com.arcadsoftware.aev.core.messages.MessageManager;
 import com.arcadsoftware.aev.core.model.IArcadPlugin;
+import com.arcadsoftware.aev.core.osgi.GlobalLogService;
+import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 
 public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPlugin, IHelperImage {
 	private class DecoratorImageDescriptor extends CompositeImageDescriptor {
@@ -59,15 +62,15 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 
 	protected ColorRegistry colorRegistry;
 	protected FontRegistry fontRegistry;
-	protected Hashtable<String, ImageDescriptor> imageDescriptorRegistry;
+	protected Map<String, ImageDescriptor> imageDescriptorRegistry;
 	protected ImageRegistry imageRegistry;
 
 	protected IShellProvider shellProvider;
 
 	public ArcadUIPlugin() {
-		imageDescriptorRegistry = new Hashtable<>();
+		imageDescriptorRegistry = new HashMap<>();
 		imageRegistry = null;
-		shellProvider = () -> ArcadUIPlugin.this.getPluginShell();
+		shellProvider = ArcadUIPlugin.this::getPluginShell;
 	}
 
 	public Color getColor(final String key) {
@@ -98,8 +101,7 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 
 	public ImageDescriptor getCompositeImageDescriptor(final Image base, final String decoKey) {
 		final ImageDescriptor overlay = getImageDescriptor(decoKey);
-		final DecoratorImageDescriptor deco = new DecoratorImageDescriptor(base.getImageData(), overlay.getImageData());
-		return deco;
+		return new DecoratorImageDescriptor(base.getImageData(), overlay.getImageData());
 	}
 
 	@Override
@@ -142,7 +144,7 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 		Image image = null;
 		try {
 			image = imageRegistry.get(key);
-		} catch (final Throwable t) {
+		} catch (final Exception t) {
 			MessageManager.addException(t, MessageManager.LEVEL_PRODUCTION);
 		}
 		return image;
@@ -154,8 +156,7 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 			imageRegistry = new ImageRegistry();
 			initializeImageRegistry();
 		}
-		final ImageDescriptor image = imageDescriptorRegistry.get(key);
-		return image;
+		return imageDescriptorRegistry.get(key);
 	}
 
 	public ImageDescriptor getPluginImage(final String fileName) {
@@ -176,10 +177,8 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 	}
 
 	public Shell getPluginShell() {
-		if (getWorkbench() != null) {
-			if (getWorkbench().getActiveWorkbenchWindow() != null) {
-				return getWorkbench().getActiveWorkbenchWindow().getShell();
-			}
+		if (getWorkbench() != null && getWorkbench().getActiveWorkbenchWindow() != null) {
+			return getWorkbench().getActiveWorkbenchWindow().getShell();
 		}
 		return null;
 	}
@@ -236,7 +235,7 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 		if (result != null) {
 			return result;
 		}
-		final int pos = key.indexOf(":"); //$NON-NLS-1$
+		final int pos = key.indexOf(':'); //$NON-NLS-1$
 		if (pos > 0) {
 			final String bundleId = key.substring(0, pos);
 			final String imageKey = key.substring(pos + 1);
@@ -255,9 +254,7 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 					imageRegistry.put(key, result);
 				}
 			} catch (final Exception e) {
-				e.printStackTrace();
-				// Bug potentiel ici: l'URL contient des espace au lieu de %20. correction:
-				// url = new URL(null,url.toString().replaceAll(" ", "%20")).toURI();
+				ServiceRegistry.lookupOrDie(GlobalLogService.class).debug(e);
 			}
 		}
 		return result;

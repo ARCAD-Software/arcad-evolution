@@ -100,7 +100,7 @@ public abstract class ArcadPreferencePage extends FieldEditorPreferencePage impl
 	 */
 	protected void addPwdStringField(final String key, final String label) {
 		final StringFieldEditor pwdFieldEditor = new StringFieldEditor(key, label, getFieldEditorParent());
-		pwdFieldEditor.getTextControl(getFieldEditorParent()).setEchoChar(GuiFormatTools.PWDChar);
+		pwdFieldEditor.getTextControl(getFieldEditorParent()).setEchoChar(GuiFormatTools.CHAR_MASK);
 		addField(pwdFieldEditor);
 	}
 

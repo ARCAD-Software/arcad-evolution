@@ -1,6 +1,7 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -20,21 +21,22 @@ public class ListExecuteTask extends AbstractXmlFileListCountedTask
 	private boolean holdIfFailed = false;
 	private boolean initStatusBeforeProcessing = false;
 
-	int itemCount = 0;
-	protected Vector<Task> nestedTasks = new Vector<>();
-	int nokCount = 0;
+	private int itemCount = 0;
+	protected List<Task> nestedTasks = new ArrayList<>();
+	private int nokCount = 0;
 
-	private final String nokCountProperty = null;
 
-	int okCount = 0;
-	private final String okCountProperty = null;
+	private int okCount = 0;
+	private String okCountProperty = null;
+	private String nokCountProperty = null;
+	
 	private boolean searchingForLastProcessedElement = false;
 
 	private boolean startOnLastProcessedElement = false;
 
 	@Override
 	public void addTask(final Task task) {
-		nestedTasks.addElement(task);
+		nestedTasks.add(task);
 	}
 
 	@Override
@@ -80,10 +82,7 @@ public class ListExecuteTask extends AbstractXmlFileListCountedTask
 	}
 
 	public void executeTasks(final StoreItem item) {
-		for (final Object element : nestedTasks) {
-			final Task nestedTask = (Task) element;
-			nestedTask.perform();
-		}
+		nestedTasks.forEach(Task::perform);
 	}
 
 	@Override
@@ -98,11 +97,11 @@ public class ListExecuteTask extends AbstractXmlFileListCountedTask
 			}
 			list.load(false, true);
 			final int result = list.browse(filter);
-			if (okCountProperty != null && !okCountProperty.equals("")) {
+			if (okCountProperty != null && !"".equals(okCountProperty)) {
 				getProject().setNewProperty(okCountProperty, String.valueOf(okCount));
 			}
 			// Mise à jour des propriétés de retour
-			if (nokCountProperty != null && !nokCountProperty.equals("")) {
+			if (nokCountProperty != null && !"".equals(nokCountProperty)) {
 				getProject().setNewProperty(nokCountProperty, String.valueOf(nokCount));
 			}
 			return result;
@@ -151,4 +150,11 @@ public class ListExecuteTask extends AbstractXmlFileListCountedTask
 		this.startOnLastProcessedElement = startOnLastProcessedElement;
 	}
 
+	public void setOkCountProperty(String okCountProperty) {
+		this.okCountProperty = okCountProperty;
+	}
+	
+	public void setNokCountProperty(String nokCountProperty) {
+		this.nokCountProperty = nokCountProperty;
+	}
 }

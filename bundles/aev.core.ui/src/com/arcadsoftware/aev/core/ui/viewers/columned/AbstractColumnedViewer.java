@@ -159,7 +159,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 			boolean newFilter = false;
 			if (showFilter == null) {
 				final ColumnedSearchCriteriaList list = new ColumnedSearchCriteriaList(displayedColumns);
-				showFilter = new ColumnedViewerFilter(list, displayedColumns, AbstractColumnedViewer.this);
+				showFilter = new ColumnedViewerFilter(list, AbstractColumnedViewer.this);
 				newFilter = true;
 			}
 			final ColumnedFilterDialog dialog = new ColumnedFilterDialog(EvolutionCoreUIPlugin.getShell(), showFilter

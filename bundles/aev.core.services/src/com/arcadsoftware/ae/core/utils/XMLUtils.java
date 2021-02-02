@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.xml.XMLConstants;
@@ -225,7 +226,7 @@ public class XMLUtils {
 						new StreamResult(new FileOutputStream(outFilename)));
 				if (deleteSourcefile) {
 					f = new File(xmlFilename);
-					f.delete();
+					Files.delete(f.toPath());
 				}
 				return f;
 			} catch (final Exception e) {

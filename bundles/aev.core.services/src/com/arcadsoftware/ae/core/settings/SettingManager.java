@@ -5,16 +5,18 @@ import java.lang.reflect.Method;
 import com.arcadsoftware.ae.core.utils.XMLUtils;
 
 public class SettingManager {
-
+	private SettingManager() {
+		
+	}
+	
 	public static Setting loadSettings(final String xmlFilename) {
 		final SettingParser parser = new SettingParser();
 		try {
 			XMLUtils.loadXmlDocument(xmlFilename, parser);
 			return parser.getSetting();
 		} catch (final Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+			return null;
+		}		
 	}
 
 	public static boolean setBeanBooleanValue(final Object bean, String setterName, final boolean value) {

@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.MatchingTask;
-import org.apache.tools.ant.taskdefs.condition.Os;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.PatternSet;
 import org.apache.tools.ant.types.ResourceCollection;
@@ -398,14 +397,11 @@ public abstract class DeleteFakeTask extends MatchingTask {
 	 * CHANGEMENT DE LA PORTEE de private en protected
 	 */
 	protected boolean delete(final File f) {
-		if (!f.delete()) {
-			if (Os.isFamily("windows")) {
-				System.gc();
-			}
+		if (!f.delete()) {			
 			try {
 				Thread.sleep(DELETE_RETRY_SLEEP_MILLIS);
 			} catch (final InterruptedException ex) {
-				// Ignore Exception
+				Thread.currentThread().interrupt();
 			}
 			if (!f.delete()) {
 				if (deleteOnExit) {

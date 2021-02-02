@@ -1,7 +1,6 @@
 package com.arcadsoftware.ae.core.utils;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 
 public class FilePathTools {
@@ -13,7 +12,7 @@ public class FilePathTools {
 		int pos = 0;
 		if (!path.equals("")) { //$NON-NLS-1$
 			if (path.length() > 0) {
-				pos = path.lastIndexOf(new Character(separator).toString());
+				pos = path.lastIndexOf(Character.toString(separator));
 				if (pos != -1) {
 					result = path.substring(0, pos);
 				} else {
@@ -37,7 +36,7 @@ public class FilePathTools {
 	public static final String extractLastPart(final String path, final char separator) {
 		int pos = 0;
 		if (path.length() > 0) {
-			pos = path.lastIndexOf(new Character(separator).toString());
+			pos = path.lastIndexOf(Character.toString(separator));
 			if (pos != -1) {
 				return path.substring(pos + 1, path.length());
 			} else {
@@ -52,19 +51,14 @@ public class FilePathTools {
 		try {
 			File f = new File(fileToSearch);
 			if (f.isAbsolute()) {
-				if (f.exists()) {
-					return f.getCanonicalPath();
-				} else {
-					return null;
-				}
+				return f.exists() ? f.getCanonicalPath() : null;
 			} else {
 				f = new File(parentDirectory, fileToSearch);
 				if (f.exists()) {
 					return f.getCanonicalPath();
 				} else {
 					final File dir = new File(parentDirectory);
-					final File[] dirs = dir.listFiles(
-							(FileFilter) File::isDirectory);
+					final File[] dirs = dir.listFiles(File::isDirectory);
 
 					for (final File dir2 : dirs) {
 						final String result = findFile(fileToSearch, dir2.getCanonicalPath());
@@ -75,7 +69,7 @@ public class FilePathTools {
 				}
 			}
 		} catch (final IOException e) {
-			e.printStackTrace();
+			return null;
 		}
 		return null;
 	}
@@ -91,7 +85,7 @@ public class FilePathTools {
 	}
 
 	public static String getExtension(final String fileName) {
-		final int pos = fileName.lastIndexOf("."); //$NON-NLS-1$
+		final int pos = fileName.lastIndexOf('.'); //$NON-NLS-1$
 		if (pos > -1) {
 			return fileName.substring(pos);
 		} else {
@@ -100,7 +94,7 @@ public class FilePathTools {
 	}
 
 	public static String getShortExtension(final String fileName) {
-		final int pos = fileName.lastIndexOf("."); //$NON-NLS-1$
+		final int pos = fileName.lastIndexOf('.'); //$NON-NLS-1$
 		if (pos > -1 && pos + 1 < fileName.length()) {
 			return fileName.substring(pos + 1);
 		} else {
@@ -128,11 +122,10 @@ public class FilePathTools {
 			String pathToSubstract,
 			final char separator) {
 		if (!pathToSubstract.equals("") && !path.equals("")) { //$NON-NLS-1$ //$NON-NLS-2$
-			if (pathToSubstract.toUpperCase().equals(path.toUpperCase())) {
+			if (pathToSubstract.equalsIgnoreCase(path)) {
 				return ""; //$NON-NLS-1$
 			} else {
 				if (pathToSubstract.charAt(pathToSubstract.length() - 1) != separator) {
-					// pathToSubstract.concat(new Character(separator).toString());
 					pathToSubstract = pathToSubstract + separator;
 				}
 
@@ -148,10 +141,8 @@ public class FilePathTools {
 		}
 	}
 
-	/**
-	 *
-	 */
-	public FilePathTools() {
+	private FilePathTools() {
+		
 	}
 
 }
