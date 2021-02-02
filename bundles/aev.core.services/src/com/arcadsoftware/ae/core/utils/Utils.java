@@ -5,10 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,44 +16,12 @@ import java.util.List;
  */
 public class Utils {
 	protected static final String ARCAD_HOME = "ARCAD_HOME";
-	private static final Class<?>[] parameters = new Class[] { URL.class };
-
-	public static void addFile(final File f) throws IOException {
-		addURL(f.toURI().toURL());
-	}
-
-	public static void addFile(final String s) throws IOException {
-		final File f = new File(s);
-		addFile(f);
-	}
-
-	public static void addURL(final URL u) throws IOException {
-		final URLClassLoader sysloader = (URLClassLoader) ClassLoader.getSystemClassLoader();
-		final Class<URLClassLoader> sysclass = URLClassLoader.class;
-		try {
-			final Method method = sysclass.getDeclaredMethod("addURL", parameters);
-			method.setAccessible(true);
-			method.invoke(sysloader, u);
-		} catch (final Exception t) {
-			throw new IOException("Error, could not add URL to system classloader");
-		}
-	}
-
+		
 	public static synchronized String computeId() {
 		final SimpleDateFormat fd = new SimpleDateFormat("yyyyMMddhhmmssSSS");
 		return fd.format(new Date());
 	}
 
-	/**
-	 * Méthode permettant de créer un tableau de File associé é chaque fichier contenu dans un répertoire spécifique
-	 * passé en paramétre.
-	 *
-	 * @param libFolder
-	 *            : File : Répertoire de base
-	 * @param recursive
-	 *            : Analyse récursive
-	 * @return Tableau des URL
-	 */
 	public static File[] getFiles(final File libFolder, final boolean recursive) {
 		if (libFolder.exists()) {
 			final File[] list = libFolder.listFiles();
@@ -104,31 +68,6 @@ public class Utils {
 		} else {
 			return folder;
 		}
-	}
-
-	/**
-	 * Méthode permettant de créer un tableau d'URL associé é chaque fichier contenu dans un répertoire spécifique passé
-	 * en paramétre.
-	 *
-	 * @param libFolder
-	 *            : File : Répertoire de base
-	 * @param recursive
-	 *            : Analyse récursive
-	 * @return Tableau des URL
-	 * @throws MalformedURLException
-	 */
-	public static URL[] getURLs(final File libFolder, final boolean recursive) throws MalformedURLException {
-		final File[] files = getFiles(libFolder, recursive);
-		final List<URL> l = new ArrayList<>(files.length);
-		for (final File file : files) {
-			final URL u = file.toURI().toURL();
-			l.add(u);
-		}
-		final URL[] result = new URL[l.size()];
-		for (int i = 0; i < l.size(); i++) {
-			result[i] = l.get(i);
-		}
-		return result;
 	}
 
 	/**
@@ -232,17 +171,8 @@ public class Utils {
 			return sb.toString();
 		}
 		return sb.toString().substring(0, length);
-	}
-
-	public static void setUrls(final String folder) throws IOException {
-		// Récupération des URL représentant les fichiers stockés dans
-		// le répertoire des URL
-		final URL[] urls = Utils.getURLs(new File(folder), true);
-		for (final URL url : urls) {
-			Utils.addURL(url);
-		}
-	}
-
+	}	
+	
 	public static void sleepForAWhile(final long millisecond) {
 		try {
 			Thread.sleep(millisecond);

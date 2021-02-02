@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.CDATASection;
@@ -30,7 +32,8 @@ import com.arcadsoftware.aev.core.tools.XMLTools;
  * @author MD
  */
 public class MessageManager implements IDiagnosisProvider {
-
+	private static Logger logger = Logger.getLogger(MessageManager.class.getName());
+	
 	private static List<Object> contextPlugins = new ArrayList<>();
 	private static int firstBlockMessage = 0;
 	private static final MessageManager instance = new MessageManager();
@@ -70,6 +73,7 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 
 	public static Message addAndPrintException(final Throwable e, final int level) {
+		logger.log(Level.INFO, e.getMessage(), e);
 		return addException(e, level);
 	}
 
@@ -479,5 +483,4 @@ public class MessageManager implements IDiagnosisProvider {
 	public String getDiagnosisFileName() {
 		return "Message_manager.log";
 	}
-
 }

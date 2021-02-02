@@ -11,6 +11,7 @@ Import-Package: com.arcadsoftware.ae.core.logger,
  org.springframework.context,
  org.springframework.context.support,
  org.springframework.core,
+ org.springframework.core.io,
  org.w3c.dom
 Bundle-ClassPath: .
 Bundle-Version: 11.0.0.qualifier

@@ -2,6 +2,11 @@ package com.arcadsoftware.aev.core.spring.factory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -42,15 +47,23 @@ public abstract class AbstractFactory {
 		final String extensionFolder = getExtensionFolder();
 		if (extensionFolder != null) {
 			try {
-				Utils.setUrls(extensionFolder);
+				ctx = new FileSystemXmlApplicationContext(getConfigurationFiles());
+				ctx.setClassLoader(new URLClassLoader(getJarURLs().toArray(new URL[0]), ClassLoader.getSystemClassLoader()));
 			} catch (final IOException e) {
 				throw new FactoryInitializationException(getClass(), e);
 			}
 		}
-
-		ctx = new FileSystemXmlApplicationContext(getConfigurationFiles());
-
+		
 		doAfterInitializing();
 	}
 
+	private List<URL> getJarURLs() throws MalformedURLException {
+		final File[] files = Utils.getFiles(new File(getExtensionFolder()), true);
+		final List<URL> urls = new ArrayList<>(files.length);
+		for(final File file : files) {
+			urls.add(file.toURI().toURL());	
+		}
+		
+		return urls;
+	}
 }
