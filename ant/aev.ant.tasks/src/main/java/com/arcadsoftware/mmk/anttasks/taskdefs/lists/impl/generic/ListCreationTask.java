@@ -1,6 +1,8 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.generic;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Vector;
 
 import org.apache.tools.ant.BuildException;
@@ -184,8 +186,11 @@ public class ListCreationTask extends AbstractXmlFileListWithItem {
 				throw new BuildException("File already exists!");
 			} else {
 				// Sinon on supprime le fichier
-				if (!f.delete()) {
-					throw new BuildException("File Replacement failed!");
+				try {
+					Files.delete(f.toPath());
+				}
+				catch(IOException e) {
+					throw new BuildException("File Replacement failed!", e);
 				}
 			}
 		}

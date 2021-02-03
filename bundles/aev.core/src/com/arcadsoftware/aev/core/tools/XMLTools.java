@@ -7,8 +7,10 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.xml.XMLConstants;
@@ -191,9 +193,11 @@ public class XMLTools {
 
 	public static void writeXMLDocumentToFile(final Document document, final File targetFile, final String encoding) {
 		try {
+			Files.deleteIfExists(targetFile.toPath());
+			Optional.ofNullable(targetFile.getParentFile()).ifPresent(File::mkdirs);
 			final DOMSource source = new DOMSource(document);
-			final StreamResult sortie = new StreamResult(targetFile);
-			getStandardTransformer(true, encoding).transform(source, sortie);
+			final StreamResult output = new StreamResult(targetFile);
+			getStandardTransformer(true, encoding).transform(source, output);
 		} catch (final Exception e) {
 			MessageManager.addAndPrintException(e);
 		}

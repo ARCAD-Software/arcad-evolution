@@ -2,6 +2,7 @@ package com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import org.apache.tools.ant.BuildException;
@@ -42,13 +43,11 @@ public class CopyFileHelper extends AbstractRollbackableTaskHelper {
 				// Traitement du mode overwrite.
 				// Si le fichier de destination existe et qu'il est
 				// plus recent que le fichier source, on ne fait rien
-				if (source != null) {
-					if (!overwrite) {
-						final File sourceFile = new File(source);
-						final long slm = sourceFile.lastModified();
-						if (slm != 0 && fileToBackupFile.lastModified() > slm) {
-							return;
-						}
+				if (source != null && !overwrite) {
+					final File sourceFile = new File(source);
+					final long slm = sourceFile.lastModified();
+					if (slm != 0 && fileToBackupFile.lastModified() > slm) {
+						return;
 					}
 				}
 				final String[] pathes = FileUtils.getFileUtils().dissect(fileToBackup);
@@ -115,37 +114,26 @@ public class CopyFileHelper extends AbstractRollbackableTaskHelper {
 	public void restoreFile(final String dataDir, final String fileToRestore, final String status) {
 		final String[] pathes = FileUtils.getFileUtils().dissect(fileToRestore);
 		final String backedupFile = getBackupRoot() + File.separator + dataDir + File.separator + pathes[1];
-		System.out.println("restoreFile::backedupFile : " + backedupFile);
-		System.out.println("restoreFile::getBackupRoot() : " + getBackupRoot());
 		if (status.equals(UPDATED)) {
-			System.out.println("Status : Updated");
 			if (new File(backedupFile).exists()) {
-				System.out.println("-> BackedUp File exists");
 				try {
-					System.out.println("-> Creation of restored File :" + fileToRestore);
 					final File f = new File(fileToRestore);
 					if (!f.exists()) {
-						System.out.println("-> Creation process");
 						FileUtils.getFileUtils().createNewFile(f, true);
 					}
-					System.out.println("-> restoration");
 					FileUtils.getFileUtils().copyFile(backedupFile, fileToRestore, null, true);
 				} catch (final IOException e) {
-					System.out.println("***EXCEPTION *** : " + e.getMessage());
 					throw new BuildException("Unable to restore file!", e, task.getTask().getLocation());
 				}
 			}
 		} else if (status.equals(CREATED)) {
-			System.out.println("-> Delete file " + fileToRestore);
-
 			// Si le fichier a restaurer existe mais qu'aucun fichier correspondant
 			// n'existe dans le repertoire de backup, on supprime le fichier de destination.
 			final File file = new File(fileToRestore);
 			if (file.exists()) {
 				try {
-					org.apache.commons.io.FileUtils.forceDelete(file);
+					Files.delete(file.toPath());
 				} catch (final IOException e) {
-					System.out.println("***EXCEPTION *** : " + e.getMessage());
 					throw new BuildException("Unable to delete file!", e, task.getTask().getLocation());
 				}
 			}

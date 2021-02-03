@@ -1,6 +1,8 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.rollback;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -12,6 +14,7 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.PatternSet;
+import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.apache.tools.ant.types.resources.FileResourceIterator;
@@ -397,13 +400,21 @@ public abstract class DeleteFakeTask extends MatchingTask {
 	 * CHANGEMENT DE LA PORTEE de private en protected
 	 */
 	protected boolean delete(final File f) {
-		if (!f.delete()) {			
+		try {
+			Files.delete(f.toPath());
+			return true;
+		}
+		catch(IOException e) {
+			log(e, Project.MSG_WARN);
 			try {
-				Thread.sleep(DELETE_RETRY_SLEEP_MILLIS);
-			} catch (final InterruptedException ex) {
+				Thread.sleep(DELETE_RETRY_SLEEP_MILLIS);			
+				Files.deleteIfExists(f.toPath());
+				return true;
+			}
+			catch(InterruptedException ie) {
 				Thread.currentThread().interrupt();
 			}
-			if (!f.delete()) {
+			catch(IOException ex) {
 				if (deleteOnExit) {
 					final int level = quiet ? Project.MSG_VERBOSE : Project.MSG_INFO;
 					log("Failed to delete " + f + ", calling deleteOnExit."
@@ -412,10 +423,12 @@ public abstract class DeleteFakeTask extends MatchingTask {
 					f.deleteOnExit();
 					return true;
 				}
-				return false;
-			}
+				else {
+					log(e, Project.MSG_WARN);
+				}
+			}			
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -518,7 +531,7 @@ public abstract class DeleteFakeTask extends MatchingTask {
 		}
 		try {
 			if (resourcesToDelete.isFilesystemOnly()) {
-				for (final Object element : resourcesToDelete) {
+				for (final Resource element : resourcesToDelete) {
 					final FileResource r = (FileResource) element;
 					// nonexistent resources could only occur if we already
 					// deleted something from a fileset:
@@ -527,9 +540,15 @@ public abstract class DeleteFakeTask extends MatchingTask {
 					}
 					if (!r.isDirectory() || r.getFile().list().length == 0) {
 						log("Deleting " + r, verbosity);
-						if (!delete(r.getFile()) && failonerror) {
-							handle("Unable to delete "
-									+ (r.isDirectory() ? "directory " : "file ") + r);
+						try {
+							Files.delete(r.getFile().toPath());
+						}
+						catch(IOException e) {
+							if (failonerror) {
+								handle("Unable to delete "
+										+ (r.isDirectory() ? "directory " : "file ") + r);
+								handle(e);
+							}
 						}
 					}
 				}

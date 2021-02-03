@@ -1,6 +1,8 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.rollback;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import org.apache.tools.ant.Project;
 
@@ -11,13 +13,18 @@ public abstract class AbstractArcadDeleteTask extends DeleteFakeTask {
 		// <added lines>
 		if (doBeforeDeleting(f)) {
 			// </added lines>
-			if (!f.delete()) {
+			try {
+				Files.delete(f.toPath());
+				return true;
+			}
+			catch(IOException e) {
+				log(e, Project.MSG_WARN);
 				try {
 					Thread.sleep(getRetryDelay());
-				} catch (final InterruptedException ex) {
-					Thread.currentThread().interrupt();
+					Files.delete(f.toPath());
+					return true;
 				}
-				if (!f.delete()) {
+				catch(IOException ex) {
 					if (isDeleteOnExit()) {
 						final int level = isQuiet() ? Project.MSG_VERBOSE : Project.MSG_INFO;
 						log("Failed to delete " + f + ", calling deleteOnExit."
@@ -26,15 +33,18 @@ public abstract class AbstractArcadDeleteTask extends DeleteFakeTask {
 						f.deleteOnExit();
 						return true;
 					}
-					return false;
+					else {
+						log(ex, Project.MSG_WARN);
+						return false;
+					}
+				}
+				catch (InterruptedException e1) {
+					log(e1, Project.MSG_WARN);
+					Thread.currentThread().interrupt();
 				}
 			}
-			return true;
-			// <added lines>
-		} else {
-			return false;
 		}
-		// </added lines>
+		return false;
 	}
 
 	public abstract void doAfterExecuting();

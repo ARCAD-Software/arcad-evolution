@@ -17,11 +17,14 @@ public class XmlUtils {
 	
 	public static boolean changeXmlFile(final IXmlLists list, final String filename) {
 		final File f = new File(list.getXmlFileName());
-		if (f.delete()) {
+		try {
+			Files.deleteIfExists(f.toPath());
 			final File nf = new File(filename);
 			return nf.renameTo(f);
 		}
-		return false;
+		catch(IOException e) {
+			return false;
+		}
 	}
 
 	public static IXmlLists createTempList(final AbstractArcadList listToClone) {

@@ -6,7 +6,6 @@ package com.arcadsoftware.aev.core.messages;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -16,7 +15,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -290,7 +288,6 @@ public class MessageManager implements IDiagnosisProvider {
 				return filteredMessages;
 			}
 		}
-		// return Collections.emptyList();
 		return null;
 	}
 
@@ -306,13 +303,6 @@ public class MessageManager implements IDiagnosisProvider {
 		List<Message> msgs = messageList;
 		if (messageList == null) {
 			msgs = messages;
-		}
-		final File file = new File(fileName);
-		try (final FileOutputStream fileOutput = FileUtils.openOutputStream(file)) {
-			// This will create the parent path and try to open the file
-		} catch (final Exception e) {
-			addException(e);
-			return;
 		}
 
 		try {
@@ -379,7 +369,7 @@ public class MessageManager implements IDiagnosisProvider {
 				root.appendChild(msg);
 			}
 			document.appendChild(root);
-			XMLTools.writeXMLDocumentToFile(document, file, StandardCharsets.UTF_8.name());
+			XMLTools.writeXMLDocumentToFile(document, new File(fileName), StandardCharsets.UTF_8.name());
 		} catch (final Exception e) {
 			addExceptionBeta(e);
 		}

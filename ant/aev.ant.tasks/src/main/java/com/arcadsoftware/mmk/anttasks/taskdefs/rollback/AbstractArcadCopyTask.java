@@ -2,6 +2,7 @@ package com.arcadsoftware.mmk.anttasks.taskdefs.rollback;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Enumeration;
 
 import org.apache.tools.ant.BuildException;
@@ -47,9 +48,8 @@ public abstract class AbstractArcadCopyTask extends Copy {
 							executionFilters
 									.addFilterSet(getProject().getGlobalFilterSet());
 						}
-						for (final Object element : getFilterSets()) {
-							executionFilters
-									.addFilterSet((FilterSet) element);
+						for (final FilterSet element : getFilterSets()) {
+							executionFilters.addFilterSet( element);
 						}
 
 						doBeforeCopying(fromFile, toFile, forceOverwrite);
@@ -63,8 +63,13 @@ public abstract class AbstractArcadCopyTask extends Copy {
 						String msg = "Failed to copy " + fromFile + " to " + toFile
 								+ " due to " + getCause(ioe);
 						final File targetFile = new File(toFile);
-						if (targetFile.exists() && !targetFile.delete()) {
-							msg += " and I couldn't delete the corrupt " + toFile;
+						if (targetFile.exists()) {
+							try {
+								Files.delete(targetFile.toPath());
+							}
+							catch(IOException ioex) {
+								msg += " and I couldn't delete the corrupt " + toFile + ": " + ioex.getLocalizedMessage();
+							}
 						}
 						if (failonerror) {
 							throw new BuildException(msg, ioe, getLocation());

@@ -1,6 +1,8 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.lists.impl.file;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import org.apache.tools.ant.BuildException;
 
@@ -12,7 +14,7 @@ public class ListOfFileCreationTask extends AbstractListFillTask {
 	private boolean checkDuplication = false;
 	private String comment = null;
 
-	private String description = null;
+	private String listDescription = null;
 	private boolean replaceFileIfExists = false;
 
 	@Override
@@ -40,7 +42,7 @@ public class ListOfFileCreationTask extends AbstractListFillTask {
 			count2 = list.addItems(filler, checkIfExists, replaceIfExists);
 		}
 
-		updateHeaderInfo(description, comment);
+		updateHeaderInfo(listDescription, comment);
 
 		return count1 + count2;
 	}
@@ -67,7 +69,7 @@ public class ListOfFileCreationTask extends AbstractListFillTask {
 	 */
 	@Override
 	public void setDescription(final String description) {
-		this.description = description;
+		this.listDescription = description;
 	}
 
 	/**
@@ -94,8 +96,11 @@ public class ListOfFileCreationTask extends AbstractListFillTask {
 				throw new BuildException("File already exists!");
 			} else {
 				// Sinon on supprime le fichier
-				if (!f.delete()) {
-					throw new BuildException("File Replacement failed!");
+				try {
+					Files.delete(f.toPath());
+				}
+				catch(IOException e) {
+					throw new BuildException("File Replacement failed!", e);
 				}
 			}
 		}

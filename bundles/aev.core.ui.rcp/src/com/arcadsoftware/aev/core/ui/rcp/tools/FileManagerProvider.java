@@ -1,5 +1,6 @@
 package com.arcadsoftware.aev.core.ui.rcp.tools;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -26,10 +29,7 @@ import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.tools.IFileManagerProvider;
 
 import net.sf.jmimemagic.Magic;
-import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
-import net.sf.jmimemagic.MagicMatchNotFoundException;
-import net.sf.jmimemagic.MagicParseException;
 
 @Component(service = IFileManagerProvider.class)
 public class FileManagerProvider implements IFileManagerProvider {
@@ -47,11 +47,7 @@ public class FileManagerProvider implements IFileManagerProvider {
 					return mimeType.substring(pos + 1);
 				}
 			}
-		} catch (final MagicParseException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
-		} catch (final MagicMatchNotFoundException e) {
-			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
-		} catch (final MagicException e) {
+		} catch (final Exception e) {
 			MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
 		}
 		return BIN_EXTENSION;
@@ -94,59 +90,46 @@ public class FileManagerProvider implements IFileManagerProvider {
 
 	@Override
 	public void openFileFromStream(final InputStream stream, final String tempFileName) {
-		if (tempFileName != null && tempFileName.length() > 0) {
-			if (stream != null) {
-				FileOutputStream out = null;
-				File tempFile = null;
-				try {
-					tempFile = File.createTempFile("customer_", '_' + tempFileName); //$NON-NLS-1$
-					tempFile.deleteOnExit();
-					out = new FileOutputStream(tempFile);
-					final byte buf[] = new byte[1024];
-					int len;
-					while ((len = stream.read(buf)) > 0) {
-						out.write(buf, 0, len);
-					}
-				} catch (final IOException e1) {
-					MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);
-				} finally {
-					if (out != null) {
-						try {
-							out.close();
-						} catch (final IOException e1) {
-							MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);
-						}
-					}
-					try {
-						stream.close();
-					} catch (final IOException e1) {
-						MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);
-					}
-				}
-				if (tempFile != null) {
-					final String actualFilename = tempFile.getAbsolutePath();
-					final String extension = FilenameUtils.getExtension(actualFilename);
-					final String basename = FilenameUtils.getBaseName(actualFilename);
-					final String path = FilenameUtils.getPath(actualFilename);
-					if (extension.equalsIgnoreCase(BIN_EXTENSION)) {
-						final String realExtension = discoverFileExtension(actualFilename);
-						if (!realExtension.equalsIgnoreCase(BIN_EXTENSION)) {
-							final File realFile = new File(path, basename + "." + realExtension); //$NON-NLS-1$
-							try {
-								FileUtils.copyFile(tempFile, realFile);
-								openTempFile(realFile);
-							} catch (final IOException e) {
-								MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
-							}
-						} else {
-							openTempFile(tempFile);
-						}
-					} else {
-						openTempFile(tempFile);
-					}
-				}
+		if (StringUtils.isNotBlank(tempFileName) && stream != null) {
+			final File tempFile;
+			try {
+				tempFile = File.createTempFile("tempfile_", '_' + tempFileName);
+				tempFile.deleteOnExit();
+			} catch (IOException e1) {
+				MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);
+				return;
+			} 
+			
+			try (
+				BufferedInputStream input = new BufferedInputStream(stream);	
+				FileOutputStream output = FileUtils.openOutputStream(tempFile)
+			){				
+				IOUtils.copyLarge(input, output);
+			} catch (final IOException e1) {
+				MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);
 			}
-		}
+
+			final String actualFilename = tempFile.getAbsolutePath();
+			final String extension = FilenameUtils.getExtension(actualFilename);
+			final String basename = FilenameUtils.getBaseName(actualFilename);
+			final String path = FilenameUtils.getPath(actualFilename);
+			if (extension.equalsIgnoreCase(BIN_EXTENSION)) {
+				final String realExtension = discoverFileExtension(actualFilename);
+				if (!realExtension.equalsIgnoreCase(BIN_EXTENSION)) {
+					final File realFile = new File(path, basename + "." + realExtension); //$NON-NLS-1$
+					try {
+						FileUtils.copyFile(tempFile, realFile);
+						openTempFile(realFile);
+					} catch (final IOException e) {
+						MessageManager.addException(e, MessageManager.LEVEL_PRODUCTION);
+					}
+				} else {
+					openTempFile(tempFile);
+				}
+			} else {
+				openTempFile(tempFile);
+			}			
+		}	
 	}
 
 	@Override
