@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
 		<artifactId>software-factory</artifactId>
-		<version>3.2.4-SNAPSHOT</version>
+		<version>3.2.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev</artifactId>
@@ -84,8 +84,9 @@
 						<plugin id="org.eclipse.rap.ui.forms"/>
 						<plugin id="org.eclipse.rap.ui.views"/>
 						<plugin id="org.eclipse.rap.ui.workbench"/>
+						<plugin id="com.arcadsoftware.asteroids.google.re2" />
 						<feature id="com.arcadsoftware.rap.feature"/>
-						<feature id="com.arcadsoftware.asteroids.spring.feature"/>
+						<feature id="com.arcadsoftware.asteroids.spring.feature"/>						
 					</excludes>
 				</configuration>
 			</plugin>

@@ -27,24 +27,9 @@
 			<version>2.3.3</version>
 		</dependency>
 		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>1.4.15</version>
-			<!-- 
-			<exclusions>
-				<exclusion>
-					<groupId>xpp3</groupId>
-					<artifactId>xpp3_min</artifactId>
-				</exclusion>
-			</exclusions>
-			 -->
-		</dependency>
-		<!-- 
-		<dependency>
 			<groupId>org.apache.servicemix.bundles</groupId>
 			<artifactId>org.apache.servicemix.bundles.xpp3</artifactId>
 			<version>1.1.4c_7</version>
 		</dependency>
-		 -->
 	</dependencies>
 </project>
