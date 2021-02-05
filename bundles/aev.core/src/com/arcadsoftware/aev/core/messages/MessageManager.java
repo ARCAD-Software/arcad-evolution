@@ -59,7 +59,34 @@ public class MessageManager implements IDiagnosisProvider {
 	public static final int SHOW_ANYERROR = SHOW_WARNING | SHOW_ERROR | SHOW_EXCEPTION;
 
 	
-
+	public static void log(final Level level, final String message) {
+		logger.log(level, message);
+	}
+	public static void log(final Level level, final String message, final Throwable e) {
+		logger.log(level, message, e);
+	}
+	
+	public static void logError(final String message, final Throwable e) {
+		log(Level.SEVERE, message, e);
+	}
+	public static void logError(final String message) {
+		log(Level.SEVERE, message);
+	}
+	
+	public static void logInfo(final String message, final Throwable e) {
+		log(Level.INFO, message, e);
+	}
+	public static void logInfo(final String message) {
+		log(Level.INFO, message);
+	}
+	
+	public static void logDiagnostic(final String message, final Throwable e) {
+		log(Level.FINE, message, e);
+	}
+	public static void logDiagnostic(final String message) {
+		log(Level.FINE, message);
+	}
+	
 	/**
 	 * Log and print an exception at level production.
 	 *
@@ -71,7 +98,7 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 
 	public static Message addAndPrintException(final Throwable e, final int level) {
-		logger.log(Level.INFO, e.getMessage(), e);
+		logInfo(e.getMessage(), e);
 		return addException(e, level);
 	}
 
@@ -88,6 +115,21 @@ public class MessageManager implements IDiagnosisProvider {
 		return addException(e, LEVEL_PRODUCTION);
 	}
 	// </MR>
+	
+	
+	public static String writeStackTrace(final Throwable e) throws IOException {
+		try (final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+			try (PrintWriter writer = new PrintWriter(out, true)) {
+				e.printStackTrace(writer);
+			}
+			return out.toString();
+		}
+	}
+	public static String printStackTrace(final Throwable e) throws IOException {
+		String msg = writeStackTrace(e);
+		logInfo(msg);
+		return msg;
+	}
 
 	/**
 	 * Ajout d'un message li� au d�clenchement d'un exception.
@@ -109,12 +151,8 @@ public class MessageManager implements IDiagnosisProvider {
 		messages.add(message);
 		fireAddMessage(message, e);
 		// </FM>
-		try (final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-			try (PrintWriter writer = new PrintWriter(out, true)) {
-				e.printStackTrace(writer);
-			}
-
-			final String s = out.toString();
+		try  {
+			final String s = writeStackTrace(e);
 			if (s != null && s.length() > 0) {
 				message.addDetail(SHOW_EXCEPTION, s);
 			}
