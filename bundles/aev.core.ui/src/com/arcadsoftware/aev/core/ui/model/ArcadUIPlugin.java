@@ -55,7 +55,8 @@ public abstract class ArcadUIPlugin extends AbstractUIPlugin implements IArcadPl
 	}
 
 	protected static final String ICON_PATH = "icons/";
-
+	protected static final String ICON_PLATFORM_PATH = "platform:/plugin/com.arcadsoftware.documentation.icons/icons/";
+	
 	public static String getIconPath() {
 		return ICON_PATH;
 	}
