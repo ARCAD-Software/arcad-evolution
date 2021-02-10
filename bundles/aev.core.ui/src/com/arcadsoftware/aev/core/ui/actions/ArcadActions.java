@@ -27,6 +27,22 @@ public abstract class ArcadActions {
 		this.container = container;
 	}
 
+	public void appendAction(final ArcadAction a) {
+		addAction(a);
+	}
+
+	public void appendSeparator() {
+		addSeparator();
+	}
+	
+	public void prependAction(final ArcadAction a) {
+		actions.add(0, a);
+	}
+
+	public void prependSeparator() {
+		actions.add(0, new ArcadSeparator());
+	}
+	
 	public void addAction(final ArcadAction a) {
 		actions.add(a);
 	}
