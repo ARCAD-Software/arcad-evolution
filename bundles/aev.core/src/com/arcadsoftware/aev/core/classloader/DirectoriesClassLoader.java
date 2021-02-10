@@ -3,6 +3,7 @@ package com.arcadsoftware.aev.core.classloader;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -21,18 +22,30 @@ import com.arcadsoftware.aev.core.messages.MessageManager;
 
 public class DirectoriesClassLoader extends URLClassLoader {
 	private static URL[] getURLs(final String... paths) {
-		final Set<URL> urls = new HashSet<>();
+		final Set<URI> urls = new HashSet<>();
 		Stream.of(paths).filter(StringUtils::isNotBlank).map(Paths::get).forEach(path -> loadURLs(urls, path));
-		return urls.toArray(new URL[urls.size()]);
+		return urls.stream().map(uri -> {
+			try {
+				return uri.toURL();
+			}
+			catch (MalformedURLException e) {
+				MessageManager.addAndPrintException(e);
+				return null;
+			}
+		})
+		.filter(Objects::nonNull)
+		.collect(Collectors.toSet())
+		.toArray(new URL[0]);
 	}
 
-	private static void loadURLs(final Set<URL> urls, final Path path) {
+	private static void loadURLs(final Set<URI> urls, final Path path) {
 		try (final Stream<Path> stream = Files.walk(path, Integer.MAX_VALUE)) {
 			stream.map(Path::toFile) //
 					.filter(DirectoriesClassLoader::isJarOrClass) //
-					.map(DirectoriesClassLoader::toURL) //
+					.map(File::toURI) //
 					.filter(Objects::nonNull) //
-					.collect(Collectors.toSet()).forEach(urls::add);
+					.collect(Collectors.toSet()) //
+					.forEach(urls::add);
 		} catch (IOException e) {
 			MessageManager.addAndPrintException(e);
 		}
@@ -41,14 +54,6 @@ public class DirectoriesClassLoader extends URLClassLoader {
 	private static boolean isJarOrClass(final File file) {
 		final String name = file.getName().toLowerCase();
 		return name.endsWith(".jar") || name.endsWith(".class");
-	}
-
-	private static URL toURL(final File file) {
-		try {
-			return file.toURI().toURL();
-		} catch (MalformedURLException e) {
-			return null;
-		}
 	}
 
 	public DirectoriesClassLoader(final String... paths) {
