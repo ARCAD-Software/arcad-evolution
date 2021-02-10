@@ -9,6 +9,7 @@ package com.arcadsoftware.aev.core.ui.container;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.graphics.Image;
@@ -45,4 +46,10 @@ public interface IContainer extends IAdaptable {
 	boolean valideDrop(Object source);
 
 	boolean valideDrop(TransferData source);
+
+	default void expand() {
+		if (this.getViewer() instanceof AbstractTreeViewer) {
+			((AbstractTreeViewer) this.getViewer()).expandToLevel(this, 1);
+		}
+	}
 }
