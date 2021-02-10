@@ -9,6 +9,7 @@ Bundle-Vendor: ARCAD Software
 Bundle-Localization: plugin
 Automatic-Module-Name: com.arcadsoftware.aev.core
 Export-Package: com.arcadsoftware.aev.core,
+ com.arcadsoftware.aev.core.classloader,
  com.arcadsoftware.aev.core.collections,
  com.arcadsoftware.aev.core.contentproviders,
  com.arcadsoftware.aev.core.messages,
