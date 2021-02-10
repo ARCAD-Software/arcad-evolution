@@ -14,33 +14,34 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.arcadsoftware.aev.core.messages.MessageManager;
 
 public class DirectoriesClassLoader extends URLClassLoader {
-	private static URL[] getURLs(final String...paths){
+	private static URL[] getURLs(final String... paths) {
 		final Set<URL> urls = new HashSet<>();
-		Stream.of(paths).map(Paths::get).forEach(path -> loadURLs(urls, path));
+		Stream.of(paths).filter(StringUtils::isNotBlank).map(Paths::get).forEach(path -> loadURLs(urls, path));
 		return urls.toArray(new URL[urls.size()]);
 	}
-	
+
 	private static void loadURLs(final Set<URL> urls, final Path path) {
-		try (final Stream<Path> stream = Files.walk(path, Integer.MAX_VALUE)){
+		try (final Stream<Path> stream = Files.walk(path, Integer.MAX_VALUE)) {
 			stream.map(Path::toFile) //
-						.filter(DirectoriesClassLoader::isJarOrClass) //
-						.map(DirectoriesClassLoader::toURL) //
-						.filter(Objects::nonNull) //
-						.collect(Collectors.toSet())
-						.forEach(urls::add);
+					.filter(DirectoriesClassLoader::isJarOrClass) //
+					.map(DirectoriesClassLoader::toURL) //
+					.filter(Objects::nonNull) //
+					.collect(Collectors.toSet()).forEach(urls::add);
 		} catch (IOException e) {
 			MessageManager.addAndPrintException(e);
 		}
 	}
-	
-	private static boolean isJarOrClass(final File file){
+
+	private static boolean isJarOrClass(final File file) {
 		final String name = file.getName().toLowerCase();
 		return name.endsWith(".jar") || name.endsWith(".class");
 	}
-	
+
 	private static URL toURL(final File file) {
 		try {
 			return file.toURI().toURL();
@@ -48,8 +49,8 @@ public class DirectoriesClassLoader extends URLClassLoader {
 			return null;
 		}
 	}
-	
-	public DirectoriesClassLoader(final String...paths) {
+
+	public DirectoriesClassLoader(final String... paths) {
 		super(getURLs(paths), ClassLoader.getSystemClassLoader());
 	}
 }
