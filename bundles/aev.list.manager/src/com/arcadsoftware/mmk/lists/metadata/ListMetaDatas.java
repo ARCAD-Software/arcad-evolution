@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.arcadsoftware.ae.core.exceptions.ArcadException;
+import com.arcadsoftware.aev.core.messages.MessageManager;
 
 public class ListMetaDatas {
 
@@ -146,7 +147,7 @@ public class ListMetaDatas {
 
 	public void print() {
 		for (final ListColumnDef newcd : cols) {
-			System.out.println(newcd.toString());
+			MessageManager.logDiagnostic(newcd.toString());
 		}
 	}
 

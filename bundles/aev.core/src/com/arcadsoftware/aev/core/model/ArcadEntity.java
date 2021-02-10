@@ -8,6 +8,7 @@ package com.arcadsoftware.aev.core.model;
 
 import com.arcadsoftware.aev.core.collections.ArcadCollection;
 import com.arcadsoftware.aev.core.collections.IArcadCollectionItem;
+import com.arcadsoftware.aev.core.messages.MessageManager;
 import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
@@ -28,7 +29,7 @@ public abstract class ArcadEntity implements IArcadCollectionItem, ITagable {
 
 	@Override
 	public IArcadCollectionItem duplicate() {
-		System.out.println("Warning: call to ArcadEntity::duplicate() returning null.");
+		MessageManager.logDiagnostic("Warning: call to ArcadEntity::duplicate() returning null.");
 		return null;
 	}
 

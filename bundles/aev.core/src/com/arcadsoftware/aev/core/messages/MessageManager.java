@@ -98,7 +98,7 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 
 	public static Message addAndPrintException(final Throwable e, final int level) {
-		logInfo(e.getMessage(), e);
+		logDiagnostic(e.getMessage(), e);
 		return addException(e, level);
 	}
 
