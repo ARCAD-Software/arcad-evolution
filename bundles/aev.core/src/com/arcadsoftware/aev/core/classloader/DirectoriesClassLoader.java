@@ -8,6 +8,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -52,5 +53,9 @@ public class DirectoriesClassLoader extends URLClassLoader {
 
 	public DirectoriesClassLoader(final String... paths) {
 		super(getURLs(paths), ClassLoader.getSystemClassLoader());
+	}
+	
+	public DirectoriesClassLoader(final Collection<String> paths) {
+		super(getURLs(paths.toArray(new String[paths.size()])), ClassLoader.getSystemClassLoader());
 	}
 }
