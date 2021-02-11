@@ -103,7 +103,7 @@ public class MessageDetail implements IMessageDetails {
 	}
 
 	public void print() {
-		System.err.println("Detail : " + toString());//$NON-NLS-1$
+		MessageManager.logError("Detail : " + toString());//$NON-NLS-1$
 	}
 
 	public void setDescription(final String string) {

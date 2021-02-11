@@ -232,7 +232,7 @@ public class Message implements IMessageDetails {
 	}
 
 	public void print() {
-		System.err.println("COMMAND : " + toString()); //$NON-NLS-1$
+		MessageManager.logError("COMMAND : " + toString()); //$NON-NLS-1$
 		for (int i = 0; i < detailCount(); i++) {
 			getDetailAt(i).print();
 		}
