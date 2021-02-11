@@ -125,9 +125,14 @@ public class MessageManager implements IDiagnosisProvider {
 			return out.toString();
 		}
 	}
-	public static String printStackTrace(final Throwable e) throws IOException {
-		String msg = writeStackTrace(e);
-		logInfo(msg);
+	public static String printStackTrace(final Throwable e) {
+		String msg="";
+		try {
+			msg = writeStackTrace(e);
+			logInfo(msg);
+		} catch (IOException e1) {
+			; //ignore
+		}
 		return msg;
 	}
 
