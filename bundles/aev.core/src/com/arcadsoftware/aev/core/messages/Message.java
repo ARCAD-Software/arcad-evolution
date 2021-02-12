@@ -140,17 +140,9 @@ public class Message implements IMessageDetails {
 			m = CoreLabels.resString("MessageManager.ExceptionThrown"); //$NON-NLS-1$
 		}
 		addDetail(MessageDetail.EXCEPTION, m);
-		try {
-			final ByteArrayOutputStream out = new ByteArrayOutputStream();
-			throwable.printStackTrace(new PrintWriter(out, true));
-			out.flush();
-			final String s = out.toString();
-			out.close();
-			if (s != null && s.length() > 0) {
-				addDetail(MessageDetail.EXCEPTION, s);
-			}
-		} catch (final IOException e1) {
-			addDetail(MessageDetail.EXCEPTION, e1.getLocalizedMessage());
+		final String s = MessageManager.printStackTrace(throwable);
+		if (s != null && s.length() > 0) {
+			addDetail(MessageDetail.EXCEPTION, s);
 		}
 		addDate();
 		MessageManager.fireMessageChanged(this);
