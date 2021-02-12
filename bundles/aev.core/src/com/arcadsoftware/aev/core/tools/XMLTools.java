@@ -30,6 +30,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.arcadsoftware.aev.core.messages.MessageManager;
 
@@ -108,11 +111,15 @@ public class XMLTools {
 				.orElse(null);
 	}
 
-	protected static Transformer getStandardTransformer(final boolean includeXMLDeclaration, final String encoding)
-			throws TransformerConfigurationException {
-		final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+	public static TransformerFactory getStandardTransformerFactory() {
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+		return transformerFactory;
+	}
+	protected static Transformer getStandardTransformer(final boolean includeXMLDeclaration, final String encoding)
+			throws TransformerConfigurationException {
+		final TransformerFactory transformerFactory = getStandardTransformerFactory();
 
 		final Transformer transformer = transformerFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, includeXMLDeclaration ? "no" : "yes");
@@ -123,6 +130,19 @@ public class XMLTools {
 		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "3");
 
 		return transformer;
+	}
+	
+	public static XMLReader getStandardXMLReader() throws SAXException {
+		XMLReader reader = XMLReaderFactory.createXMLReader();
+		// https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html#java
+		reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		// This may not be strictly required as DTDs shouldn't be allowed at
+		// all, per previous line.
+		reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+		reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+		reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		
+		return reader;
 	}
 
 	public static String getStringAttribute(final NamedNodeMap attributes, final String name) {
