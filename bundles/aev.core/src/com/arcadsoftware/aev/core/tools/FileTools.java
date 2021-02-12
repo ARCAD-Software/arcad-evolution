@@ -37,14 +37,14 @@ public class FileTools {
 	public static boolean renameTo(File file, File dest) {
 		boolean renamed = file.renameTo(dest);
 		if (!renamed)
-			MessageManager.logDiagnostic("File " + file.getName() + " not renamed");
+			MessageManager.logDiagnostic("Could not rename file " + file.getName() + " to " + dest.getName());
 		return renamed;
 	}
 	
 	public static boolean setReadOnly(File file) {
 		boolean readOnly = file.setReadOnly();
 		if (!readOnly)
-			MessageManager.logDiagnostic("File " + file.getName() + " could not be set to Read Only");
+			MessageManager.logDiagnostic("Could not set " + file.getName() + " to Read Only");
 		return readOnly;
 	}
 	
