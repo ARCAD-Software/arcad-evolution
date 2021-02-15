@@ -1,13 +1,15 @@
 package com.arcadsoftware.aev.core.ui.labelproviders.columned;
 
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
 /**
  * @author MD
  */
-public class AbstractColumnedLabelProviderAdapter implements IArcadTableLabelProvider, ILabelProvider {
+public class AbstractColumnedLabelProviderAdapter implements IArcadTableLabelProvider, ILabelProvider, IColorProvider {
 
 	/**
 	 * 
@@ -99,6 +101,16 @@ public class AbstractColumnedLabelProviderAdapter implements IArcadTableLabelPro
 	@Override
 	public void removeListener(final ILabelProviderListener listener) {
 		// Do nothing
+	}
+
+	@Override
+	public Color getForeground(Object element) {
+		return null;
+	}
+
+	@Override
+	public Color getBackground(Object element) {
+		return null;
 	}
 
 }
