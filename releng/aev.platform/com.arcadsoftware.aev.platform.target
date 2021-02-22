@@ -17,9 +17,9 @@
             <unit id="com.arcadsoftware.asteroids.google.re2" version="0.0.0"/>
 			<unit id="org.apache.commons.commons-io" version="0.0.0"/>
 			<unit id="org.apache.servicemix.bundles.hsqldb" version="0.0.0"/>
-			<unit id="org.apache.servicemix.bundles.xpp3" version="0.0.0"/>
 			<unit id="org.apache.commons.commons-fileupload" version="0.0.0"/>
 			<unit id="net.sf.jmimemagic" version="0.0.0"/>
+			<unit id="com.arcadsoftware.asteroids.thoughtworks.xstream" version="0.0.0"/>
             <repository location="http://rdanart01plv.quarcad.net/asteroids/master/update"/>
         </location>
         <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
