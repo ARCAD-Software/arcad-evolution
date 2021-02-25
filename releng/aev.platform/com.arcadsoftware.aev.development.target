@@ -3,7 +3,10 @@
     <locations>
         <location path="${eclipse_home}" type="Profile"/>
         <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-            <unit id="com.arcadsoftware.asteroids.spring.feature.feature.group" version="0.0.0"/>
+            <unit id="org.apache.servicemix.bundles.spring-beans"/>     
+			<unit id="org.apache.servicemix.bundles.spring-context"/>   
+			<unit id="org.apache.servicemix.bundles.spring-core"/>      
+			<unit id="org.apache.servicemix.bundles.spring-expression"/>
             <unit id="org.apache.commons.lang3" version="0.0.0"/>
             <unit id="com.arcadsoftware.asteroids.google.re2" version="0.0.0"/>
 			<unit id="org.apache.commons.commons-io" version="0.0.0"/>
