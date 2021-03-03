@@ -98,7 +98,7 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 
 	public static Message addAndPrintException(final Throwable e, final int level) {
-		logDiagnostic(e.getMessage(), e);
+		logError(e.getMessage(), e);
 		return addException(e, level);
 	}
 
@@ -129,7 +129,7 @@ public class MessageManager implements IDiagnosisProvider {
 		String msg="";
 		try {
 			msg = writeStackTrace(e);
-			logInfo(msg);
+			logDiagnostic(msg);
 		} catch (IOException e1) {
 			; //ignore
 		}
