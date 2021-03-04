@@ -58,6 +58,7 @@ public class MessageManager implements IDiagnosisProvider {
 
 	public static final int SHOW_ANYERROR = SHOW_WARNING | SHOW_ERROR | SHOW_EXCEPTION;
 
+	static final CustomLevel DIAG = new CustomLevel("DIAG", Level.INFO.intValue());
 	
 	public static void log(final Level level, final String message) {
 		logger.log(level, message);
@@ -66,6 +67,8 @@ public class MessageManager implements IDiagnosisProvider {
 		logger.log(level, message, e);
 	}
 	
+	//<JIRA number="RDAOBSERVE-141" version="13.1.0x" date="Mar 4, 2021" type="Enh" user="ACL">
+	// These methods were added to replace all of the existing System.err.print calls 
 	public static void logError(final String message, final Throwable e) {
 		log(Level.SEVERE, message, e);
 	}
@@ -73,6 +76,7 @@ public class MessageManager implements IDiagnosisProvider {
 		log(Level.SEVERE, message);
 	}
 	
+	// These methods were added to replace all of the existing System.out.print calls 
 	public static void logInfo(final String message, final Throwable e) {
 		log(Level.INFO, message, e);
 	}
@@ -81,10 +85,16 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 	
 	public static void logDiagnostic(final String message, final Throwable e) {
-		log(Level.FINE, message, e);
+		log(DIAG, message, e);
 	}
 	public static void logDiagnostic(final String message) {
-		log(Level.FINE, message);
+		log(DIAG, message);
+	}
+	//</JIRA>
+	
+	/** This should *always* be a do-nothing routine in shipping code - *only* use if for debugging in your local workspace **/ 
+	public static void logSensitive(final String message) {
+		//System.out.println(message);
 	}
 	
 	/**
@@ -493,7 +503,7 @@ public class MessageManager implements IDiagnosisProvider {
 			fireMessageDeleted(message);
 		}
 	}
-
+	
 	public MessageManager() {
 		super();
 	}
@@ -503,7 +513,7 @@ public class MessageManager implements IDiagnosisProvider {
 		final char ln = Character.LINE_SEPARATOR;
 		final StringBuilder content = new StringBuilder();
 
-		// Copy the array to avoir concurrent modification exception
+		// Copy the array to avoid concurrent modification exception
 		for (final Message message : messages) {
 			content.append(message.toString())
 					.append(ln).append(ln);
