@@ -7,4 +7,8 @@ public class ServiceNotFoundException extends RuntimeException {
 	public ServiceNotFoundException(final Class<?> serviceClass) {
 		super("Implementation of service " + serviceClass + " could not be found.");
 	}
+	
+	public ServiceNotFoundException(final Class<?> serviceClass, final String name) {
+		super("Implementation of service " + serviceClass + " with name " + name + " could not be found.");
+	}
 }

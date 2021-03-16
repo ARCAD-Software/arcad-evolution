@@ -12,6 +12,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -35,6 +36,10 @@ public final class ServiceRegistry {
 		return getInstance().map(sr -> sr.registrations).orElse(null);
 	}
 
+	public static <T> Optional<T> lookupNamed(final Class<T> clazz, final String name) {
+		return lookup(clazz, String.format("(%s=%s)", ComponentConstants.COMPONENT_NAME, name));
+	}
+	
 	public static <T> Optional<T> lookup(final Class<T> clazz) {
 		final BundleContext context = getBundleContext();
 		if (context != null) {
@@ -73,6 +78,10 @@ public final class ServiceRegistry {
 		return Collections.emptyList();
 	}
 
+	public static <T> T lookupNamedOrDie(final Class<T> clazz, final String name) {
+		return lookupNamed(clazz, name).orElseThrow(() -> new ServiceNotFoundException(clazz));
+	}
+	
 	public static <T> T lookupOrDie(final Class<T> clazz) {
 		return lookup(clazz).orElseThrow(() -> new ServiceNotFoundException(clazz));
 	}
