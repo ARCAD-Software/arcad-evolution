@@ -29,5 +29,5 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  org.hsqldb.jdbc,
  org.xmlpull.v1
 Bundle-ClassPath: .
-Bundle-Version: 11.0.1.qualifier
+Bundle-Version: 11.0.2.qualifier
 Bundle-ActivationPolicy: lazy
