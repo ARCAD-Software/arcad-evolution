@@ -7,7 +7,7 @@
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev</artifactId>
-	<version>11.0.0-SNAPSHOT</version>
+	<version>11.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<scm>
@@ -29,7 +29,7 @@
 						<artifact>
 							<groupId>com.arcadsoftware</groupId>
 							<artifactId>com.arcadsoftware.aev.platform</artifactId>
-							<version>11.0.0-SNAPSHOT</version>
+							<version>11.0.1-SNAPSHOT</version>
 						</artifact>
 					</target>
 				</configuration>
@@ -84,7 +84,7 @@
 						<plugin id="org.eclipse.rap.ui.forms"/>
 						<plugin id="org.eclipse.rap.ui.views"/>
 						<plugin id="org.eclipse.rap.ui.workbench"/>
-						<plugin id="com.arcadsoftware.asteroids.google.re2" />
+						<plugin id="com.arcadsoftware.asteroids.google.re2"/>
 						<feature id="com.arcadsoftware.rap.feature"/>
 						<feature id="com.arcadsoftware.asteroids.spring.feature"/>						
 					</excludes>
