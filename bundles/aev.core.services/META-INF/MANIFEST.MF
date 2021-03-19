@@ -19,8 +19,7 @@ Export-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.translation,
  com.arcadsoftware.ae.core.utils,
  com.arcadsoftware.ae.core.utils.io
-Import-Package: com.arcadsoftware.aev.core.messages,
- org.w3c.dom
+Import-Package: org.w3c.dom
 Bundle-ClassPath: .
 Bundle-Version: 11.0.1.qualifier
 Bundle-ActivationPolicy: lazy
