@@ -42,21 +42,23 @@ public abstract class AbstractMessageRouter {
 		}
 
 		protected File getLogFile(final File logFile) {
-			boolean created = false;
+			boolean createdOrExisted = false;
 			try {
 				if (logFile.exists()) {
 					if (logFile.length() > 2097152) {
 						renameLocalLogFile(logFile, 1);
-						created = logFile.createNewFile();
+						createdOrExisted = logFile.createNewFile();
+					} else {
+						createdOrExisted = true;
 					}
 				} else {
-					created = logFile.createNewFile();
+					createdOrExisted = logFile.createNewFile();
 				}
 			} catch (final IOException e) {
 				return null;
 			}
 
-			return created ? logFile : null;
+			return createdOrExisted ? logFile : null;
 		}
 
 		private String getTimeStamp() {
@@ -101,6 +103,12 @@ public abstract class AbstractMessageRouter {
 			} catch (final Exception e) {
 				throw new ArcadRuntimeException("Could not write into " + logFile, e);
 			}
+		}
+
+		@Override
+		public void println() {
+			// TODO Auto-generated method stub
+			super.println();
 		}
 	}
 
