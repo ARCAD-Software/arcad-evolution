@@ -104,12 +104,6 @@ public abstract class AbstractMessageRouter {
 				throw new ArcadRuntimeException("Could not write into " + logFile, e);
 			}
 		}
-
-		@Override
-		public void println() {
-			// TODO Auto-generated method stub
-			super.println();
-		}
 	}
 
 	protected String data = null;
