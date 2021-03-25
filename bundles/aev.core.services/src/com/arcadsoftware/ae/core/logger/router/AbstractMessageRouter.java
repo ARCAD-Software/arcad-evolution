@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
@@ -33,12 +30,12 @@ public abstract class AbstractMessageRouter {
 			super(stream1);
 			this.isErrorStream = isErrorStream;
 			try {
-				final Path directory = Paths.get(Utils.getHomeDirectory(), "logs");
-				if (Files.notExists(directory)) {
-					Files.createDirectories(directory);
+				final File logDirectory = new File(Utils.getHomeDirectory(), "logs");
+				if (!logDirectory.exists()) {
+					logDirectory.mkdirs();
 				}
-				standardLogFile = new File(directory.toFile(), "service_providers_stdout.log").getCanonicalFile();
-				errorLogFile = new File(directory.toFile(), "service_providers_stderr.log").getCanonicalFile();
+				standardLogFile = new File(logDirectory, "service_providers_stdout.log").getCanonicalFile();
+				errorLogFile = new File(logDirectory, "service_providers_stderr.log").getCanonicalFile();				
 			} catch (final IOException e) {
 				interceptMessage(new ErrorMessage("DualStream",
 						"Could not initialize DualStream output logs:" + e.getLocalizedMessage()));
