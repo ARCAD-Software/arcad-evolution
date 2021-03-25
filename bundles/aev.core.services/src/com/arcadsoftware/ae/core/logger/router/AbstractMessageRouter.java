@@ -33,14 +33,12 @@ public abstract class AbstractMessageRouter {
 			super(stream1);
 			this.isErrorStream = isErrorStream;
 			try {
-				final Path directory = Paths.get(Utils.getHomeDirectory() + "/logs/");
+				final Path directory = Paths.get(Utils.getHomeDirectory(), "logs");
 				if (Files.notExists(directory)) {
 					Files.createDirectories(directory);
 				}
-				standardLogFile = new File(directory + "service_providers_stdout.log")
-						.getCanonicalFile();
-				errorLogFile = new File(directory + "service_providers_stderr.log")
-						.getCanonicalFile();
+				standardLogFile = new File(directory.toFile(), "service_providers_stdout.log").getCanonicalFile();
+				errorLogFile = new File(directory.toFile(), "service_providers_stderr.log").getCanonicalFile();
 			} catch (final IOException e) {
 				interceptMessage(new ErrorMessage("DualStream",
 						"Could not initialize DualStream output logs:" + e.getLocalizedMessage()));
