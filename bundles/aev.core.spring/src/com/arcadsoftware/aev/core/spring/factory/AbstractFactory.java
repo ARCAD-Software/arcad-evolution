@@ -47,8 +47,10 @@ public abstract class AbstractFactory {
 		final String extensionFolder = getExtensionFolder();
 		if (extensionFolder != null) {
 			try {
-				ctx = new FileSystemXmlApplicationContext(getConfigurationFiles());
+				ctx = new FileSystemXmlApplicationContext();
 				ctx.setClassLoader(new URLClassLoader(getJarURLs().toArray(new URL[0]), ClassLoader.getSystemClassLoader()));
+				ctx.setConfigLocations(getConfigurationFiles());
+				ctx.refresh();
 			} catch (final IOException e) {
 				throw new FactoryInitializationException(getClass(), e);
 			}
