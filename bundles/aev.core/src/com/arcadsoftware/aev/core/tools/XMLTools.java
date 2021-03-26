@@ -66,6 +66,7 @@ public class XMLTools {
 		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 		factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+		factory.setNamespaceAware(true);
 
 		return factory;
 	}
@@ -94,11 +95,18 @@ public class XMLTools {
 				.map(nodeClass::cast) //
 				.collect(Collectors.toList());
 	}
+	
+	public static boolean filterNodeName(Node n, String elementName) {
+		String nodeName = n.getLocalName();
+		if (nodeName == null)
+			nodeName = n.getNodeName();
+		return elementName.equals(nodeName);
+	}
 
 	public static List<Node> getNodesNamed(final Node node, final String elementName) {
 		return getChildNodes(node) //
 				.stream() //
-				.filter(n -> n.getNodeName().equals(elementName)) //
+				.filter(n -> filterNodeName(n, elementName)) //
 				.collect(Collectors.toList()); //
 	}
 
