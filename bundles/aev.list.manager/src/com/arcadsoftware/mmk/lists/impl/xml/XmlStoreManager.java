@@ -10,7 +10,6 @@ import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_LIST;
 import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_METADATAS;
 import static com.arcadsoftware.mmk.lists.EListConstants.LST_TAG_ROW;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -29,7 +28,8 @@ public class XmlStoreManager extends AbstractStoreManager {
 	private XmlSerializer serializer;
 	private final IXmlLists xmlList;
 	private final SimpleDateFormat sd = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
-
+	private FileWriter fileWriter;	
+	
 	public XmlStoreManager(final IXmlLists xmlList) {
 		super(xmlList.getList());
 		this.xmlList = xmlList;
@@ -90,12 +90,11 @@ public class XmlStoreManager extends AbstractStoreManager {
 		serializer.endTag(null, LST_TAG_METADATAS.getValue());
 	}
 
-	private void createSerializer() throws ArcadException {
-		final String fileName = xmlList.getXmlFileName();
-		final File f = new File(fileName);
+	private void createSerializer() throws ArcadException {		
 		try {
-			serializer = XmlPullParserFactory.newInstance().newSerializer();
-			serializer.setOutput(new FileWriter(f));
+			this.fileWriter = new FileWriter(xmlList.getXmlFileName());
+			this.serializer = XmlPullParserFactory.newInstance().newSerializer();
+			this.serializer.setOutput(fileWriter);
 		} catch (final Exception e) {
 			throw new ArcadException(e.getMessage(), e);
 		}
@@ -111,6 +110,7 @@ public class XmlStoreManager extends AbstractStoreManager {
 			// Cela pouvait générait une erreur si tentative de remplacement
 			// du fichier dnas une même session JVM
 			serializer.flush();
+			fileWriter.close();
 			return true;
 		} catch (final IOException e) {
 			throw new ArcadException(e.getMessage(), e);
