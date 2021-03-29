@@ -2,7 +2,7 @@
 <feature
       id="com.arcadsoftware.aev.services.features"
       label="ARCAD-Evolution Services"
-      version="11.0.3.qualifier"
+      version="11.0.4.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
