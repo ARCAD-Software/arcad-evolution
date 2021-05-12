@@ -326,9 +326,14 @@ public class StringTools {
 	}
 
 	public static void string2File(final File file, final String data) throws IOException {
+		//<JIRA number="RDSKIPPER-180" version="13.1.10" date="May 12, 2021" type="Bug" user="ACL">
+		// Not correctly closing BufferedWriter (only closing FileWriter) so written contents were blank
 		try (FileWriter thisFile = new FileWriter(file)) {
-			new BufferedWriter(thisFile).write(data);
+			try (BufferedWriter bw = new BufferedWriter(thisFile)) {
+				bw.write(data);
+			}
 		}
+		//</JIRA>
 	}
 
 	public static int[] stringToIntArray(final List<String> strings) {
