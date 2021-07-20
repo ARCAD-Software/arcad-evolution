@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,7 @@ import com.arcadsoftware.aev.core.tools.XMLTools;
 public class MessageManager implements IDiagnosisProvider {
 	private static Logger logger = Logger.getLogger(MessageManager.class.getName());
 	
-	private static List<Object> contextPlugins = new ArrayList<>();
+	private static List<Object> contextPlugins = new CopyOnWriteArrayList<>();
 	private static int firstBlockMessage = 0;
 	private static final MessageManager instance = new MessageManager();
 	public static final int LEVEL_BETATESTING = 2;
@@ -41,8 +42,8 @@ public class MessageManager implements IDiagnosisProvider {
 
 	public static final int LEVEL_DEVELOPMENT = 1;
 	public static final int LEVEL_PRODUCTION = 4;
-	private static final List<IMessagesListener> listenerList = new ArrayList<>();
-	private static final List<Message> messages = new ArrayList<>();
+	private static final List<IMessagesListener> listenerList = new CopyOnWriteArrayList<>();
+	private static final List<Message> messages = new CopyOnWriteArrayList<>();
 
 	public static final int SHOW_COMPLETION = MessageDetail.COMPLETION;
 
