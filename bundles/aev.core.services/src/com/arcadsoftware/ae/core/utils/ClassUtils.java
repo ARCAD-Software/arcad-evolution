@@ -7,14 +7,17 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 public class ClassUtils {
-
+	
+	private ClassUtils() {
+		
+	}
+	
 	public static Object createObject(final String classname)
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		if (classname != null && classname.length() != 0) {
 			// create the transformer
 			final Class<?> transformerClass = Class.forName(classname);
-			final Object transformer = transformerClass.newInstance();
-			return transformer;
+			return transformerClass.newInstance();
 		} else {
 			throw new ClassNotFoundException(classname);
 		}
@@ -34,8 +37,7 @@ public class ClassUtils {
 			if (classname != null && classname.length() != 0) {
 				// create the transformer
 				final Class<?> transformerClass = Class.forName(classname, true, classLoader);
-				final Object transformer = transformerClass.newInstance();
-				return transformer;
+				return transformerClass.newInstance();
 			} else {
 				classLoader.close();
 				throw new ClassNotFoundException(classname);

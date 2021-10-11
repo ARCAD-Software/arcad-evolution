@@ -8,7 +8,7 @@ import com.arcadsoftware.ae.core.logger.messages.AbstractMessage;
 import com.arcadsoftware.ae.core.logger.messages.MessageData;
 import com.arcadsoftware.ae.core.logger.messages.Messages;
 
-public class BasicMessageFormatter extends AbstractMessageFormatter {
+public class BasicMessageFormatter implements AbstractMessageFormatter {
 
 	SimpleDateFormat sp = new SimpleDateFormat("yyyyMMdd-hh:mm:ss:SSS");
 

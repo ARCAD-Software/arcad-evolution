@@ -38,6 +38,7 @@ public class StatusMessage extends SimpleMessage
 
 	@Override
 	public void setXMLPart(final Element root) {
+		//nothing to set
 	}
 
 }

@@ -2,6 +2,7 @@
 package com.arcadsoftware.ae.core.logger;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.arcadsoftware.ae.core.logger.formatter.impl.XmlMessageFormatter;
 import com.arcadsoftware.ae.core.logger.messages.AbstractMessage;
@@ -70,11 +71,11 @@ public class MessageLogger {
 		}
 	}
 
-	public synchronized static boolean isEnabled() {
+	public static synchronized boolean isEnabled() {
 		return enabled;
 	}
 
-	public synchronized static boolean isLoaded() {
+	public static synchronized boolean isLoaded() {
 		return loaded;
 	}
 
@@ -222,7 +223,7 @@ public class MessageLogger {
 		sendMessage(new WarningMessage(serviceName, Utils.stackTrace(e)));
 	}
 
-	public synchronized static void setEnabled(final boolean enabled) {
+	public static synchronized void setEnabled(final boolean enabled) {
 		MessageLogger.enabled = enabled;
 	}
 
@@ -231,7 +232,7 @@ public class MessageLogger {
 		loaded = true;
 	}
 
-	private ArrayList<AbstractMessageRouter> messageRouters = new ArrayList<>();
+	private List<AbstractMessageRouter> messageRouters = new ArrayList<>();
 
 	protected MessageLogger() {
 		super();
@@ -242,11 +243,11 @@ public class MessageLogger {
 	 *
 	 * @return the messageRouters ArrayList<AbstractMessageRouter> :
 	 */
-	public ArrayList<AbstractMessageRouter> getMessageRouters() {
+	public List<AbstractMessageRouter> getMessageRouters() {
 		return messageRouters;
 	}
 
-	public void setMessageRouters(final ArrayList<AbstractMessageRouter> list) {
+	public void setMessageRouters(final List<AbstractMessageRouter> list) {
 		messageRouters = list;
 	}
 }

@@ -18,7 +18,7 @@ import com.arcadsoftware.ae.core.logger.messages.MessageData;
 import com.arcadsoftware.ae.core.logger.messages.Messages;
 import com.arcadsoftware.ae.core.utils.XMLUtils;
 
-public class XmlMessageFormatter extends AbstractMessageFormatter {
+public class XmlMessageFormatter implements AbstractMessageFormatter {
 
 	private static final String ATTR_COUNT = "count";
 

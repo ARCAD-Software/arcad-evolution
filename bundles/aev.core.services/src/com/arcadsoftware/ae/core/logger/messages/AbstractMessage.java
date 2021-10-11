@@ -2,6 +2,7 @@
 package com.arcadsoftware.ae.core.logger.messages;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe abstraite de base servant à définir tous les messages.<br>
@@ -77,7 +78,7 @@ public abstract class AbstractMessage {
 	 */
 	public static final String TYPE_MSG_WARNING = "WARNING";
 
-	private ArrayList<MessageData> datas = new ArrayList<>();
+	private List<MessageData> datas = new ArrayList<>();
 	private String messageText;
 	private String messageType;
 	private String serviceName;
@@ -125,7 +126,7 @@ public abstract class AbstractMessage {
 	/**
 	 * @return Renvoie datas.
 	 */
-	public ArrayList<MessageData> getDatas() {
+	public List<MessageData> getDatas() {
 		return datas;
 	}
 
@@ -160,11 +161,8 @@ public abstract class AbstractMessage {
 	}
 
 	public boolean isErrorMessage() {
-		if (messageType.equals(TYPE_MSG_ERROR) ||
-				messageType.equals(TYPE_MSG_FAILED)) {
-			return true;
-		}
-		return false;
+		return messageType.equals(TYPE_MSG_ERROR) ||
+				messageType.equals(TYPE_MSG_FAILED);
 	}
 
 	public boolean isInfoMessage() {
@@ -190,7 +188,7 @@ public abstract class AbstractMessage {
 	 * @param datas
 	 *            datas é définir.
 	 */
-	public void setDatas(final ArrayList<MessageData> datas) {
+	public void setDatas(final List<MessageData> datas) {
 		this.datas = datas;
 	}
 
