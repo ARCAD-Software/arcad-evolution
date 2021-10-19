@@ -9,7 +9,7 @@ import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.CopyFileHelper;
 import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringConstants;
 
 public class ArcadCopyTask extends AbstractArcadCopyTask implements IRollbackableTask {
-	protected static final String VERSION = "1.0.0.1";
+	protected static final String VERSION = "1.0.2";
 	protected CopyFileHelper helper;
 
 	protected boolean inTransaction = false;

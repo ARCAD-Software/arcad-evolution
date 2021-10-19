@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -93,7 +94,14 @@ public class FileManagerProvider implements IFileManagerProvider {
 		if (StringUtils.isNotBlank(tempFileName) && stream != null) {
 			final File tempFile;
 			try {
-				tempFile = File.createTempFile("tempfile_", '_' + tempFileName);
+				tempFile = 
+						new File(System.getProperty("java.io.tmpdir"), UUID.randomUUID() + tempFileName)
+							.getCanonicalFile();
+				if(!(tempFile.setReadable(true, true) &&
+						tempFile.setWritable(true, true) &&
+						tempFile.setExecutable(true, true))){
+					throw new IOException("Could not set RWX for owner only on " + tempFile);
+				}
 				tempFile.deleteOnExit();
 			} catch (IOException e1) {
 				MessageManager.addException(e1, MessageManager.LEVEL_PRODUCTION);

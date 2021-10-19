@@ -13,7 +13,7 @@ import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers.ERollbackStringC
 public class ArcadDeleteTask extends AbstractArcadDeleteTask
 		implements IRollbackableTask {
 
-	private static final String VERSION = "1.0.0.0";
+	private static final String VERSION = "1.0.1";
 	DeleteFileHelper helper;
 
 	private boolean inTransaction = false;
