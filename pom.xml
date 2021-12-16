@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
 		<artifactId>software-factory</artifactId>
-		<version>3.2.12</version>
+		<version>3.2.14</version>
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev</artifactId>
