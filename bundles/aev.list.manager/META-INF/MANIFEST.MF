@@ -26,8 +26,8 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.aev.core.spring.factory;resolution:=optional,
  org.apache.commons.io;version="2.8.0",
  org.hsqldb,
- org.hsqldb.jdbc,
- org.xmlpull.v1
-Bundle-ClassPath: .
+ org.hsqldb.jdbc
+Bundle-ClassPath: .,
+ libs/org.apache.servicemix.bundles.xpp3-1.1.4c_7.jar
 Bundle-Version: 11.0.10.qualifier
 Bundle-ActivationPolicy: lazy
