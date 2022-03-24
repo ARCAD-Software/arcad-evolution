@@ -189,13 +189,16 @@ public class ColumnedExportAction extends ArcadAction {
 						filePath += parametersPage.getExtensions()[i].substring(1);
 					}
 				}
+				boolean ok = true;
 				final File file = new File(filePath);
 				if (!file.exists()) {					
-					return file.createNewFile();					
+					ok = file.createNewFile();					
 				}
-				StringTools.string2File(file, new String(data));
-				parametersPage.saveWidgetValues(parametersPage.getSettings());
-				return true;
+				if (ok) {
+					StringTools.string2File(file, new String(data));
+					parametersPage.saveWidgetValues(parametersPage.getSettings());
+				} 
+				return ok;
 			}
 			return false;
 		} catch (final Exception e) {
