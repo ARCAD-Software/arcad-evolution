@@ -24,6 +24,7 @@ public class FileTools {
 
 	public static boolean deleteFile(File file) {
 		try {
+			file.setWritable(true);
 			Files.delete(file.toPath());
 			return true;
 		} catch (IOException e) {
