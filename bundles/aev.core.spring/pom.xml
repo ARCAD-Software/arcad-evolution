@@ -7,7 +7,7 @@
 	</parent>
 
 	<properties>
-		<spring.version>5.2.9.RELEASE</spring.version>
+		<spring.version>5.3.20</spring.version>
 	</properties>
 
 	<name>ARCAD-Evolution Core Spring</name>
