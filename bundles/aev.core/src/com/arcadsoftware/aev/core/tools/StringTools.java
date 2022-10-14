@@ -231,6 +231,13 @@ public class StringTools {
 			return false;
 		}
 	}
+	
+	/**
+	 * @return true if the value can be used as a pattern e.g. LIKE '%PATTERN%'
+	 */
+	public static boolean isPattern(final String value) {
+		return containsAny(value, "%_");
+	}
 
 	// --------------------------------------------------------------------------
 	public static final String lpad(final String s, final int length, final char paddedChar) {
