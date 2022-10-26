@@ -67,7 +67,7 @@
 						<plugin id="org.ops4j.pax.logging.pax-logging-api"/>
 						<plugin id="net.sf.jmimemagic"/>
 						<plugin id="com.arcadsoftware.asteroids.thoughtworks.xstream"/>
-						<plugin id="org.apache.servicemix.bundles.hsqldb"/>
+						<plugin id="org.hsqldb.hsqldb"/>
 						<plugin id="xstream"/>
 						<plugin id="com.ibm.icu"/>
 						<plugin id="javax.xml"/>
