@@ -2,7 +2,7 @@
 <feature
       id="com.arcadsoftware.aev.spring.features"
       label="ARCAD-Evolution Spring"
-      version="11.0.15.qualifier"
+      version="11.0.16.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
