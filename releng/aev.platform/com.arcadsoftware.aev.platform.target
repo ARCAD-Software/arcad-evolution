@@ -19,10 +19,10 @@
             <unit id="org.apache.commons.lang3" version="0.0.0"/>
             <unit id="com.arcadsoftware.asteroids.google.re2" version="0.0.0"/>
 			<unit id="org.apache.commons.commons-io" version="0.0.0"/>
-			<unit id="org.apache.servicemix.bundles.hsqldb" version="0.0.0"/>
+			<unit id="org.hsqldb.hsqldb" version="0.0.0"/>
 			<unit id="org.apache.commons.commons-fileupload" version="0.0.0"/>
 			<unit id="net.sf.jmimemagic" version="0.0.0"/>
-            <repository location="http://rdanart01plv.quarcad.net/asteroids/next/update"/>
+            <repository location="http://rdanart01plv.quarcad.net/asteroids/main/update"/>
         </location>
         <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
             <unit id="com.arcadsoftware.rap.feature.feature.group" version="0.0.0"/>
