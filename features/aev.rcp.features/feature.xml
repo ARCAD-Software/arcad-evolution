@@ -2,7 +2,7 @@
 <feature
       id="com.arcadsoftware.aev.rcp.features"
       label="ARCAD-Evolution RCP"
-      version="11.0.16.qualifier"
+      version="11.0.17.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
