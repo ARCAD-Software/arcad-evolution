@@ -28,5 +28,5 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
 Require-Bundle: org.hsqldb.hsqldb
 Bundle-ClassPath: .,
  libs/org.apache.servicemix.bundles.xpp3-1.1.4c_7.jar
-Bundle-Version: 11.0.19.qualifier
+Bundle-Version: 11.0.20.qualifier
 Bundle-ActivationPolicy: lazy
