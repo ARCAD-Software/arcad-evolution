@@ -21,5 +21,5 @@ Export-Package: com.arcadsoftware.ae.core.exceptions,
  com.arcadsoftware.ae.core.utils.io
 Import-Package: org.w3c.dom
 Bundle-ClassPath: .
-Bundle-Version: 11.0.18.qualifier
+Bundle-Version: 11.0.19.qualifier
 Bundle-ActivationPolicy: lazy
