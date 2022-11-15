@@ -102,6 +102,18 @@ public class Message implements IMessageDetails {
 		addMessageDetail(type, description);
 		return this;
 	}
+	public Message addDetail(final int type, final String description, String help) {
+		String extendedDescription;
+		//TODO: something a little more elegant/sophisticated than just \n, maybe a new (help) property of the Message or whatever...
+		// It does seem to work pretty well in the console and details views however, so good for now...
+		if (description!=null && !StringTools.isEmpty(help))
+			extendedDescription = description + '\n' + help;
+		else
+			extendedDescription = description;
+			
+		addMessageDetail(type, extendedDescription);
+		return this;
+	}
 
 	/**
 	 * Ajoute des d�tails relatifs � l'exception.
