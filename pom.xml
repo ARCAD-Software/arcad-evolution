@@ -7,7 +7,7 @@
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev</artifactId>
-	<version>11.0.22-SNAPSHOT</version>
+	<version>11.0.23-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<scm>
@@ -29,7 +29,7 @@
 						<artifact>
 							<groupId>com.arcadsoftware</groupId>
 							<artifactId>com.arcadsoftware.aev.platform</artifactId>
-							<version>11.0.22-SNAPSHOT</version>
+							<version>11.0.23-SNAPSHOT</version>
 						</artifact>
 					</target>
 				</configuration>
