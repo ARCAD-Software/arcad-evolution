@@ -543,10 +543,10 @@ public class XmlCashManager extends AbstractCashManager
 					result.append(" and ");
 				}
 				if (caseSensitive) {
-					result.append("CAST(").append(cd.getId()).append(" as VARCHAR(20))").append(" = ? ");
+					result.append("CAST(").append(cd.getId()).append(" as VARCHAR(4000))").append(" = ? ");
 
 				} else {
-					result.append("UCASE(CAST(").append(cd.getId()).append(" as VARCHAR(20))").append(") = UCASE(?) ");
+					result.append("UCASE(CAST(").append(cd.getId()).append(" as VARCHAR(4000))").append(") = UCASE(?) ");
 				}
 			}
 		}
