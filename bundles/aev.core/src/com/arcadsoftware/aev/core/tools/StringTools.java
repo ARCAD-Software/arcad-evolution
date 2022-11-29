@@ -236,7 +236,7 @@ public class StringTools {
 	 * @return true if the value can be used as a pattern e.g. LIKE '%PATTERN%'
 	 */
 	public static boolean isPattern(final String value) {
-		return containsAny(value, "%_");
+		return containsAny(value, "%*");
 	}
 
 	// --------------------------------------------------------------------------
