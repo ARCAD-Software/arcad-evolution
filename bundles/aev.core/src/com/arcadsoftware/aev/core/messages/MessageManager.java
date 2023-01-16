@@ -485,10 +485,7 @@ public class MessageManager implements IDiagnosisProvider {
 	}
 
 	public static void removeListener(final IMessagesListener listener) {
-		final int i = listenerList.indexOf(listener);
-		if (i != -1) {
-			listenerList.remove(i);
-		}
+		listenerList.remove(listener);
 	}
 
 	/**
