@@ -1,18 +1,18 @@
 package com.arcadsoftware.mmk.anttasks.taskdefs.rollback.helpers;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-
+import com.arcadsoftware.ae.core.utils.XMLUtils;
+import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.IRollbackableTask;
+import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.util.FileUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.arcadsoftware.ae.core.utils.XMLUtils;
-import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.IRollbackableTask;
-import com.arcadsoftware.mmk.anttasks.taskdefs.rollback.impl.ArcadRollbackTask;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 public class CopyFileHelper extends AbstractRollbackableTaskHelper {
 
@@ -66,11 +66,8 @@ public class CopyFileHelper extends AbstractRollbackableTaskHelper {
 		} else {
 			// Si le répertoire n'existe pas, il sera créé lors de la copie, donc il faudra l'effacer
 			// et tout son contenu avec
-			if (!pathWillBeCreated(fileToBackupFile)) {
-				// Si le fichier de destination n'existe pas, on l'ajoute
-				// dans la collection traitant les nouveaux fichiers.
-				createdfiles.add(fileToBackup);
-			}
+			pathWillBeCreated(fileToBackupFile);
+			createdfiles.add(fileToBackup);
 		}
 	}
 
@@ -143,16 +140,21 @@ public class CopyFileHelper extends AbstractRollbackableTaskHelper {
 	@Override
 	public boolean rollback(final ArcadRollbackTask rollbackTask, final Element e) {
 		final NodeList backupActions = e.getElementsByTagName("backup");
-		for (int i = 0; i < backupActions.getLength(); i++) {
-			final Element backupAction = (Element) backupActions.item(i);
-			final String fileName = backupAction.getAttribute("src");
-			final String status = backupAction.getAttribute("status");
-			final String datadir = backupAction.getAttribute("datadir");
-			if (fileName != null) {
-				restoreFile(datadir, fileName, status);
-			}
-
-		}
+		// Iterate through rollback elements in reverse to prevent
+		// the deletion failure of non empty directory
+		IntStream
+				.iterate(backupActions.getLength() - 1, i -> i - 1)
+				.limit(backupActions.getLength())
+				.mapToObj(backupActions::item)
+				.forEach(node -> {
+					final Element backupAction = (Element) node;
+					final String fileName = backupAction.getAttribute("src");
+					final String status = backupAction.getAttribute("status");
+					final String datadir = backupAction.getAttribute("datadir");
+					if (!fileName.isEmpty()) {
+						restoreFile(datadir, fileName, status);
+					}
+				});
 		return true;
 	}
 }
