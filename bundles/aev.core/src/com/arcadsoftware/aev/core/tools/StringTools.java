@@ -233,10 +233,18 @@ public class StringTools {
 	}
 	
 	/**
-	 * @return true if the value can be used as a pattern e.g. LIKE '%PATTERN%'
+	 * @return true if the value can be used as a pattern e.g. '*PATTERN?'
 	 */
 	public static boolean isPattern(final String value) {
-		return containsAny(value, "%*");
+		return containsAny(value, "%*?");
+	}
+	
+	/**
+	 * @return the value that can be used as an SQL LIKE pattern e.g. '%PATTERN_':
+	 * replacing '*'->'%' and '?'->'_'
+	 */
+	public static String toPattern(final String value) {
+		return value.replace('*',  '%').replace('?', '_');
 	}
 
 	// --------------------------------------------------------------------------
