@@ -14,6 +14,6 @@ Import-Package: com.arcadsoftware.ae.core.logger,
  org.springframework.core.io,
  org.w3c.dom
 Bundle-ClassPath: .
-Bundle-Version: 11.0.25.qualifier
+Bundle-Version: 11.0.26.qualifier
 Export-Package: com.arcadsoftware.aev.core.spring.factory
 Bundle-ActivationPolicy: lazy

@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
 		<artifactId>com.arcadsoftware.aev.releng</artifactId>
-		<version>11.0.25-SNAPSHOT</version>
+		<version>11.0.26-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev.update</artifactId>
