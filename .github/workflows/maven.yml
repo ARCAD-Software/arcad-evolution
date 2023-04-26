@@ -31,15 +31,15 @@ jobs:
       run: mvn -B package --file pom.xml -Pflat-repo
       
     - name: Upload flat p2 update site
-	if: github.ref == 'refs/heads/main'
-	uses: marvinpinto/action-automatic-releases@latest
-	with:
-	  repo_token: "${{secrets.GITHUB_TOKEN}}"
-	  automatic_release_tag: "latest"
-	  prerelease: true
-	  title: "Development Build"
-	  files: 
-	    releng/aev.update/target/flat-repository/*
+      if: github.ref == 'refs/heads/main'
+      uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: "${{secrets.GITHUB_TOKEN}}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: 
+	  releng/aev.update/target/flat-repository/*
 
     - name: Release
       uses: softprops/action-gh-release@v1
