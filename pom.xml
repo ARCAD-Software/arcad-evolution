@@ -22,20 +22,20 @@
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
-			 <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>tycho-p2-plugin</artifactId>
-   				<version>${tycho.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-p2-metadata</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>p2-metadata</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>attach-p2-metadata</id>
+						<phase>package</phase>
+						<goals>
+							<goal>p2-metadata</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -63,25 +63,59 @@
 							<goal>feature-source</goal>
 						</goals>
 					</execution>
-				</executions>			
+				</executions>
 				<configuration>
 					<excludes>
-						<plugin id="org.apache.commons.commons-io"/>
-						<plugin id="org.apache.commons.lang3"/>
-						<plugin id="org.ops4j.pax.logging.pax-logging-api"/>
-						<plugin id="net.sf.jmimemagic"/>
-						<plugin id="xstream"/>
-						<plugin id="javax.xml"/>
-						<plugin id="org.eclipse.core.filesystem"/>
-						<plugin id="org.eclipse.core.resources"/>
-						<plugin id="org.eclipse.equinox.http.servletbridge"/>
-						<plugin id="com.arcadsoftware.asteroids.google.re2"/>
-						<plugin id="org.hsqldb.hsqldb"/>						
+						<plugin id="org.apache.commons.commons-io" />
+						<plugin id="org.apache.commons.lang3" />
+						<plugin id="org.ops4j.pax.logging.pax-logging-api" />
+						<plugin id="net.sf.jmimemagic" />
+						<plugin id="xstream" />
+						<plugin id="javax.xml" />
+						<plugin id="org.eclipse.core.filesystem" />
+						<plugin id="org.eclipse.core.resources" />
+						<plugin id="org.eclipse.equinox.http.servletbridge" />
+						<plugin id="com.arcadsoftware.asteroids.google.re2" />
+						<plugin id="org.hsqldb.hsqldb" />
 					</excludes>
 				</configuration>
-			</plugin>
+			</plugin>			
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>flat-repo</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>dev.jbang</groupId>
+						<artifactId>jbang-maven-plugin</artifactId>
+						<version>0.0.7</version>
+						<executions>
+							<execution>
+								<id>run</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<script>
+										https://gist.github.com/fbricon/3c718d03f55c3ceba5dea570af4af5f8</script>
+									<args>
+										<arg>${project.basedir}/releng/aev.update</arg>
+									</args>
+									<trusts>
+										<trust>https://gist.github.com</trust>
+									</trusts>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<modules>
 		<module>bundles</module>

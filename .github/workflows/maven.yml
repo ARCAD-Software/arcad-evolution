@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Build P2 repository
 
 on: workflow_dispatch
 #  release:
@@ -19,15 +19,35 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
+      run: mvn -B package --file pom.xml -Pflat-repo
+      
+		- name: Upload flat p2 update site
+			if: github.ref == 'refs/heads/main'
+			uses: marvinpinto/action-automatic-releases@latest
+			with:
+				repo_token: "${{secrets.GITHUB_TOKEN}}"
+				automatic_release_tag: "latest"
+				prerelease: true
+				title: "Development Build"
+				files: 
+					releng/aev.update/target/flat-repository/*
+		
+		- name: Release
+			uses: softprops/action-gh-release@v1
+			if: startsWith(github.ref, 'refs/tags/')
+			with:
+				files:
+					releng/aev.update/target/flat-repository/*
+	        
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
