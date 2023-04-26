@@ -2,7 +2,7 @@
 <feature
       id="com.arcadsoftware.aev.core.features"
       label="ARCAD-Evolution Core"
-      version="11.0.27.qualifier"
+      version="12.0.0.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
@@ -41,7 +41,7 @@
          unpack="false"/>
 
    <plugin
-         id="com.arcadsoftware.asteroids.google.re2"
+         id="wrapped.com.google.re2j.re2j"
          download-size="0"
          install-size="0"
          version="0.0.0"

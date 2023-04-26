@@ -1,104 +1,83 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.arcadsoftware</groupId>
-		<artifactId>software-factory</artifactId>
-		<version>4.0.17</version>
-	</parent>
 
+	<groupId>com.arcadsoftware</groupId>
 	<artifactId>com.arcadsoftware.aev</artifactId>
-	<version>11.0.27-SNAPSHOT</version>
+	<version>12.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<scm>
-		<connection>scm:git:git@rdanghub01plv.quarcad.net:RetD/aev.git</connection>
-		<tag>HEAD</tag>
-	</scm>
-	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<tycho.version>3.0.4</tycho.version>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
 			</plugin>
+			 <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-p2-plugin</artifactId>
+   				<version>${tycho.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-p2-metadata</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>p2-metadata</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
 				<configuration>
 					<target>
 						<artifact>
 							<groupId>com.arcadsoftware</groupId>
 							<artifactId>com.arcadsoftware.aev.platform</artifactId>
-							<version>11.0.27-SNAPSHOT</version>
+							<version>12.0.0-SNAPSHOT</version>
 						</artifact>
 					</target>
+					<executionEnvironment>JavaSE-1.8</executionEnvironment>
+					<pomDependencies>consider</pomDependencies>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-source-plugin</artifactId>
+				<version>${tycho.version}</version>
 				<executions>
 					<execution>
 						<goals>
 							<goal>plugin-source</goal>
+							<goal>feature-source</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-source-feature-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>source-feature</goal>
-						</goals>
-					</execution>
-				</executions>
+				</executions>			
 				<configuration>
 					<excludes>
 						<plugin id="org.apache.commons.commons-io"/>
 						<plugin id="org.apache.commons.lang3"/>
-						<plugin id="org.apache.servicemix.bundles.dom4j"/>
-						<plugin id="org.apache.servicemix.bundles.spring-beans"/>
-						<plugin id="org.apache.servicemix.bundles.spring-context"/>
-						<plugin id="org.apache.servicemix.bundles.spring-core"/>
-						<plugin id="org.apache.servicemix.bundles.spring-expression"/>
 						<plugin id="org.ops4j.pax.logging.pax-logging-api"/>
 						<plugin id="net.sf.jmimemagic"/>
-						<plugin id="com.arcadsoftware.asteroids.thoughtworks.xstream"/>
-						<plugin id="org.hsqldb.hsqldb"/>
 						<plugin id="xstream"/>
-						<plugin id="com.ibm.icu"/>
 						<plugin id="javax.xml"/>
 						<plugin id="org.eclipse.core.filesystem"/>
 						<plugin id="org.eclipse.core.resources"/>
 						<plugin id="org.eclipse.equinox.http.servletbridge"/>
-						<plugin id="org.eclipse.rap.filedialog"/>
-						<plugin id="org.eclipse.rap.fileupload"/>
-						<plugin id="org.eclipse.rap.jface"/>
-						<plugin id="org.eclipse.rap.jface.databinding"/>
-						<plugin id="org.eclipse.rap.rwt"/>
-						<plugin id="org.eclipse.rap.rwt.osgi"/>
-						<plugin id="org.eclipse.rap.ui"/>
-						<plugin id="org.eclipse.rap.ui.forms"/>
-						<plugin id="org.eclipse.rap.ui.views"/>
-						<plugin id="org.eclipse.rap.ui.workbench"/>
 						<plugin id="com.arcadsoftware.asteroids.google.re2"/>
-						<feature id="com.arcadsoftware.rap.feature"/>
-						<feature id="com.arcadsoftware.asteroids.spring.feature"/>						
+						<plugin id="org.hsqldb.hsqldb"/>						
 					</excludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-p2-plugin</artifactId>
-			</plugin>						
-			<plugin>
-				<groupId>com.arcadsoftware</groupId>
-				<artifactId>software-factory-maven-plugin</artifactId>
-				<configuration>						
-					<siteId>aev</siteId>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -106,7 +85,6 @@
 
 	<modules>
 		<module>bundles</module>
-		<module>ant</module>
 		<module>features</module>
 		<module>releng</module>
 	</modules>

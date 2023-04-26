@@ -2,7 +2,7 @@ package com.arcadsoftware.aev.core.ui.messages;
 
 import com.arcadsoftware.aev.core.messages.Message;
 import com.arcadsoftware.aev.core.messages.MessageDetail;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 public class MessageIconHelper {
 	public static Icon getMessageDetailIcon(final MessageDetail messageDetail) {

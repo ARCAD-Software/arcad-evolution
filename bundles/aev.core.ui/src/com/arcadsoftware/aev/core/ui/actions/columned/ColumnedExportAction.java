@@ -26,7 +26,6 @@ import com.arcadsoftware.aev.core.ui.wizards.ArcadWizardDialog;
 import com.arcadsoftware.aev.core.ui.wizards.IWizardBranding;
 import com.arcadsoftware.aev.core.ui.wizards.columned.ColumnedCSVExportWizard;
 import com.arcadsoftware.aev.core.ui.wizards.columned.ColumnedParametersWizardPage;
-import com.arcadsoftware.documentation.brands.Brand;
 
 /**
  * @author dlelong
@@ -87,7 +86,7 @@ public class ColumnedExportAction extends ArcadAction {
 	private ImageDescriptor getWizardImage() {
 		return ServiceRegistry.lookup(IWizardBranding.class) //
 				.map(IWizardBranding::getBrandingImage) //
-				.orElseGet(Brand.ARCAD_LOGO_64::imageDescriptor);
+				.orElseGet(com.arcadsoftware.aev.icons.Brand.ARCAD_LOGO_64::imageDescriptor);
 	}
 
 	public String getWizardTitle() {

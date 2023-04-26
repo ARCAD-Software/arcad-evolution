@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ARCAD Evolutions Icons
+Bundle-SymbolicName: com.arcadsoftware.aev.icons
+Bundle-Version: 12.0.0.qualifier
+Bundle-Vendor: ARCAD Software
+Automatic-Module-Name: com.arcadsoftware.aev.icons
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.eclipse.jface.resource,
+ org.eclipse.swt.graphics,
+ org.eclipse.swt.widgets,
+ org.osgi.framework;version="1.8.0"
+Export-Package: com.arcadsoftware.aev.icons

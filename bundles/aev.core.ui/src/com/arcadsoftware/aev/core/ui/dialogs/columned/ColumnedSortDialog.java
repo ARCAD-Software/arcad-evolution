@@ -21,7 +21,7 @@ import com.arcadsoftware.aev.core.ui.columned.model.ColumnedSortCriteriaList;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedSortTableViewer;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author dlelong

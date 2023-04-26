@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author mlafon

@@ -29,7 +29,7 @@ import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedInternalTableViewer;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.ColumnedTableViewer;
 import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedSorter;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author MD

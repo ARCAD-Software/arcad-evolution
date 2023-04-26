@@ -35,7 +35,7 @@ import com.arcadsoftware.aev.core.ui.dialogs.DialogConstantProvider;
 import com.arcadsoftware.aev.core.ui.listeners.columned.IDialogListener;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 public class ColumnedDisplayDialog extends ColumnedDialog {
 	protected static int APPLY_ID = 47;

@@ -11,7 +11,7 @@ import org.eclipse.jface.wizard.WizardPage;
 
 import com.arcadsoftware.aev.core.osgi.ServiceRegistry;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
-import com.arcadsoftware.documentation.brands.Brand;
+import com.arcadsoftware.aev.icons.Brand;
 
 /**
  * @author MD

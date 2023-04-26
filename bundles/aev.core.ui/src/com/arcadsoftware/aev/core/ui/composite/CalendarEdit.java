@@ -22,7 +22,7 @@ import com.arcadsoftware.aev.core.tools.StringTools;
 import com.arcadsoftware.aev.core.ui.calendar.SWTCalendarDialog;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author mlafon

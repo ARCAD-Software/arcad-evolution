@@ -15,7 +15,7 @@ import com.arcadsoftware.aev.core.ui.calendar.SWTCalendar;
 import com.arcadsoftware.aev.core.ui.calendar.SWTCalendarDialog;
 import com.arcadsoftware.aev.core.ui.calendar.SWTTimeChooser;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 public class CalendarDialog extends Dialog {
 

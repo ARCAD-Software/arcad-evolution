@@ -1,37 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
 <target name="AEV Build Platform" sequenceNumber="1">
-    <locations>
-        <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-            <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
-            <unit id="org.eclipse.e4.rcp.feature.group" version="0.0.0"/>
-            <unit id="org.eclipse.emf.common.feature.group" version="0.0.0"/>
-            <unit id="org.eclipse.emf.ecore.feature.group" version="0.0.0"/>
-            <unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
-            <unit id="javax.xml.stream" version="0.0.0"/>
-            <repository location="https://download.eclipse.org/releases/neon/201705151400/"/>
-        </location>
-        <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">            
-			<unit id="org.apache.servicemix.bundles.spring-beans" version="0.0.0"/>
-			<unit id="org.apache.servicemix.bundles.spring-context" version="0.0.0"/>
-			<unit id="org.apache.servicemix.bundles.spring-core" version="0.0.0"/>
-			<unit id="org.apache.servicemix.bundles.spring-expression" version="0.0.0"/>
-            <unit id="org.apache.commons.lang3" version="0.0.0"/>
-            <unit id="com.arcadsoftware.asteroids.google.re2" version="0.0.0"/>
-			<unit id="org.apache.commons.commons-io" version="0.0.0"/>
-			<unit id="org.hsqldb.hsqldb" version="0.0.0"/>
-			<unit id="org.apache.commons.commons-fileupload" version="0.0.0"/>
-			<unit id="net.sf.jmimemagic" version="0.0.0"/>
-            <repository location="http://rdanart01plv.quarcad.net/asteroids/4.0.14/update"/>
-        </location>
-        <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-            <unit id="com.arcadsoftware.rap.feature.feature.group" version="0.0.0"/>
-            <repository location="http://rdanart01plv.quarcad.net/rap/3.2.1/update"/>
-        </location>
-        <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-			<repository location="http://rdanart01plv.quarcad.net/documentation/master/update"/>
-			<unit id="com.arcadsoftware.documentation.brands" version="0.0.0"/>
-			<unit id="com.arcadsoftware.documentation.icons" version="0.0.0"/>
+	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+			<unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.e4.rcp.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.emf.common.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.emf.ecore.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
+			<unit id="javax.xml.stream" version="0.0.0"/>
+			<repository location="https://download.eclipse.org/releases/neon/201705151400/"/>
 		</location>
-    </locations>
+		<location includeDependencyDepth="none" includeDependencyScopes="compile" missingManifest="generate" type="Maven">
+			<dependencies>
+				<dependency>
+					<groupId>com.google.re2j</groupId>
+					<artifactId>re2j</artifactId>
+					<version>1.7</version>
+					<type>jar</type>
+				</dependency>
+				<dependency>
+					<groupId>commons-io</groupId>
+					<artifactId>commons-io</artifactId>
+					<version>2.11.0</version>
+					<type>jar</type>
+				</dependency>
+				<dependency>
+					<groupId>net.sf.jmimemagic</groupId>
+					<artifactId>jmimemagic</artifactId>
+					<version>0.1.5</version>
+					<type>jar</type>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-lang3</artifactId>
+					<version>3.12.0</version>
+					<type>jar</type>
+				</dependency>
+				<dependency>
+					<groupId>org.hsqldb</groupId>
+					<artifactId>hsqldb</artifactId>
+					<version>2.7.1</version>
+					<type>jar</type>
+				</dependency>
+			</dependencies>
+		</location>
+	</locations>
 </target>

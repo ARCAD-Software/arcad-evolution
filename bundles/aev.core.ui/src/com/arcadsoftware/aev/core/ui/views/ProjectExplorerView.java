@@ -35,7 +35,7 @@ import com.arcadsoftware.aev.core.ui.mementos.DefaultExplorerMementoTools;
 import com.arcadsoftware.aev.core.ui.mementos.ExplorerMementoTools;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.treeviewers.ContainerTreeViewer;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained from the model. The

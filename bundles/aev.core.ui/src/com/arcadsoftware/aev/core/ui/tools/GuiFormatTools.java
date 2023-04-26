@@ -76,7 +76,7 @@ import com.arcadsoftware.aev.core.ui.dialogs.gui.CalendarDialog;
 import com.arcadsoftware.aev.core.ui.dialogs.gui.MultiValueDialog;
 import com.arcadsoftware.aev.core.ui.listeners.SimpleDateVerifierListener;
 import com.arcadsoftware.aev.core.ui.widgets.ArcadColorWidget;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author MD

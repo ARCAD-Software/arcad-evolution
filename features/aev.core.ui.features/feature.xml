@@ -2,7 +2,7 @@
 <feature
       id="com.arcadsoftware.aev.core.ui.features"
       label="ARCAD-Evolution Core UI"
-      version="11.0.27.qualifier"
+      version="12.0.0.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
@@ -38,5 +38,12 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="com.arcadsoftware.aev.icons"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

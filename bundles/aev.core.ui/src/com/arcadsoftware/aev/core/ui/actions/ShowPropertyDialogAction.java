@@ -17,7 +17,7 @@ import com.arcadsoftware.aev.core.tools.StringTools;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 import com.arcadsoftware.aev.core.ui.dialogs.ArcadPropertyDialog;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author MD

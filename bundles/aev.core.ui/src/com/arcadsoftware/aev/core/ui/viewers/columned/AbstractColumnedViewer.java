@@ -60,7 +60,7 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnResolver;
 import com.arcadsoftware.aev.core.ui.viewers.columned.impl.IColumnedSearcher;
 import com.arcadsoftware.aev.core.ui.viewers.sorters.ArcadTableViewerColumnSorter;
 import com.arcadsoftware.aev.core.ui.viewers.sorters.ColumnedSorter;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author MD

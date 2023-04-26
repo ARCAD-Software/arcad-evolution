@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature id="com.arcadsoftware.aev.spring.features" version="0.0.0">
-      <category name="aev_features"/>
-   </feature>
    <feature id="com.arcadsoftware.aev.services.features" version="0.0.0">
       <category name="aev_features"/>
    </feature>
@@ -10,9 +7,6 @@
       <category name="aev_features"/>
    </feature>
    <feature id="com.arcadsoftware.aev.core.ui.features" version="0.0.0">
-      <category name="aev_features"/>
-   </feature>
-   <feature id="com.arcadsoftware.aev.rap.features" version="0.0.0">
       <category name="aev_features"/>
    </feature>
    <feature id="com.arcadsoftware.aev.rcp.features" version="0.0.0">
@@ -30,16 +24,10 @@
    <feature id="com.arcadsoftware.aev.core.ui.features.source" version="0.0.0">
       <category name="aev_features"/>
    </feature>
-   <feature id="com.arcadsoftware.aev.rap.features.source" version="0.0.0">
-      <category name="aev_features"/>
-   </feature>
    <feature id="com.arcadsoftware.aev.rcp.features.source" version="0.0.0">
       <category name="aev_features"/>
    </feature>
    <feature id="com.arcadsoftware.aev.list.features.source" version="0.0.0">
-      <category name="aev_features"/>
-   </feature>
-   <feature id="com.arcadsoftware.aev.spring.features.source" version="0.0.0">
       <category name="aev_features"/>
    </feature>
    <category-def name="aev_features" label="ARCAD-Evolution features"/>

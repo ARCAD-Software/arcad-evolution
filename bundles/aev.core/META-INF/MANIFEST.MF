@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution Core
 Bundle-SymbolicName: com.arcadsoftware.aev.core;singleton:=true
-Bundle-Version: 11.0.27.qualifier
+Bundle-Version: 12.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: com.arcadsoftware.aev.core.EvolutionCorePlugin
 Bundle-Vendor: ARCAD Software
@@ -27,5 +27,5 @@ Import-Package: com.google.re2j,
  org.osgi.service.component.annotations;resolution:=optional,
  org.w3c.dom;version="3.0.0"
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/com.arcadsoftware.aev.core.osgi.ServiceRegistry.xml,
- OSGI-INF/com.arcadsoftware.aev.core.osgi.GlobalLogService.xml
+Service-Component: OSGI-INF/com.arcadsoftware.aev.core.osgi.GlobalLogService.xml,
+ OSGI-INF/com.arcadsoftware.aev.core.osgi.ServiceRegistry.xml

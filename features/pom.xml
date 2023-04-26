@@ -3,19 +3,17 @@
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
 		<artifactId>com.arcadsoftware.aev</artifactId>
-		<version>11.0.27-SNAPSHOT</version>
+		<version>12.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>com.arcadsoftware.aev.features</artifactId>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>aev.spring.features</module>
 		<module>aev.services.features</module>
 		<module>aev.list.features</module>
 		<module>aev.core.features</module>
 		<module>aev.core.ui.features</module>
 		<module>aev.rcp.features</module>
-		<module>aev.rap.features</module>
 	</modules>
 </project>

@@ -29,7 +29,7 @@ import com.arcadsoftware.aev.core.ui.IDocProvider;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 import com.arcadsoftware.aev.core.ui.treeviewers.MessagesTreeViewer;
-import com.arcadsoftware.documentation.icons.Icon;
+import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author mlafon
