@@ -29,7 +29,7 @@
 									<script>
 										https://gist.github.com/fbricon/3c718d03f55c3ceba5dea570af4af5f8</script>
 									<args>
-										<arg>${project.basedir}/releng/aev.update</arg>
+										<arg>${project.basedir}</arg>
 									</args>
 									<trusts>
 										<trust>https://gist.github.com</trust>
