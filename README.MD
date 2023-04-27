@@ -2,7 +2,7 @@
 This project holds several Eclipse bundles used by ARCAD products.
 
 ## Development
-Recommended tool for maintaining this project:
+Recommended tools for maintaining this project:
 - [Java 17](https://adoptium.net/temurin/releases/?version=17)
 - [Eclipse IDE](https://www.eclipse.org/downloads/)
 - Eclipse m2e integration plugin
