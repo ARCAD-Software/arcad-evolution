@@ -8,9 +8,13 @@
 
 name: Build P2 repository
 
-on: workflow_dispatch
-#  release:
-#    types: [created]
+on: 
+  pull_request:
+    push:
+    branches:
+      - main
+    tags:
+      - "*.*.*"
 
 jobs:
   build:
