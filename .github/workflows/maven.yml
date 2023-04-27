@@ -9,8 +9,7 @@
 name: Build P2 repository
 
 on: 
-  pull_request:
-    push:
+  push:
     branches:
       - main
     tags:
