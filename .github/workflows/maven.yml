@@ -29,7 +29,22 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-        
+
+    - name: Set up JDK 8
+      id: java-8
+      uses: actions/setup-java@v3
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+        cache: maven
+
+    - uses: cactuslab/maven-toolchains-xml-action@v1
+      with:
+        toolchains: |
+          [
+            {"type":"jdk", "jdkVersion": "8", "jdkHome": "${{steps.java-8.outputs.path}}", "provides": { "id":"JavaSE-1.8", "version":"8", "vendor":"Eclipse" } }
+          ]
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml -Pflat-repo
       
