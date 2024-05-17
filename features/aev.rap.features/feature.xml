@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="com.arcadsoftware.aev.core.ui.features"
-      label="ARCAD-Evolution Core UI"
+      id="com.arcadsoftware.aev.rap.features"
+      label="ARCAD-Evolution RAP"
       version="12.0.2.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
-      Contains the Cores bundles from ARCAD Evolution:
-- AEV Core
-- AEV Core UI
+      Contains the ARCAD Evolution RAP bundle and its dependencies.
    </description>
 
    <copyright url="http://www.arcadsoftware.com">
@@ -17,30 +15,18 @@
 
    <license url="http://www.arcadsoftware.com">
       General ARCAD-Software Commercial License
-      (c) 2022, ARCAD Software, all rights reserved.
+      (c) 2021, ARCAD Software, all rights reserved.
       The software and documentation cannot be used without explicit
       authorization of ARCAD-Software.
       Please refer to the global ARCAD products licence for details.
    </license>
 
    <includes
-         id="com.arcadsoftware.aev.core.features"
-         version="0.0.0"/>
-
-   <requires>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="com.arcadsoftware.aev.core"/>
-   </requires>
-
-   <plugin
-         id="com.arcadsoftware.aev.core.ui"
-         download-size="0"
-         install-size="0"
+         id="com.arcadsoftware.aev.core.ui.features"
          version="0.0.0"/>
 
    <plugin
-         id="com.arcadsoftware.aev.icons"
+         id="com.arcadsoftware.aev.core.ui.rap"
          download-size="0"
          install-size="0"
          version="0.0.0"

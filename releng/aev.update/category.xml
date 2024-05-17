@@ -12,6 +12,9 @@
    <feature id="com.arcadsoftware.aev.rcp.features" version="0.0.0">
       <category name="aev_features"/>
    </feature>
+   <feature id="com.arcadsoftware.aev.rap.features" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
    <feature id="com.arcadsoftware.aev.list.features" version="0.0.0">
       <category name="aev_features"/>
    </feature>
@@ -25,6 +28,9 @@
       <category name="aev_features"/>
    </feature>
    <feature id="com.arcadsoftware.aev.rcp.features.source" version="0.0.0">
+      <category name="aev_features"/>
+   </feature>
+   <feature id="com.arcadsoftware.aev.rap.features.source" version="0.0.0">
       <category name="aev_features"/>
    </feature>
    <feature id="com.arcadsoftware.aev.list.features.source" version="0.0.0">
