@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD-Evolution Core UI RCP
 Automatic-Module-Name: com.arcadsoftware.aev.core.ui.rcp
 Bundle-SymbolicName: com.arcadsoftware.aev.core.ui.rcp;singleton:=true
-Bundle-Version: 12.0.2
+Bundle-Version: 12.0.3.qualifier
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  com.arcadsoftware.aev.core,
