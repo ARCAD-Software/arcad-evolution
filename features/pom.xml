@@ -18,7 +18,7 @@
 		<module>aev.rap.features</module>
 	</modules>
 	
-	<pluginManagement>
+	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -28,5 +28,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</pluginManagement>
+	</build>
 </project>

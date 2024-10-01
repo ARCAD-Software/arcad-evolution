@@ -15,9 +15,9 @@
 	<modules>
 		<module>aev.platform</module>
 		<module>aev.update</module>
-	</modules>
-
-	<pluginManagement>
+	</modules>	
+	
+	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -27,5 +27,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</pluginManagement>
+	</build>
 </project>
