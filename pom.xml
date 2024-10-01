@@ -118,4 +118,13 @@
 		<module>features</module>
 		<module>releng</module>
 	</modules>
+
+  	<distributionManagement>
+    		<repository>
+      			<id>github</id>
+      			<name>GitHub Packages</name>
+      			<url>https://maven.pkg.github.com/ARCAD-Software/arcad-evolution</url>
+    		</repository>
+	</distributionManagement>
+
 </project>
