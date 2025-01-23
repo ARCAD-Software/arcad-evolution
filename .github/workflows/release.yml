@@ -1,0 +1,71 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Publish release
+on:
+  release:
+    types: [created]
+
+
+jobs:
+  release:
+    name: Release and publish
+
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      packages: write
+      
+    steps:
+    - uses: actions/checkout@v4
+	  with:
+	    ref: main
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Update version number
+		  run: mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${{ github.ref_name }}
+
+    - name: Build with Maven
+      run: mvn -B deploy --file pom.xml -Pflat-repo --batch-mode      
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Attach p2 update site
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}          
+        file: releng/aev.update/target/flat-repository/*
+        file_glob: true
+
+    - name: Commit changes and move release tag
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit --allow-empty -a -m "Release ${{ github.ref_name }}"
+          git tag -f ${{ github.ref_name }}
+          git push --tags --force
+
+    - name: Bump version numbers for next cycle
+      run: mvn org.eclipse.tycho:tycho-versions-plugin:bump-versions
+
+    - name: Read new version
+      id: new-version        
+      uses: PERES-Richard/maven-get-version-action@v3.0.0
+
+    - name: Commit version number change
+      run: |
+        git commit -a -m "Starting ${{ steps.new-version.outputs.version }} development"
+        git push
