@@ -9,6 +9,17 @@
 	<artifactId>com.arcadsoftware.aev.bundles</artifactId>
 	<packaging>pom</packaging>
 
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<modules>
 		<module>aev.core.services</module>
 		<module>aev.list.manager</module>
