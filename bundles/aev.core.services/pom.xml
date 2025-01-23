@@ -9,15 +9,4 @@
 	<name>ARCAD-Evolution Core Services</name>
 	<packaging>eclipse-plugin</packaging>
 	<artifactId>com.arcadsoftware.aev.core.services</artifactId>
-
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-deploy-plugin</artifactId>	
-				<configuration>
-					<skip>false</skip>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
