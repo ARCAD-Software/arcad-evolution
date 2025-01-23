@@ -6,14 +6,9 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Build P2 repository
+name: Build repository
 
-on: 
-  push:
-    branches:
-      - main
-    tags:
-      - "*.*.*"
+on: workflow_dispatch
 
 jobs:
   build:
