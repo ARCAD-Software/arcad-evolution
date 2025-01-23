@@ -2,6 +2,7 @@
 .*
 !.gitignore
 !.mvn
+!.github
 **/target
 **/bin
 *.iml
