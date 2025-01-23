@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.arcadsoftware</groupId>
 		<artifactId>com.arcadsoftware.aev.releng</artifactId>
-		<version>12.0.3-SNAPSHOT</version>
+		<version>12.0.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>com.arcadsoftware.aev.platform</artifactId>
 	<packaging>eclipse-target-definition</packaging>

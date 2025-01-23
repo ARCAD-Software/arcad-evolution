@@ -6,7 +6,7 @@
 
 	<groupId>com.arcadsoftware</groupId>
 	<artifactId>com.arcadsoftware.aev</artifactId>
-	<version>12.0.3-SNAPSHOT</version>
+	<version>12.0.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -77,7 +77,7 @@
 						<artifact>
 							<groupId>com.arcadsoftware</groupId>
 							<artifactId>com.arcadsoftware.aev.platform</artifactId>
-							<version>12.0.3-SNAPSHOT</version>
+							<version>12.0.4-SNAPSHOT</version>
 						</artifact>
 					</target>
 					<executionEnvironment>JavaSE-1.8</executionEnvironment>
