@@ -74,7 +74,7 @@ jobs:
           git push --tags --force
 
       - name: Bump version numbers for next cycle
-        run: mvn org.eclipse.tycho:tycho-versions-plugin:3.0.5:bump-versions
+        run: mvn org.eclipse.tycho:tycho-versions-plugin:bump-versions
 
       - name: Read new version
         id: new-version        
