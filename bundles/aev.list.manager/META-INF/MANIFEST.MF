@@ -27,5 +27,5 @@ Import-Package: com.arcadsoftware.ae.core.exceptions,
 Bundle-ClassPath: .,
  libs/org.apache.servicemix.bundles.xpp3-1.1.4c_7.jar,
  libs/hsqldb-2.7.1-jdk8.jar
-Bundle-Version: 12.0.3.qualifier
+Bundle-Version: 12.0.3
 Bundle-ActivationPolicy: lazy
