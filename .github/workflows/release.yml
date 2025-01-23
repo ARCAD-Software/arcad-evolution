@@ -66,12 +66,12 @@ jobs:
           file_glob: true
 
       - name: Commit changes and move release tag
-          run: |
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git commit --allow-empty -a -m "Release ${{ github.ref_name }}"
-            git tag -f ${{ github.ref_name }}
-            git push --tags --force
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit --allow-empty -a -m "Release ${{ github.ref_name }}"
+          git tag -f ${{ github.ref_name }}
+          git push --tags --force
 
       - name: Bump version numbers for next cycle
         run: mvn org.eclipse.tycho:tycho-versions-plugin:bump-versions
