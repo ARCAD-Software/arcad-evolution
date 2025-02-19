@@ -73,14 +73,16 @@ jobs:
           git tag -f ${{ github.ref_name }}
           git push --tags --force
 
+      - name: Get next version
+        uses: reecetech/version-increment@2024.10.1
+        id: next-version
+        with:
+          increment: patch
+		  
       - name: Bump version numbers for next cycle
-        run: mvn org.eclipse.tycho:tycho-versions-plugin:bump-versions
-
-      - name: Read new version
-        id: new-version        
-        uses: PERES-Richard/maven-get-version-action@v3.0.0
+        run: mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${{ steps.next-version.outputs.version }}
 
       - name: Commit version number change
         run: |
-          git commit -a -m "Starting ${{ steps.new-version.outputs.version }} development"
+          git commit -a -m "Starting ${{ steps.next-version.outputs.version }} development"
           git push
