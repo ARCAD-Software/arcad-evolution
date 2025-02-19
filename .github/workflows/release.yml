@@ -78,7 +78,7 @@ jobs:
         id: next-version
         with:
           increment: patch
-		  
+
       - name: Bump version numbers for next cycle
         run: mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${{ steps.next-version.outputs.version }}
 
