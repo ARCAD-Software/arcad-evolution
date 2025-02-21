@@ -50,7 +50,7 @@ jobs:
             ]
 
       - name: Update version number
-        run: mvn org.eclipse.tycho:tycho-versions-plugin:3.0.5:set-version -DnewVersion=${{ github.ref_name }}
+        run: mvn org.eclipse.tycho:tycho-versions-plugin:1.7.0:set-version -DnewVersion=${{ github.ref_name }}
 
       - name: Build with Maven
         run: mvn -B deploy --file pom.xml -Pflat-repo --batch-mode      
@@ -80,7 +80,7 @@ jobs:
           increment: patch
 
       - name: Bump version numbers for next cycle
-        run: mvn org.eclipse.tycho:tycho-versions-plugin:3.0.5:set-version -DnewVersion=${{ steps.next-version.outputs.version }}-SNAPSHOT
+        run: mvn org.eclipse.tycho:tycho-versions-plugin:1.7.0:set-version -DnewVersion=${{ steps.next-version.outputs.version }}-SNAPSHOT
 
       - name: Commit version number change
         run: |
