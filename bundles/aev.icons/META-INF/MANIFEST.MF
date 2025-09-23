@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ARCAD Evolutions Icons
 Bundle-SymbolicName: com.arcadsoftware.aev.icons
-Bundle-Version: 12.0.6.qualifier
+Bundle-Version: 12.0.6
 Bundle-Vendor: ARCAD Software
 Automatic-Module-Name: com.arcadsoftware.aev.icons
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
