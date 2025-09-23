@@ -17,12 +17,10 @@ Export-Package: com.arcadsoftware.aev.core,
  com.arcadsoftware.aev.core.osgi,
  com.arcadsoftware.aev.core.tools
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ org.apache.commons.lang3;bundle-version="3.18.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.google.re2j,
- org.apache.commons.lang3;version="[3.6.0,4.0.0)",
- org.apache.commons.lang3.math;version="[3.6.0,4.0.0)",
- org.apache.commons.lang3.time;version="[3.6.0,4.0.0)",
  org.osgi.service.component,
  org.osgi.service.component.annotations;resolution:=optional,
  org.w3c.dom
