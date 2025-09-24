@@ -1,9 +1,16 @@
-/*
- * Créé le 10 juin 2004
- * Projet : ARCAD Plugin Core UI
- * <i> Copyright 2004, Arcad-Software.</i>
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- */
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.wizards;
 
 import java.util.ArrayList;
@@ -59,12 +66,12 @@ public class MessagesWizardPage extends ArcadWizardPage implements IMessagesList
 	}
 
 	/**
-	 * Débute le block de messages.
+	 * Dï¿½bute le block de messages.
 	 *
 	 * @param plugin
-	 *            le plugin responsable du block de message (peut être null).
+	 *            le plugin responsable du block de message (peut ï¿½tre null).
 	 * @param blockContext
-	 *            message englobant les messages jusqu'à terminaison du block (peut être null).
+	 *            message englobant les messages jusqu'ï¿½ terminaison du block (peut ï¿½tre null).
 	 * @return Message
 	 */
 	public Message begin(final String blockContext) {

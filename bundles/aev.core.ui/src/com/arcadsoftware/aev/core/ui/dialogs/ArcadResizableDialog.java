@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /**
  *
  */
@@ -8,7 +21,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * @author jbeauquis created on 7 déc. 07 12:40:24
+ * @author jbeauquis created on 7 dï¿½c. 07 12:40:24
  */
 public class ArcadResizableDialog extends ArcadDialog {
 

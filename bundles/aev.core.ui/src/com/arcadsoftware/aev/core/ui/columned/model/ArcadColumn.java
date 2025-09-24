@@ -1,5 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
- * Created on 13 févr. 2006
+ * Created on 13 fï¿½vr. 2006
  */
 package com.arcadsoftware.aev.core.ui.columned.model;
 
@@ -51,9 +64,9 @@ public class ArcadColumn {
 	 * @param identifier
 	 *            (aka property) : Identificateur de la colonne
 	 * @param name
-	 *            : Libellé de la colonne
+	 *            : Libellï¿½ de la colonne
 	 * @param visible
-	 *            : Indicateur de visibilité de la colonne
+	 *            : Indicateur de visibilitï¿½ de la colonne
 	 * @param position
 	 *            Position de la colonne dans la liste
 	 */

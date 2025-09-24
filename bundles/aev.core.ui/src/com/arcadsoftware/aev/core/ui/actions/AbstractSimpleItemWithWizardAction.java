@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on 12 avr. 2006
  *
@@ -13,15 +26,15 @@ import com.arcadsoftware.aev.core.ui.wizards.AbstractSimpleItemWizardPage;
 import com.arcadsoftware.aev.core.ui.wizards.ArcadWizardDialog;
 
 /**
- * Classe des actions n'agissant que sur une seule entité ARCAD par envoi d'une commande sur le serveur iSeries et
+ * Classe des actions n'agissant que sur une seule entitï¿½ ARCAD par envoi d'une commande sur le serveur iSeries et
  * utilisant un assistant<br>
  *
  * @author MD
  */
 public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleItemAction {
 
-	// booléen utilisé pour l'appel de la méthode runActions()
-	// après la fermetuire du wizard
+	// boolï¿½en utilisï¿½ pour l'appel de la mï¿½thode runActions()
+	// aprï¿½s la fermetuire du wizard
 	protected boolean actionsToRunAfterWizard = true;
 	ArcadWizardDialog dialog;
 
@@ -36,11 +49,11 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 	}
 
 	/**
-	 * Méthode de spécification de l'assistant à utiliser dans l'action<br>
-	 * Implémentez cette méthode pour spécifier quel assistant votre action doit utiliser lors de son exécution. Par
-	 * défaut : <br>
-	 * - l'action passée est l'instance elle même (this)<br>
-	 * - Le titre passé est celui défini par la méthode
+	 * Mï¿½thode de spï¿½cification de l'assistant ï¿½ utiliser dans l'action<br>
+	 * Implï¿½mentez cette mï¿½thode pour spï¿½cifier quel assistant votre action doit utiliser lors de son exï¿½cution. Par
+	 * dï¿½faut : <br>
+	 * - l'action passï¿½e est l'instance elle mï¿½me (this)<br>
+	 * - Le titre passï¿½ est celui dï¿½fini par la mï¿½thode
 	 *
 	 * @param action
 	 *            AbstractSimpleItemWithWizardAction : Action appelante
@@ -56,15 +69,15 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 	}
 
 	/**
-	 * Méthode de déclenchement de l'exécution de l'action.<br>
-	 * Cette méthode prend en charge l'ensemble du cycle d'exécution de l'action, y compris l'affichage d'un assistant.
+	 * Mï¿½thode de dï¿½clenchement de l'exï¿½cution de l'action.<br>
+	 * Cette mï¿½thode prend en charge l'ensemble du cycle d'exï¿½cution de l'action, y compris l'affichage d'un assistant.
 	 * <p>
-	 * <b><u>Les étapes du cycles</u></b><br>
+	 * <b><u>Les ï¿½tapes du cycles</u></b><br>
 	 * <ol>
-	 * <li>Appel à la méthode {@link #getWizardTitle() getWizardTitle()} pour récupération du titre de l'assistant.</li>
-	 * <li>Appel à la méthode {@link #createWizard(AbstractSimpleItemWithWizardAction, String) createWizard()} pour
-	 * génération d'un assistant.</li>
-	 * <li>SI l'assistant créé n'est pas null ALORS
+	 * <li>Appel ï¿½ la mï¿½thode {@link #getWizardTitle() getWizardTitle()} pour rï¿½cupï¿½ration du titre de l'assistant.</li>
+	 * <li>Appel ï¿½ la mï¿½thode {@link #createWizard(AbstractSimpleItemWithWizardAction, String) createWizard()} pour
+	 * gï¿½nï¿½ration d'un assistant.</li>
+	 * <li>SI l'assistant crï¿½ï¿½ n'est pas null ALORS
 	 * <ul>
 	 * <li>Affichage de l'assistant</li>
 	 * <li>Retourne la valeur "isExecutionSucceed" de l'assistant</li>
@@ -95,7 +108,7 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 	}
 
 	/**
-	 * Méthode qui renvoie la hauteur du dialogue A surcharger si l'on souhaite changer la hauteur du dialogue
+	 * Mï¿½thode qui renvoie la hauteur du dialogue A surcharger si l'on souhaite changer la hauteur du dialogue
 	 *
 	 * @return hauteur du dialogue de l'assistant
 	 */
@@ -104,26 +117,26 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 	}
 
 	/**
-	 * Renvoi une entité ARCAD sur laquelle porte éventuellement la commande
+	 * Renvoi une entitï¿½ ARCAD sur laquelle porte ï¿½ventuellement la commande
 	 *
-	 * @return ArcadEntity : Entité traitée
+	 * @return ArcadEntity : Entitï¿½ traitï¿½e
 	 */
 	public abstract ArcadEntity getItem();
 
 	/**
-	 * Méthode permettant de spécifier les pages à ajouter à l'assistant.<br>
-	 * Cette méthode permet de définir un tableau contenant les pages de type
-	 * {@link com.arcadsoftware.core.ui.wizards.AbstractSimpleItemWizardPage AbstractSimpleItemWizardPage} à ajouter
+	 * Mï¿½thode permettant de spï¿½cifier les pages ï¿½ ajouter ï¿½ l'assistant.<br>
+	 * Cette mï¿½thode permet de dï¿½finir un tableau contenant les pages de type
+	 * {@link com.arcadsoftware.core.ui.wizards.AbstractSimpleItemWizardPage AbstractSimpleItemWizardPage} ï¿½ ajouter
 	 * dans l'assistant.<br>
-	 * Cette méthode est appelée directement par la méthode
+	 * Cette mï¿½thode est appelï¿½e directement par la mï¿½thode
 	 * {@link com.arcadsoftware.core.ui.wizards.AbstractSimpleItemWizard#addPages() addPages()} de l'assistant.
 	 *
-	 * @return Tableau d'AbstractSimpleItemWizardPage : Pages à ajouter à l'assistant.
+	 * @return Tableau d'AbstractSimpleItemWizardPage : Pages ï¿½ ajouter ï¿½ l'assistant.
 	 */
 	public abstract AbstractSimpleItemWizardPage[] getPages();
 
 	/**
-	 * Méthode qui renvoie la largeur du dialogue A surcharger si l'on souhaite changer la largeur du dialogue
+	 * Mï¿½thode qui renvoie la largeur du dialogue A surcharger si l'on souhaite changer la largeur du dialogue
 	 *
 	 * @return largeur du dialogue de l'assistant
 	 */
@@ -132,7 +145,7 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 	}
 
 	/**
-	 * Méthode de définition du titre de l'assistant.<br>
+	 * Mï¿½thode de dï¿½finition du titre de l'assistant.<br>
 	 *
 	 * @return String : Titre de l'assistant
 	 */
@@ -143,11 +156,11 @@ public abstract class AbstractSimpleItemWithWizardAction extends AbstractSimpleI
 	}
 
 	/**
-	 * Méthode permettant d'appeler les actions exécuter. Méthode appelée dans
+	 * Mï¿½thode permettant d'appeler les actions exï¿½cuter. Mï¿½thode appelï¿½e dans
 	 * {@link com.arcadsoftware.core.ui.wizards.AbstractSimpleItemWizard#performFinish()} . A surcharger si l'on
-	 * souhaite que toutes les opérations s'éxecutent avant la fermeture du wizard.
+	 * souhaite que toutes les opï¿½rations s'ï¿½xecutent avant la fermeture du wizard.
 	 *
-	 * @return <b>true</b> si les actions se sont bien déroulées <b>false</b> sinon
+	 * @return <b>true</b> si les actions se sont bien dï¿½roulï¿½es <b>false</b> sinon
 	 */
 	public boolean runActions() {
 		return false;

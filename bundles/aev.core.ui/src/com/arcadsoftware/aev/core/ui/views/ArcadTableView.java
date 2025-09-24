@@ -1,8 +1,21 @@
-/*
- * Créé le 26 mai 04
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
+/*
+ * Crï¿½ï¿½ le 26 mai 04
+ *
+ * Pour changer le modï¿½le de ce fichier gï¿½nï¿½rï¿½, allez ï¿½ :
+ * Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 package com.arcadsoftware.aev.core.ui.views;
 
@@ -189,7 +202,7 @@ public class ArcadTableView extends ViewPart implements ISelectionChangedListene
 		if (hookTableMenu) {
 			final Menu menu = menuMgr.createContextMenu(getStructuredViewer().getControl());
 			getStructuredViewer().getControl().setMenu(menu);
-			// [ML] Le menu popup devrait pouvoir être surclassé par les
+			// [ML] Le menu popup devrait pouvoir ï¿½tre surclassï¿½ par les
 			// Descendants.
 			getSite().registerContextMenu(menuMgr, getStructuredViewer());
 		}

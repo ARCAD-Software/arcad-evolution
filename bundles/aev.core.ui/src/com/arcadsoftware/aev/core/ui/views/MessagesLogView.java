@@ -1,9 +1,16 @@
-/*
- * Créé le 10 juin 2004
- * Projet : ARCAD Plugin Core UI
- * <i> Copyright 2004, Arcad-Software.</i>
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- */
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.views;
 
 import org.eclipse.jface.action.Action;
@@ -188,8 +195,8 @@ public class MessagesLogView extends ViewPart implements IMessagesListener {
 	public void newMessageAdded(final Message message, final Throwable e) {
 		if (tree != null) {
 
-			// Evite un appel à la méthode refresh depuis un Thread qui n'y
-			// aurais pas accès.
+			// Evite un appel ï¿½ la mï¿½thode refresh depuis un Thread qui n'y
+			// aurais pas accï¿½s.
 			try {
 				tree.getViewer().getControl().isVisible();
 			} catch (final SWTException e1) {

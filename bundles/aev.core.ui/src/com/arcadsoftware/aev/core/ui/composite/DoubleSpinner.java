@@ -1,9 +1,16 @@
-/*
- * Créé le 25 mai 2004
- * Projet : ARCAD Plugin Core UI
- * <i> Copyright 2004, Arcad-Software.</i>
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- */
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.composite;
 
 import java.math.BigDecimal;
@@ -25,7 +32,7 @@ import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
  * @author mlafon
- * @version 1.0.0 Spinner de double (avec précision définie et saisie interdite).
+ * @version 1.0.0 Spinner de double (avec prï¿½cision dï¿½finie et saisie interdite).
  */
 public class DoubleSpinner extends Composite {
 

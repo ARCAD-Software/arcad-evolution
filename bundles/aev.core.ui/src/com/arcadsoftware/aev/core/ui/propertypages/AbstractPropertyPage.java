@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on 27 juin 2006
  */
@@ -51,10 +64,10 @@ public abstract class AbstractPropertyPage extends ArcadPropertyPage {
 		enabled = isEditable(item);
 
 		if (!enabled) {
-			// La page n'est pas éditable dans sa globalité.
+			// La page n'est pas ï¿½ditable dans sa globalitï¿½.
 			setCompositeNotEditable(composite);
 		} else {
-			// La gestion de l'édition des contrôles se fait de manière plus
+			// La gestion de l'ï¿½dition des contrï¿½les se fait de maniï¿½re plus
 			// fine.
 			final Control[] c = doRightManagement();
 			setControlsNotEditable(c);
@@ -67,10 +80,10 @@ public abstract class AbstractPropertyPage extends ArcadPropertyPage {
 	}
 
 	/**
-	 * Cette méthode est à surcharger pour choisir de manière plus fine (en fonction de droits, par exemple) les
-	 * contrôles qui ne doivent pas être "éditables".
+	 * Cette mï¿½thode est ï¿½ surcharger pour choisir de maniï¿½re plus fine (en fonction de droits, par exemple) les
+	 * contrï¿½les qui ne doivent pas ï¿½tre "ï¿½ditables".
 	 *
-	 * @return Control[] : tableau des contrôles qui ne doivent pas être éditables.
+	 * @return Control[] : tableau des contrï¿½les qui ne doivent pas ï¿½tre ï¿½ditables.
 	 */
 	protected Control[] doRightManagement() {
 		return new Control[0];
@@ -81,10 +94,10 @@ public abstract class AbstractPropertyPage extends ArcadPropertyPage {
 	protected abstract void fillWithItem(ArcadEntity itemToFill);
 
 	/**
-	 * Cette méthode est à surcharger lorsque l'on ne veut pas que la page soit éditable (mode consultation).
+	 * Cette mï¿½thode est ï¿½ surcharger lorsque l'on ne veut pas que la page soit ï¿½ditable (mode consultation).
 	 *
 	 * @param itemEditable
-	 * @return booelan : si la page est éditable dans sa globalité ou non.
+	 * @return booelan : si la page est ï¿½ditable dans sa globalitï¿½ ou non.
 	 */
 	protected boolean isEditable(final ArcadEntity itemEditable) {
 		return true;

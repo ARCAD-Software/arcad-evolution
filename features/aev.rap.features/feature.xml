@@ -2,7 +2,7 @@
 <feature
       id="com.arcadsoftware.aev.rap.features"
       label="ARCAD-Evolution RAP"
-      version="12.0.6.qualifier"
+      version="12.0.7.qualifier"
       provider-name="ARCAD-Software">
 
    <description>
@@ -27,9 +27,6 @@
 
    <plugin
          id="com.arcadsoftware.aev.core.ui.rap"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

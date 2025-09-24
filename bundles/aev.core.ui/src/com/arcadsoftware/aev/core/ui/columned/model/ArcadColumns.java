@@ -1,5 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
- * Created on 13 févr. 2006
+ * Created on 13 fï¿½vr. 2006
  */
 package com.arcadsoftware.aev.core.ui.columned.model;
 
@@ -78,11 +91,11 @@ public class ArcadColumns {
 	}
 
 	/**
-	 * Renvoit une colonne en fonction de la valeur passée en paramétre
+	 * Renvoit une colonne en fonction de la valeur passï¿½e en paramï¿½tre
 	 *
 	 * @param index
-	 *            index de la colonne que l'on désire relire
-	 * @return Colonne correspondant à l'index ou null si la valeur passée est en dehaors des plages.
+	 *            index de la colonne que l'on dï¿½sire relire
+	 * @return Colonne correspondant ï¿½ l'index ou null si la valeur passï¿½e est en dehaors des plages.
 	 */
 	public ArcadColumn items(final int index) {
 		if (index > -1 && index < list.size()) {
@@ -92,11 +105,11 @@ public class ArcadColumns {
 	}
 
 	/**
-	 * Renvoit une colonne en fonction de la valeur passée en paramétre
+	 * Renvoit une colonne en fonction de la valeur passï¿½e en paramï¿½tre
 	 *
 	 * @param property
 	 *            Identifiant de la colonne
-	 * @return Colonne correspondant à l'identifiant ou null si la valeur passée ne correspond à aucune colonne.
+	 * @return Colonne correspondant ï¿½ l'identifiant ou null si la valeur passï¿½e ne correspond ï¿½ aucune colonne.
 	 */
 	public ArcadColumn items(final String property) {
 		for (int i = 0; i < list.size(); i++) {
@@ -109,11 +122,11 @@ public class ArcadColumns {
 	}
 
 	/**
-	 * Renvoit une colonne en fonction de la valeur passée en paramétre
+	 * Renvoit une colonne en fonction de la valeur passï¿½e en paramï¿½tre
 	 *
 	 * @param property
 	 *            Identifiant de la colonne
-	 * @return Colonne correspondant à l'identifiant ou null si la valeur passée ne correspond à aucune colonne.
+	 * @return Colonne correspondant ï¿½ l'identifiant ou null si la valeur passï¿½e ne correspond ï¿½ aucune colonne.
 	 */
 	public ArcadColumn itemsByUserNameValue(final String valueName) {
 		for (int i = 0; i < list.size(); i++) {
@@ -130,7 +143,7 @@ public class ArcadColumns {
 	 *
 	 * @param poisiton
 	 *            position d'affichage
-	 * @return Colonne correspondant à l'identifiant ou null si la valeur passée ne correspond à aucune colonne.
+	 * @return Colonne correspondant ï¿½ l'identifiant ou null si la valeur passï¿½e ne correspond ï¿½ aucune colonne.
 	 */
 	public ArcadColumn itemsFromActualPosition(final int columnIndex) {
 		for (int i = 0; i < list.size(); i++) {
@@ -143,11 +156,11 @@ public class ArcadColumns {
 	}
 
 	/**
-	 * Renvoit une colonne en fonction de la valeur de sa position dans l'ordonnancement des colonnes de références
+	 * Renvoit une colonne en fonction de la valeur de sa position dans l'ordonnancement des colonnes de rï¿½fï¿½rences
 	 *
 	 * @param positon
 	 *            position d'affichage
-	 * @return Colonne correspondant à l'identifiant ou null si la valeur passée ne correspond à aucune colonne.
+	 * @return Colonne correspondant ï¿½ l'identifiant ou null si la valeur passï¿½e ne correspond ï¿½ aucune colonne.
 	 */
 	public ArcadColumn itemsFromPosition(final int columnIndex) {
 		for (int i = 0; i < list.size(); i++) {
@@ -189,11 +202,11 @@ public class ArcadColumns {
 	}
 
 	/**
-	 * Renvoit une colonne en fonction de la valeur passée en paramétre
+	 * Renvoit une colonne en fonction de la valeur passï¿½e en paramï¿½tre
 	 *
 	 * @param index
-	 *            index de la colonne que l'on désire relire
-	 * @return Colonne correspondant à l'index ou null si la valeur passée est en dehaors des plages.
+	 *            index de la colonne que l'on dï¿½sire relire
+	 * @return Colonne correspondant ï¿½ l'index ou null si la valeur passï¿½e est en dehaors des plages.
 	 */
 	public ArcadColumn visibleItems(final int index) {
 		if (index > -1 && index < list.size()) {

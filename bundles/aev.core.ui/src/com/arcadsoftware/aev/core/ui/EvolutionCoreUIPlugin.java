@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui;
 
 import java.util.Locale;
@@ -76,10 +89,10 @@ public class EvolutionCoreUIPlugin extends ArcadUIPlugin implements IHelperImage
 	}
 
 	/**
-	 * Obtenir la valeur d'une préférence de type Entier
+	 * Obtenir la valeur d'une prï¿½fï¿½rence de type Entier
 	 *
 	 * @param id
-	 *            l'identifiant de la préférence
+	 *            l'identifiant de la prï¿½fï¿½rence
 	 */
 	public static int getIntegerPreference(final String id) {
 		return getDefault().getPreferenceStore().getInt(id);
@@ -186,7 +199,7 @@ public class EvolutionCoreUIPlugin extends ArcadUIPlugin implements IHelperImage
 	}
 
 	/**
-	 * Obtenir le niveau de détail des messages à l'affichage.
+	 * Obtenir le niveau de dï¿½tail des messages ï¿½ l'affichage.
 	 *
 	 * @return int
 	 */
@@ -225,7 +238,7 @@ public class EvolutionCoreUIPlugin extends ArcadUIPlugin implements IHelperImage
 	}
 
 	/**
-	 * Modifie le niveau de détaild es messages à l'affichage.
+	 * Modifie le niveau de dï¿½taild es messages ï¿½ l'affichage.
 	 *
 	 * @param value
 	 */

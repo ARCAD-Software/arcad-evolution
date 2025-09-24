@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.columned.model;
 
 import com.arcadsoftware.aev.core.tools.StringTools;
@@ -44,7 +57,7 @@ public class ColumnedSortCriteria extends AbstractColumnedCriteria {
 
 	/**
 	 * @param sortOrder
-	 *            sortOrder à définir.
+	 *            sortOrder ï¿½ dï¿½finir.
 	 */
 	public void setSortOrder(final String sortOrder) {
 		this.sortOrder = sortOrder;

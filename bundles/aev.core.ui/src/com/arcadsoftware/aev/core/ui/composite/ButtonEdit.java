@@ -1,10 +1,16 @@
-/*
- * Créé le 14 mai 2004
- * Projet : ARCAD Plugin Core UI
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
  *
- * <i> Copyright 2004, Arcad-Software.</i>
- */
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.composite;
 
 import org.eclipse.swt.SWT;
@@ -27,7 +33,7 @@ import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 
 /**
  * @author mlafon
- * @version 1.0.0 Classe abstraite permetant de définir des éditeurs associées à une dialog box.
+ * @version 1.0.0 Classe abstraite permetant de dï¿½finir des ï¿½diteurs associï¿½es ï¿½ une dialog box.
  */
 public abstract class ButtonEdit extends Composite {
 
@@ -183,7 +189,7 @@ public abstract class ButtonEdit extends Composite {
 	}
 
 	/**
-	 * Modifie le texte en générant un évènement de modification.
+	 * Modifie le texte en gï¿½nï¿½rant un ï¿½vï¿½nement de modification.
 	 *
 	 * @param newText
 	 */

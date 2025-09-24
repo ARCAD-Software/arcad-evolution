@@ -1,10 +1,23 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.monitors;
 
 import com.arcadsoftware.aev.core.model.IMonitor;
 import com.arcadsoftware.aev.core.tools.StringTools;
 
 /**
- * Monitor permettant de recevoir une notification de message à chaque changement d'étape d'une Action et de renvoyer
+ * Monitor permettant de recevoir une notification de message ï¿½ chaque changement d'ï¿½tape d'une Action et de renvoyer
  * ces messages sur la sortie standard.
  *
  * @author dlelong
@@ -22,7 +35,7 @@ public class StdoutMonitor implements IMonitor {
 	 * @param actionDefinition
 	 *            : Texte de l'action
 	 * @param verbose
-	 *            : si 'true' écriture des messages de chaque étape, sinon écriture de début et de fin d'action
+	 *            : si 'true' ï¿½criture des messages de chaque ï¿½tape, sinon ï¿½criture de dï¿½but et de fin d'action
 	 */
 	public StdoutMonitor(final String actionDefinition, final boolean verbose) {
 		super();
@@ -69,7 +82,7 @@ public class StdoutMonitor implements IMonitor {
 	}
 
 	/**
-	 * Ecrit sur la sortie standrad la définition de l'action concaténée avec le message indiquant l'étape franchie
+	 * Ecrit sur la sortie standrad la dï¿½finition de l'action concatï¿½nï¿½e avec le message indiquant l'ï¿½tape franchie
 	 *
 	 * @param message
 	 */

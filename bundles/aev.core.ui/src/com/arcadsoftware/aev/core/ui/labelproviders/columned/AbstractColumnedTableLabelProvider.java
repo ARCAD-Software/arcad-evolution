@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.labelproviders.columned;
 
 import org.eclipse.swt.graphics.Color;
@@ -52,8 +65,8 @@ public abstract class AbstractColumnedTableLabelProvider extends AbstractColumne
 				if (element instanceof IArcadDisplayable) {
 					final IArcadDisplayable e = (IArcadDisplayable) element;
 					final String overlay = e.getOverlayID();
-					// ATTENTION : il est nécessaire de surcharger les méthodes
-					// getImage et getCompositeImage si vos icônes
+					// ATTENTION : il est nï¿½cessaire de surcharger les mï¿½thodes
+					// getImage et getCompositeImage si vos icï¿½nes
 					// ne sont pas dans Core UI
 					if (overlay != null) {
 						return getCompositeImage(e.getIconID(), overlay);
@@ -84,8 +97,8 @@ public abstract class AbstractColumnedTableLabelProvider extends AbstractColumne
 				}
 			}
 		}
-		// Transcryption de l'index de la colonne affichée en index réel
-		// parmi les colonnes de références.
+		// Transcryption de l'index de la colonne affichï¿½e en index rï¿½el
+		// parmi les colonnes de rï¿½fï¿½rences.
 		final int actualIndex = viewer.getActualIndexFromDisplayedIndex(columnIndex);
 		if (actualIndex == -1) {
 			return StringTools.EMPTY;
@@ -99,7 +112,7 @@ public abstract class AbstractColumnedTableLabelProvider extends AbstractColumne
 	}
 
 	/**
-	 * Il est nécessaire de surcharger cette méthode si votre icône n'est pas dans Core UI
+	 * Il est nï¿½cessaire de surcharger cette mï¿½thode si votre icï¿½ne n'est pas dans Core UI
 	 *
 	 * @param key
 	 * @return
@@ -109,7 +122,7 @@ public abstract class AbstractColumnedTableLabelProvider extends AbstractColumne
 	}
 
 	/**
-	 * Il est nécessaire de surcharger cette méthode si votre icône n'est pas dans Core UI
+	 * Il est nï¿½cessaire de surcharger cette mï¿½thode si votre icï¿½ne n'est pas dans Core UI
 	 *
 	 * @param key
 	 * @return

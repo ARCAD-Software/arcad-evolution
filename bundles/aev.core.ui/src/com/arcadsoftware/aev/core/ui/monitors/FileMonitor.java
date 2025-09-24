@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.monitors;
 
 import java.io.File;
@@ -9,8 +22,8 @@ import com.arcadsoftware.aev.core.messages.MessageManager;
 import com.arcadsoftware.aev.core.model.IMonitor;
 
 /**
- * Monitor permettant de recevoir une notification de message à chaque changement d'étape d'une Action et de renvoyer
- * ces messages sur un fichier de log dont le chemin d'accés est passé en paramètre.
+ * Monitor permettant de recevoir une notification de message ï¿½ chaque changement d'ï¿½tape d'une Action et de renvoyer
+ * ces messages sur un fichier de log dont le chemin d'accï¿½s est passï¿½ en paramï¿½tre.
  *
  * @author dlelong
  */
@@ -20,20 +33,20 @@ public class FileMonitor implements IMonitor {
 	protected boolean verbose = true;
 	protected FileWriter writer;
 
-	// Par défaut le monitor fonctionne en mode verbose
+	// Par dï¿½faut le monitor fonctionne en mode verbose
 	public FileMonitor(final String actionDefinition, final String filename) {
 		this(actionDefinition, filename, true);
 	}
 
 	/**
-	 * Création d'un nouveau FileMonitor
+	 * Crï¿½ation d'un nouveau FileMonitor
 	 * 
 	 * @param actionDefinition
-	 *            : Texte court expliquant ce que fait l'action écoutée
+	 *            : Texte court expliquant ce que fait l'action ï¿½coutï¿½e
 	 * @param filename
-	 *            : Chemin d'accés au fichier dans lequel on va stocker les informations
+	 *            : Chemin d'accï¿½s au fichier dans lequel on va stocker les informations
 	 * @param verbose
-	 *            : si 'true' écriture des messages de chaque étape, sinon écriture de début et de fin d'action
+	 *            : si 'true' ï¿½criture des messages de chaque ï¿½tape, sinon ï¿½criture de dï¿½but et de fin d'action
 	 */
 	public FileMonitor(final String actionDefinition, final String filename, final boolean verbose) {
 		super();
@@ -62,7 +75,7 @@ public class FileMonitor implements IMonitor {
 	}
 
 	/**
-	 * Libération des ressources
+	 * Libï¿½ration des ressources
 	 */
 	protected void dispose() {
 		try {
@@ -81,7 +94,7 @@ public class FileMonitor implements IMonitor {
 	}
 
 	/**
-	 * Initialisation du writer et création du fichier s'il n'existe pas
+	 * Initialisation du writer et crï¿½ation du fichier s'il n'existe pas
 	 * 
 	 * @param filename
 	 */
@@ -118,7 +131,7 @@ public class FileMonitor implements IMonitor {
 	}
 
 	/**
-	 * Ajout à la fin du fichier de la définition de l'action suivi du message passé en paramètre
+	 * Ajout ï¿½ la fin du fichier de la dï¿½finition de l'action suivi du message passï¿½ en paramï¿½tre
 	 * 
 	 * @param message
 	 */

@@ -1,8 +1,16 @@
-/*
- * Copyright 2005 ARCAD-Software.
- * Créé par mlafon
- * Créé le 23 juin 05
- */
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.dialogs;
 
 import java.util.Iterator;
@@ -34,7 +42,7 @@ import com.arcadsoftware.aev.core.ui.messages.MessageIconHelper;
 import com.arcadsoftware.aev.core.ui.tools.GuiFormatTools;
 
 /**
- * Affiche le détail d'un message Arcad.
+ * Affiche le dï¿½tail d'un message Arcad.
  *
  * @author mlafon
  */
@@ -107,12 +115,12 @@ public class MessageDetailDialog extends ArcadDialog implements IMessagesListene
 	}
 
 	/**
-	 * Créé et ouvre la dialog en une ligne.
+	 * Crï¿½ï¿½ et ouvre la dialog en une ligne.
 	 *
 	 * @param parentShell
 	 *            Le shell parent (la dialog est modale).
 	 * @param message
-	 *            Le message à afficher
+	 *            Le message ï¿½ afficher
 	 */
 	public static void showMessageDetails(final Shell parentShell, final Message message) {
 		new MessageDetailDialog(parentShell).open(message);

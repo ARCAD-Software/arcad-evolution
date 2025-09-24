@@ -1,5 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
- * Créé le 5 déc. 2006
+ * Crï¿½ï¿½ le 5 dï¿½c. 2006
  */
 package com.arcadsoftware.aev.core.ui.mementos;
 
@@ -168,7 +181,7 @@ public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 				aCol.putInteger("position", colViewerSettings.getColumn(i).getPosition());//$NON-NLS-1$
 				aCol.putInteger("width", colViewerSettings.getColumn(i).getWidth());//$NON-NLS-1$
 			}
-			// <FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+			// <FM number="2013/00188" version="08.16.04" date="28 fï¿½vr. 2013 user="md">
 			final IMemento sortNode = user.createChild("sort");//$NON-NLS-1$
 			if (colViewerSettings.getSortCriteriaList() != null) {
 				final ColumnedSortCriteriaList list = colViewerSettings.getSortCriteriaList();
@@ -188,7 +201,7 @@ public class ColumnedViewerMementoTools extends RootAndUserMementoTools {
 
 	/**
 	 * @param filterViewerId
-	 *            filterViewerId à définir.
+	 *            filterViewerId ï¿½ dï¿½finir.
 	 */
 	public void setFilterViewerId(final String filterViewerId) {
 		this.filterViewerId = filterViewerId;

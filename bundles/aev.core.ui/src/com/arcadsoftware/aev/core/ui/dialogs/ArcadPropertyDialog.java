@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on 2 mars 2006
  *
@@ -34,11 +47,11 @@ public class ArcadPropertyDialog extends PropertyDialog implements ISelectionCha
 
 	public void doAfterCreation() {
 		getTreeViewer().addPostSelectionChangedListener(this);
-		// Comme on n'enregistre cette page qu'après sa création, pour éviter
+		// Comme on n'enregistre cette page qu'aprï¿½s sa crï¿½ation, pour ï¿½viter
 		// qu'elle ne prenne la taille de
-		// sa liste à la création, elle n'a pas reçu l'évènement pour la 1ère
-		// sélection (celle par défaut)
-		// On lui envoie donc cet évènement.
+		// sa liste ï¿½ la crï¿½ation, elle n'a pas reï¿½u l'ï¿½vï¿½nement pour la 1ï¿½re
+		// sï¿½lection (celle par dï¿½faut)
+		// On lui envoie donc cet ï¿½vï¿½nement.
 		getTreeViewer().setSelection(getTreeViewer().getSelection());
 	}
 

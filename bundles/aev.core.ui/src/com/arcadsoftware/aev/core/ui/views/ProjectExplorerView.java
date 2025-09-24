@@ -1,12 +1,15 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2003 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Common Public License v1.0
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/cpl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *     IBM Corporation - initial API and implementation
+ *     ARCAD Software - initial API and implementation
  *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.views;
 
@@ -50,7 +53,7 @@ import com.arcadsoftware.aev.icons.Icon;
 public abstract class ProjectExplorerView extends ArcadTableView implements IPartListener2, IContainerSelectListener {
 
 	private static final int[] defaultContainer = new int[] {
-			// Mettre ici les identifiants des container autorisés
+			// Mettre ici les identifiants des container autorisï¿½s
 	};
 	protected int[] containerStyle;
 	ExplorerMementoTools explorerMemento;
@@ -70,7 +73,7 @@ public abstract class ProjectExplorerView extends ArcadTableView implements IPar
 	}
 
 	/**
-	 * Méthode permettant de rattacher un ExplorerMementoTools spécifique Le DefaultExplorerMementoTools ici ne fait
+	 * Mï¿½thode permettant de rattacher un ExplorerMementoTools spï¿½cifique Le DefaultExplorerMementoTools ici ne fait
 	 * aucune sauvegarde
 	 *
 	 * @return

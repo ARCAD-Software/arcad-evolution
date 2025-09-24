@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.treeviewers;
 
 import java.util.AbstractList;
@@ -121,7 +134,7 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 	}
 
 	/**
-	 * Supprime les messages sélectionnés de la liste.
+	 * Supprime les messages sï¿½lectionnï¿½s de la liste.
 	 */
 	public void clearSelection() {
 		if (getInput() == null) {
@@ -220,7 +233,7 @@ public class MessagesTreeViewer extends AbstractColumnedTreeViewer {
 	}
 
 	/**
-	 * Mise à jour du niveau de filtrage des messages.
+	 * Mise ï¿½ jour du niveau de filtrage des messages.
 	 *
 	 * @param level
 	 */

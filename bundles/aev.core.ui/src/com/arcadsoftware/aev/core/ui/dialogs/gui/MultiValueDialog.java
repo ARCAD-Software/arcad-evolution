@@ -1,5 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
- * Created on 9 févr. 2006
+ * Created on 9 fï¿½vr. 2006
  */
 package com.arcadsoftware.aev.core.ui.dialogs.gui;
 
@@ -109,7 +122,7 @@ public class MultiValueDialog extends ArcadCenteredDialog {
 		gridLayout.numColumns = 1;
 		composite.setLayout(gridLayout);
 
-		// -- Option de mise à disposition
+		// -- Option de mise ï¿½ disposition
 		list = new List(composite, SWT.BORDER);
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.verticalAlignment = GridData.FILL;
@@ -120,7 +133,7 @@ public class MultiValueDialog extends ArcadCenteredDialog {
 			list.setItems(values);
 		}
 
-		// Création du composite de réception
+		// Crï¿½ation du composite de rï¿½ception
 		final Composite p = new Composite(composite, SWT.NONE);
 		final GridLayout layout = new GridLayout(3, false);
 		layout.marginWidth = 0;

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on 27 avr. 2004
  *
@@ -34,12 +47,12 @@ public abstract class ArcadPreferencePage extends FieldEditorPreferencePage impl
 	}
 
 	/**
-	 * Création d'une page de préférences.<br>
-	 * A dériver dans un autre plugin que le Core UI Plugin.<br>
-	 * Dois affecter le PreferenceStore du plugin conserné.
+	 * Crï¿½ation d'une page de prï¿½fï¿½rences.<br>
+	 * A dï¿½river dans un autre plugin que le Core UI Plugin.<br>
+	 * Dois affecter le PreferenceStore du plugin consernï¿½.
 	 *
 	 * @param store
-	 *            stockage des propriétés à éditer.
+	 *            stockage des propriï¿½tï¿½s ï¿½ ï¿½diter.
 	 */
 	protected ArcadPreferencePage(final IPreferenceStore store) {
 		super(GRID);
@@ -51,7 +64,7 @@ public abstract class ArcadPreferencePage extends FieldEditorPreferencePage impl
 	}
 
 	/**
-	 * Ajoute un champ de saisie booléen.
+	 * Ajoute un champ de saisie boolï¿½en.
 	 *
 	 * @param key
 	 * @param label
@@ -71,7 +84,7 @@ public abstract class ArcadPreferencePage extends FieldEditorPreferencePage impl
 	}
 
 	/**
-	 * Ajoute un champ de saisie pour un type énumération.
+	 * Ajoute un champ de saisie pour un type ï¿½numï¿½ration.
 	 *
 	 * @param key
 	 * @param label
@@ -105,7 +118,7 @@ public abstract class ArcadPreferencePage extends FieldEditorPreferencePage impl
 	}
 
 	/**
-	 * Ajoute un champ de saisie de chaine de caractère.
+	 * Ajoute un champ de saisie de chaine de caractï¿½re.
 	 *
 	 * @param key
 	 * @param label
@@ -115,7 +128,7 @@ public abstract class ArcadPreferencePage extends FieldEditorPreferencePage impl
 	}
 
 	/**
-	 * Ajoute un champ de saisie de chaine de caractère.
+	 * Ajoute un champ de saisie de chaine de caractï¿½re.
 	 *
 	 * @param key
 	 * @param label
@@ -171,8 +184,8 @@ public abstract class ArcadPreferencePage extends FieldEditorPreferencePage impl
 	@Override
 	public void setVisible(final boolean visible) {
 		super.setVisible(visible);
-		// Permet de mettre à jour la référence de l'aide directement, dès
-		// que la page est sélectionnée.
+		// Permet de mettre ï¿½ jour la rï¿½fï¿½rence de l'aide directement, dï¿½s
+		// que la page est sï¿½lectionnï¿½e.
 		if (visible || !getShell().isDisposed()) {
 			final String helpID = getPageHelpContextId();
 			if (helpID != null) {

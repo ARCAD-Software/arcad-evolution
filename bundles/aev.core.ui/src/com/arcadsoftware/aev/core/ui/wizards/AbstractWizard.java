@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on Jul 26, 2006
  */
@@ -34,7 +47,7 @@ public abstract class AbstractWizard extends ArcadWizard {
 	}
 
 	/**
-	 * Cette méthode permet de déterminer si tous les paramètres nécessaire à l'exécution de la commande sont valides
+	 * Cette mï¿½thode permet de dï¿½terminer si tous les paramï¿½tres nï¿½cessaire ï¿½ l'exï¿½cution de la commande sont valides
 	 *
 	 * @see org.eclipse.jface.wizard.IWizard#canFinish()
 	 */
@@ -55,10 +68,10 @@ public abstract class AbstractWizard extends ArcadWizard {
 	}
 
 	/**
-	 * Méthode permettant l'annulation de l'action en cours.<br>
-	 * Cette méthode est appelé lorsque l'utilisateur clique sur le bouton "Annuler" de l'assistant.<br>
-	 * Cette méthode a été redéfinie pour mettre à jour l'indicateur de succes de l'opération stocké dans la variable
-	 * d'instance "executionSucceed" pour pouvoir être utilisé par la suite.
+	 * Mï¿½thode permettant l'annulation de l'action en cours.<br>
+	 * Cette mï¿½thode est appelï¿½ lorsque l'utilisateur clique sur le bouton "Annuler" de l'assistant.<br>
+	 * Cette mï¿½thode a ï¿½tï¿½ redï¿½finie pour mettre ï¿½ jour l'indicateur de succes de l'opï¿½ration stockï¿½ dans la variable
+	 * d'instance "executionSucceed" pour pouvoir ï¿½tre utilisï¿½ par la suite.
 	 *
 	 * @see org.eclipse.jface.wizard.Wizard#performCancel()
 	 */

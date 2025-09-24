@@ -1,9 +1,16 @@
-/*
- * Créé le 14 mai 2004
- * Projet : org.vafada.swtcalendar
- * <i> Copyright 2004, Arcad-Software.</i>
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- */
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.calendar;
 
 import java.util.Calendar;
@@ -24,7 +31,7 @@ import com.arcadsoftware.aev.icons.Icon;
 public class SWTCalendarDialog extends Dialog {
 
 	/**
-	 * Ouvre une fenètre de saisie de date.
+	 * Ouvre une fenï¿½tre de saisie de date.
 	 *
 	 * @param parentShell
 	 * @param calendar

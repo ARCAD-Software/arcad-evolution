@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.mementos;
 
 import java.io.FileNotFoundException;
@@ -21,21 +34,21 @@ public abstract class ExplorerMementoTools extends ExplorerSettings {
 	}
 
 	/**
-	 * Construction d'un ExplorerSettings en fonction des paramètres choisis
+	 * Construction d'un ExplorerSettings en fonction des paramï¿½tres choisis
 	 *
 	 * @return
 	 */
 	protected abstract ExplorerSettings createNewExplorerSettings();
 
 	/**
-	 * Méthode permettant de supprimer les anciennes valeurs avant sauvegarde des nouvelles
+	 * Mï¿½thode permettant de supprimer les anciennes valeurs avant sauvegarde des nouvelles
 	 */
 	protected abstract void deleteOldValues();
 
 	protected abstract String getFilename();
 
 	/**
-	 * Méthode permettant de comparer l'explorerSettings aux paramètres locaux
+	 * Mï¿½thode permettant de comparer l'explorerSettings aux paramï¿½tres locaux
 	 *
 	 * @param explorerSettings
 	 * @return
@@ -57,7 +70,7 @@ public abstract class ExplorerMementoTools extends ExplorerSettings {
 	}
 
 	/**
-	 * Méthode permettant de relire les données stockées à partir de l'élément root du fichier XML
+	 * Mï¿½thode permettant de relire les donnï¿½es stockï¿½es ï¿½ partir de l'ï¿½lï¿½ment root du fichier XML
 	 *
 	 * @param root
 	 *            : racine du document XML
@@ -79,7 +92,7 @@ public abstract class ExplorerMementoTools extends ExplorerSettings {
 		readAll();
 		// Supression des anciennes valeurs
 		deleteOldValues();
-		// Réintroduction des valeurs
+		// Rï¿½introduction des valeurs
 		list.add(createNewExplorerSettings());
 		// Enregistrement du fichier
 		final XMLMemento x = XMLMemento.createWriteRoot("element"); //$NON-NLS-1$
@@ -96,12 +109,12 @@ public abstract class ExplorerMementoTools extends ExplorerSettings {
 	}
 
 	/**
-	 * Méthode de sauvegarde d'un ExplorerSettings à la racine du document XML
+	 * Mï¿½thode de sauvegarde d'un ExplorerSettings ï¿½ la racine du document XML
 	 *
 	 * @param root
 	 *            : racine du document XML
 	 * @param es
-	 *            : l'ExplorerSettings à sauvegarder
+	 *            : l'ExplorerSettings ï¿½ sauvegarder
 	 */
 	protected abstract void saveExplorerSettings(XMLMemento root, ExplorerSettings es);
 }

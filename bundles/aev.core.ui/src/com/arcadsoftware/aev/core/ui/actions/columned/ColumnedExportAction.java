@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.actions.columned;
 
 import java.io.File;
@@ -151,7 +164,7 @@ public class ColumnedExportAction extends ArcadAction {
 				elements = filteredElements;
 			}
 
-			// Attention le viewer.getInput() ne donne que les éléments de
+			// Attention le viewer.getInput() ne donne que les ï¿½lï¿½ments de
 			// premier niveau pour les arbres...
 			if (viewer instanceof AbstractColumnedTreeViewer) {
 				final ArrayList<Object> treeElements = new ArrayList<>();
@@ -160,8 +173,8 @@ public class ColumnedExportAction extends ArcadAction {
 				}
 				elements = treeElements;
 			}
-			// Pour chaque élément, on va récupérer sa valeur textuelle pour la
-			// concaténer au buffer final
+			// Pour chaque ï¿½lï¿½ment, on va rï¿½cupï¿½rer sa valeur textuelle pour la
+			// concatï¿½ner au buffer final
 			for (final Object element : elements) {
 				boolean isFirstData = true;
 				for (int j = 0; j < columns.count(); j++) {

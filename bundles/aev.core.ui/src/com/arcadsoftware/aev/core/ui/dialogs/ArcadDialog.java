@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on 11 mai 2004
  *
@@ -24,7 +37,7 @@ import com.arcadsoftware.aev.icons.Icon;
 
 /**
  * @author mlafon
- * @version 1.0.0 Ajoute quelques méthode d'assistance à a la création de controles dans la fenêtre... <i> Copryright
+ * @version 1.0.0 Ajoute quelques mï¿½thode d'assistance ï¿½ a la crï¿½ation de controles dans la fenï¿½tre... <i> Copryright
  *          2004, Arcad-Software</i>.
  */
 public abstract class ArcadDialog extends Dialog {
@@ -45,11 +58,11 @@ public abstract class ArcadDialog extends Dialog {
 	}
 
 	/**
-	 * Méthode permettant d'ajouter un iSelectionListener déclenchant la validation de la données saisie pour un widget
+	 * Mï¿½thode permettant d'ajouter un iSelectionListener dï¿½clenchant la validation de la donnï¿½es saisie pour un widget
 	 * de type Button.
 	 *
 	 * @param b
-	 *            Button : Button à mettre sous contrôle
+	 *            Button : Button ï¿½ mettre sous contrï¿½le
 	 */
 	protected void addCheckDataListeners(final Button b) {
 		b.addSelectionListener(new SelectionAdapter() {
@@ -62,11 +75,11 @@ public abstract class ArcadDialog extends Dialog {
 	}
 
 	/**
-	 * Méthode permettant d'ajouter un iSelectionListener et un ModifyListener déclenchant la validation de la données
+	 * Mï¿½thode permettant d'ajouter un iSelectionListener et un ModifyListener dï¿½clenchant la validation de la donnï¿½es
 	 * saisie pour une liste Combo.
 	 *
 	 * @param c
-	 *            Combo : Combo à mettre sous contrôle
+	 *            Combo : Combo ï¿½ mettre sous contrï¿½le
 	 */
 
 	protected void addCheckDataListeners(final Combo c) {
@@ -87,11 +100,11 @@ public abstract class ArcadDialog extends Dialog {
 	}
 
 	/**
-	 * Méthode permettant d'ajouter un ModifyListener déclenchant la validation de la données saisie pour un widget de
+	 * Mï¿½thode permettant d'ajouter un ModifyListener dï¿½clenchant la validation de la donnï¿½es saisie pour un widget de
 	 * type Text.
 	 *
 	 * @param c
-	 *            Text : Text à mettre sous contrôle
+	 *            Text : Text ï¿½ mettre sous contrï¿½le
 	 */
 	protected void addCheckDataListeners(final Text t) {
 		t.addModifyListener(new ModifyListener() {
@@ -104,9 +117,9 @@ public abstract class ArcadDialog extends Dialog {
 	}
 
 	/**
-	 * Méthode permettant la validation des informations saisies.<br>
-	 * La surcharge de cette méthode permet de déclarer vos règles de validation de saisie.<br>
-	 * Pour intégrer l'appel de cette fonction à vos contrôle de saisie, vous pouvez utiliser les méthodes
+	 * Mï¿½thode permettant la validation des informations saisies.<br>
+	 * La surcharge de cette mï¿½thode permet de dï¿½clarer vos rï¿½gles de validation de saisie.<br>
+	 * Pour intï¿½grer l'appel de cette fonction ï¿½ vos contrï¿½le de saisie, vous pouvez utiliser les mï¿½thodes
 	 * "addCheckDataListeners()" disponible sur les Combo et les Text.
 	 *
 	 * @return boolean : <b>True</b> si les informations saisies sont valides, <b>false</b> sinon.

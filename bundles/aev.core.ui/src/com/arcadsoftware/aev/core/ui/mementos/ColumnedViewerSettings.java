@@ -1,5 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
- * Créé le 4 déc. 2006
+ * Crï¿½ï¿½ le 4 dï¿½c. 2006
  */
 package com.arcadsoftware.aev.core.ui.mementos;
 
@@ -14,7 +27,7 @@ import com.arcadsoftware.aev.core.ui.viewers.columned.AbstractColumnedViewer;
 public class ColumnedViewerSettings extends ArcadSettings {
 
 	private ArcadColumns columns;
-	// <FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+	// <FM number="2013/00188" version="08.16.04" date="28 fï¿½vr. 2013 user="md">
 	private ColumnedSortCriteriaList sortCriteriaList = null;
 	private String viewerId;
 
@@ -83,7 +96,7 @@ public class ColumnedViewerSettings extends ArcadSettings {
 
 	/**
 	 * @param columns
-	 *            columns à définir.
+	 *            columns ï¿½ dï¿½finir.
 	 */
 	public void setColumns(final ArcadColumns columns) {
 		this.columns = columns;

@@ -1,9 +1,16 @@
-/*
- * Créé le 9 juin 2004
- * Projet : ARCAD Plugin Core UI
- * <i> Copyright 2004, Arcad-Software.</i>
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- */
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.dialogs;
 
 import java.util.List;
@@ -36,7 +43,7 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 	}
 
 	/**
-	 * Débute un block d'enregistrement de messges pour la dialog.
+	 * Dï¿½bute un block d'enregistrement de messges pour la dialog.
 	 *
 	 * @param blockContext
 	 * @return Message
@@ -79,8 +86,8 @@ public class MessageDialog extends ArcadDialog implements IMessagesListener {
 	@Override
 	protected void configureShell(final Shell newShell) {
 		super.configureShell(newShell);
-		// Spécification du titre de la fenêtre en fonction du détail des
-		// messages affichés.
+		// Spï¿½cification du titre de la fenï¿½tre en fonction du dï¿½tail des
+		// messages affichï¿½s.
 		String text = CoreUILabels.resString("MessageDialog.Messages"); //$NON-NLS-1$
 		switch (EvolutionCoreUIPlugin.getDefault().getMessagesLevel()) {
 		case MessageManager.LEVEL_DEVELOPMENT:

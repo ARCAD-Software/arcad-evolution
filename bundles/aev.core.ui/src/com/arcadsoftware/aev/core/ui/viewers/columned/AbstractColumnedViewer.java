@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.viewers.columned;
 
 import java.io.File;
@@ -102,8 +115,8 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		}
 
 		/**
-		 * Méthode d'exécution du tri multicritère avec message de progression Les éléments sont alors triés et affichés
-		 * dans le viewer spécifique
+		 * Mï¿½thode d'exï¿½cution du tri multicritï¿½re avec message de progression Les ï¿½lï¿½ments sont alors triï¿½s et affichï¿½s
+		 * dans le viewer spï¿½cifique
 		 *
 		 * @param monitor
 		 */
@@ -206,7 +219,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		@Override
 		public void run() {
 			displayDuplicate = displayedColumns.duplicate();
-			// Affichage du dialog de préférences
+			// Affichage du dialog de prï¿½fï¿½rences
 			final ColumnedDisplayDialog dialog = new ColumnedDisplayDialog(EvolutionCoreUIPlugin.getShell(),
 					displayDuplicate);
 			dialog.create();
@@ -279,9 +292,9 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	public static final String FILENAME = DIRECTORYNAME + File.separator + "columnsDef.xml"; //$NON-NLS-1$
 
 	/**
-	 * indicateur si le dispose des colonnes est appelé explicitement par le développeur. Utile car Eclipse n'effectue
-	 * pas le meme traitement dans le cas d'un dispose appelé en interne ou explicitement par le développeur. C'est le
-	 * cas pour la méthode removeAllColumns().
+	 * indicateur si le dispose des colonnes est appelï¿½ explicitement par le dï¿½veloppeur. Utile car Eclipse n'effectue
+	 * pas le meme traitement dans le cas d'un dispose appelï¿½ en interne ou explicitement par le dï¿½veloppeur. C'est le
+	 * cas pour la mï¿½thode removeAllColumns().
 	 */
 	boolean columnsDisposedByDevelopper = false;
 	private ArcadColumns displayDuplicate;
@@ -326,24 +339,24 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant la création d'une colonne.<br>
-	 * Implémenter cette méthode pour créer une colonne d'affichage en adéquation avec le controle d'affichage choisi.
+	 * Mï¿½thode permettant la crï¿½ation d'une colonne.<br>
+	 * Implï¿½menter cette mï¿½thode pour crï¿½er une colonne d'affichage en adï¿½quation avec le controle d'affichage choisi.
 	 *
 	 * @param widget
 	 *            Widget : widget parent;
 	 * @param columnStyle
 	 *            int : Style SWT d'affichage
 	 * @param index
-	 *            int : Index de la colonne à créer
-	 * @return Item : colonne créée.
+	 *            int : Index de la colonne ï¿½ crï¿½er
+	 * @return Item : colonne crï¿½ï¿½e.
 	 */
 	public abstract Item createColumn(Widget widget, int columnStyle, int index);
 
 	/*---------------------------------------------------------------------
-	 *                    Gestion de la création des colonnes
+	 *                    Gestion de la crï¿½ation des colonnes
 	 ---------------------------------------------------------------------*/
 	/**
-	 * Méthode de création des colonnes.<br>
+	 * Mï¿½thode de crï¿½ation des colonnes.<br>
 	 */
 	public void createColumns(final ArcadColumns columns) {
 		if (hasColumns()) {
@@ -380,7 +393,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	public abstract AbstractColumnedLabelProviderAdapter createLabelProvider(AbstractColumnedViewer viewer);
 
 	/**
-	 * Méthode de création du menu contextuel du control de l'afficheur.
+	 * Mï¿½thode de crï¿½ation du menu contextuel du control de l'afficheur.
 	 */
 	protected void createMenu() {
 		final MenuManager menuManager = new MenuManager("#PopupMenu"); //$NON-NLS-1$
@@ -390,8 +403,8 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode de création d'un viewer spécifique.<br>
-	 * Ce sont les classes concrètes filles qui auront la charge de créer ce viewer.
+	 * Mï¿½thode de crï¿½ation d'un viewer spï¿½cifique.<br>
+	 * Ce sont les classes concrï¿½tes filles qui auront la charge de crï¿½er ce viewer.
 	 *
 	 * @return AbstractInternalColumnedViewer
 	 */
@@ -409,34 +422,34 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant la gestion du double-clic.<br>
-	 * Surchargez cette méthode pour définir le comportement du double-clique.
+	 * Mï¿½thode permettant la gestion du double-clic.<br>
+	 * Surchargez cette mï¿½thode pour dï¿½finir le comportement du double-clique.
 	 *
 	 * @param selection
-	 *            IStructuredSelection Sélection
+	 *            IStructuredSelection Sï¿½lection
 	 */
 	protected void doOnDoubleClick(final IStructuredSelection selection) {
 		// Do nothing
 	}
 
 	/**
-	 * Méthode permettant la gestion de la sélection.<br>
+	 * Mï¿½thode permettant la gestion de la sï¿½lection.<br>
 	 *
 	 * @param selection
-	 *            IStructuredSelection Sélection
+	 *            IStructuredSelection Sï¿½lection
 	 */
 	protected void doOnSelectionChange(final IStructuredSelection selection) {
 		// Do nothing
 	}
 
-	// <FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+	// <FM number="2013/00188" version="08.16.04" date="28 fï¿½vr. 2013 user="md">
 	protected void extendSettings(final ColumnedViewerSettings settings) {
 		// nothing
 	}
 
 	/**
-	 * Méthode permettant le remplissage du menu contextuel.<br>
-	 * Ce menu est automatiquement alimenter par les actions retournées par la méthode {@link #makeActions()
+	 * Mï¿½thode permettant le remplissage du menu contextuel.<br>
+	 * Ce menu est automatiquement alimenter par les actions retournï¿½es par la mï¿½thode {@link #makeActions()
 	 * makeActions()}.
 	 *
 	 * @param newManager
@@ -458,12 +471,12 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant de renvoyer la position de la colonne de référence en fonction de l'index de la colonne
+	 * Mï¿½thode permettant de renvoyer la position de la colonne de rï¿½fï¿½rence en fonction de l'index de la colonne
 	 * d'affichage.
 	 *
 	 * @param displayedIndex
 	 *            int : Index de la colonne d'affichage
-	 * @return : Position de la colonne de référence ou -1 si non trouvé.
+	 * @return : Position de la colonne de rï¿½fï¿½rence ou -1 si non trouvï¿½.
 	 */
 	public int getActualIndexFromDisplayedIndex(final int displayedIndex) {
 		if (displayedIndex > -1 && displayedIndex < displayedColumns.count()) {
@@ -480,10 +493,10 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant de récupérer le Widget d'affichage du viewer.<br>
-	 * Implémenter cette méthode dans les sous-classes pour renvoyer le widget réel d'affichage.
+	 * Mï¿½thode permettant de rï¿½cupï¿½rer le Widget d'affichage du viewer.<br>
+	 * Implï¿½menter cette mï¿½thode dans les sous-classes pour renvoyer le widget rï¿½el d'affichage.
 	 *
-	 * @return Widget Controle d'affichage des données.
+	 * @return Widget Controle d'affichage des donnï¿½es.
 	 */
 	public abstract Widget getControl();
 
@@ -495,11 +508,11 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant de renvoyer la position affichée de la colonne de en fonction de son index de référence.
+	 * Mï¿½thode permettant de renvoyer la position affichï¿½e de la colonne de en fonction de son index de rï¿½fï¿½rence.
 	 *
 	 * @param referenceIndex
-	 *            int : Index de référence de la colonne
-	 * @return : index d'affichage de la colonne ou -1 si non trouvé.
+	 *            int : Index de rï¿½fï¿½rence de la colonne
+	 * @return : index d'affichage de la colonne ou -1 si non trouvï¿½.
 	 */
 	public int getDisplayedIndexFromActualIndex(final int referenceIndex) {
 		if (referenceIndex > -1 && referenceIndex < referenceColumns.count()) {
@@ -527,8 +540,8 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Possibilité de le surcharger pour un traitement spécifique, notamment en retournant null pour totalement occulter
-	 * la sauvegarde/chargement de la présentation du viewer
+	 * Possibilitï¿½ de le surcharger pour un traitement spï¿½cifique, notamment en retournant null pour totalement occulter
+	 * la sauvegarde/chargement de la prï¿½sentation du viewer
 	 *
 	 * @return String
 	 */
@@ -541,8 +554,8 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant de récupérer les colonnes de référence.<br>
-	 * Les colonnes de référence sont fournies par le développeur qui devra, implémenter la méthode
+	 * Mï¿½thode permettant de rï¿½cupï¿½rer les colonnes de rï¿½fï¿½rence.<br>
+	 * Les colonnes de rï¿½fï¿½rence sont fournies par le dï¿½veloppeur qui devra, implï¿½menter la mï¿½thode
 	 * {@link #getReferenceColumns() getReferenceColumns()}.
 	 *
 	 * @return
@@ -560,8 +573,8 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Methode permettant de spécifier les colonnes de références.<br>
-	 * Implémentez cette méthode pour spécifier les colonnes de référence.
+	 * Methode permettant de spï¿½cifier les colonnes de rï¿½fï¿½rences.<br>
+	 * Implï¿½mentez cette mï¿½thode pour spï¿½cifier les colonnes de rï¿½fï¿½rence.
 	 *
 	 * @return : Collection d'ArcadColumn.
 	 */
@@ -582,11 +595,11 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant de renvoyer la valeur réelle de la colonne (valeur numérique, date ou chaine) afin de
-	 * permettre un tri selon ces valeurs réelles (et non selon leur affichage en chaine de caractères)
+	 * Mï¿½thode permettant de renvoyer la valeur rï¿½elle de la colonne (valeur numï¿½rique, date ou chaine) afin de
+	 * permettre un tri selon ces valeurs rï¿½elles (et non selon leur affichage en chaine de caractï¿½res)
 	 *
 	 * @param element
-	 *            Object : object dont les valeurs doivent être affichées
+	 *            Object : object dont les valeurs doivent ï¿½tre affichï¿½es
 	 * @param columnIndex
 	 *            int : Index de la colonne d'affichage
 	 * @return : valeur de cet objet pour cette colonne
@@ -607,7 +620,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 
 	// </FM>
 	/**
-	 * Méthoe permettant de définir si oui ou non le view affiche des colonnes.
+	 * Mï¿½thoe permettant de dï¿½finir si oui ou non le view affiche des colonnes.
 	 *
 	 * @return
 	 */
@@ -616,8 +629,8 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode de gestion du double-clic.<br>
-	 * Surchargez la méthode {@link #doOnDoubleClick(IStructuredSelection) OnDoubleClick doOnDoubleClick()} pour définir
+	 * Mï¿½thode de gestion du double-clic.<br>
+	 * Surchargez la mï¿½thode {@link #doOnDoubleClick(IStructuredSelection) OnDoubleClick doOnDoubleClick()} pour dï¿½finir
 	 * le comportement du double-clic.
 	 */
 	private void hookDoubleClickAction() {
@@ -654,17 +667,17 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode d'initialisation du viewer.<br>
+	 * Mï¿½thode d'initialisation du viewer.<br>
 	 */
 	public void initialize() {
-		// Chargement des paramétres utilisateurs
+		// Chargement des paramï¿½tres utilisateurs
 		restoreState();
-		// Création des colonnes
+		// Crï¿½ation des colonnes
 		createColumns(displayedColumns);
 		internalViewer.setColumnProperties(displayedColumns.getIdentifiers());
 		// Fixer les options du viewer
 		setOptions();
-		// Implémentation des mécanismes d'interface.
+		// Implï¿½mentation des mï¿½canismes d'interface.
 		createMenu();
 		getViewer().addSelectionChangedListener(new ViewerSelectionChangerListener());
 
@@ -676,9 +689,9 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant de définir les actions à ajouter dans le menu contextuel.<br>
+	 * Mï¿½thode permettant de dï¿½finir les actions ï¿½ ajouter dans le menu contextuel.<br>
 	 *
-	 * @return Action[] : Table des actions à ajouter dans le menu contextuel.
+	 * @return Action[] : Table des actions ï¿½ ajouter dans le menu contextuel.
 	 */
 	protected Action[] makeActions() {
 		if (!doHideDefaultActions()) {
@@ -697,14 +710,14 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant la recréation des colonnes
+	 * Mï¿½thode permettant la recrï¿½ation des colonnes
 	 */
 	public void refreshColumns() {
 		// Supression de toutes les colonnes
 		columnsDisposedByDevelopper = true;
 		removeAllColumns();
 		columnsDisposedByDevelopper = false;
-		// Recréation des colonnes
+		// Recrï¿½ation des colonnes
 		createColumns(displayedColumns);
 		internalViewer.setColumnProperties(displayedColumns.getIdentifiers());
 		saveState();
@@ -712,7 +725,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant la suppression de toutes les colonnes de l'afficheur.<br>
+	 * Mï¿½thode permettant la suppression de toutes les colonnes de l'afficheur.<br>
 	 */
 	public abstract void removeAllColumns();
 
@@ -728,7 +741,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 		if (viewerSettings != null) {
 			displayedColumns = viewerSettings.getColumns();
 			if (referenceColumns.count() > displayedColumns.count()) {
-				// des colonnes ont été rajoutées par le développeur dans le
+				// des colonnes ont ï¿½tï¿½ rajoutï¿½es par le dï¿½veloppeur dans le
 				// viewer
 				for (int i = 0; i < referenceColumns.count(); i++) {
 					ArcadColumn column = displayedColumns.items(referenceColumns.items(i).getIdentifier());
@@ -753,7 +766,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 					}
 				}
 			} else if (referenceColumns.count() < displayedColumns.count()) {
-				// des colonnes ont été supprimées par le développeur dans le
+				// des colonnes ont ï¿½tï¿½ supprimï¿½es par le dï¿½veloppeur dans le
 				// viewer
 				for (int i = 0; i < displayedColumns.count(); i++) {
 					final ArcadColumn column = referenceColumns.items(displayedColumns.items(i).getIdentifier());
@@ -763,7 +776,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 				}
 			}
 
-			// <FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+			// <FM number="2013/00188" version="08.16.04" date="28 fï¿½vr. 2013 user="md">
 			if (viewerSettings.getSortCriteriaList() != null) {
 				final ColumnedSortCriteriaList list = new ColumnedSortCriteriaList(displayedColumns);
 				for (int i = 0; i < viewerSettings.getSortCriteriaList().getSize(); i++) {
@@ -785,14 +798,14 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant la sauvegarde des préférences utilisateurs.
+	 * Mï¿½thode permettant la sauvegarde des prï¿½fï¿½rences utilisateurs.
 	 *
-	 * @return boolean true si l'opération s'est bien passée, false sinon.
+	 * @return boolean true si l'opï¿½ration s'est bien passï¿½e, false sinon.
 	 */
 	public boolean saveState() {
 		if (useUserPreference) {
 			setColumnsWidth();
-			// <FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+			// <FM number="2013/00188" version="08.16.04" date="28 fï¿½vr. 2013 user="md">
 			final ColumnedViewerSettings settings = new ColumnedViewerSettings(
 					AbstractColumnedViewer.this.viewerIdentifier,
 					AbstractColumnedViewer.this.displayedColumns);
@@ -820,7 +833,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant d'assigner la largeur des colonnes affichees à l'attribut width de l'objet ArcadColumn
+	 * Mï¿½thode permettant d'assigner la largeur des colonnes affichees ï¿½ l'attribut width de l'objet ArcadColumn
 	 */
 	public void setColumnsWidth() {
 		if (getViewer() instanceof TableViewer) {
@@ -855,7 +868,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode permettant l'affectation des propriétés de la colonne à l'aide des informations de description.<br>
+	 * Mï¿½thode permettant l'affectation des propriï¿½tï¿½s de la colonne ï¿½ l'aide des informations de description.<br>
 	 *
 	 * @param item
 	 *            Item : Objet colonne d'affichage
@@ -892,7 +905,7 @@ public abstract class AbstractColumnedViewer implements IColumnResolver, IDialog
 	}
 
 	/**
-	 * Méthode de paramétrage de l'aspect du viewer.<br>
+	 * Mï¿½thode de paramï¿½trage de l'aspect du viewer.<br>
 	 */
 	protected void setOptions() {
 		internalViewer.setHeaderVisible(true);

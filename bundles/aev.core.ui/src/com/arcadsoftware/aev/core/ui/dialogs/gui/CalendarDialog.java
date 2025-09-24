@@ -1,5 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
- * Créé le 18 déc. 07
+ * Crï¿½ï¿½ le 18 dï¿½c. 07
  */
 package com.arcadsoftware.aev.core.ui.dialogs.gui;
 
@@ -20,7 +33,7 @@ import com.arcadsoftware.aev.icons.Icon;
 public class CalendarDialog extends Dialog {
 
 	/**
-	 * Ouvre une fenètre de saisie de date.
+	 * Ouvre une fenï¿½tre de saisie de date.
 	 *
 	 * @param parentShell
 	 * @param calendar

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.actions;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,35 +26,35 @@ import com.arcadsoftware.aev.core.model.ArcadEntity;
 import com.arcadsoftware.aev.core.ui.EvolutionCoreUIPlugin;
 
 /**
- * Classe des actions agissant sur plusieurs entités.<br>
+ * Classe des actions agissant sur plusieurs entitï¿½s.<br>
  * <p>
- * <b><u>Les éléments à traités</u></b><br>
- * La détermination des éléments à traiter peut se fairte de plusieurs manières. <br>
+ * <b><u>Les ï¿½lï¿½ments ï¿½ traitï¿½s</u></b><br>
+ * La dï¿½termination des ï¿½lï¿½ments ï¿½ traiter peut se fairte de plusieurs maniï¿½res. <br>
  * SI la valeur de <code>collection</code> n'est pas null ALORS<br>
- * - ce seront ces éléments qui seront traités<br>
+ * - ce seront ces ï¿½lï¿½ments qui seront traitï¿½s<br>
  * SINON SI la valeur de <code>entity</code> n'est pas null ALORS<br>
- * - seule cette valeur sera traitée<br>
+ * - seule cette valeur sera traitï¿½e<br>
  * SINON SI la valeur de <code>collectionProvider</code> n'est pas null ALORS<br>
- * - ce sont les élements de la collection fournie par <code>collectionProvider.getCollection()</code> qui seront
- * traités.
+ * - ce sont les ï¿½lements de la collection fournie par <code>collectionProvider.getCollection()</code> qui seront
+ * traitï¿½s.
  * </p>
  * <p>
- * <b><u>Traitement de chaque élément</u></b><br>
- * Les éléments seront traités un par un grace à la méthode {@link #runOnEntity(ArcadEntity)
+ * <b><u>Traitement de chaque ï¿½lï¿½ment</u></b><br>
+ * Les ï¿½lï¿½ments seront traitï¿½s un par un grace ï¿½ la mï¿½thode {@link #runOnEntity(ArcadEntity)
  * <code>runOnEntity(ArcadEntity)</code>}.
  * </p>
  * <p>
  * <b><u>Etapes de traitement</u></b><br>
- * Vous pouvez controler les étapes du traitement en surchargeant les méthodes :
+ * Vous pouvez controler les ï¿½tapes du traitement en surchargeant les mï¿½thodes :
  * <ul>
  * <li>{@link AbstractMultiItemAction#doBeforeProcessing(ArcadCollection) <code>
- * doBeforeProcessing(ArcadCollection items)</code>} : méthode exécutée AVANT le traitement globale</li>
+ * doBeforeProcessing(ArcadCollection items)</code>} : mï¿½thode exï¿½cutï¿½e AVANT le traitement globale</li>
  * <li>{@link AbstractMultiItemAction#doAfterProcessing(ArcadCollection) <code>
- * doAfterProcessing(ArcadCollection items)</code>} : méthode exécutée APRES le traitement globale</li>
+ * doAfterProcessing(ArcadCollection items)</code>} : mï¿½thode exï¿½cutï¿½e APRES le traitement globale</li>
  * <li>{@link AbstractMultiItemAction#doAfterProcessingOnItem(ArcadEntity)
- * <code>doAfterProcessingOnItem(ArcadEntity item)</code>} : méthode exécutée AVANT le traitement d'un élément</li>
+ * <code>doAfterProcessingOnItem(ArcadEntity item)</code>} : mï¿½thode exï¿½cutï¿½e AVANT le traitement d'un ï¿½lï¿½ment</li>
  * <li>{@link AbstractMultiItemAction#doBeforeProcessingOnItem(ArcadEntity)
- * <code>doBeforeProcessingOnItem(ArcadEntity item)</code>} : méthode exécutée APRES le traitement d'un élément</li>
+ * <code>doBeforeProcessingOnItem(ArcadEntity item)</code>} : mï¿½thode exï¿½cutï¿½e APRES le traitement d'un ï¿½lï¿½ment</li>
  * </ul>
  *
  * @author MD
@@ -115,7 +128,7 @@ public abstract class AbstractMultiItemAction extends ArcadAction {
 	}
 
 	/**
-	 * Méthode permettant de tester si on peut exécuter l'action
+	 * Mï¿½thode permettant de tester si on peut exï¿½cuter l'action
 	 *
 	 * @param object
 	 * @return boolean
@@ -125,8 +138,8 @@ public abstract class AbstractMultiItemAction extends ArcadAction {
 	}
 
 	/**
-	 * Méthode permettant de créer la collection désirée servant de conteneur aux éléments à traiter.<br>
-	 * C'est dans cette méthode que vous allez créeer la collection spécialisée contenant les éléments à traiter.
+	 * Mï¿½thode permettant de crï¿½er la collection dï¿½sirï¿½e servant de conteneur aux ï¿½lï¿½ments ï¿½ traiter.<br>
+	 * C'est dans cette mï¿½thode que vous allez crï¿½eer la collection spï¿½cialisï¿½e contenant les ï¿½lï¿½ments ï¿½ traiter.
 	 *
 	 * @return ArcadCollection : Objet de t'un type descendant d'ArcadCollection
 	 */
@@ -167,14 +180,14 @@ public abstract class AbstractMultiItemAction extends ArcadAction {
 	}
 
 	/**
-	 * Méthode permettant de modifier le contenu de la collection des éléments à traiter.<br>
-	 * Surchargez cette méthode si vous dérirez modifer le contenu de la collection des éléments à traiter juste aprés
-	 * que la classe n'est réalisée son remplissage automatique en fonction des paramétres passés. Généralement, cette
-	 * méthode est utilisée pour ajouter dans la collection des éléments déduits des éléments principaux.
+	 * Mï¿½thode permettant de modifier le contenu de la collection des ï¿½lï¿½ments ï¿½ traiter.<br>
+	 * Surchargez cette mï¿½thode si vous dï¿½rirez modifer le contenu de la collection des ï¿½lï¿½ments ï¿½ traiter juste aprï¿½s
+	 * que la classe n'est rï¿½alisï¿½e son remplissage automatique en fonction des paramï¿½tres passï¿½s. Gï¿½nï¿½ralement, cette
+	 * mï¿½thode est utilisï¿½e pour ajouter dans la collection des ï¿½lï¿½ments dï¿½duits des ï¿½lï¿½ments principaux.
 	 *
 	 * @param toProceed
-	 *            ArcadCollection : Collection des éléments à traiter telle quelle existe juste aprés le remplissage
-	 *            réalisé pa la méthode {@link #getItemToProceed() <code>getItemToProceed()</code>}
+	 *            ArcadCollection : Collection des ï¿½lï¿½ments ï¿½ traiter telle quelle existe juste aprï¿½s le remplissage
+	 *            rï¿½alisï¿½ pa la mï¿½thode {@link #getItemToProceed() <code>getItemToProceed()</code>}
 	 */
 	public void extendToProceed(final ArcadCollection toProceed) {
 		// Do nothing
@@ -215,7 +228,7 @@ public abstract class AbstractMultiItemAction extends ArcadAction {
 
 	public ArcadCollection getItemToProceed() {
 		ArcadCollection toProceed = null;
-		// Préparation de la collection à traiter
+		// Prï¿½paration de la collection ï¿½ traiter
 		if (collection != null) {
 			toProceed = collection;
 		} else if (entity != null) {
@@ -240,12 +253,12 @@ public abstract class AbstractMultiItemAction extends ArcadAction {
 	}
 
 	/**
-	 * Méthode permettant de définir l'action à réaliser sur l'entité ARCAD passée en paramétre.<br>
-	 * C'est grace à cette méthode que vous allez réellement définir l'exécution de l'action entité par entité.
+	 * Mï¿½thode permettant de dï¿½finir l'action ï¿½ rï¿½aliser sur l'entitï¿½ ARCAD passï¿½e en paramï¿½tre.<br>
+	 * C'est grace ï¿½ cette mï¿½thode que vous allez rï¿½ellement dï¿½finir l'exï¿½cution de l'action entitï¿½ par entitï¿½.
 	 *
 	 * @param newEntity
-	 *            ArcadEntity : Entité sur laquelle vous allez définir le traitement.
-	 * @return boolean : renvoit vrai si 'laction s'est correctement déroulée.
+	 *            ArcadEntity : Entitï¿½ sur laquelle vous allez dï¿½finir le traitement.
+	 * @return boolean : renvoit vrai si 'laction s'est correctement dï¿½roulï¿½e.
 	 */
 	public abstract boolean runOnEntity(ArcadEntity newEntity);
 

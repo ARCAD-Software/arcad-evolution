@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.viewers.columned;
 
 import java.lang.reflect.InvocationTargetException;
@@ -43,8 +56,8 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 		}
 
 		/**
-		 * Méthode d'exécution du tri multicritère avec message de progression Les éléments sont alors triés et affichés
-		 * dans le viewer spécifique
+		 * Mï¿½thode d'exï¿½cution du tri multicritï¿½re avec message de progression Les ï¿½lï¿½ments sont alors triï¿½s et affichï¿½s
+		 * dans le viewer spï¿½cifique
 		 *
 		 * @param monitor
 		 */
@@ -166,7 +179,7 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 		return new ColumnedInternalTableViewer(new ColumnedTableViewer(viewerParent, viewerStyle));
 	}
 
-	// <FM number="2013/00188" version="08.16.04" date="28 févr. 2013 user="md">
+	// <FM number="2013/00188" version="08.16.04" date="28 fï¿½vr. 2013 user="md">
 	@Override
 	protected void extendSettings(final ColumnedViewerSettings settings) {
 		if (sorter != null) {
@@ -212,7 +225,7 @@ public abstract class AbstractColumnedTableViewer extends AbstractColumnedViewer
 		System.arraycopy(previous, 0, result, 0, previous.length);
 		result[previous.length] = new ColumnedActionSeparator();
 		System.arraycopy(makeActions, 0, result, previous.length + 1, makeActions.length);
-		// Ajout de l'action d'affichage de l'éditeur de tris
+		// Ajout de l'action d'affichage de l'ï¿½diteur de tris
 		final int size = previous.length + makeActions.length + 1;
 		result[size] = new ShowSortEditorAction();
 		result[size + 1] = new ColumnedActionSeparator();

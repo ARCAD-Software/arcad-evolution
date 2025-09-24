@@ -1,8 +1,21 @@
-/*
- * Créé le 23 juin 04
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
+/*
+ * Crï¿½ï¿½ le 23 juin 04
+ *
+ * Pour changer le modï¿½le de ce fichier gï¿½nï¿½rï¿½, allez ï¿½ :
+ * Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 package com.arcadsoftware.aev.core.ui.viewers.sorters;
 
@@ -18,8 +31,8 @@ import com.arcadsoftware.aev.core.tools.StringTools;
 import com.arcadsoftware.aev.core.ui.labelproviders.columned.IArcadTableLabelProvider;
 
 /**
- * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * @author MD Pour changer le modï¿½le de ce commentaire de type gï¿½nï¿½rï¿½, allez ï¿½ :
+ *         Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 public class ArcadTableViewerColumnSorter extends ViewerSorter {
 

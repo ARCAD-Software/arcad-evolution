@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on 13 avr. 2006
  */
@@ -169,24 +182,24 @@ public class SimpleDateVerifierListener implements Listener {
 		final StringBuilder buffer = new StringBuilder(e.text);
 		final char[] chars = new char[buffer.length()];
 		buffer.getChars(0, chars.length, chars, 0);
-		// Gestion du caractère d'effacement
+		// Gestion du caractï¿½re d'effacement
 		if (processBackspace(e)) {
 			return;
 		}
-		// Controle de saisie (numérique, domaine, etc...)
+		// Controle de saisie (numï¿½rique, domaine, etc...)
 		if (!checkInput(e)) {
 			return;
 		}
-		// Création d'un texte de sumulation pour controle de validité
+		// Crï¿½ation d'un texte de sumulation pour controle de validitï¿½
 		final String newText = buffer.toString();
 		final int length = newText.length();
 		final StringBuilder date = new StringBuilder(text.getText());
 		date.replace(e.start, e.start + length, newText);
-		// Controle de validité de la date
+		// Controle de validitï¿½ de la date
 		if (!checkDate(date)) {
 			return;
 		}
-		// Si tous les controle sont OK, on intégre la modification
+		// Si tous les controle sont OK, on intï¿½gre la modification
 		// dans le texte du controle
 		text.setSelection(e.start, e.start + length);
 		ignore = true;

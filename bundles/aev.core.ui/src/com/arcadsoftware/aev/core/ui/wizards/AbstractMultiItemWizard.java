@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on Jul 25, 2006
  */
@@ -38,13 +51,13 @@ public class AbstractMultiItemWizard extends AbstractWizard {
 	}
 
 	/**
-	 * Méthode d'ajout des pages de l'assistant.<br>
-	 * Cette méthode fait appel à la méthode
+	 * Mï¿½thode d'ajout des pages de l'assistant.<br>
+	 * Cette mï¿½thode fait appel ï¿½ la mï¿½thode
 	 * {@link com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction#getPages() getPages()} de la classe
-	 * action passé en paramétre au constructeur pour récupérer les pages spécifiques nécessaires à l'exécution de
+	 * action passï¿½ en paramï¿½tre au constructeur pour rï¿½cupï¿½rer les pages spï¿½cifiques nï¿½cessaires ï¿½ l'exï¿½cution de
 	 * l'action.<br>
-	 * Cette méthode permet aussi d'intégrer automatiquement la page de type {@link SimpleItemCommandWizardPage
-	 * SimpleItemCommandWizardPage} permettant l'affichage du résumé et du prompt de commande.
+	 * Cette mï¿½thode permet aussi d'intï¿½grer automatiquement la page de type {@link SimpleItemCommandWizardPage
+	 * SimpleItemCommandWizardPage} permettant l'affichage du rï¿½sumï¿½ et du prompt de commande.
 	 *
 	 * @see org.eclipse.jface.wizard.IWizard#addPages()
 	 * @see com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction#getPages()
@@ -65,19 +78,19 @@ public class AbstractMultiItemWizard extends AbstractWizard {
 	}
 
 	/**
-	 * Méthode permettant le déclenchement de l'action.<br>
-	 * Cette méthode est appelé lorsque l'utilisateur clique sur le bouton "Terminer" de l'assistant.<br>
-	 * Cette méthode a été redéfinie pour :
+	 * Mï¿½thode permettant le dï¿½clenchement de l'action.<br>
+	 * Cette mï¿½thode est appelï¿½ lorsque l'utilisateur clique sur le bouton "Terminer" de l'assistant.<br>
+	 * Cette mï¿½thode a ï¿½tï¿½ redï¿½finie pour :
 	 * <ul>
-	 * <li>Tenir compte des modifications éventuelles de l'action réalisée.</li>
-	 * <li>Déléguer l'exécution réelle à l'action appelante via l'appel de la méthode
+	 * <li>Tenir compte des modifications ï¿½ventuelles de l'action rï¿½alisï¿½e.</li>
+	 * <li>Dï¿½lï¿½guer l'exï¿½cution rï¿½elle ï¿½ l'action appelante via l'appel de la mï¿½thode
 	 * {@link com.arcadsoftware.core.ui.actions.AbstractSimpleItemWithWizardAction#doExecuteCommand(String)
 	 * doExecuteCommand(String command)}</li>
 	 * </ul>
 	 *
-	 * @return boolean : <b>True</b> si l'exécution s'est déroulée correctement, <b>false</b> sinon.<br>
-	 *         Ce code retour d'exécution est stocké dans la variable d'instance "executionSucceed" pour pouvoir être
-	 *         utilisé par la suite.
+	 * @return boolean : <b>True</b> si l'exï¿½cution s'est dï¿½roulï¿½e correctement, <b>false</b> sinon.<br>
+	 *         Ce code retour d'exï¿½cution est stockï¿½ dans la variable d'instance "executionSucceed" pour pouvoir ï¿½tre
+	 *         utilisï¿½ par la suite.
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	@Override

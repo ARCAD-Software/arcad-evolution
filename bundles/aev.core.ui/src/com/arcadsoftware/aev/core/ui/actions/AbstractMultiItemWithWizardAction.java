@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
  * Created on Jul 25, 2006
  *
@@ -14,9 +27,9 @@ import com.arcadsoftware.aev.core.ui.wizards.AbstractSimpleItemWizardPage;
 import com.arcadsoftware.aev.core.ui.wizards.ArcadWizardDialog;
 
 /**
- * Classe permettant l'exécution d'une action sur plusieurs éléments.<br>
- * Cette classe prend en charge l'appel à un assistant de saisie des données utilisateur nécessaires au paramétrage de
- * l'exécution de la commande.
+ * Classe permettant l'exï¿½cution d'une action sur plusieurs ï¿½lï¿½ments.<br>
+ * Cette classe prend en charge l'appel ï¿½ un assistant de saisie des donnï¿½es utilisateur nï¿½cessaires au paramï¿½trage de
+ * l'exï¿½cution de la commande.
  *
  * @author MD
  */
@@ -62,11 +75,11 @@ public abstract class AbstractMultiItemWithWizardAction extends AbstractMultiIte
 	}
 
 	/**
-	 * Méthode de spécification de l'assistant à utiliser dans l'action<br>
-	 * Implémentez cette méthode pour spécifier quel assistant votre action doit utiliser lors de son exécution. Par
-	 * défaut : <br>
-	 * - l'action passée est l'instance elle même (this)<br>
-	 * - Le titre passé est celui défini par la méthode
+	 * Mï¿½thode de spï¿½cification de l'assistant ï¿½ utiliser dans l'action<br>
+	 * Implï¿½mentez cette mï¿½thode pour spï¿½cifier quel assistant votre action doit utiliser lors de son exï¿½cution. Par
+	 * dï¿½faut : <br>
+	 * - l'action passï¿½e est l'instance elle mï¿½me (this)<br>
+	 * - Le titre passï¿½ est celui dï¿½fini par la mï¿½thode
 	 *
 	 * @param action
 	 *            AbstractMultiItemWithWizardAction : Action appelante
@@ -78,18 +91,18 @@ public abstract class AbstractMultiItemWithWizardAction extends AbstractMultiIte
 	public abstract AbstractMultiItemWizard createWizard(AbstractMultiItemWithWizardAction action, String title);
 
 	/**
-	 * Méthode de déclenchement de l'exécution de l'action.<br>
-	 * Cette méthode prend en charge l'ensemble du cycle d'exécution de l'action, y compris l'affichage d'un assistant.
-	 * Lors de circonstances particulières ou en fonction de paramétres particuliers vous désirez ne pas faire l'appel à
-	 * l'assistant de saisie vous devez surcharger la méthode {@link #useWizard() <code>useWizard()</code>} pour lui
-	 * faire renvoyer "false". Dans cas, l'exécution sera la même que pour une exécution standard.
+	 * Mï¿½thode de dï¿½clenchement de l'exï¿½cution de l'action.<br>
+	 * Cette mï¿½thode prend en charge l'ensemble du cycle d'exï¿½cution de l'action, y compris l'affichage d'un assistant.
+	 * Lors de circonstances particuliï¿½res ou en fonction de paramï¿½tres particuliers vous dï¿½sirez ne pas faire l'appel ï¿½
+	 * l'assistant de saisie vous devez surcharger la mï¿½thode {@link #useWizard() <code>useWizard()</code>} pour lui
+	 * faire renvoyer "false". Dans cas, l'exï¿½cution sera la mï¿½me que pour une exï¿½cution standard.
 	 * <p>
-	 * <b><u>Les étapes du cycles</u></b><br>
+	 * <b><u>Les ï¿½tapes du cycles</u></b><br>
 	 * <ol>
-	 * <li>Appel à la méthode {@link #getWizardTitle() getWizardTitle()} pour récupération du titre de l'assistant.</li>
-	 * <li>Appel à la méthode {@link #createWizard(AbstractSimpleItemWithWizardAction, String) createWizard()} pour
-	 * génération d'un assistant.</li>
-	 * <li>SI l'assistant créé n'est pas null ALORS
+	 * <li>Appel ï¿½ la mï¿½thode {@link #getWizardTitle() getWizardTitle()} pour rï¿½cupï¿½ration du titre de l'assistant.</li>
+	 * <li>Appel ï¿½ la mï¿½thode {@link #createWizard(AbstractSimpleItemWithWizardAction, String) createWizard()} pour
+	 * gï¿½nï¿½ration d'un assistant.</li>
+	 * <li>SI l'assistant crï¿½ï¿½ n'est pas null ALORS
 	 * <ul>
 	 * <li>Affichage de l'assistant</li>
 	 * <li>Retourne la valeur "isExecutionSucceed" de l'assistant</li>
@@ -122,19 +135,19 @@ public abstract class AbstractMultiItemWithWizardAction extends AbstractMultiIte
 	}
 
 	/**
-	 * Méthode permettant de spécifier les pages à ajouter à l'assistant.<br>
-	 * Cette méthode permet de définir un tableau contenant les pages de type
-	 * {@link com.arcadsoftware.core.ui.wizards.AbstractSimpleItemWizardPage AbstractSimpleItemWizardPage} à ajouter
+	 * Mï¿½thode permettant de spï¿½cifier les pages ï¿½ ajouter ï¿½ l'assistant.<br>
+	 * Cette mï¿½thode permet de dï¿½finir un tableau contenant les pages de type
+	 * {@link com.arcadsoftware.core.ui.wizards.AbstractSimpleItemWizardPage AbstractSimpleItemWizardPage} ï¿½ ajouter
 	 * dans l'assistant.<br>
-	 * Cette méthode est appelée directement par la méthode
+	 * Cette mï¿½thode est appelï¿½e directement par la mï¿½thode
 	 * {@link com.arcadsoftware.core.ui.wizards.AbstractSimpleItemWizard#addPages() addPages()} de l'assistant.
 	 *
-	 * @return Tableau d'AbstractSimpleItemWizardPage : Pages à ajouter à l'assistant.
+	 * @return Tableau d'AbstractSimpleItemWizardPage : Pages ï¿½ ajouter ï¿½ l'assistant.
 	 */
 	public abstract AbstractSimpleItemWizardPage[] getPages();
 
 	/**
-	 * Méthode de définition du titre de l'assistant.<br>
+	 * Mï¿½thode de dï¿½finition du titre de l'assistant.<br>
 	 *
 	 * @return String : Titre de l'assistant
 	 */

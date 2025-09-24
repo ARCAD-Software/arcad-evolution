@@ -1,8 +1,21 @@
-/*
- * Créé le 28 avr. 04
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- * Pour changer le modèle de ce fichier généré, allez à :
- * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
+/*
+ * Crï¿½ï¿½ le 28 avr. 04
+ *
+ * Pour changer le modï¿½le de ce fichier gï¿½nï¿½rï¿½, allez ï¿½ :
+ * Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 package com.arcadsoftware.aev.core.ui.labelproviders;
 
@@ -15,8 +28,8 @@ import com.arcadsoftware.aev.core.collections.IArcadDisplayable;
 import com.arcadsoftware.aev.core.ui.tools.CoreUILabels;
 
 /**
- * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
- *         Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+ * @author MD Pour changer le modï¿½le de ce commentaire de type gï¿½nï¿½rï¿½, allez ï¿½ :
+ *         Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
  */
 public class ArcadCollectionItemLabelProvider implements ILabelProvider {
 
@@ -43,7 +56,7 @@ public class ArcadCollectionItemLabelProvider implements ILabelProvider {
 	}
 
 	/**
-	 * Il est nécessaire de surcharger cette méthode si votre icône n'est pas dans Core UI
+	 * Il est nï¿½cessaire de surcharger cette mï¿½thode si votre icï¿½ne n'est pas dans Core UI
 	 *
 	 * @param key
 	 * @return
@@ -61,8 +74,8 @@ public class ArcadCollectionItemLabelProvider implements ILabelProvider {
 		if (element instanceof IArcadDisplayable) {
 			final IArcadDisplayable e = (IArcadDisplayable) element;
 			final String overlay = e.getOverlayID();
-			// ATTENTION : il est nécessaire de surcharger les méthodes getImage
-			// et getCompositeImage si vos icônes
+			// ATTENTION : il est nï¿½cessaire de surcharger les mï¿½thodes getImage
+			// et getCompositeImage si vos icï¿½nes
 			// ne sont pas dans Core UI
 			if (overlay != null) {
 				return getCompositeImage(e.getIconID(), overlay);
@@ -73,7 +86,7 @@ public class ArcadCollectionItemLabelProvider implements ILabelProvider {
 	}
 
 	/**
-	 * Il est nécessaire de surcharger cette méthode si votre icône n'est pas dans Core UI
+	 * Il est nï¿½cessaire de surcharger cette mï¿½thode si votre icï¿½ne n'est pas dans Core UI
 	 *
 	 * @param key
 	 * @return

@@ -1,5 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
- * Créé le 27 avr. 2007
+ * Crï¿½ï¿½ le 27 avr. 2007
  */
 package com.arcadsoftware.aev.core.ui.composite;
 
@@ -72,7 +85,7 @@ public abstract class AbstractExpandBarComposite extends Composite {
 		moreParameter.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(final MouseEvent e) {
-				// Si le controle est déployé
+				// Si le controle est dï¿½ployï¿½
 				if (expanded) {
 					collapse();
 				} else {
@@ -91,17 +104,17 @@ public abstract class AbstractExpandBarComposite extends Composite {
 	}
 
 	/**
-	 * Methode permettant de déclencher des actions lors de la contraction de la barre.
+	 * Methode permettant de dï¿½clencher des actions lors de la contraction de la barre.
 	 */
 	public void doOnCollapse() {
 		// Do nothing
 	}
 
 	/**
-	 * Méthode permettant de définir les contrôles à ajouter à la barre.
+	 * Mï¿½thode permettant de dï¿½finir les contrï¿½les ï¿½ ajouter ï¿½ la barre.
 	 *
 	 * @param parent
-	 *            Composite : Composite sur lequel vous allez ajouter vos contrôles.
+	 *            Composite : Composite sur lequel vous allez ajouter vos contrï¿½les.
 	 */
 	public abstract void doOnExpand(Composite parent);
 
@@ -146,7 +159,7 @@ public abstract class AbstractExpandBarComposite extends Composite {
 		if (flag == expanded) {
 			return;
 		}
-		// Si le controle est déployé
+		// Si le controle est dï¿½ployï¿½
 		if (flag) {
 			expand();
 		} else {

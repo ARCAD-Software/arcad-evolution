@@ -1,9 +1,16 @@
-/*
- * Créé le 27 mai 2004
- * Projet : ARCAD Plugin Core UI
- * <i> Copyright 2004, Arcad-Software.</i>
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
  *
- */
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.actions;
 
 import org.eclipse.jface.action.Action;
@@ -22,7 +29,7 @@ public class RefreshControlAction extends Action {
 
 	/**
 	 * @param control
-	 *            l'élément cabable de se raffraichir.
+	 *            l'ï¿½lï¿½ment cabable de se raffraichir.
 	 * @param image
 	 */
 	public RefreshControlAction(final IRefreshControl control, final String longText) {
@@ -70,7 +77,7 @@ public class RefreshControlAction extends Action {
 
 	/**
 	 * @param control
-	 *            le controle à raffraihir.
+	 *            le controle ï¿½ raffraihir.
 	 */
 	public void setControl(final IRefreshControl control) {
 		this.control = control;

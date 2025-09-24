@@ -1,5 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 /*
- * Créé le 3 août 07
+ * Crï¿½ï¿½ le 3 aoï¿½t 07
  */
 package com.arcadsoftware.aev.core.ui.composite;
 
@@ -24,7 +37,7 @@ public class CustomExpandBar {
 	}
 
 	public CustomExpandBar(final Composite parent, final int style) {
-		// Création de l'expandBar
+		// Crï¿½ation de l'expandBar
 		infoBar = new ExpandBar(parent, style);
 		final GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2025 ARCAD Software.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     ARCAD Software - initial API and implementation
+ *******************************************************************************/
 package com.arcadsoftware.aev.core.ui.treeviewers;
 
 import java.util.ArrayList;
@@ -62,8 +75,8 @@ public class ContainerTreeViewer extends AbstractColumnedTreeViewer {
 	}
 
 	/*
-	 * @author MD Pour changer le modèle de ce commentaire de type généré, allez à :
-	 * Fenêtre&gt;Préférences&gt;Java&gt;Génération de code&gt;Code et commentaires
+	 * @author MD Pour changer le modï¿½le de ce commentaire de type gï¿½nï¿½rï¿½, allez ï¿½ :
+	 * Fenï¿½tre&gt;Prï¿½fï¿½rences&gt;Java&gt;Gï¿½nï¿½ration de code&gt;Code et commentaires
 	 */
 	private class ContainerTreeDragSourceListener implements DragSourceListener {
 		/**
@@ -112,9 +125,9 @@ public class ContainerTreeViewer extends AbstractColumnedTreeViewer {
 				if (c != null) {
 					if (dropSource != null) {
 						return c.performDrop(dropSource);
-						// Drag à partir d'une vue exterieur
+						// Drag ï¿½ partir d'une vue exterieur
 					}
-					// en fonction du type d'élément droppé, faire le traitement
+					// en fonction du type d'ï¿½lï¿½ment droppï¿½, faire le traitement
 					// adequat
 					// else if (componentDropped){
 					// ComponentWithKey cd = (ComponentWithKey)data;
@@ -161,7 +174,7 @@ public class ContainerTreeViewer extends AbstractColumnedTreeViewer {
 		}
 	}
 
-	// on détermine quel est le plus grand id pour cet arbre
+	// on dï¿½termine quel est le plus grand id pour cet arbre
 	public static final int MAXCONTAINER_NUMBER = 0;
 
 	private final ArrayList<Integer> containerList = new ArrayList<>();
@@ -220,7 +233,7 @@ public class ContainerTreeViewer extends AbstractColumnedTreeViewer {
 
 	public void expandFromKey(final String key) {
 		TreeItem node = null;
-		// Découpage de la clé en sous clé
+		// Dï¿½coupage de la clï¿½ en sous clï¿½
 		final StringTokenizer st = new StringTokenizer(key, "/", false); //$NON-NLS-1$
 		String s = StringTools.EMPTY;
 		while (st.hasMoreElements()) {
