@@ -65,6 +65,14 @@ jobs:
           file: releng/aev.update/target/flat-repository/*
           file_glob: true
 
+      - name: Attach p2 update site
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}          
+          file: releng/aev.update/target/com.arcadsoftware.aev.update-*.zip
+          file_glob: true
+
       - name: Get next version
         uses: reecetech/version-increment@2024.10.1
         id: next-version

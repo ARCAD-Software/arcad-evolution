@@ -59,6 +59,7 @@ jobs:
         title: "Development Build"
         files: |
           releng/aev.update/target/flat-repository/*
+          releng/aev.update/target/com.arcadsoftware.aev.update-*.zip
 
     - name: Release
       uses: softprops/action-gh-release@v1
@@ -66,3 +67,4 @@ jobs:
       with:
         files: |
           releng/aev.update/target/flat-repository/*
+          releng/aev.update/target/com.arcadsoftware.aev.update-*.zip
